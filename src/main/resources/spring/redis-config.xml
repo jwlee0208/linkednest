@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+		 
+		 <bean id="redisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		 	<property name="minIdle" value="1"></property>
+		 	<property name="maxIdle" value="30"></property>
+		 	<property name="maxTotal" value="30"></property>
+		 	<property name="maxWaitMillis" value="10000"></property>
+		 	<property name="testOnBorrow" value="true"></property>
+		 </bean>
+		  
+		 <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		 	<property name="hostName" value="127.0.0.1"></property>
+		 	<property name="port" value="6379"></property>
+		 	<property name="password" value=""></property>
+<!-- 		 	<property name="password" value="123456"></property> -->
+		 	<property name="usePool" value="yes"></property> 
+		 	<property name="poolConfig" ref="redisPoolConfig"></property>		 	
+		 	 <property name="database" value="0"></property><!-- default 0 디비  dao영역에서 index 값 파라메터로 던져서 실시간으로 변경 감지 가능함.-->
+		 </bean>
+		 <!-- 
+		<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"  p:connection-factory-ref="connectionFactory"/>	
+		 -->
+		 
+<!-- 		<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"> -->
+<!-- 			<property name="connectionFactory" ref="connectionFactory"></property> -->
+<!-- 		</bean> -->
+		
+			 
+		<!-- redisTemplate 사용할 경우 아래 주석풀고 사용 -->
+		
+		<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		    <property name="connectionFactory" ref="connectionFactory" />
+		</bean>
+<!-- 		 -->
+		 
+</beans>			

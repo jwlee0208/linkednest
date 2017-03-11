@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http//mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="sql.board">
+
+		<select id="selectBoardListAll" resultType="board.boardDto">
+			<include refid="selectBoard"/>
+			<if test="createUserId != null and createUserId != ''">
+			<where>
+				create_user_id = #{createUserId}
+			</where>
+			</if>
+			ORDER BY board_category_id , board_id ASC
+		</select>
+		<select id="selectBoardList" parameterType="searchCondition" resultType="board.boardDto">
+			<include refid="selectBoard"/>
+			<include refid="searchConditionSql"/>     
+			ORDER BY board_id desc                
+			LIMIT #{startRow}, #{endRow}     			
+		</select>
+
+		<!-- 페이징 위한 리스트 갯수 조회 -->    
+		<select id="selectListCount" parameterType="searchCondition" resultType="Integer">        
+			SELECT count(*) AS totalCnt         
+			FROM TB_BOARD         
+			<include refid="searchConditionSql"/>    
+		</select>      
+
+		
+		<insert id="insertBoardInfo" parameterType="board.boardDto" useGeneratedKeys="true" keyProperty="boardId">
+			INSERT INTO TB_BOARD
+			( board_name
+			, board_category_id
+			, board_type
+			, create_user_id
+			, create_user_name
+			, create_date)
+			VALUES
+			( #{boardName} 
+			, #{boardCategoryId}
+			, #{boardType} 
+			, #{createUserId} 
+			, #{createUserName} 
+			, CURRENT_TIMESTAMP())
+			<selectKey keyProperty="boardId" resultType="int" order="AFTER">
+				 SELECT last_insert_id()	as boardId
+			</selectKey>
+			
+		</insert>
+		
+		<update id="updateBoardInfo" parameterType="board.boardDto">
+			UPDATE TB_BOARD
+				SET
+					board_name 			= #{boardName} ,
+					board_category_id	= #{boardCategoryId} ,
+					board_type 			= #{boardType} ,
+					modify_user_id 		= #{modifyUserId} ,
+					modify_user_name 	= #{modifyUserName} ,
+					modify_date 		= CURRENT_TIMESTAMP()
+			WHERE board_id = #{boardId}
+		</update>
+
+
+		<!--  게시글 조회 -->
+		<select id="selectBoardInfo" resultType="board.boardDto" parameterType="board.boardDto">
+		    <include refid="selectBoard"/>
+		    <include refid="searchConditionSql"/>
+		</select>
+		
+		<!-- 이전 글 조회 -->
+		<select id="selectPrevBoardInfo" resultType="board.boardDto" parameterType="board.boardDto">
+		 	 <include refid="selectBoard"/>  
+				WHERE 
+					1 = 1 	
+				<![CDATA[ 
+					AND board_id > ${boardId}
+				]]>
+				ORDER BY board_id ASC
+				LIMIT 1	 	 		    
+		</select>
+		<!-- 다음 글 조회 -->
+		<select id="selectNextBoardInfo" resultType="board.boardDto" parameterType="board.boardDto">
+		 	 <include refid="selectBoard"/>  
+				WHERE 
+					1 = 1
+				<![CDATA[ 
+					AND board_id < ${boardId}
+				]]>	
+				ORDER BY board_id DESC
+				LIMIT 1	 	 		    
+		</select>
+		
+		<sql id="selectBoard">
+			SELECT 	board_id,
+					board_category_id,
+				    board_name,
+				    board_type,
+				    create_user_id,
+				    create_user_name,
+				    create_date,
+				    modify_user_id,
+				    modify_user_name,
+				    modify_date
+			FROM TB_BOARD		
+		</sql>
+		
+		<sql id="searchConditionSql">
+		    WHERE 1 = 1
+		    <if test="boardId > 0">
+		      AND board_id = #{boardId}
+		    </if>
+		    <if test="createUserId != null and createUserId != ''">
+		      AND create_user_id = #{createUserId}
+		    </if>
+		    
+		</sql>
+		
+		<select id="selectBoardCategoryList" parameterType="board.boardCategoryDto" resultType="board.boardCategoryDto">
+			SELECT board_category_id
+				 , board_category_name
+				 , create_user_id
+				 , create_date 
+			FROM TB_BOARD_CATEGORY					
+			<if test="createUserId != null and createUserId != ''">
+			<where>
+				create_user_id = #{createUserId}
+			</where>
+			</if>
+		</select>
+				
+		<select id="selectBoardCategoryAndBoardList" parameterType="board.boardCategoryPortalDto" resultMap="selectBoardCategoryAndBoardList">
+			SELECT	bc.board_category_id
+				  , bc.board_category_name
+				  , b.board_id
+				  ,	b.board_category_id
+				  , b.board_name
+				  , b.board_type
+				  , b.create_user_id
+				  , b.create_user_name
+				  , b.create_date
+				  , b.modify_user_id
+				  , b.modify_user_name
+				  , b.modify_date
+			FROM		TB_BOARD_CATEGORY bc
+			INNER JOIN	TB_BOARD 		  b 	ON b.board_category_id = bc.board_category_id
+			<if test="createUserId != null and createUserId != ''">
+			<where>
+				b.create_user_id = #{createUserId} 
+			</where>		
+			</if>
+			ORDER BY bc.board_category_id, b.board_id ASC
+		</select>
+		
+		<resultMap id="selectBoardCategoryAndBoardList" type="board.boardCategoryPortalDto">
+			<id		column="board_category_id" 		property="boardCategoryId"/>
+			<result column="board_category_name" 	property="boardCategoryName"/>
+			<collection property="boardList" ofType="board.boardDto">
+				<id		column="board_id" property="boardId"/>
+				<result column="board_category_id" property="boardCategoryId"/>
+				<result column="board_name"		 property="boardName"/>
+				<result column="board_yype"		 property="boardType"/>
+				<result column="create_user_id"	 property="createUserId"/>
+				<result column="create_user_name"	 property="createUserName"/>
+				<result column="create_date"		 property="createDate"/>
+				<result column="modify_user_id"	 property="modifyUserId"/>
+				<result column="modify_user_name"	 property="modifyUserName"/>
+				<result column="modify_date"		 property="modifyDate"/>
+			</collection>
+		</resultMap>
+		
+		
+		<select id="selectBoardCategoryAndBoardInfo" parameterType="board.boardDto" resultType="board.boardDto">
+			SELECT	bc.board_category_id
+				  , bc.board_category_name
+				  , b.board_id
+				  ,	b.board_category_id
+				  , b.board_name
+				  , b.board_type
+				  , b.create_user_id
+				  , b.create_user_name
+				  , b.create_date
+				  , b.modify_user_id
+				  , b.modify_user_name
+				  , b.modify_date
+			FROM		TB_BOARD_CATEGORY bc
+			INNER JOIN	TB_BOARD 		  b 	ON b.board_category_id = bc.board_category_id
+			WHERE b.board_id = #{boardId}
+		</select>
+    </mapper>
+    

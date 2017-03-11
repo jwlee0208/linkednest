@@ -1,0 +1,8 @@
+cat_id,parent_cat_id,cat_name,create_date,create_user_id,create_user_name,modify_user_id,modify_user_name
+1,0,player,"2014-10-27 18:20:37",jwlee0208,Paul,NULL,NULL
+2,0,manager,"2014-10-27 18:20:46",jwlee0208,Paul,NULL,NULL
+3,0,coach,"2014-10-27 18:20:55",jwlee0208,Paul,NULL,NULL
+4,0,agent,"2014-10-27 18:21:02",jwlee0208,Paul,NULL,NULL
+5,0,team,"2014-10-27 18:21:11",jwlee0208,Paul,NULL,NULL
+6,1,pitcher,"2014-10-27 18:21:48",jwlee0208,Paul,NULL,NULL
+7,1,hitter,"2014-10-27 18:22:30",jwlee0208,Paul,NULL,NULL

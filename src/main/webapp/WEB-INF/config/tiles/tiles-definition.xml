@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<!--
+     This is a blank Tiles definition file with a commented example.
+-->
+<tiles-definitions>
+
+     <definition name="board/article/*" template="/WEB-INF/views/layout/board/main.jsp">
+          <put-attribute name="title" 			value="linkednest" type="string" />
+          <put-attribute name="metatag" 		value="/WEB-INF/views/layout/board/metatag.jsp" />
+          <put-attribute name="header" 			value="/WEB-INF/views/layout/board/header.jsp" />
+          <put-attribute name="menu" 			value="/WEB-INF/views/layout/board/menu.jsp" />
+          <put-attribute name="body" 			value="/WEB-INF/views/board/article/{1}.jsp" />
+          <put-attribute name="quickBoardList" 	value="/WEB-INF/views/layout/common/quickBoardList.jsp" />
+          <put-attribute name="footer" 			value="/WEB-INF/views/layout/board/footer.jsp" />     
+     </definition>
+
+     <definition name="bookmark/*" template="/WEB-INF/views/layout/bookmark/main.jsp">
+          <put-attribute name="title" 			value="linkednest" type="string" />
+          <put-attribute name="metatag" 		value="/WEB-INF/views/layout/bookmark/metatag.jsp" />
+          <put-attribute name="header" 			value="/WEB-INF/views/layout/bookmark/header.jsp" />
+          <put-attribute name="menu" 			value="/WEB-INF/views/layout/bookmark/menu.jsp" />
+          <put-attribute name="body" 			value="/WEB-INF/views/bookmark/{1}.jsp" />
+          <put-attribute name="quickBoardList" 	value="/WEB-INF/views/layout/common/quickBoardList.jsp" />
+          <put-attribute name="footer" 			value="/WEB-INF/views/layout/bookmark/footer.jsp" />     
+     </definition>
+
+     <definition name="config/*/*" template="/WEB-INF/views/layout/config/main.jsp">
+          <put-attribute name="title" 			value="linkednest" type="string" />
+          <put-attribute name="header" 			value="/WEB-INF/views/layout/board/header.jsp" />
+          <put-attribute name="menu" 			value="/WEB-INF/views/layout/board/menu.jsp" />
+          <put-attribute name="body" 			value="/WEB-INF/views/config/{1}/{2}.jsp" />
+          <put-attribute name="quickConfigList" value="/WEB-INF/views/layout/common/quickConfigList.jsp" />
+          <put-attribute name="footer" 			value="/WEB-INF/views/layout/board/footer.jsp" />  
+     </definition>
+
+     <definition name="config/*" template="/WEB-INF/views/layout/config/main.jsp">
+          <put-attribute name="title" 			value="linkednest" type="string" />
+          <put-attribute name="header" 			value="/WEB-INF/views/layout/board/header.jsp" />
+          <put-attribute name="menu" 			value="/WEB-INF/views/layout/board/menu.jsp" />
+          <put-attribute name="body" 			value="/WEB-INF/views/config/{1}.jsp" />
+          <put-attribute name="quickConfigList" value="/WEB-INF/views/layout/common/quickConfigList.jsp" />
+          <put-attribute name="footer" 			value="/WEB-INF/views/layout/board/footer.jsp" />  
+     </definition>
+
+
+     <definition name="default" template="/WEB-INF/views/layout/default/main.jsp">
+          <put-attribute name="title" 	value="linkednest" type="string" />
+          <put-attribute name="header" 	value="/WEB-INF/views/layout/default/header.jsp" />
+          <put-attribute name="menu" 	value="/WEB-INF/views/layout/default/menu.jsp" />          
+          <put-attribute name="body" 	value="" />
+          <put-attribute name="footer" 	value="/WEB-INF/views/layout/default/footer.jsp" />          
+     </definition>
+
+     <definition name="none" template="/WEB-INF/views/layout/noTemplate.jsp">
+       <put-attribute name="body" value="" />
+     </definition>  
+
+     <definition name="*/ajax*" extends="none">
+          <put-attribute name="body" 	value="/WEB-INF/views/{1}/ajax{2}.jsp" />
+     </definition>    
+
+     <definition name="*/*/ajax*" extends="none">
+          <put-attribute name="body" 	value="/WEB-INF/views/{1}/{2}/ajax{3}.jsp" />
+     </definition>    
+
+     <definition name="/login" template="/WEB-INF/views/layout/login/main.jsp">
+          <put-attribute name="body" 	value="/WEB-INF/views/login.jsp" />
+     </definition>
+
+     <definition name="/user/regist" template="/WEB-INF/views/layout/regist/main.jsp">
+          <put-attribute name="body" 	value="/WEB-INF/views/user/regist.jsp" />
+          <put-attribute name="footer" 	value="/WEB-INF/views/layout/regist/footer.jsp" />
+     </definition>
+          
+     <definition name="*/pop*" template="/WEB-INF/views/layout/popup/main.jsp">
+     	  <put-attribute name="title" 	value="linkednest" type="string" />
+          <put-attribute name="body" 	value="/WEB-INF/views/{1}/pop{2}.jsp" />
+     </definition>    
+
+     <definition name="*/*/pop*" template="/WEB-INF/views/layout/popup/main.jsp">
+     	  <put-attribute name="title" 	value="linkednest" type="string" />
+          <put-attribute name="body" 	value="/WEB-INF/views/{1}/{2}/pop{3}.jsp" />
+     </definition>    
+
+     <definition name="*/*/*" extends="default">
+       <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+     </definition>
+     
+     <definition name="*/*" extends="default">
+       <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+     </definition>
+
+     <definition name="*" extends="default">
+       <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+     </definition>
+
+     
+</tiles-definitions>

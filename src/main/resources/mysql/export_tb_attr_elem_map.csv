@@ -1,0 +1,27 @@
+attr_elem_map_id,attr_id,attr_elem_id,cat_id,user_id,user_name,attr_elem_map_name,create_date,create_user_id,create_user_name,modify_date,modify_user_id,modify_user_name
+1,1,1,6,ajm,안지만,right,"2014-10-27 21:30:51",jwlee0208,Paul,NULL,NULL,NULL
+2,2,4,6,ajm,안지만,overhand,"2014-10-27 21:30:51",jwlee0208,Paul,NULL,NULL,NULL
+3,3,8,6,ajm,안지만,right,"2014-10-27 21:30:51",jwlee0208,Paul,NULL,NULL,NULL
+4,1,1,6,bys,배영수,right,"2014-10-27 21:32:04",jwlee0208,Paul,NULL,NULL,NULL
+5,2,4,6,bys,배영수,overhand,"2014-10-27 21:32:04",jwlee0208,Paul,NULL,NULL,NULL
+6,3,8,6,bys,배영수,right,"2014-10-27 21:32:04",jwlee0208,Paul,NULL,NULL,NULL
+7,1,1,6,khk,김희걸,right,"2014-10-27 21:32:47",jwlee0208,Paul,NULL,NULL,NULL
+8,2,4,6,khk,김희걸,overhand,"2014-10-27 21:32:47",jwlee0208,Paul,NULL,NULL,NULL
+9,3,8,6,khk,김희걸,right,"2014-10-27 21:32:47",jwlee0208,Paul,NULL,NULL,NULL
+10,1,1,6,ysh,윤성환,right,"2014-10-27 21:33:29",jwlee0208,Paul,NULL,NULL,NULL
+11,2,4,6,ysh,윤성환,overhand,"2014-10-27 21:33:29",jwlee0208,Paul,NULL,NULL,NULL
+12,3,8,6,ysh,윤성환,right,"2014-10-27 21:33:29",jwlee0208,Paul,NULL,NULL,NULL
+13,1,1,6,osh,오승환,right,"2014-10-27 21:34:02",jwlee0208,Paul,NULL,NULL,NULL
+14,2,4,6,osh,오승환,overhand,"2014-10-27 21:34:02",jwlee0208,Paul,NULL,NULL,NULL
+15,1,1,6,osh,오승환,right,"2014-10-27 21:34:25",jwlee0208,Paul,NULL,NULL,NULL
+16,2,4,6,osh,오승환,overhand,"2014-10-27 21:34:25",jwlee0208,Paul,NULL,NULL,NULL
+17,3,8,6,osh,오승환,right,"2014-10-27 21:34:25",jwlee0208,Paul,NULL,NULL,NULL
+18,1,2,6,kh,권혁,right,"2014-10-27 21:35:53",jwlee0208,Paul,NULL,NULL,NULL
+19,2,4,6,kh,권혁,overhand,"2014-10-27 21:35:53",jwlee0208,Paul,NULL,NULL,NULL
+20,3,9,6,kh,권혁,right,"2014-10-27 21:35:53",jwlee0208,Paul,NULL,NULL,NULL
+21,1,1,6,ajm,안지만,right,"2014-10-27 21:36:37",jwlee0208,Paul,NULL,NULL,NULL
+22,2,4,6,ajm,안지만,overhand,"2014-10-27 21:36:37",jwlee0208,Paul,NULL,NULL,NULL
+23,3,8,6,ajm,안지만,right,"2014-10-27 21:36:37",jwlee0208,Paul,NULL,NULL,NULL
+24,1,1,6,syw,신용운,sidearm,"2014-10-27 21:39:08",jwlee0208,Paul,NULL,NULL,NULL
+25,2,6,6,syw,신용운,overhand,"2014-10-27 21:39:08",jwlee0208,Paul,NULL,NULL,NULL
+26,3,8,6,syw,신용운,right,"2014-10-27 21:39:08",jwlee0208,Paul,NULL,NULL,NULL

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="sql.common">
+		<select id="selectCodeList" parameterType="common.codeDto" resultType="common.codeDto">
+			SELECT 
+					code_id
+				  , code_name
+				  , code_value
+				  , code_type				  
+			FROM TB_CODE
+			WHERE code_type = #{codeType}
+			ORDER BY code_name ASC
+		</select> 
+    </mapper>

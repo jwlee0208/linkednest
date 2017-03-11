@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="sql.share">		
+    	<select id="selectShareInfo" parameterType="common.shareDto" resultType="common.shareDto">
+    		SELECT 	share_id
+				  , share_name
+				  , share_type
+				  , introduce
+				  , user_id
+				  , DATE_FORMAT(create_date, '%Y-%m-%d') AS create_date
+			FROM TB_SHARE
+			WHERE user_id = #{userId}
+    	</select>
+    	
+    	<insert id="insertShareInfo" parameterType="common.shareDto" useGeneratedKeys="true" keyProperty="shareId">
+    		INSERT INTO TB_SHARE 
+    			(share_name, share_type, introduce, user_id, create_date)
+    		VALUES 
+    			(#{shareName}, #{shareType}, #{introduce}, #{userId}, now())	
+    	</insert>
+
+    	<update id="updateShareInfo" parameterType="common.shareDto">
+    		UPDATE TB_SHARE 
+    			SET share_name 	= #{shareName}
+    			, 	share_type	= #{shareType}
+    			, 	introduce	= #{introduce}
+    			, 	user_id		= #{userId}
+    			, 	create_date	= now()
+			WHERE share_id 	= #{shareId}
+			  AND user_id	= #{userId}
+    	</update>
+
+    </mapper>

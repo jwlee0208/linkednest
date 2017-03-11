@@ -1,0 +1,15 @@
+.ui-autocomplete .highlight {
+			font-weight : bold;
+			color : red;
+			text-decoration: underline;
+}
+		
+.table-responsive .table.table-hover tr td {vertical-align : middle; }
+		
+		
+.position {
+	  float: right;
+	  font-size: 18px;
+	  margin-top: -5px;
+	  margin-right: -5px;
+}

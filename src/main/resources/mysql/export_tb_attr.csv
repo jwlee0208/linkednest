@@ -1,0 +1,7 @@
+attr_id,cat_id,attr_name,create_date,create_user_id,create_user_name,modify_date,modify_user_id,modify_user_name
+1,6,throws,"2014-10-27 18:25:46",jwlee0208,Paul,NULL,NULL,NULL
+2,6,throwsType,"2014-10-27 18:27:04",jwlee0208,Paul,NULL,NULL,NULL
+3,6,bats,"2014-10-27 18:27:10",jwlee0208,Paul,NULL,NULL,NULL
+4,7,position,"2014-10-27 18:38:11",jwlee0208,Paul,NULL,NULL,NULL
+5,7,throws,"2014-10-27 18:38:17",jwlee0208,Paul,NULL,NULL,NULL
+6,7,bats,"2014-10-27 18:38:24",jwlee0208,Paul,NULL,NULL,NULL

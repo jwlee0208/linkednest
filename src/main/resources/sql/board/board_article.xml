@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="sql.boardArticle">
+    
+    	<resultMap id="boardArticleMap" type="board.boardArticleDto">
+			<id 	column="article_id" 			property="articleId"/>
+			<result column="board_id" 				property="boardId"/>
+			<result column="title" 					property="title"/>
+			<result column="content" 				property="content"/>
+			<result column="file_path" 				property="filePath"/>
+			<result column="original_file_name" 	property="originalFileName"/>
+			<result column="author_id" 				property="authorId"/>
+			<result column="author_nm" 				property="authorNm"/>
+			<result column="create_date" 			property="createDate"/>
+			<result column="board_category_id" 		property="boardCategoryId"/>
+			<result column="board_category_name" 	property="boardCategoryName"/>
+			<result column="board_name" 			property="boardName"/>
+			<association property="shareInfo" javaType="common.shareDto">
+				<id		column="user_id" 		property="userId"/>
+				<result column="share_name" 	property="shareName"/>
+			</association>
+			<collection property="slideshareLinkInfos" ofType="board.slideshareLinkDto">
+				<id 	column="slide_id" 				property="slideId"/>
+				<result column="article_id" 			property="articleId"/>
+				<result column="slideshare_link_url" 	property="slideshareLinkUrl"/>
+				<result column="create_user_id" 		property="createUserId"/>
+				<result column="create_date" 			property="createDate"/>
+			</collection>
+			
+		</resultMap> 
+    	
+    
+    
+        <insert id="insertArticleInfo" parameterType="board.boardArticleDto" useGeneratedKeys="true" keyProperty="articleId">
+            INSERT INTO TB_BOARD_ARTICLE
+				(
+				board_id,
+				title,
+				content,
+				file_path,
+				original_file_name,
+				author_id,
+				author_nm,
+				create_date,
+				status)
+			VALUES (
+				#{boardId},
+				#{title},
+				#{content},
+				#{filePath},
+				#{originalFileName},
+				#{authorId},
+				#{authorNm},
+				CURRENT_TIMESTAMP(),
+				#{status})
+			<selectKey keyProperty="articleId" resultType="int" order="AFTER">
+				 SELECT last_insert_id()	as articleId
+			</selectKey>
+				
+        </insert>
+        <select id="selectList" parameterType="board.boardArticleDto" resultMap="boardArticleMap">
+            <include refid="searchSql"/>   
+            <where>
+				<include refid="searchConditionSql"/>
+			</where>
+			ORDER BY article_id desc        
+        </select>
+		<!-- 페이징 위한 리스트 갯수 조회 -->    
+		<select id="selectListCount" resultType="Integer" parameterType="searchCondition">        
+			SELECT count(*) AS totalCnt         
+			FROM 	   TB_BOARD_ARTICLE 	ba  
+			INNER JOIN TB_BOARD 			b  ON b.board_id 		  = ba.board_id
+			INNER JOIN TB_BOARD_CATEGORY    bc ON b.board_category_id = bc.board_category_id 
+			<where>     
+				<include refid="searchConditionSql"/>    
+			</where>
+		</select>      
+		
+		<!-- 리스트 조회 -->    
+		<select id="selectBoardList" resultMap="boardArticleMap" parameterType="searchCondition">                      
+			<include refid="searchSql"/>  
+			<where>                    
+				<include refid="searchConditionSql"/>
+			</where>                         
+			ORDER BY article_id desc                
+			LIMIT #{startRow}, #{endRow}     
+		</select>		
+		
+		<!--  게시글 조회 -->
+		<select id="selectBoardContent" resultMap="boardArticleMap" parameterType="board.boardArticleDto">
+		    <include refid="searchSql"/>
+		    <include refid="searchContentSql"/>
+		</select>
+		<!-- 이전 글 조회 -->
+		<select id="selectPrevBoardContent" resultMap="boardArticleMap" parameterType="board.boardArticleDto">
+		 	 <include refid="searchSql"/>  
+				<where>
+					ba.board_id = ${boardId}	
+				<![CDATA[ 
+					AND ba.article_id < ${articleId}
+				]]>
+					AND ba.status = 1
+				</where>	
+				ORDER BY ba.article_id DESC
+				LIMIT 1	 	 		    
+		</select>
+		<!-- 다음 글 조회 -->
+		<select id="selectNextBoardContent" resultMap="boardArticleMap" parameterType="board.boardArticleDto">
+		 	 <include refid="searchSql"/>  
+				<where>
+					ba.board_id = ${boardId}
+				<![CDATA[ 
+					AND ba.article_id > ${articleId}
+				]]>	
+					AND ba.status = 1
+				</where>	
+				ORDER BY ba.article_id ASC
+				LIMIT 1	 	 		    
+		</select>
+		
+		
+					
+		<sql id="searchSql">
+			SELECT 
+			    ba.article_id,
+			    ba.board_id,
+			    ba.title,
+			    ba.content,
+			    ba.file_path, 
+			    ba.original_file_name,
+			    ba.author_id,
+			    ba.author_nm,
+			    ba.create_date,
+			    bc.board_category_id,
+			    bc.board_category_name,
+			    b.board_name,
+			    sl.slide_id,
+			    sl.slideshare_link_url,
+			    s.user_id,
+			    s.share_name 
+			FROM TB_BOARD_ARTICLE ba
+			INNER JOIN TB_BOARD 			b  ON b.board_id 			= ba.board_id
+			INNER JOIN TB_BOARD_CATEGORY 	bc ON b.board_category_id 	= bc.board_category_id
+			LEFT  JOIN TB_SLIDESHARE_LINK 	sl ON sl.article_id 		= ba.article_id
+			INNER JOIN TB_SHARE 			s  ON s.user_id 			= bc.create_user_id
+		</sql>
+		<sql id="searchConditionSql">
+				<if test="boardId > 0">
+				and ba.board_id = #{boardId}    
+				</if>
+				<if test="createUserId != null and createUserId != ''">
+					   and bc.create_user_id = #{createUserId} 
+				</if>
+				<if test="searchCondition != null and searchCondition != ''">
+					<if test="searchCondition == 'title'">
+						<if test="searchText != null and searchText != ''">
+<!-- 						and MATCH(title) AGAINST(CONCAT('*',#{searchText},'*') in boolean mode); -->
+						and ba.title 	like CONCAT('%', #{searchText}, '%')
+						</if> 
+					</if>
+					<if test="searchCondition == 'content'">
+						<if test="searchText != null and searchText != ''">
+<!-- 						and MATCH(content) AGAINST(CONCAT('*',#{searchText},'*') in boolean mode); -->
+						and ba.content like CONCAT('%', #{searchText}, '%')
+						</if>
+					</if>
+					<if test="searchCondition == 'titleNcontent'">
+						<if test="searchText != null and searchText != ''">
+<!-- 						and MATCH(title, content) AGAINST(CONCAT('*',#{searchText},'*') in boolean mode); -->
+						and (ba.title 	 like CONCAT('%', #{searchText}, '%') 
+						     or 
+						     ba.content like CONCAT('%', #{searchText}, '%'))
+						</if>     
+					</if>
+				</if>
+				and ba.status = 1			     	    
+		</sql> 
+		<sql id="searchContentSql">
+		    <where>
+		    <if test="createUserId != null and createUserId != ''">
+		    	and bc.create_user_id = #{createUserId}
+		    </if>
+		    <if test="articleId > 0">
+		        and ba.article_id = #{articleId}
+		    </if>
+			    and ba.status = 1
+		    </where>
+		</sql>
+		
+		
+		<!-- 5개의 게시글 조회 -->    
+		<select id="selectArticleFive" resultMap="boardArticleMap" parameterType="board.boardArticleDto">                      
+			<include refid="searchSql"/>              
+			<where>
+				<if test="boardId > 0">
+				and ba.board_id = #{boardId}    
+				</if>			
+				and status = 1
+			</where>	
+			        
+<!-- 			<include refid="searchConditionSql"/>                          -->
+			ORDER BY article_id desc                
+			LIMIT 0, 5     
+		</select>		
+		
+		<!-- 게시글 수정 -->
+		<update id="updateArticleInfo" parameterType="board.boardArticleDto">
+			UPDATE TB_BOARD_ARTICLE
+				SET
+					article_id 			= #{articleId },
+					board_id 			= #{boardId },
+					title 				= #{title },
+					content 			= #{content },
+					file_path 			= #{filePath },
+					original_file_name 	= #{originalFileName },
+					author_id 			= #{authorId },
+					author_nm 			= #{authorNm }
+			WHERE article_id = #{articleId}		
+		</update>
+		<!-- 게시글 삭제 -->		
+		<update id="deleteArticleInfo" parameterType="board.boardArticleDto">
+			UPDATE TB_BOARD_ARTICLE
+				SET
+					STATUS = 0
+			WHERE article_id = #{articleId}					
+		</update>
+<!-- 		<delete id="deleteArticleInfo" parameterType="board.boardArticleDto"> -->
+<!-- 			DELETE FROM TB_BOARD_ARTICLE WHERE ARTICLE_ID = #{articleId} -->
+<!-- 		</delete> -->
+
+		<!-- 우측 게시판 목록 조회 -->
+		<select id="selectSideBoardList" parameterType="board.boardDto" resultMap="selectSideBoardListMap">
+			SELECT 
+				   bc.board_category_id
+				 , bc.board_category_name	
+				 , b.board_id
+				 , b.board_name
+				 , b.board_type
+				 , b.create_user_id
+				 , b.create_user_name
+				 , b.create_date
+				 , count(ba.article_id) as boardArticleCnt 
+			FROM 			TB_BOARD 			b
+			INNER 	JOIN 	TB_BOARD_CATEGORY 	bc ON b.board_category_id = bc.board_category_id
+			LEFT 	JOIN 	TB_BOARD_ARTICLE 	ba ON ba.board_id 		  = b.board_id AND ba.status = 1
+			<if test="createUserId != null and createUserId != ''">
+			<where>
+				bc.create_user_id = #{createUserId}
+			</where>
+			</if>
+			GROUP BY b.board_id
+			ORDER BY bc.board_category_id ASC, b.board_id DESC
+		</select>
+		
+		
+		<resultMap id="selectSideBoardListMap" type="board.sideBoardCategoryPortalDto">
+			<id		column="board_category_id" 		property="boardCategoryId"/>
+			<result column="board_category_name" 	property="boardCategoryName"/>
+			<collection property="sideBoardList" ofType="board.sideBoardListDto">
+				<id		column="board_id" 			property="boardId"/>
+				<result column="boardArticleCnt" 	property="boardArticleCnt"/>
+				<association property="boardInfo" javaType="board.boardDto">
+					<id		column="board_id" 				property="boardId"/>
+					<result column="board_category_id" 		property="boardCategoryId"/>
+					<result column="board_name"		 		property="boardName"/>
+					<result column="board_type"		 		property="boardType"/>
+					<result column="create_user_id"	 		property="createUserId"/>
+					<result column="create_user_name"	 	property="createUserName"/>
+					<result column="create_date"		 	property="createDate"/>
+					<result column="modify_user_id"	 		property="modifyUserId"/>
+					<result column="modify_user_name"	 	property="modifyUserName"/>
+					<result column="modify_date"		 	property="modifyDate"/>				
+				</association>
+			</collection>
+		</resultMap>
+		
+		
+		
+		
+		<insert id="insertSlideshareLinkInfo" parameterType="board.slideshareLinkDto" useGeneratedKeys="true" keyProperty="slideId">
+			INSERT INTO TB_SLIDESHARE_LINK
+			(
+				article_id,
+				slideshare_link_url,
+				create_user_id,
+				create_date)
+			VALUES
+			(
+				#{articleId},
+				#{slideshareLinkUrl},
+				#{createUserId},
+				now())		
+		</insert>
+		<update id="updateSlideshareLinkInfo" parameterType="board.slideshareLinkDto">
+			UPDATE TB_SLIDESHARE_LINK
+			SET 
+				article_id = #{articleId},
+				slideshare_link_url = #{slideshareLinkUrl}
+			WHERE slide_id = #{slideId}			
+		</update>
+
+    </mapper>

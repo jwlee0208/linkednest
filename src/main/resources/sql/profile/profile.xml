@@ -1,0 +1,1057 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="sql.profile">
+		<sql id="profileColumnSql">
+				  p.profile_id
+				, p.profile_type  
+				, p.cat_id1
+				, p.cat_id2
+				, p.title
+				, p.name
+				, p.profile_img_path
+				, p.introduce
+				, p.create_date		
+		</sql>
+		<sql id="profilePlayerColumnSql">
+				, pp.profile_player_id
+				, pp.birth_date
+				, pp.height
+				, pp.weight
+				, pp.birth_place
+				, pp.education
+				, pp.hobbies
+				, pp.favorite_food
+				, pp.nationality
+				, pp.language		
+		</sql>
+		<sql id="leagueColumnSql">
+				, li.league_id
+				, li.league_name
+				, li.league_type
+				, li.league_division
+				, li.area
+				, li.country		
+		</sql>
+		<sql id="profileTeamColumnSql">
+				, pt.profile_team_id
+				, pt.city
+				, pt.established_date    	
+    	</sql>
+    	<sql id="contactInfoColumnSql">
+				, ci.phone_no
+				, ci.cell_phone_no
+				, ci.email
+				, ci.website_url
+				, ci.facebook_url
+				, ci.twitter_url
+				, ci.instagram_url
+				, ci.address
+				, ci.create_date
+				, ci.create_user_id				    	
+    	</sql>
+    	<sql id="profileAttributeColumnSql">
+				, pa.profile_attr_id
+				, pa.profile_attr_name    	
+    	</sql>
+    	<sql id="profileAttributeElementColumnSql">
+				, paem.profile_attr_element_id
+				, paem.profile_attr_element_name
+				, paem.profile_attr_element_map_id
+				, paem.profile_attr_element_map_name				    	
+    	</sql>
+		<sql id="profileCareerColumnSql">
+				, pc.career_id
+				, pc.career_title
+				, pc.career_description
+				, pc.start_date
+				, pc.end_date
+				, pc.career_status
+				, pc.career_seq
+		</sql>    	
+		<sql id="profileStatPitcherColumnSql">
+				, psp.stat_pitcher_id
+				, psp.p_team_name
+				, psp.p_stat_year
+				, psp.inn
+				, psp.w
+				, psp.l
+				, psp.era
+				, psp.g
+				, psp.gs
+				, psp.sv
+				, psp.svo
+				, psp.ip
+				, psp.h
+				, psp.r
+				, psp.er	
+				, psp.hr
+				, psp.bb	
+				, psp.so
+				, psp.avg
+				, psp.whip
+				, psp.k	
+				, psp.etc
+		</sql>
+		<sql id="profileStatFielderColumnSql">	
+				, psf.stat_fielder_id
+				, psf.f_team_name
+				, psf.f_stat_year
+				, psf.pos as f_pos
+				, psf.g as f_g
+				, psf.gs as f_gs
+				, psf.inn as f_inn
+				, psf.tc as f_tc
+				, psf.po	as f_po
+				, psf.a	as f_a
+				, psf.e as f_e
+				, psf.dp as f_dp
+				, psf.sb as f_sb
+				, psf.cs	as f_cs
+				, psf.sbpct	as f_sbpct
+				, psf.pb	as f_pb
+				, psf.c_wp	as f_c_wp
+				, psf.fpct	as f_fpct
+				, psf.rf	as f_rf
+				, psf.etc	as f_etc
+		</sql>
+		<sql id="profileStatHitterColumnSql">	
+				, psh.stat_hitter_id
+				, psh.h_team_name
+				, psh.h_stat_year
+				, psh.g as h_g
+				, psh.ab as h_ab
+				, psh.r as h_r
+				, psh.h as h_h
+				, psh.two_b as h_two_b
+				, psh.three_b as h_three_b
+				, psh.hr as h_hr
+				, psh.rbi as h_rbi
+				, psh.bb as h_bb
+				, psh.so as h_so
+				, psh.sb as h_sb
+				, psh.cs as h_cs
+				, psh.avg as h_avg
+				, psh.obp as h_obp
+				, psh.slg as h_slg
+				, psh.ops as h_ops
+				, psh.etc as h_etc		
+		</sql>
+		<sql id="profileStreamColumnSql">
+				, pstream.stream_id
+				, pstream.stream_title
+				, pstream.stream_url
+		</sql>
+    	<sql id="selectProfilePlayerListSql">
+			SELECT 
+				<include refid="profileColumnSql"/>
+				<include refid="profilePlayerColumnSql"/>
+<!-- 				<include refid="profileAttributeColumnSql"/> -->
+<!-- 				<include refid="profileAttributeElementColumnSql"/> -->
+			FROM TB_PROFILE 						p
+			INNER JOIN TB_PROFILE_PLAYER 			pp 		ON p.profile_id = pp.profile_id
+<!-- 			LEFT JOIN TB_PROFILE_ATTR 	  			pa		ON p.cat_id1 = pa.cat_id -->
+<!-- 			LEFT JOIN TB_PROFILE_ATTR_ELEMENT_MAP 	paem 	ON p.profile_id = paem.profile_id AND pa.profile_attr_id = paem.profile_attr_id		    	 -->
+    	</sql>
+    	<sql id="selectProfileCoachListSql">
+			SELECT 
+				<include refid="profileColumnSql"/>
+				<include refid="profilePlayerColumnSql"/>
+<!-- 				<include refid="profileTeamColumnSql"/> -->
+<!-- 				<include refid="profileAttributeColumnSql"/> -->
+<!-- 				<include refid="profileAttributeElementColumnSql"/> -->
+			FROM TB_PROFILE 						p
+			INNER JOIN TB_PROFILE_PLAYER 			pp 		ON p.profile_id = pp.profile_id			
+<!-- 			INNER JOIN TB_PROFILE_TEAM 				pt 		ON p.profile_id = pt.profile_id -->
+<!-- 			INNER JOIN TB_LEAGUE_INFO 				li 		ON li.league_id = pt.league_id -->
+<!-- 			LEFT JOIN TB_PROFILE_ATTR 	  			pa		ON p.cat_id1 = pa.cat_id -->
+<!-- 			LEFT JOIN TB_PROFILE_ATTR_ELEMENT_MAP 	paem 	ON p.profile_id = paem.profile_id AND pa.profile_attr_id = paem.profile_attr_id		 -->
+    	</sql>
+ 		<sql id="selectProfileTeamListSql">
+			SELECT 
+				<include refid="profileColumnSql"/>
+				<include refid="leagueColumnSql"/>
+				<include refid="profileTeamColumnSql"/>
+<!-- 				<include refid="profileAttributeColumnSql"/> -->
+<!-- 				<include refid="profileAttributeElementColumnSql"/> -->
+			FROM TB_PROFILE 					  p
+			INNER JOIN TB_PROFILE_TEAM 			  pt 	ON p.profile_id = pt.profile_id
+			INNER JOIN TB_LEAGUE_INFO 			  li 	ON li.league_id = pt.league_id
+<!-- 			LEFT JOIN TB_PROFILE_ATTR 	  		  pa	ON p.cat_id1 = pa.cat_id -->
+<!-- 			LEFT JOIN TB_PROFILE_ATTR_ELEMENT_MAP paem 	ON p.profile_id = paem.profile_id AND pa.profile_attr_id = paem.profile_attr_id		 -->
+ 		</sql>
+     	<sql id="selectProfilePlayerInfoSql">
+			SELECT 
+				<include refid="profileColumnSql"/>
+				<include refid="profilePlayerColumnSql"/>
+				<include refid="profileAttributeColumnSql"/>
+				<include refid="profileAttributeElementColumnSql"/>
+				<include refid="contactInfoColumnSql"/>
+				<include refid="profileCareerColumnSql"/>
+				<include refid="profileStatPitcherColumnSql"/>
+				<include refid="profileStatHitterColumnSql"/>
+				<include refid="profileStatFielderColumnSql"/>			
+				<include refid="profileStreamColumnSql"/>		
+			FROM TB_PROFILE 					  p
+			INNER JOIN TB_PROFILE_PLAYER 		  pp 		ON pp.profile_id		= p.profile_id
+			LEFT JOIN TB_CONTACT_INFO 			  ci 		ON ci.profile_id 		= p.profile_id
+			LEFT JOIN TB_PROFILE_ATTR 	  		  pa		ON pa.cat_id 			= p.cat_id1
+			LEFT JOIN TB_PROFILE_ATTR_ELEMENT_MAP paem 		ON paem.profile_id 		= p.profile_id AND pa.profile_attr_id = paem.profile_attr_id		 
+			LEFT JOIN TB_PROFILE_STREAM			  pstream 	ON pstream.profile_id 	= p.profile_id 
+			LEFT JOIN TB_PROFILE_CAREER 		  pc 		ON pc.profile_id 		= p.profile_id					
+			LEFT JOIN TB_PROFILE_STAT_FIELDER 	  psf 		ON psf.profile_id 		= p.profile_id
+			LEFT JOIN TB_PROFILE_STAT_PITCHER 	  psp 		ON psp.profile_id 		= p.profile_id 
+			LEFT JOIN TB_PROFILE_STAT_HITTER 	  psh 		ON psh.profile_id 		= p.profile_id
+    	</sql>
+     	<sql id="selectProfileCoachInfoSql">
+			SELECT 
+				<include refid="profileColumnSql"/>
+				<include refid="profilePlayerColumnSql"/>
+				<include refid="profileAttributeColumnSql"/>
+				<include refid="profileAttributeElementColumnSql"/>
+				<include refid="contactInfoColumnSql"/>
+				<include refid="profileCareerColumnSql"/>
+				<include refid="profileStatPitcherColumnSql"/>
+				<include refid="profileStatHitterColumnSql"/>
+				<include refid="profileStatFielderColumnSql"/>
+				<include refid="profileStreamColumnSql"/>			
+			FROM TB_PROFILE 					  p
+			INNER JOIN TB_PROFILE_PLAYER 		  pp 	ON p.profile_id 	= pp.profile_id
+			LEFT JOIN TB_CONTACT_INFO 			  ci 	ON p.profile_id 	= ci.profile_id
+			LEFT JOIN TB_PROFILE_ATTR 	  		  pa	ON p.cat_id1 		= pa.cat_id
+			LEFT JOIN TB_PROFILE_ATTR_ELEMENT_MAP paem 	ON p.profile_id 	= paem.profile_id AND pa.profile_attr_id = paem.profile_attr_id
+			LEFT JOIN TB_PROFILE_STREAM			  pstream 	ON pstream.profile_id 	= p.profile_id 
+			LEFT JOIN TB_PROFILE_STAT_FIELDER 	  psf 	ON psf.profile_id 	= p.profile_id
+			LEFT JOIN TB_PROFILE_STAT_PITCHER 	  psp 	ON psp.profile_id 	= p.profile_id 
+			LEFT JOIN TB_PROFILE_STAT_HITTER 	  psh 	ON psh.profile_id 	= p.profile_id
+			LEFT JOIN TB_PROFILE_CAREER 		  pc 	ON pc.profile_id 	= p.profile_id					
+    	</sql>
+    	
+ 		<sql id="selectProfileTeamInfoSql">
+			SELECT 
+				<include refid="profileColumnSql"/>
+				<include refid="leagueColumnSql"/>
+				<include refid="profileTeamColumnSql"/>
+				<include refid="profileAttributeColumnSql"/>
+				<include refid="profileAttributeElementColumnSql"/>
+				<include refid="contactInfoColumnSql"/>								
+			FROM TB_PROFILE p
+			INNER JOIN TB_PROFILE_TEAM 			  pt 	ON p.profile_id = pt.profile_id
+			INNER JOIN TB_LEAGUE_INFO 			  li 	ON li.league_id = pt.league_id
+			LEFT JOIN TB_CONTACT_INFO 			  ci 	ON p.profile_id = ci.profile_id
+			LEFT JOIN TB_PROFILE_ATTR 	  		  pa	ON p.cat_id1 	= pa.cat_id
+			LEFT JOIN TB_PROFILE_ATTR_ELEMENT_MAP paem 	ON p.profile_id = paem.profile_id AND pa.profile_attr_id = paem.profile_attr_id		
+ 		</sql>
+    	
+    	<sql id="searchProfileConditionSql">
+			<where>
+				<if test="catId1 != null and catId1 != ''">
+			cat_id1 = #{catId1}
+				</if>
+				<if test="profileId > 0">
+			AND p.profile_id = #{profileId}  	
+				</if>
+				<if test="profileType > 0">
+			AND p.profile_type = #{profileType}  	
+				</if>				
+				<if test="searchText != null and searchText != ''">
+					<if test="searchCondition == 'name'">
+			AND p.name like CONCAT('%', #{searchText}, '%')		
+					</if>
+				</if>
+				<!-- Filtering Attribute -->
+				<if test="profileAttrList != null">
+					<foreach collection="profileAttrList"  item="parentAttribute">
+						<if test="parentAttribute.profileAttrElementList != null">
+			AND	EXISTS(SELECT 1 
+					   FROM TB_PROFILE_ATTR_ELEMENT_MAP paem 
+					   WHERE paem.profile_id = p.profile_id 
+					   	 AND paem.profile_attr_id = #{parentAttribute.profileAttrId} 
+					   	 AND paem.profile_attr_element_id IN 
+					   	 <foreach collection="parentAttribute.profileAttrElementList" item="childAttribute" separator="," open="(" close=")">
+					   	 #{childAttribute.profileAttrElementId}
+					   	 </foreach>		   	 
+						)		   	 
+						</if>
+					</foreach>
+				</if>
+				<!-- // Filtering Attribute -->
+				<!-- Filtering nationality -->
+				<if test="area != null and area != ''">
+					<if test="profileType == 3">
+			AND li.area = #{area}
+					</if>	
+				</if>
+				<if test="country != null and country != ''">
+					<choose>	
+						<when test="profileType == 1">
+			AND pp.nationality = #{country}
+						</when>
+						<when test="profileType == 2">
+			AND pp.nationality = #{country}
+						</when>
+						<when test="profileType == 3">
+			AND li.country = #{country}
+						</when>
+					</choose>	
+				</if>
+				<!-- // Filtering nationality -->
+			</where>    	
+    	</sql>
+    	
+    	<select id="selectProfileInfo" parameterType="profile.profileDto" resultMap="profileListMap">  
+			<choose>
+				<when test="profileType == 1">
+					<include refid="selectProfilePlayerInfoSql"/>
+				</when>
+				<when test="profileType == 2">
+					<include refid="selectProfileCoachInfoSql"/>			
+				</when>
+				<when test="profileType == 3">
+					<include refid="selectProfileTeamInfoSql"/>
+				</when>			
+			</choose>
+			
+			<where>
+				<if test="catId1 != null and catId1 != ''">
+			cat_id1 = #{catId1}
+				</if>
+				<if test="profileId > 0">
+			AND p.profile_id = #{profileId}  	
+				</if>
+			</where>
+			ORDER BY p.create_date DESC   
+			<choose>
+				<when test="profileType == 1">
+				, psh.h_stat_year DESC, psf.f_stat_year DESC, psp.p_stat_year DESC
+				</when>	
+				<when test="profileType == 2">
+				
+				</when>
+				<when test="profileType == 3">
+				
+				</when>	
+			</choose>	
+    	</select>
+
+		<resultMap id="profileListMap" type="profile.profileDto">
+			<id 	column="profile_id" 		property="profileId"/>
+			<result column="profile_type" 		property="profileType"/>
+			<result column="cat_id1" 			property="catId1"/>
+			<result column="cat_id2" 			property="catId2"/>
+			<result column="title" 				property="title"/>
+			<result column="name" 				property="name"/>
+			<result column="profile_img_path" 	property="profileImgPath"/>
+			<result column="introduce" 			property="introduce"/>
+			<result column="create_date" 		property="createDate"/>
+			<association 	property="profilePlayerDto" javaType="profile.profilePlayerDto">
+				<id 	column="profile_player_id" 	property="profilePlayerId"/>
+				<result column="birth_date" 		property="birthDate"/>
+				<result column="height" 			property="height"/>
+				<result column="weight" 			property="weight"/>
+				<result column="birth_place" 		property="birthPlace"/>
+				<result column="education" 			property="education"/>
+				<result column="hobbies" 			property="hobbies"/>
+				<result column="favorite_food" 		property="favoriteFood"/>
+				<result column="nationality" 		property="nationality"/>
+				<result column="language" 			property="language"/>
+			</association>
+			<association 	property="leagueInfoDto" javaType="profile.leagueInfoDto">
+				<id 	column="league_id" 				property="leagueId"/>
+				<result column="league_type" 			property="leagueType"/>
+				<result column="league_name" 			property="leagueName"/>
+				<result column="league_division" 		property="leagueDivision"/>
+				<result column="commissioner" 			property="commissioner"/>
+				<result column="league_website_url" 	property="leagueWebsiteUrl"/>
+				<result column="joined_team_cnt" 		property="joinedTeamCnt"/>
+				<result column="area" 					property="area"/>
+				<result column="country" 				property="country"/>
+				<result column="established_date" 		property="establishedDate"/>
+			</association>				
+			<association 	property="profileTeamDto" javaType="profile.profileTeamDto">
+				<id 	column="profile_team_id" 	property="profileTeamId"/>
+				<result column="city" 				property="city"/>
+				<result column="established_date" 	property="establishedDate"/>
+			</association>
+			<association 	property="profileContactInfoDto" javaType="profile.profileContactInfoDto">
+				<id 	column="contact_info_id" 	property="contactInfoId"/>
+				<result column="phone_no" 			property="phoneNo"/>
+				<result column="cell_phone_no" 		property="cellPhoneNo"/>
+				<result column="email" 				property="email"/>
+				<result column="website_url" 		property="websiteUrl"/>
+				<result column="facebook_url" 		property="facebookUrl"/>
+				<result column="twitter_url" 		property="twitterUrl"/>
+				<result column="instagram_url" 		property="instagramUrl"/>
+				<result column="address" 			property="address"/>
+				<result column="create_date" 		property="createDate"/>
+				<result column="create_user_id"		property="createUserId"/>
+			</association>
+			<collection property="profileAttrList" ofType="profile.profileAttrDto">
+				<id 	column="profile_attr_id" 			property="profileAttrId"/>
+				<result column="profile_attr_name" 			property="profileAttrName"/>	
+				<collection property="profileAttrElementMapList" ofType="profile.profileAttrElementMapDto">
+					<id 	column="profile_attr_id" 			 	property="profileAttrId"/>
+					<id 	column="profile_attr_element_map_id" 	property="profileAttrElementMapId"/>
+					<result column="profile_attr_name" 			 	property="profileAttrName"/>
+					<result column="profile_attr_element_id" 	 	property="profileAttrElementId"/>
+					<result column="profile_attr_element_name" 	 	property="profileAttrElementName"/>
+					<result column="profile_attr_element_map_name" 	property="profileAttrElementMapName"/>
+				</collection>			
+			</collection>
+			<collection property="profileStreamList" ofType="profile.profileStreamDto">
+				<id		column="stream_id"			property="streamId"/>
+				<result column="stream_title"		property="streamTitle"/>
+				<result column="stream_url"			property="streamUrl"/>
+			</collection>
+			
+			<collection property="profileCareerList" ofType="profile.profileCareerDto">
+				<id 	column="career_id" 			property="careerId"/>
+				<result column="career_title" 		property="careerTitle"/>
+				<result column="career_description" property="careerDescription"/>
+				<result column="start_date" 		property="startDate"/>
+				<result column="end_date" 			property="endDate"/>
+				<result column="career_status" 		property="careerStatus"/>
+				<result column="career_seq" 		property="careerSeq"/>
+			</collection>
+			<collection property="profileStatPitcherList" ofType="profile.profileStatPitcherDto">
+				<result column="stat_pitcher_id" property="statPitcherId"/>
+				<result column="p_team_name" 	 property="pTeamName"/>
+				<result column="p_stat_year" 	 property="pStatYear"/>
+				<result column="inn" 			 property="inn"/>
+				<result column="w" 				 property="w"/>
+				<result column="l" 				 property="l"/>
+				<result column="era" 			 property="era"/>
+				<result column="g" 				 property="g"/>
+				<result column="gs" 			 property="gs"/>
+				<result column="sv" 			 property="sv"/>
+				<result column="svo" 			 property="svo"/>
+				<result column="ip" 			 property="ip"/>
+				<result column="h" 				 property="h"/>
+				<result column="r" 				 property="r"/>
+				<result column="er" 			 property="er"/>
+				<result column="hr" 			 property="hr"/>
+				<result column="bb" 			 property="bb"/>	
+				<result column="so" 			 property="so"/>
+				<result column="avg" 			 property="avg"/>
+				<result column="whip" 			 property="whip"/>
+				<result column="k" 				 property="k"/>
+				<result column="etc" 			 property="etc"/>
+			</collection>
+			<collection property="profileStatHitterList" ofType="profile.profileStatHitterDto">
+				<id 	column="stat_hitter_id" property="statHitterId"/>
+				<result column="h_team_name" 	property="hTeamName"/>
+				<result column="h_stat_year" 	property="hStatYear"/>
+				<result column="h_g" 				property="g"/>
+				<result column="h_ab" 			property="ab"/>
+				<result column="h_r" 				property="r"/>
+				<result column="h_h" 				property="h"/>
+				<result column="h_two_b" 			property="twoB"/>
+				<result column="h_three_b" 		property="threeB"/>
+				<result column="h_hr" 			property="hr"/>
+				<result column="h_rbi" 			property="rbi"/>
+				<result column="h_bb" 			property="bb"/>
+				<result column="h_so" 			property="so"/>
+				<result column="h_sb" 			property="sb"/>
+				<result column="h_cs" 			property="cs"/>
+				<result column="h_avg" 			property="avg"/>
+				<result column="h_obp" 			property="obp"/>
+				<result column="h_slg" 			property="slg"/>
+				<result column="h_ops" 			property="ops"/>
+				<result column="h_etc" 			property="etc"/>
+			</collection>
+			<collection property="profileStatFielderList" ofType="profile.profileStatFielderDto">
+				<id 	column="stat_fielder_id" 	property="statFielderId"/>
+				<result column="f_team_name" 		property="fTeamName"/>
+				<result column="f_stat_year" 		property="fStatYear"/>
+				<result column="f_pos" 				property="pos"/>
+				<result column="f_g" 					property="g"/>
+				<result column="f_gs" 				property="gs"/>
+				<result column="f_inn" 				property="inn"/>
+				<result column="f_tc" 				property="tc"/>
+				<result column="f_po" 				property="po"/>
+				<result column="f_a" 					property="a"/>
+				<result column="f_e" 					property="e"/>
+				<result column="f_dp" 				property="dp"/>
+				<result column="f_sb" 				property="sb"/>
+				<result column="f_cs" 				property="cs"/>
+				<result column="f_sbpct" 				property="sbpct"/>
+				<result column="f_pb" 				property="pb"/>
+				<result column="f_c_wp" 				property="cWp"/>
+				<result column="f_fpct" 				property="fpct"/>
+				<result column="f_rf" 				property="rf"/>
+				<result column="f_etc" 				property="etc"/>
+			</collection>				
+		</resultMap>
+		<!-- 검색 리스트 목록 조회 -->			
+		<select id="selectSearchedProfileList" resultMap="profileListMap" parameterType="profile.searchProfileDto">
+			<choose>
+				<when test="profileType == 1">
+					<include refid="selectProfilePlayerListSql"/>
+				</when>
+				<when test="profileType == 2">
+					<include refid="selectProfileCoachListSql"/>			
+				</when>
+				<when test="profileType == 3">
+					<include refid="selectProfileTeamListSql"/>
+				</when>			
+			</choose>
+			<include refid="searchProfileConditionSql"/>     
+			ORDER BY p.create_date DESC	
+			LIMIT #{fetchScale}, #{listSize}  
+		</select>
+
+		<!-- 검색 리스트 갯수 조회 -->	
+		<select id="selectSearchedProfileListCount" resultType="Integer" parameterType="profile.searchProfileDto">        
+			SELECT count(*) 
+			FROM (
+			<choose>
+				<when test="profileType == 1">
+					<include refid="selectProfilePlayerListSql"/>
+				</when>
+				<when test="profileType == 2">
+					<include refid="selectProfileCoachListSql"/>			
+				</when>
+				<when test="profileType == 3">
+					<include refid="selectProfileTeamListSql"/>
+				</when>			
+			</choose>
+			<include refid="searchProfileConditionSql"/>    
+			) as count
+			<!-- 
+			order by null의 사용으로 filesort작업 제거 
+			ref.] http://papamake.tistory.com/118
+				  http://beautijeon.tistory.com/1458
+				  http://www.mysqlkorea.com/sub.html?mcode=manual&scode=01&m_no=21460&cat1=7&cat2=217&cat3=238&lang=k 
+			-->
+			ORDER BY null	
+		</select>      
+					
+		<!-- 프로필 검색 목록 화면에서 리스트 필터링을 위한 속성 목록 조회 -->			
+		<select id="selectSearchAttrElementList" resultMap="profileAttrElementListMap" parameterType="profile.profileDto">
+			SELECT 
+					pa.profile_attr_id
+				  , pa.profile_attr_name
+				  , pae.profile_attr_element_id
+				  , pae.profile_attr_element_name
+			FROM TB_PROFILE_ATTR pa
+			LEFT JOIN TB_PROFILE_ATTR_ELEMENT pae ON pa.profile_attr_id = pae.profile_attr_id
+			WHERE pa.cat_id = #{catId1}				
+		</select>			
+		
+		<resultMap id="profileAttrElementListMap" type="profile.profileAttrDto">
+			<id 	column="profile_attr_id" 	property="profileAttrId"/>
+			<result column="profile_attr_name" 	property="profileAttrName"/>
+			<result column="cat_id" 			property="catId"/>
+			<result column="create_date" 		property="createDate"/>
+			<result column="create_user_id" 	property="createUserId"/>
+			<collection property="profileAttrElementList" ofType="profile.profileAttrElementDto">
+				<id column="profile_attr_element_id"		property="profileAttrElementId"/>
+				<result column="profile_attr_element_name"	property="profileAttrElementName"/>
+				<result column="create_date"				property="createDate"/>
+				<result column="create_user_id"				property="createUserId"/>
+			</collection>
+		</resultMap>
+		
+		
+		<insert id="insertProfileInfo" parameterType="profile.profileDto" useGeneratedKeys="true" keyProperty="profileId">
+			INSERT INTO TB_PROFILE
+				(
+				 profile_type,
+				 cat_id1,
+				 cat_id2,
+				 title,
+				 name,
+				 profile_img_path,
+				 introduce,
+				 create_date,
+				 create_user_id)
+			VALUES
+				(
+				 #{profileType},
+				 #{catId1},
+				 #{catId2},
+				 #{title},
+				 #{name},
+				 #{profileImgPath},
+				 #{introduce},
+				 now(),
+				 'jwlee0208')
+		</insert>
+
+		<update id="updateProfileInfo" parameterType="profile.profileDto">
+			UPDATE TB_PROFILE 
+				SET
+				 cat_id2 = #{catId2},
+				 title = #{title},
+				 name = #{name},
+				 profile_img_path = #{profileImgPath},
+				 introduce = #{introduce}
+			WHERE profile_id = #{profileId}	 
+		</update>
+
+		
+		<insert id="insertProfilePlayerInfo" parameterType="profile.profilePlayerDto" useGeneratedKeys="true" keyProperty="profilePlayerId">
+			INSERT INTO TB_PROFILE_PLAYER
+				(
+				 profile_id,
+				 birth_date,
+				 height,
+				 weight,
+				 birth_place,
+				 education,
+				 hobbies,
+				 favorite_food,
+				 nationality,
+				 language)
+			VALUES
+				(
+				 #{profileId},
+				 #{birthDate},
+				 #{height},
+				 #{weight},
+				 #{birthPlace},
+				 #{education},
+				 #{hobbies},
+				 #{favoriteFood},
+				 #{nationality},
+				 #{language})
+		</insert>		
+
+		<update id="updateProfilePlayerInfo" parameterType="profile.profilePlayerDto">
+			UPDATE TB_PROFILE_PLAYER
+				SET
+				 birth_date 	= #{birthDate},
+				 height 		= #{height},
+				 weight 		= #{weight},
+				 birth_place 	= #{birthPlace},
+				 education 		= #{education},
+				 hobbies 		= #{hobbies},
+				 favorite_food 	= #{favoriteFood},
+				 nationality 	= #{nationality},
+				 language 		= #{language}
+			WHERE
+				PROFILE_ID = #{profileId}	 
+		</update>
+		
+		<insert id="insertProfileContactInfo" parameterType="profile.profileContactInfoDto" useGeneratedKeys="true" keyProperty="contactInfoId">
+			INSERT INTO TB_CONTACT_INFO
+				(
+				profile_id,
+				phone_no,
+				cell_phone_no,
+				email,
+				website_url,
+				facebook_url,
+				twitter_url,
+				instagram_url,
+				address,
+				create_date,
+				create_user_id)
+			VALUES
+				(
+				#{profileId},
+				#{phoneNo},
+				#{cellPhoneNo},
+				#{email},
+				#{websiteUrl},
+				#{facebookUrl},
+				#{twitterUrl},
+				#{instagramUrl},
+				#{address},
+				now(),
+				'jwlee0208')
+
+		</insert>
+			
+			
+		<update id="updateProfileContactInfo" parameterType="profile.profileContactInfoDto">
+			UPDATE TB_CONTACT_INFO
+				SET
+				phone_no = #{phoneNo},
+				cell_phone_no = #{cellPhoneNo},
+				email = #{email},
+				website_url = #{websiteUrl},
+				facebook_url = #{facebookUrl},
+				twitter_url = #{twitterUrl},
+				instagram_url = #{instagramUrl},
+				address = ${address}
+			WHERE PROFILE_ID = #{profileId}	
+		</update>
+					
+		<insert id="insertProfileStatFielderInfo" parameterType="profile.profileStatFielderDto" useGeneratedKeys="true" keyProperty="statFielderId">
+			INSERT INTO TB_PROFILE_STAT_FIELDER
+				(profile_id,
+				 f_team_name,
+				 f_stat_year,
+				 pos,
+				 g,
+				 gs,
+				 inn,
+				 tc,
+				 po,
+				 a,
+				 e,
+				 dp,
+				 sb,
+				 cs,
+				 sbpct,
+				 pb,
+				 c_wp,
+				 fpct,
+				 rf,
+				 etc,
+				 create_date,
+				 create_user_id)
+			VALUES
+				(#{profileId},
+				 #{fTeamName},
+				 #{fStatYear},
+				 #{pos},
+				 #{g},
+				 #{gs},
+				 #{inn},
+				 #{tc},
+				 #{po},
+				 #{a},
+				 #{e},
+				 #{dp},
+				 #{sb},
+				 #{cs},
+				 #{sbpct},
+				 #{pb},
+				 #{cWp},
+				 #{fpct},
+				 #{rf},
+				 #{etc},
+				 now(),
+				 'jwlee0208')			
+		</insert>	
+		
+		<delete id="deleteProfileStatFielderInfo" parameterType="profile.profileStatFielderDto">
+			DELETE FROM TB_PROFILE_STAT_FIELDER WHERE PROFILE_ID = #{profileId}
+		</delete>
+				
+		<insert id="insertProfileStatHitterInfo" parameterType="profile.profileStatHitterDto" useGeneratedKeys="true" keyProperty="statHitterId">
+			INSERT INTO TB_PROFILE_STAT_HITTER
+				(profile_id,
+				 h_team_name,
+				 h_stat_year,
+				 g,
+				 ab,
+				 r,
+				 h,
+				 two_b,
+				 three_b,
+				 hr,
+				 rbi,
+				 bb,
+				 so,
+				 sb,
+				 cs,
+				 avg,
+				 obp,
+				 slg,
+				 ops,
+				 etc,
+				 create_date,
+				 create_user_id)
+			VALUES
+				(#{profileId},
+				 #{hTeamName},
+				 #{hStatYear},
+				 #{g},
+				 #{ab},
+				 #{r},
+				 #{h},
+				 #{twoB},
+				 #{threeB},
+				 #{hr},
+				 #{rbi},
+				 #{bb},
+				 #{so},
+				 #{sb},
+				 #{cs},
+				 #{avg},
+				 #{obp},
+				 #{slg},
+				 #{ops},
+				 #{etc},
+				 now(),
+				 'jwlee0208');
+		</insert>	
+		
+		<delete id="deleteProfileStatHitterInfo" parameterType="profile.profileStatHitterDto">
+			DELETE FROM TB_PROFILE_STAT_HITTER WHERE PROFILE_ID = #{profileId}
+		</delete>
+		
+		
+		<insert id="insertProfileStatPitcherInfo" parameterType="profile.profileStatPitcherDto" useGeneratedKeys="true" keyProperty="statPitcherId">
+			INSERT INTO TB_PROFILE_STAT_PITCHER
+				(profile_id,
+				p_team_name,
+				p_stat_year,
+				inn,
+				w,
+				l,
+				era,
+				g,
+				gs,
+				sv,
+				svo,
+				ip,
+				h,
+				r,
+				er,
+				hr,
+				bb,
+				so,
+				avg,
+				whip,
+				k,
+				etc,
+				create_date,
+				create_user_id)
+			VALUES
+				(
+				 #{profileId},
+				 #{pTeamName},
+				 #{pStatYear},
+				 #{inn},
+				 #{w},
+				 #{l},
+				 #{era},
+				 #{g},
+				 #{gs},
+				 #{sv},
+				 #{svo},
+				 #{ip},
+				 #{h},
+				 #{r},
+				 #{er},
+				 #{hr},
+				 #{bb},
+				 #{so},
+				 #{avg},
+				 #{whip},
+				 #{k},
+				 #{etc},
+				 now(),
+				 'jwlee0208')
+		</insert>
+		
+		<delete id="deleteProfileStatPitcherInfo" parameterType="profile.profileStatPitcherDto">
+			DELETE FROM TB_PROFILE_STAT_PITCHER WHERE PROFILE_ID = #{profileId}
+		</delete>
+		
+		
+		<insert id="insertProfileStreamInfo" parameterType="profile.profileStreamDto" useGeneratedKeys="true" keyProperty="streamId">		
+			INSERT INTO TB_PROFILE_STREAM
+				(profile_id,
+				 stream_title,
+				 stream_url)
+			VALUES
+				(#{profileId},
+				 #{streamTitle},
+				 #{streamUrl})
+		</insert>
+		
+		<delete id="deleteProfileStreamInfo" parameterType="profile.profileStreamDto">
+			DELETE FROM TB_PROFILE_STREAM WHERE PROFILE_ID = #{profileId}
+		</delete>		
+		
+		
+		<insert id="insertProfileAttrElemMapInfo" parameterType="profile.profileAttrElementMapDto" useGeneratedKeys="true" keyProperty="profileAttrElementMapId">
+			INSERT INTO TB_PROFILE_ATTR_ELEMENT_MAP
+				(profile_id,
+				 profile_attr_id,
+				 profile_attr_name,
+				 profile_attr_element_id,
+				 profile_attr_element_name,
+				 profile_attr_element_map_name,
+				 create_date,
+				 create_user_id)
+			VALUES
+				(#{profileId},
+				 #{profileAttrId},
+				 #{profileAttrName},
+				 #{profileAttrElementId},
+				 #{profileAttrElementName},
+				 #{profileAttrElementMapName},
+				 now(),
+				 'jwlee0208')
+		</insert>
+		
+		<delete id="deleteProfileAttrElemMapInfo" parameterType="profile.profileAttrElementMapDto">
+			DELETE FROM TB_PROFILE_ATTR_ELEMENT_MAP WHERE PROFILE_ID = #{profileId}
+		</delete>
+		
+		<insert id="insertProfileCareerInfo" parameterType="profile.profileCareerDto" useGeneratedKeys="true" keyProperty="careerId">
+			INSERT INTO TB_PROFILE_CAREER
+				(
+				 profile_id,
+				 career_title,
+				 career_description,
+				 start_date,
+				 end_date,
+<!-- 				 career_status, -->
+				 career_seq,
+				 create_date,
+				 create_user_id)
+			VALUES
+				(
+				#{profileId},
+				#{careerTitle},
+				#{careerDescription},
+				#{startDate},
+				#{endDate},
+<!-- 				#{careerStatus}, -->
+				#{careerSeq},
+				now(),
+				'jwlee0208');
+		
+		</insert>
+		
+		<delete id="deleteProfileCareerInfo" parameterType="profile.profileCareerDto">
+			DELETE FROM TB_PROFILE_CAREER WHERE PROFILE_ID = #{profileId}
+		</delete>
+			
+		
+		<insert id="insertProfileTeamInfo" parameterType="profile.profileTeamDto" useGeneratedKeys="true" keyProperty="profileTeamId">
+			INSERT INTO TB_PROFILE_TEAM
+				(
+				`league_id`,
+				`profile_id`,
+				`city`,
+				`established_date`,
+				`create_date`,
+				`create_user_id`)
+			VALUES
+				(
+				#{leagueId},
+				#{profileId},
+				#{city},
+				#{establishedDate},
+				now(),
+				'jwlee0208')
+		</insert>
+		
+		<update id="updateProfileTeamInfo" parameterType="profile.profileTeamDto">
+		
+		</update>
+		
+		
+		<insert id="insertLeagueInfo" parameterType="profile.leagueInfoDto"  useGeneratedKeys="true" keyProperty="leagueId">
+			INSERT INTO `TB_LEAGUE_INFO`
+				(
+				`league_img_path`,
+				`league_type`,
+				`league_name`,
+				`league_division`,
+				`introduce`,
+				`commissioner`,
+				`league_website_url`,
+				`joined_team_cnt`,
+				`established_date`,
+				`area`,
+				`country`,
+				`create_date`,
+				`create_user_id`)
+			VALUES
+				(
+				#{leagueImgPath},
+				#{leagueType},
+				#{leagueName},
+				#{leagueDivision},
+				#{introduce},
+				#{commissioner},
+				#{leagueWebsiteUrl},
+				#{joinedTeamCnt},
+				#{establishedDate},
+				#{area},
+				#{country},
+				now(),
+				'admin');
+			
+		</insert>
+
+		<sql id="selectLeagueInfoDefault">
+			SELECT 
+				 league_id
+				,league_img_path 
+				,league_name
+				,league_type
+				,league_division
+				,introduce
+				,area
+				,country		
+			FROM TB_LEAGUE_INFO	li			
+		</sql>		
+
+		<select id="selectLeagueInfoList" parameterType="profile.leagueInfoDto" resultType="profile.leagueInfoDto">
+			<include refid="selectLeagueInfoDefault"/>
+			ORDER BY li.league_id DESC
+		</select>
+
+		<select id="selectLeagueInfo" parameterType="profile.leagueInfoDto" resultMap="leagueInfoMap">
+			SELECT 
+				 li.league_id
+				,li.league_img_path 
+				,li.league_name
+				,li.league_type
+				,li.league_division
+				,li.introduce
+				,li.area
+				,li.country
+				,li.league_website_url
+				,li.joined_team_cnt
+				,pt.profile_team_id
+				,pt.city
+				,p.name		
+				,p.profile_type
+				,p.profile_id
+			FROM 		TB_LEAGUE_INFO	li			
+			LEFT JOIN 	TB_PROFILE_TEAM pt 	ON pt.league_id = li.league_id 
+			LEFT JOIN 	TB_PROFILE 		p 	ON p.profile_id = pt.profile_id 
+			<where>
+				li.league_id = #{leagueId}
+			</where>
+		</select>
+		
+		<resultMap id="leagueInfoMap" type="profile.leagueInfoDto">
+			<id 	column="league_id" 			property="leagueId"/>
+			<result column="league_img_path" 	property="leagueImgPath"/>
+			<result column="league_type" 		property="leagueType"/>
+			<result column="league_name" 		property="leagueName"/>
+			<result column="league_division" 	property="leagueDivision"/>
+			<result column="introduce" 	property="introduce"/>
+			<result column="commissioner" 		property="commissioner"/>
+			<result column="league_division" 	property="leagueDivision"/>
+			<result column="league_website_url" property="leagueWebsiteUrl"/>
+			<result column="joined_team_cnt" 	property="joinedTeamCnt"/>
+			<result column="established_date" 	property="establishedDate"/>
+			<result column="area" 				property="area"/>
+			<result column="country" 			property="country"/>
+			<result column="create_date" 		property="createDate"/>
+			<result column="create_user_id" 	property="createUserId"/>
+			<collection property="teamList" ofType="profile.profileDto">
+				<id 	column="profile_id" 		property="profileId"/>
+				<result column="profile_type" 		property="profileType"/>
+				<result column="cat_id1" 			property="catId1"/>
+				<result column="cat_id2" 			property="catId2"/>
+				<result column="title" 				property="title"/>
+				<result column="name" 				property="name"/>
+				<result column="profile_img_path" 	property="profileImgPath"/>
+				<result column="introduce" 			property="introduce"/>
+				<result column="create_date" 		property="createDate"/>
+				<association 	property="profileTeamDto" javaType="profile.profileTeamDto">
+					<id 	column="profile_team_id" 	property="profileTeamId"/>
+					<result column="city" 				property="city"/>
+					<result column="established_date" 	property="establishedDate"/>
+				</association>
+			</collection>
+		</resultMap>
+		
+		
+	</mapper>

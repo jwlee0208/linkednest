@@ -1,0 +1,42 @@
+.circle {
+margin-left: auto;
+margin-right: auto;
+border-radius: 50%;
+width: 40%;
+position: relative;
+}
+
+.circle-border {
+border: 1px solid black;
+}
+
+.circle-solid{
+background-color: whitesmoke;
+}
+
+.circle:before {
+content: "";
+display: block;
+padding-top: 100%;
+}
+
+.circle-inner {
+position: absolute;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+text-align: center;
+}
+
+.score-text {
+margin: auto;
+position: absolute;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+height: 1em;
+line-height: 1em;
+font-size: 1em;
+}

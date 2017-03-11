@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="sql.user">
+        <insert id="insertUserInfo" parameterType="user.userDto"> 
+			INSERT INTO TB_USER
+				(user_id,
+				user_nm,
+				passwd,
+				email,
+				phone_no,
+			<if test="fbUserId != null and fbUserId != ''">
+				fb_user_id,
+			</if>
+			<if test="twUserId != null and twUserId != ''">
+				tw_user_id,
+			</if>
+			<if test="nationality != null and nationality != ''">
+				nationality,
+			</if>
+			<if test="language != null and language != ''">
+				language,
+			</if>	
+				join_date)
+			VALUES
+				(#{userId},
+				#{userNm},
+				#{passwd},
+				#{email},
+				#{phoneNo},
+			<if test="fbUserId != null and fbUserId != ''">
+				#{fbUserId},
+			</if>
+			<if test="twUserId != null and twUserId != ''">
+				#{twUserId},
+			</if>				
+			<if test="nationality != null and nationality != ''">
+				LOWER(#{nationality}),
+			</if>	
+			<if test="language != null and language != ''">
+				LOWER(#{language}),
+			</if>	
+				CURRENT_TIMESTAMP())
+<!-- 			<where> -->
+<!-- 				user_id != #{userId} -->
+<!-- 			or  email   != #{email} -->
+<!-- 			</where> -->
+							
+        </insert>
+        <select id="selectUserList" parameterType="user.userDto" resultType="user.userDto">
+        </select>
+		
+		<select id="selectUserInfo" parameterType="user.userDto" resultType="user.userDto">
+		    SELECT 
+		    	user_id, 
+		    	user_nm,
+		    	passwd,
+		    	email,
+		    	phone_no,
+		    	fb_user_id,
+		    	tw_user_id,
+		    	nationality,
+		    	language,
+		    	join_date 
+		    FROM TB_USER
+		    <where>
+		    <choose>
+		    	<when test="userId != null and userId != ''">
+		    	 user_id = #{userId}
+		    		<if test="email != null and email != ''">
+		      OR email = #{email}	
+		    		</if>
+		    	</when>
+		    	<when test="email != null and email != ''">
+		    	email = #{email}
+		    	</when>
+		    </choose>
+		    	
+		    </where>
+		    LIMIT 1
+		</select>
+		
+		<update id="updateUserInfo" parameterType="user.userDto">
+			UPDATE TB_USER 
+			   SET 
+			<choose>   
+			   <when test="userId != null and userId != ''">
+			   	   user_nm     = #{userNm}
+			     , email       = #{email}
+			     , phone_no    = #{phoneNo}
+			     , nationality = LOWER(#{nationality})
+			     , language    = LOWER(#{language})
+				<if test="fbUserId != null and fbUserId != ''">
+				 , fb_user_id  = #{fbUserId}
+				</if>
+				<if test="twUserId != null and twUserId != ''">
+				 , tw_user_id  = #{twUserId}
+				</if>				
+			     
+			   </when>  
+			   <when test="email != null and email != ''">
+			       passwd	   = #{passwd}
+			   </when>
+			</choose>     
+			<where>
+				<choose>
+					<when test="userId != null and userId != ''">
+					user_id = #{userId}
+					</when>
+					<when test="email != null and email != ''">
+					email = #{email}
+					</when>
+				</choose>
+				
+			</where>
+			     
+		</update>
+		
+    </mapper>
