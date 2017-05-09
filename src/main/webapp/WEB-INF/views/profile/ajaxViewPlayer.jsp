@@ -103,8 +103,22 @@
 				    	</c:if>
 				    </p>
 				</div>
-			</div>		
-	
+			</div>
+		<div class="form-group row">
+			<label for="" class="col-sm-2 col-form-label">Status</label>
+			<div class="col-sm-10">
+				<p class="form-control-static">
+					<a class="btn btn-info">
+						<c:choose>
+							<c:when test="${profileInfo.status eq '0'}">Temporary Saved</c:when>
+							<c:when test="${profileInfo.status eq '1'}">Activation</c:when>
+							<c:when test="${profileInfo.status eq '2'}">Disabled</c:when>
+							<c:when test="${profileInfo.status eq '3'}">Finished</c:when>
+						</c:choose>
+					</a>
+				</p>
+			</div>
+		</div>
 	</div>
 	<div id="playerAttribute" class="tab-pane" role="tabpanel">
 	
