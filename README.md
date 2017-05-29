@@ -1,30 +1,30 @@
-#LinkedNest Project
+# __LinkedNest Project__
 
-##Purpose
-###- Link Between Player With Team(Club).
-	- URL : http://linkednest.net
-###- Share Knowledge, Experiences
-	- URL : http://linkednest.net/share
+## __Purpose__
+### - Link Between Player With Team(Club).
+> 	- URL : http://linkednest.net
+### - Share Knowledge, Share Experiences
+> 	- URL : http://linkednest.net/share
 
-##Functions
-- Membership
+## __Functions__
+### - Membership
 	- Sign Up 
 	- Sign In 
 	- Configure To Private Informations	
-- Upload Profile For Player
+### - Upload Profile For Player
 	- Upload Image File To Cdn Server
 	- Upload Image File To Flickr Service
 	- Search Image Files Using Flickr Api Service
 	- Search Stream List Using Youtube Api
-- Write Article Using WISIWIG Editor 
+### - Write Article Using WISIWIG Editor 
 	- TinyMCE(4.x ver.) 
 			
 
-##Redis Installation And Configuration Guide
-###- Go to http://redis.io/download , download and execute to install redis
-###- Set about redis into pom.xml(maven dependency) and update maven dependency following this : 
+## __Redis Installation And Configuration Guide__
+### - Go to http://redis.io/download , download and execute to install redis
+### - Set about redis into pom.xml(maven dependency) and update maven dependency following this : 
 		
-		<dependency>
+> 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>2.5.2</version>
@@ -36,15 +36,15 @@
 			<version>1.4.0.RELEASE</version>
 		</dependency>
 			
-###- Update maven dependency
-		if you use to eclipse, 
-		- Select to project
+### - Update maven dependency
+- if you use to eclipse, 
+> 		- Select to project
 		- Click to right mouse
 		- Select 'Maven > Update Project'
 		
-###- Create to redis_config.xml into "src/main/resources/spring" directory following this : 
+### - Create to redis_config.xml into "src/main/resources/spring" directory following this : 
 		
-		<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+> 		<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:p="http://www.springframework.org/schema/p"
 		xmlns:context="http://www.springframework.org/schema/context"
 		xsi:schemaLocation="
@@ -74,11 +74,11 @@
 			</bean>
 		</beans>
 	
-###- Import redis-config.xml into application-config.xml following this : 
+### - Import redis-config.xml into application-config.xml following this : 
 			
-		<import resource = "classpath:spring/redis-config.xml" />
+> 		<import resource = "classpath:spring/redis-config.xml" />
 			
-###- Create to java source
+### - Create to java source
 
 		@Autowired
 		private RedisTemplate<String, List<BoardArticleDto>> redisTemplate;
@@ -178,46 +178,46 @@
 		* This code is just for checking out to spring-data-redis. 
 		* I think it'll be better to create mvc pattern and to create source each class.  
 		 
-###- Build to project
+### - Build to project
 
-###- Set to redis sentinel & Start to redis
+### - Set to redis sentinel & Start to redis
 	  * I tested using redis sentinel for master/slave monitoring and syncronize to data into 1 server(local : 127.0.0.1)
 	  
-###- Set to redis sentinel
+### - Set to redis sentinel
 	  Ref.] http://megnetsun.tistory.com/entry/Redis-Master-Slave-server-%EC%84%A4%EC%A0%95%EC%9E%A1%EA%B8%B0-Sentinel-tool%EB%A1%9C-%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81-%ED%95%98%EA%B8%B0
 
-###- Create to redis-master.conf
+### - Create to redis-master.conf
 		slave-server-stale-data yes
 		requirepass 123456
 	
-###- Create to redis-slave.conf
+### - Create to redis-slave.conf
 
 		slaveof 127.0.0.1 6379
 		masterauth 123456
 		repl-ping-slave-period 10
 		repl-timeout 60 
 
-###- Modify to sentinel.conf
+### - Modify to sentinel.conf
 
 		sentinel monitor mymaster 127.0.0.1 6379 1    
 		sentinel auth-pass mymaster 123456            
 		sentinel can-failover mymaster yes            
 		sentinel parallel-syncs mymaster 1            
 
-###- Startup master redis
+### - Startup master redis
 
 		./src/redis-server redis-master.conf &
 
 
-###- Startup slave redis
+### - Startup slave redis
 
 		./src/redis-server redis-slave.conf &
 
 
-###- Startup Sentinel
+### - Startup Sentinel
 
 		$ ./redis-server ../sentinel.conf --sentinel
 
 
-###- Startup Tomcat Server
+### - Startup Tomcat Server
 
