@@ -22,7 +22,7 @@
 
 ## __Redis Installation And Configuration Guide__
 ### - Go to http://redis.io/download , download and execute to install redis
-### - Set about redis into pom.xml(maven dependency) and update maven dependency following this : 
+### - Set about redis into pom.xml(maven dependency) and update maven dependency following this
 		
  		<dependency>
 			<groupId>redis.clients</groupId>
@@ -44,7 +44,7 @@
 		
 ### - Create to redis_config.xml into "src/main/resources/spring" directory following this : 
 		
-> 		<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ 		<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:p="http://www.springframework.org/schema/p"
 		xmlns:context="http://www.springframework.org/schema/context"
 		xsi:schemaLocation="
