@@ -24,7 +24,7 @@
 ### - Go to http://redis.io/download , download and execute to install redis
 ### - Set about redis into pom.xml(maven dependency) and update maven dependency following this : 
 		
-> 		<dependency>
+ 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>2.5.2</version>
@@ -39,8 +39,8 @@
 ### - Update maven dependency
 - if you use to eclipse, 
 > 		- Select to project
-		- Click to right mouse
-		- Select 'Maven > Update Project'
+>		- Click to right mouse
+>		- Select 'Maven > Update Project'
 		
 ### - Create to redis_config.xml into "src/main/resources/spring" directory following this : 
 		
