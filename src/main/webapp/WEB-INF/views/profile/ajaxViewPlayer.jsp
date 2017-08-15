@@ -108,14 +108,7 @@
 			<label for="" class="col-sm-2 col-form-label">Status</label>
 			<div class="col-sm-10">
 				<p class="form-control-static">
-					<a class="btn btn-info">
-						<c:choose>
-							<c:when test="${profileInfo.status eq '0'}">Temporary Saved</c:when>
-							<c:when test="${profileInfo.status eq '1'}">Activation</c:when>
-							<c:when test="${profileInfo.status eq '2'}">Disabled</c:when>
-							<c:when test="${profileInfo.status eq '3'}">Finished</c:when>
-						</c:choose>
-					</a>
+					<a class="btn btn-info">${profileInfo.status}</a>
 				</p>
 			</div>
 		</div>
@@ -150,18 +143,7 @@
 		<div class="form-group row">
 			<label for="" class="col-sm-2 col-form-label">Main <tag:message code="text.position"/></label>
 			<div class="col-sm-10">
-					<span class="btn btn-danger">
-					<c:if test="${profileInfo.catId2 eq '01010101'}"><tag:message code="attr.position.p"/></c:if>
-					<c:if test="${profileInfo.catId2 eq '01010102'}"><tag:message code="attr.position.cc"/></c:if>
-					<c:if test="${profileInfo.catId2 eq '01010103'}"><tag:message code="attr.position.1b"/></c:if>
-					<c:if test="${profileInfo.catId2 eq '01010104'}"><tag:message code="attr.position.2b"/></c:if>
-					<c:if test="${profileInfo.catId2 eq '01010105'}"><tag:message code="attr.position.3b"/></c:if>
-					<c:if test="${profileInfo.catId2 eq '01010106'}"><tag:message code="attr.position.ss"/></c:if>
-					<c:if test="${profileInfo.catId2 eq '01010107'}"><tag:message code="attr.position.lf"/></c:if>
-					<c:if test="${profileInfo.catId2 eq '01010108'}"><tag:message code="attr.position.cf"/></c:if>
-					<c:if test="${profileInfo.catId2 eq '01010109'}"><tag:message code="attr.position.rf"/></c:if>
-					<c:if test="${profileInfo.catId2 eq '01010110'}"><tag:message code="attr.position.dh"/></c:if>
-					</span>
+				<span class="btn btn-danger"><tag:message code="${profileInfo.catId2Val}"/></span>
 			</div>
 		</div>
 	</div>
