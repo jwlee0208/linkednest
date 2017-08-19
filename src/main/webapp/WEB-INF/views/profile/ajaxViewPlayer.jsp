@@ -10,8 +10,7 @@
 		<div class="col-sm-7">
 		</div>
 	</div>	
-	<!--<div class="row">-->
-		<ul class="nav nav-pills flex-column flex-sm-row" id="profileTab">
+		<ul class="nav nav-tabs flex-column flex-sm-row" id="profileTab">
 		  <li class="nav-item">
 		    <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="pill" href="#playerInfo">Player Information</a>
 		  </li>
@@ -34,12 +33,11 @@
 		    <a class="flex-sm-fill text-sm-center nav-link" data-toggle="pill" href="#contact">Contact</a>
 		  </li>
 		</ul>	
-	<!--</div>-->
 	<br/>
 	<div class="tab-content">
 	<div id="playerInfo" class="tab-pane active" role="tabpanel">
-		<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.personalinfo"/></h3>
-		<hr/>	
+		<%--<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.personalinfo"/></h3>
+		<hr/>	--%>
 	  	<div class="form-group row">
 	    	<label for="" class="col-sm-2 col-form-label"><tag:message code="text.player.name"/></label>
 		    <div class="col-sm-10">
@@ -115,8 +113,8 @@
 	</div>
 	<div id="playerAttribute" class="tab-pane" role="tabpanel">
 	
-		<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.playerattr"/></h3>
-		<hr/>
+		<%--<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.playerattr"/></h3>
+		<hr/>--%>
 		<c:set var="profileAttrList" value="${profileInfo.profileAttrList}"/>
 
 		<c:if test="${!empty profileAttrList}">
@@ -150,8 +148,8 @@
 	<div id="career" class="tab-pane" role="tabpanel">	
 	<c:set var="profileCareerList" value="${profileInfo.profileCareerList}"/>
 	<c:if test="${!empty profileCareerList}">
-		<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.career"/></h3>
-		<hr/>
+		<%--<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.career"/></h3>
+		<hr/>--%>
 			<table class="table table-bordered table-hover">
 				<thead class="">
 					<tr>
@@ -181,8 +179,8 @@
 	<div id="streamList" class="tab-pane" role="tabpanel">
 		<c:set var="profileStreamList" value="${profileInfo.profileStreamList}"/>
 		<c:if test="${!empty profileStreamList}">
-		<h3><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.playstream"/></h3>
-		<hr/>
+		<%--<h3><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.playstream"/></h3>
+		<hr/>--%>
 		<c:forEach var="profileStreamInfo" items="${profileStreamList}">
 		<h3><small>${profileStreamInfo.streamTitle}</small></h3>	
 		<div class="embed-responsive embed-responsive-16by9">${profileStreamInfo.streamUrl}</div>
@@ -195,8 +193,8 @@
 	
 	<div id="statistic" class="tab-pane" role="tabpanel">
 	<c:if test="${!empty profileStatPitcherList || !empty profileStatHitterList || !empty profileStatFielderList}">			
-		<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;<tag:message code="text.stats"/></h3>
-		<hr/>	
+		<%--<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;<tag:message code="text.stats"/></h3>
+		<hr/>	--%>
 				
 		<c:if test="${!empty profileStatPitcherList}">
 		<h3><small><tag:message code="text.pitching.stat"/></small></h3>

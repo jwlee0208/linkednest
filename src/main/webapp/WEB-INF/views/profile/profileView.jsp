@@ -36,8 +36,8 @@
 		</c:choose>
 
 		<div id="introduce" class="tab-pane" role="tabpanel">
-			<h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.introduce"/></h3>
-			<hr/>
+			<%--<h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.introduce"/></h3>
+			<hr/>--%>
 			<div class="form-group row">
 				<div class="col-sm-12">
 					<p class="form-control-static"><c:out value="${profileInfo.introduce}" escapeXml="false"/></p>
@@ -46,8 +46,8 @@
 		</div>
 
 		<div id="contact" class="tab-pane" role="tabpanel">
-			<h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
-			<hr/>
+			<%--<h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
+			<hr/>--%>
 			<c:if test="${profileInfo.profileContactInfoDto.email ne null && profileInfo.profileContactInfoDto.email ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.email"/></label>
