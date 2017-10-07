@@ -13,7 +13,8 @@
 				, p.name
 				, p.profile_img_path
 				, p.introduce
-				, p.create_date		
+				, p.create_date
+				, p.status
 		</sql>
 		<sql id="profilePlayerColumnSql">
 				, pp.profile_player_id
@@ -346,6 +347,7 @@
 			<result column="profile_img_path" 	property="profileImgPath"/>
 			<result column="introduce" 			property="introduce"/>
 			<result column="create_date" 		property="createDate"/>
+			<result column="status"				property="status"/>
 			<association 	property="profilePlayerDto" javaType="profile.profilePlayerDto">
 				<id 	column="profile_player_id" 	property="profilePlayerId"/>
 				<result column="birth_date" 		property="birthDate"/>

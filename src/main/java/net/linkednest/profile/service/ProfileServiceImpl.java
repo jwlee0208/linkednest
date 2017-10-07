@@ -1,9 +1,12 @@
 package net.linkednest.profile.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,7 @@ import net.linkednest.profile.dto.ProfileStatPitcherDto;
 import net.linkednest.profile.dto.ProfileStreamDto;
 import net.linkednest.profile.dto.ProfileTeamDto;
 import net.linkednest.profile.dto.SearchProfileDto;
+import org.springframework.util.ObjectUtils;
 
 @Service("profileService")
 public class ProfileServiceImpl implements ProfileService{
@@ -31,6 +35,11 @@ public class ProfileServiceImpl implements ProfileService{
 	
 	@Resource(name="profileDao")
 	private ProfileDao profileDao;
+
+
+	private static final String PROFILE_TYPE_PLAYER 	= "1";
+	private static final String PROFILE_TYPE_COACH 		= "2";
+	private static final String PROFILE_TYPE_TEAM 		= "3";
 	
 	/**
 	 * @brief 프로파일 정보 목록 조회(none-paging)
@@ -74,150 +83,238 @@ public class ProfileServiceImpl implements ProfileService{
 	 * @param profileDto
 	 * @return
 	 */
-	public List<ProfileAttrDto> getProfileAttrElementList(ProfileDto profileDto){
+	public List<ProfileAttrDto> getProfileAttrElementList(ProfileDto profileDto) {
 //		logger.debug("[ProfileServiceImpl.getProfileAttrElementList] select result : " + this.profileDao.selectProfileAttrElementList(profileDto));
 		return this.profileDao.selectProfileAttrElementList(profileDto);
 	}
-	
-	public int addProfileInfos(ProfileDto profileDto){
+
+	/**
+	 * Insert Profile Infos
+	 *
+	 * @param profileDto
+	 * @return Integer
+	 */
+	public int addProfileInfos(ProfileDto profileDto) {
 		
 		int profileId = this.addProfileInfo(profileDto);
-		
 		logger.debug("profileId is " + profileId);
 		
-		if(profileId > 0){
-			if(profileDto.getProfileType().equals("1")){
-				ProfilePlayerDto profilePlayerParam = profileDto.getProfilePlayerDto();
-				if(profilePlayerParam != null){
-					profilePlayerParam.setProfileId(profileId);
-					try {
-						this.addProfilePlayerInfo(profilePlayerParam);						
-					} catch (Exception e) {
-						TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					}
-				}
-				List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
-				if(profileCareerParamList != null && profileCareerParamList.size() > 0){
-					for(ProfileCareerDto profileCareerParam : profileCareerParamList){
-						profileCareerParam.setProfileId(profileId);
-						try {
-							this.addProfileCareerInfo(profileCareerParam);							
-						} catch (Exception e) {
-							TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-						}
-					}
-				}
-				List<ProfileStatHitterDto> profileStatHitterParamList = profileDto.getProfileStatHitterList();
-				if(profileStatHitterParamList != null && profileStatHitterParamList.size() > 0){
-					for(ProfileStatHitterDto profileStatHitterParam : profileStatHitterParamList){
-						profileStatHitterParam.setProfileId(profileId);
-						try {
-							this.addProfileStatHitterInfo(profileStatHitterParam);								
-						} catch (Exception e) {
-							TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-						}
-					}
-				}
-				
-				List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
-				if(profileStatFielderParamList != null && profileStatFielderParamList.size() > 0){
-					for(ProfileStatFielderDto profileStatFielderParam : profileStatFielderParamList){
-						profileStatFielderParam.setProfileId(profileId);
-						try {
-							this.addProfileStatFielderInfo(profileStatFielderParam);								
-						} catch (Exception e) {
-							TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-						}
-					}
-				}
-				
-				List<ProfileStatPitcherDto> profileStatPitcherParamList = profileDto.getProfileStatPitcherList();
-				if(profileStatPitcherParamList != null && profileStatPitcherParamList.size() > 0){
-					for(ProfileStatPitcherDto profileStatPitcherParam : profileStatPitcherParamList){
-						profileStatPitcherParam.setProfileId(profileId);
-						try {
-							this.addProfileStatPitcherInfo(profileStatPitcherParam);								
-						} catch (Exception e) {
-							TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-						}
-					}
-				}			
-				
-			}else if(profileDto.getProfileType().equals("2")){
-				ProfilePlayerDto profilePlayerParam = profileDto.getProfilePlayerDto();
-				if(profilePlayerParam != null){
-					profilePlayerParam.setProfileId(profileId);
-					try {
-						this.addProfilePlayerInfo(profilePlayerParam);						
-					} catch (Exception e) {
-						TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					}
-				}
-				List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
-				if(profileCareerParamList != null && profileCareerParamList.size() > 0){
-					for(ProfileCareerDto profileCareerParam : profileCareerParamList){
-						profileCareerParam.setProfileId(profileId);
-						try {
-							this.addProfileCareerInfo(profileCareerParam);							
-						} catch (Exception e) {
-							TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-						}
-					}
-				}
-			}else if(profileDto.getProfileType().equals("3")){
-				ProfileTeamDto profileTeamParam = profileDto.getProfileTeamDto();
-				if(profileTeamParam != null){
-					profileTeamParam.setProfileId(profileId);
-					try {
-						this.addProfileTeamInfo(profileTeamParam);						
-					} catch (Exception e) {
-						TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					}
-				}
+		if (profileId > 0) {
+			String profileType = profileDto.getProfileType();
+			if( StringUtils.equals(profileType, PROFILE_TYPE_PLAYER)) {
+				// insert player's profile infos
+				this.insertProfileForPlayer(profileId, profileDto);
+			} else if (StringUtils.equals(profileType, PROFILE_TYPE_COACH)){
+				// insert coach's profile infos
+				this.insertProfileForCoach(profileId, profileDto);
+			} else if (StringUtils.equals(profileType, PROFILE_TYPE_TEAM)){
+				// insert team's profile infos
+				this.insertProfileForTeam(profileId, profileDto);
 			}
-			
-			ProfileContactInfoDto profileContactInfoParam = profileDto.getProfileContactInfoDto();
-			if(profileContactInfoParam != null){
-				profileContactInfoParam.setProfileId(profileId);
+			// insert common profile infos
+			this.insertProfileCommonInfos(profileId, profileDto);
+		}
+		return 1;
+	}
+
+	/**
+	 * Insert Player's Profile Infos
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
+	private void insertProfileForPlayer(int profileId, ProfileDto profileDto) {
+		// 1. default profile info
+		this.insertProfilePlayerInfo(profileId, profileDto);
+		// 2. career info list
+		this.insertProfileCareerInfos(profileId, profileDto);
+		// 3. statistic
+		this.insertProfileStatInfos(profileId, profileDto);
+	}
+
+	/**
+	 * Insert Coach's Profile Infos
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
+	private void insertProfileForCoach(int profileId, ProfileDto profileDto) {
+		// 1. default profile info
+		this.insertProfilePlayerInfo(profileId, profileDto);
+		// 2. career info list
+		this.insertProfileCareerInfos(profileId, profileDto);
+	}
+
+	/**
+	 * Insert Team's Profile Infos
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
+	private void insertProfileForTeam(int profileId, ProfileDto profileDto) {
+		Optional<ProfileTeamDto> profileTeamParam = Optional.of(profileDto.getProfileTeamDto());
+		if (profileTeamParam.isPresent()) {
+			ProfileTeamDto profileTeamParamObj = profileTeamParam.get();
+			profileTeamParamObj.setProfileId(profileId);
+			try {
+				this.addProfileTeamInfo(profileTeamParamObj);
+			} catch (Exception e) {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			}
+		}
+	}
+
+	/**
+	 * Insert Player's Profile Info
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
+	private void insertProfilePlayerInfo (int profileId, ProfileDto profileDto) {
+		this.mergeProfilePlayerInfo(profileId, profileDto, "insert");
+	}
+
+	/**
+	 * Insert Or Update Player's Profile Info
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 * @param actionType
+	 */
+	private void mergeProfilePlayerInfo(int profileId, ProfileDto profileDto, String actionType) {
+		Optional<ProfilePlayerDto> profilePlayerParam = Optional.of(profileDto.getProfilePlayerDto());
+		if(profilePlayerParam.isPresent()){
+			ProfilePlayerDto profilePlayerParamObj = profilePlayerParam.get();
+			profilePlayerParamObj.setProfileId(profileId);
+			try {
+				if (StringUtils.equals(actionType, "insert")) {
+					this.addProfilePlayerInfo(profilePlayerParamObj);
+				} else if (StringUtils.equals(actionType, "update")) {
+					this.updateProfilePlayerInfo(profilePlayerParamObj);
+				}
+			} catch (Exception e) {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			}
+		}
+	}
+
+	/**
+	 * Insert Career Infos for Player, Coach
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
+	private void insertProfileCareerInfos(int profileId, ProfileDto profileDto) {
+		List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
+		if (profileCareerParamList != null && profileCareerParamList.size() > 0){
+			for(ProfileCareerDto profileCareerParam : profileCareerParamList){
+				profileCareerParam.setProfileId(profileId);
 				try {
-					this.addProfileContactInfo(profileContactInfoParam);
+					this.addProfileCareerInfo(profileCareerParam);
 				} catch (Exception e) {
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();	
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				}
 			}
-			
-			
-			List<ProfileStreamDto> profileStreamParamList = profileDto.getProfileStreamList();
-			if(profileStreamParamList != null && profileStreamParamList.size() > 0){
-				for(ProfileStreamDto profileStreamParam : profileStreamParamList){
-					profileStreamParam.setProfileId(profileId);
+		}
+	}
+
+	/**
+	 * Insert Profile Statistics Infos
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
+	private void insertProfileStatInfos(int profileId, ProfileDto profileDto) {
+		// 3.1. hitting statistic
+		List<ProfileStatHitterDto> profileStatHitterParamList = profileDto.getProfileStatHitterList();
+		if (CollectionUtils.isNotEmpty(profileStatHitterParamList)) {
+			profileStatHitterParamList.stream().forEach(profileStatHitterParam -> {
+				profileStatHitterParam.setProfileId(profileId);
+				try {
+					this.addProfileStatHitterInfo(profileStatHitterParam);
+				} catch (Exception e) {
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				}
+			});
+		}
+		// 3.2. fielding statistic
+		List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
+		if (profileStatFielderParamList != null && profileStatFielderParamList.size() > 0) {
+			for(ProfileStatFielderDto profileStatFielderParam : profileStatFielderParamList){
+				profileStatFielderParam.setProfileId(profileId);
+				try {
+					this.addProfileStatFielderInfo(profileStatFielderParam);
+				} catch (Exception e) {
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				}
+			}
+		}
+		// 3.3. pitching statistic
+		List<ProfileStatPitcherDto> profileStatPitcherParamList = profileDto.getProfileStatPitcherList();
+		if (CollectionUtils.isNotEmpty(profileStatPitcherParamList)) {
+			profileStatPitcherParamList.stream().forEach(profileStatPitcherParam -> {
+				profileStatPitcherParam.setProfileId(profileId);
+				try {
+					this.addProfileStatPitcherInfo(profileStatPitcherParam);
+				} catch (Exception e) {
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				}
+			});
+		}
+	}
+
+	/**
+	 * Insert Common Profile Infos
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
+	private void insertProfileCommonInfos(int profileId, ProfileDto profileDto) {
+		ProfileContactInfoDto profileContactInfoParam = profileDto.getProfileContactInfoDto();
+		if(profileContactInfoParam != null){
+			profileContactInfoParam.setProfileId(profileId);
+			try {
+				this.addProfileContactInfo(profileContactInfoParam);
+			} catch (Exception e) {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			}
+		}
+
+
+		List<ProfileStreamDto> profileStreamParamList = profileDto.getProfileStreamList();
+		if(profileStreamParamList != null && profileStreamParamList.size() > 0){
+			for(ProfileStreamDto profileStreamParam : profileStreamParamList){
+				profileStreamParam.setProfileId(profileId);
+				try {
+					this.addProfileStreamInfo(profileStreamParam);
+				} catch (Exception e) {
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				}
+			}
+		}
+
+
+		List<ProfileAttrElementMapDto> profileAttrElementMapParamList = profileDto.getProfileAttrElementMapList();
+		if(profileAttrElementMapParamList != null && profileAttrElementMapParamList.size() > 0){
+			for(ProfileAttrElementMapDto profileAttrElementMapParam : profileAttrElementMapParamList){
+				if(profileAttrElementMapParam.getProfileAttrElementId() > 0){
+					profileAttrElementMapParam.setProfileId(profileId);
 					try {
-						this.addProfileStreamInfo(profileStreamParam);						
+						this.addProfileAttrElemMapInfo(profileAttrElementMapParam);
 					} catch (Exception e) {
 						TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					}
-				}
-			}
-			
-			
-			List<ProfileAttrElementMapDto> profileAttrElementMapParamList = profileDto.getProfileAttrElementMapList();
-			if(profileAttrElementMapParamList != null && profileAttrElementMapParamList.size() > 0){
-				for(ProfileAttrElementMapDto profileAttrElementMapParam : profileAttrElementMapParamList){
-					if(profileAttrElementMapParam.getProfileAttrElementId() > 0){
-						profileAttrElementMapParam.setProfileId(profileId);
-						try {
-							this.addProfileAttrElemMapInfo(profileAttrElementMapParam);													
-						} catch (Exception e) {
-							TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-						}
 					}
 				}
 			}
 		}
-		
-		return 1;
 	}
 
+	/**
+	 * Update Profile Infos
+	 *
+	 * @param profileDto
+	 * @return
+	 */
 	public int updateProfileInfos(ProfileDto profileDto){
 		
 		int profileId = profileDto.getProfileId();	//this.addProfileInfo(profileDto);
@@ -228,156 +325,160 @@ public class ProfileServiceImpl implements ProfileService{
 			try {
 				// update to profile info 
 				this.profileDao.updateProfileInfo(profileDto);		
-				
-				if(profileDto.getProfileType().equals("1")){
-					ProfilePlayerDto profilePlayerParam = profileDto.getProfilePlayerDto();
-					if(profilePlayerParam != null){
-						profilePlayerParam.setProfileId(profileId);
-						try {
-							this.updateProfilePlayerInfo(profilePlayerParam);							
-						} catch (Exception e){
-							TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-						}
-					}
-					List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
-					if(profileCareerParamList != null && profileCareerParamList.size() > 0){
-//						this.profileDao.deleteProfileCareerInfo(profileId);
-						for(ProfileCareerDto profileCareerParam : profileCareerParamList){
-							profileCareerParam.setProfileId(profileId);
-							try {
-								this.addProfileCareerInfo(profileCareerParam);
-							} catch (Exception e){
-								e.printStackTrace();
-								TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-							}							
-						}
-					}
-					List<ProfileStatHitterDto> profileStatHitterParamList = profileDto.getProfileStatHitterList();
-					if(profileStatHitterParamList != null && profileStatHitterParamList.size() > 0){
-						this.profileDao.deleteProfileStatHitterInfo(profileId);
-						for(ProfileStatHitterDto profileStatHitterParam : profileStatHitterParamList){
-							profileStatHitterParam.setProfileId(profileId);
-							try {
-								this.addProfileStatHitterInfo(profileStatHitterParam);	
-							} catch (Exception e){
-								e.printStackTrace();
-								TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-							}														
-						}
-					}
-					
-					List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
-					if(profileStatFielderParamList != null && profileStatFielderParamList.size() > 0){
-						this.profileDao.deleteProfileStatFielderInfo(profileId);
-						for(ProfileStatFielderDto profileStatFielderParam : profileStatFielderParamList){
-							profileStatFielderParam.setProfileId(profileId);
-							try {
-								this.addProfileStatFielderInfo(profileStatFielderParam);	
-							} catch (Exception e){
-								e.printStackTrace();
-								TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-							}							
-						}
-					}
-					
-					List<ProfileStatPitcherDto> profileStatPitcherParamList = profileDto.getProfileStatPitcherList();
-					if(profileStatPitcherParamList != null && profileStatPitcherParamList.size() > 0){
-						this.profileDao.deleteProfileStatPitcherInfo(profileId);
-						for(ProfileStatPitcherDto profileStatPitcherParam : profileStatPitcherParamList){
-							profileStatPitcherParam.setProfileId(profileId);
-							try {
-								this.addProfileStatPitcherInfo(profileStatPitcherParam);	
-							} catch (Exception e){
-								e.printStackTrace();
-								TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-							}														
-						}
-					}			
-					
-				}else if(profileDto.getProfileType().equals("2")){
-					ProfilePlayerDto profilePlayerParam = profileDto.getProfilePlayerDto();
-					if(profilePlayerParam != null){
-						profilePlayerParam.setProfileId(profileId);
-						try {
-							this.updateProfilePlayerInfo(profilePlayerParam);							
-						} catch (Exception e){
-							TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-						}
-					}
-					List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
-					if(profileCareerParamList != null && profileCareerParamList.size() > 0){
-//						this.profileDao.deleteProfileCareerInfo(profileId);
-						for(ProfileCareerDto profileCareerParam : profileCareerParamList){
-							profileCareerParam.setProfileId(profileId);
-							try {
-								this.addProfileCareerInfo(profileCareerParam);
-							} catch (Exception e){
-								e.printStackTrace();
-								TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-							}							
-						}
-					}
-				}else if(profileDto.getProfileType().equals("3")){
-					ProfileTeamDto profileTeamParam = profileDto.getProfileTeamDto();
-					if(profileTeamParam != null){
-						profileTeamParam.setProfileId(profileId);
-						try {
-							this.updateProfileTeamInfo(profileTeamParam);
-						} catch (Exception e){
-							e.printStackTrace();
-							TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-						}						
-					}
+				String profileType = profileDto.getProfileType();
+				if (StringUtils.equals(profileType, PROFILE_TYPE_PLAYER)) {
+					this.updateProfileForPlayer(profileId, profileDto);
+				} else if (StringUtils.equals(profileType, PROFILE_TYPE_COACH)) {
+					this.updateProfileForCoach(profileId, profileDto);
+				} else if (StringUtils.equals(profileType, PROFILE_TYPE_TEAM)) {
+					this.updateProfileForTeam(profileId, profileDto);
 				}
-				
-				ProfileContactInfoDto profileContactInfoParam = profileDto.getProfileContactInfoDto();
-				if(profileContactInfoParam != null){
-					profileContactInfoParam.setProfileId(profileId);
-					try {
-						this.updateProfileContactInfo(profileContactInfoParam);
-					} catch (Exception e){
-						e.printStackTrace();
-						TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					}											
-				}
-				
-				
-				List<ProfileStreamDto> profileStreamParamList = profileDto.getProfileStreamList();
-				if(profileStreamParamList != null && profileStreamParamList.size() > 0){
-					this.profileDao.deleteProfileStreamInfo(profileId);
-					for(ProfileStreamDto profileStreamParam : profileStreamParamList){
-						profileStreamParam.setProfileId(profileId);
-						try {
-							this.addProfileStreamInfo(profileStreamParam);
-						} catch (Exception e){
-							e.printStackTrace();
-							TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-						}																	
-					}
-				}
-				
-				List<ProfileAttrElementMapDto> profileAttrElementMapParamList = profileDto.getProfileAttrElementMapList();
-				if(profileAttrElementMapParamList != null && profileAttrElementMapParamList.size() > 0){
-					this.profileDao.deleteProfileAttrElemMapInfo(profileId);
-					for(ProfileAttrElementMapDto profileAttrElementMapParam : profileAttrElementMapParamList){
-						if(profileAttrElementMapParam.getProfileAttrElementId() > 0){
-							profileAttrElementMapParam.setProfileId(profileId);
-							this.addProfileAttrElemMapInfo(profileAttrElementMapParam);						
-						}
-					}
-				}
-				
+
+				this.updateProfileCommonInfos(profileId, profileDto);
+
 			} catch (Exception e){
 				e.printStackTrace();
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			}
-			
+
 		}
-		
+
 		return 1;
 	}
-	
-	
+
+
+	private void updateProfileForPlayer(int profileId, ProfileDto profileDto) {
+
+		this.updateProfilePlayerInfo(profileId, profileDto);
+
+		this.updateProfileCareerInfos(profileId, profileDto);
+
+		this.updateProfileStatInfos(profileId, profileDto);
+	}
+
+	private void updateProfileForCoach(int profileId, ProfileDto profileDto) {
+
+		this.updateProfilePlayerInfo(profileId, profileDto);
+
+		this.updateProfileCareerInfos(profileId, profileDto);
+	}
+
+	private void updateProfileForTeam(int profileId, ProfileDto profileDto) {
+		ProfileTeamDto profileTeamParam = profileDto.getProfileTeamDto();
+		if(profileTeamParam != null){
+			profileTeamParam.setProfileId(profileId);
+			try {
+				this.updateProfileTeamInfo(profileTeamParam);
+			} catch (Exception e){
+				e.printStackTrace();
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			}
+		}
+	}
+
+	private void updateProfileCommonInfos(int profileId, ProfileDto profileDto) {
+		ProfileContactInfoDto profileContactInfoParam = profileDto.getProfileContactInfoDto();
+		if(profileContactInfoParam != null){
+			profileContactInfoParam.setProfileId(profileId);
+			try {
+				this.updateProfileContactInfo(profileContactInfoParam);
+			} catch (Exception e){
+				e.printStackTrace();
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			}
+		}
+
+
+		List<ProfileStreamDto> profileStreamParamList = profileDto.getProfileStreamList();
+		if(profileStreamParamList != null && profileStreamParamList.size() > 0){
+			this.profileDao.deleteProfileStreamInfo(profileId);
+			for(ProfileStreamDto profileStreamParam : profileStreamParamList){
+				profileStreamParam.setProfileId(profileId);
+				try {
+					this.addProfileStreamInfo(profileStreamParam);
+				} catch (Exception e){
+					e.printStackTrace();
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				}
+			}
+		}
+
+		List<ProfileAttrElementMapDto> profileAttrElementMapParamList = profileDto.getProfileAttrElementMapList();
+		if(profileAttrElementMapParamList != null && profileAttrElementMapParamList.size() > 0){
+			this.profileDao.deleteProfileAttrElemMapInfo(profileId);
+			for(ProfileAttrElementMapDto profileAttrElementMapParam : profileAttrElementMapParamList){
+				if(profileAttrElementMapParam.getProfileAttrElementId() > 0){
+					profileAttrElementMapParam.setProfileId(profileId);
+					this.addProfileAttrElemMapInfo(profileAttrElementMapParam);
+				}
+			}
+		}
+	}
+
+	private void updateProfilePlayerInfo(int profileId, ProfileDto profileDto) {
+		this.mergeProfilePlayerInfo(profileId, profileDto, "update");
+	}
+
+	private void updateProfileCareerInfos(int profileId, ProfileDto profileDto) {
+		List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
+		if(profileCareerParamList != null && profileCareerParamList.size() > 0){
+//						this.profileDao.deleteProfileCareerInfo(profileId);
+			for(ProfileCareerDto profileCareerParam : profileCareerParamList){
+				profileCareerParam.setProfileId(profileId);
+				try {
+					this.addProfileCareerInfo(profileCareerParam);
+				} catch (Exception e){
+					e.printStackTrace();
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				}
+			}
+		}
+	}
+
+	private void updateProfileStatInfos(int profileId, ProfileDto profileDto) {
+		List<ProfileStatHitterDto> profileStatHitterParamList = profileDto.getProfileStatHitterList();
+		if(profileStatHitterParamList != null && profileStatHitterParamList.size() > 0){
+			this.profileDao.deleteProfileStatHitterInfo(profileId);
+			for(ProfileStatHitterDto profileStatHitterParam : profileStatHitterParamList){
+				profileStatHitterParam.setProfileId(profileId);
+				try {
+					this.addProfileStatHitterInfo(profileStatHitterParam);
+				} catch (Exception e){
+					e.printStackTrace();
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				}
+			}
+		}
+
+		List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
+		if(profileStatFielderParamList != null && profileStatFielderParamList.size() > 0){
+			this.profileDao.deleteProfileStatFielderInfo(profileId);
+			for(ProfileStatFielderDto profileStatFielderParam : profileStatFielderParamList){
+				profileStatFielderParam.setProfileId(profileId);
+				try {
+					this.addProfileStatFielderInfo(profileStatFielderParam);
+				} catch (Exception e){
+					e.printStackTrace();
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				}
+			}
+		}
+
+		List<ProfileStatPitcherDto> profileStatPitcherParamList = profileDto.getProfileStatPitcherList();
+		if(profileStatPitcherParamList != null && profileStatPitcherParamList.size() > 0){
+			this.profileDao.deleteProfileStatPitcherInfo(profileId);
+			for(ProfileStatPitcherDto profileStatPitcherParam : profileStatPitcherParamList){
+				profileStatPitcherParam.setProfileId(profileId);
+				try {
+					this.addProfileStatPitcherInfo(profileStatPitcherParam);
+				} catch (Exception e){
+					e.printStackTrace();
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				}
+			}
+		}
+	}
+
 	private int addProfileInfo(ProfileDto profileDto){
 		return this.profileDao.insertProfileInfo(profileDto);
 	}

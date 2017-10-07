@@ -2,6 +2,8 @@ package net.linkednest.profile.dto;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.type.Alias;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +19,24 @@ public class ProfileDto {
 	private String 	profileImgPath;
 	private String 	introduce;
 	private String 	createDate;
-	
+	private String  status;
+
+	/**
+	 * profile status mapping array
+	 */
+	private static final String[] STATUS_CODE = {"0", "1", "2", "3"};
+	private static final String[] STATUS_VALUE = {"Temporary Saved", "Actavation", "Disabled", "Finished"};
+
+	/**
+	 * 2nd category code mapping array
+	 */
+	private static final String[] CHILD_CATEGORY_CODE = {	"01010101", "01010102", "01010103", "01010104"
+														  , "01010105", "01010106", "01010107", "01010108"
+														  , "01010109", "01010110"};
+	private static final String[] CHILD_CATEGORY_VALUE = {"attr.position.p", "attr.position.cc", "attr.position.1b", "attr.position.2b"
+														, "attr.position.3b", "attr.position.ss", "attr.position.lf", "attr.position.cf"
+														, "attr.position.rf", "attr.position.dh"};
+
 	// player profile dto
 	private ProfilePlayerDto 		profilePlayerDto;
 	// league Info Dto 
@@ -171,17 +190,44 @@ public class ProfileDto {
 	public void setProfileAttrElementMapList(List<ProfileAttrElementMapDto> profileAttrElementMapList) {
 		this.profileAttrElementMapList = profileAttrElementMapList;
 	}
-	@Override
-	public String toString() {
-		return "ProfileDto [profileId=" + profileId + ", profileType=" + profileType + ", catId1=" + catId1
-				+ ", catId2=" + catId2 + ", title=" + title + ", name=" + name + ", profileImg=" + profileImg
-				+ ", profileImgPath=" + profileImgPath + ", introduce=" + introduce + ", createDate=" + createDate
-				+ ", profilePlayerDto=" + profilePlayerDto + ", leagueInfoDto=" + leagueInfoDto + ", profileTeamDto="
-				+ profileTeamDto + ", profileContactInfoDto=" + profileContactInfoDto + ", profileStatHitterList="
-				+ profileStatHitterList + ", profileStatFielderList=" + profileStatFielderList
-				+ ", profileStatPitcherList=" + profileStatPitcherList + ", profileCareerList=" + profileCareerList
-				+ ", profileAttrList=" + profileAttrList + ", profileStreamList=" + profileStreamList
-				+ ", profileAttrElementMapList=" + profileAttrElementMapList + "]";
+
+	public String getStatus() {
+		return StringUtils.replaceEach(status, STATUS_CODE, STATUS_VALUE);
 	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getCatId2Val() {
+		return StringUtils.replaceEach(this.catId2, CHILD_CATEGORY_CODE, CHILD_CATEGORY_VALUE);
+	}
+
+	@Override
+	public String toString() {
+		return "ProfileDto{" +
+				"profileId=" + profileId +
+				", profileType='" + profileType + '\'' +
+				", catId1='" + catId1 + '\'' +
+				", catId2='" + catId2 + '\'' +
+				", title='" + title + '\'' +
+				", name='" + name + '\'' +
+				", profileImg=" + profileImg +
+				", profileImgPath='" + profileImgPath + '\'' +
+				", introduce='" + introduce + '\'' +
+				", createDate='" + createDate + '\'' +
+				", status='" + status + '\'' +
+				", profilePlayerDto=" + profilePlayerDto +
+				", leagueInfoDto=" + leagueInfoDto +
+				", profileTeamDto=" + profileTeamDto +
+				", profileContactInfoDto=" + profileContactInfoDto +
+				", profileStatHitterList=" + profileStatHitterList +
+				", profileStatFielderList=" + profileStatFielderList +
+				", profileStatPitcherList=" + profileStatPitcherList +
+				", profileCareerList=" + profileCareerList +
+				", profileAttrList=" + profileAttrList +
+				", profileStreamList=" + profileStreamList +
+				", profileAttrElementMapList=" + profileAttrElementMapList +
+				'}';
+	}
 }
