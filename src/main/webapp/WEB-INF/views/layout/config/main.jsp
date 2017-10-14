@@ -22,6 +22,7 @@
 <link rel="manifest" href="/manifest.json">
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="/img/common/ms-icon-144x144.png">
+	<meta name="google-site-verification" content="aJbNlB1meI01VflLcMglICNj4ReA0sIhQCbaSHnjEtI" />
 <meta name="theme-color" content="#ffffff">
 <title>::: Config :::</title>
 <%@ include file="/WEB-INF/views/common/include.jsp"%>

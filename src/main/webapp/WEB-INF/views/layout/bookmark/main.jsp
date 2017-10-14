@@ -21,6 +21,7 @@
 <link rel="icon" type="image/png" 	sizes="16x16" 	href="/img/common/favicon-16x16.png">
 <link rel="manifest" 								href="/manifest.json">
 <meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="google-site-verification" content="aJbNlB1meI01VflLcMglICNj4ReA0sIhQCbaSHnjEtI" />
 <meta name="msapplication-TileImage" content="/img/common/ms-icon-144x144.png">
 <meta name="theme-color" content="#ffffff">
 <tiles:insertAttribute name="metatag"/>

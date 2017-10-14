@@ -11,6 +11,7 @@
 <meta name="description" content="LinkedNest's popup page">
 <meta name="keywords" content="popup">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="google-site-verification" content="aJbNlB1meI01VflLcMglICNj4ReA0sIhQCbaSHnjEtI" />
 <title>LinkedNest - Link Between Player With Club</title>
 <%@ include file="/WEB-INF/views/common/include.jsp"%>
 </head>
