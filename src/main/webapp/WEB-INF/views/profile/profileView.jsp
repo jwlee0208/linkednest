@@ -24,7 +24,7 @@
 		</div>
 		<div class="col">
 			&nbsp;
-			<<%--span class="btn btn-info" style="float:right;" data-toggle="modal" data-target="#sendMailForm" id="sendProfileModalOpen">Send Profile</span>--%>
+			<%--span class="btn btn-info" style="float:right;" data-toggle="modal" data-target="#sendMailForm" id="sendProfileModalOpen">Send Profile</span>--%>
 		</div>
 	</div>
 	<hr/>
