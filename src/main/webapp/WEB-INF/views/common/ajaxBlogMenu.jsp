@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="tag" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8"%>
-<%@ page import="net.linkednest.user.dto.UserDto"%>
+<%@ page import="net.linkednest.www.user.dto.UserDto"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/navbar.min.css">
 <%
 	UserDto userInfo = (UserDto)request.getSession().getAttribute("userInfo");

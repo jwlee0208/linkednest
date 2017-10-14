@@ -6,27 +6,21 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.linkednest.board.dto.BoardDto;
-import net.linkednest.board.service.BoardArticleService;
-import net.linkednest.board.service.BoardService;
+import net.linkednest.www.board.dto.BoardDto;
+import net.linkednest.www.board.service.BoardArticleService;
+import net.linkednest.www.board.service.BoardService;
 import net.linkednest.common.dto.ShareDto;
-import net.linkednest.user.dto.UserDto;
-import net.linkednest.user.service.UserService;
+import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import net.linkednest.board.dto.BoardCategoryPortalDto;
-import net.linkednest.board.dto.BoardDto;
-import net.linkednest.board.dto.SideBoardCategoryPortalDto;
-import net.linkednest.board.service.BoardArticleService;
-import net.linkednest.board.service.BoardService;
-import net.linkednest.common.dto.ShareDto;
-import net.linkednest.share.service.ShareService;
-import net.linkednest.user.dto.UserDto;
-import net.linkednest.user.service.UserService;
+import net.linkednest.www.board.dto.BoardCategoryPortalDto;
+import net.linkednest.www.board.dto.SideBoardCategoryPortalDto;
+import net.linkednest.www.share.service.ShareService;
 
 @Controller
 @RequestMapping(value="/common")

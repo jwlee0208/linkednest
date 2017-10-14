@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import net.linkednest.board.service.BoardCategoryServiceImpl;
+import net.linkednest.www.board.service.BoardCategoryServiceImpl;
 import net.linkednest.common.dto.ShareDto;
 import net.linkednest.common.service.impl.CommonServiceImpl;
 import net.linkednest.common.util.PagedList;
-import net.linkednest.user.dto.UserDto;
+import net.linkednest.www.user.dto.UserDto;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
@@ -28,16 +28,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import net.linkednest.board.dto.BoardCategoryDto;
-import net.linkednest.board.dto.BoardDto;
-import net.linkednest.board.service.BoardCategoryServiceImpl;
-import net.linkednest.board.service.BoardServiceImpl;
-import net.linkednest.common.dto.ShareDto;
-import net.linkednest.common.service.impl.CommonServiceImpl;
-import net.linkednest.common.util.PagedList;
-import net.linkednest.share.service.ShareServiceImpl;
-import net.linkednest.user.dto.UserDto;
-import net.linkednest.user.service.UserServiceImpl;
+import net.linkednest.www.board.dto.BoardCategoryDto;
+import net.linkednest.www.board.dto.BoardDto;
+import net.linkednest.www.board.service.BoardServiceImpl;
+import net.linkednest.www.share.service.ShareServiceImpl;
+import net.linkednest.www.user.service.UserServiceImpl;
 @Controller
 @RequestMapping(value="/config")
 @SessionAttributes("userInfo")

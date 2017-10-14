@@ -8,9 +8,32 @@
 			<img src="http://jwlee0208.cdn3.cafe24.com/${profileInfo.profileImgPath}" class="img-fluid rounded mx-auto d-block"/>
 		</div>	
 		<div class="col-sm-7">
+			<ul class="nav flex-column nav-pills" id="profileTab">
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link active" data-toggle="pill" href="#playerInfo">Player Information</a>
+				</li>
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link" data-toggle="pill" href="#playerAttribute">Player Attribute</a>
+				</li>
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link" data-toggle="pill" href="#career">Career</a>
+				</li>
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link" data-toggle="pill" href="#streamList">Play Streamming</a>
+				</li>
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link" data-toggle="pill" href="#statistic">Statistics</a>
+				</li>
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link" data-toggle="pill" href="#introduce">Introduce</a>
+				</li>
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link" data-toggle="pill" href="#contact">Contact</a>
+				</li>
+			</ul>
 		</div>
 	</div>	
-		<ul class="nav nav-tabs flex-column flex-sm-row" id="profileTab">
+		<%--<ul class="nav nav-tabs flex-column flex-sm-row" id="profileTab">
 		  <li class="nav-item">
 		    <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="pill" href="#playerInfo">Player Information</a>
 		  </li>
@@ -32,7 +55,7 @@
 		  <li class="nav-item">
 		    <a class="flex-sm-fill text-sm-center nav-link" data-toggle="pill" href="#contact">Contact</a>
 		  </li>
-		</ul>	
+		</ul>--%>
 	<br/>
 	<div class="tab-content">
 	<div id="playerInfo" class="tab-pane active" role="tabpanel">

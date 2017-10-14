@@ -41,9 +41,10 @@
 				<c:set var="type" value="Team"/>
 			</c:otherwise>
 		</c:choose>
-		<h1 id="btn-groups" class="page-header">${type}&nbsp;&nbsp;<small>Profile List</small></h1>
 		<div class="form-group">
-	
+			<h1 id="btn-groups" class="page-header" style="padding-left:10px;padding-top:20px;">Profile List&nbsp;&nbsp;<small>${type}</small></h1>
+		</div>
+		<div class="form-group">
 			<div class="form-group" role="search" style="padding-left:10px; padding-right:10px;">	
 				<input type="hidden" 	id="searchCondition" 	name="searchCondition" value="name"/>
 				<input type="hidden" 	id="searchText" 		name="searchText" />
@@ -55,7 +56,7 @@
 				<div id="areaList" style="margin-top:10px;">
 					<div class="row">
 						<div class="col-lg-2"><h4><span class="badge badge-primary"><tag:message code="text.continent"/></span></h4></div>
-						<div class="col-lg-10 btn-group">
+						<div class="col-lg-10 btn-group" data-toggle="buttons">
 								<label class="btn btn-primary">		
 									<input type="radio" id="area1" name="area" value="as" class="attrElemRadio"/>&nbsp;<tag:message code="code.area.as"/>
 								</label>
@@ -78,7 +79,7 @@
 				<div id="countryList">
 					<div class="row">
 						<div class="col-lg-2"><h4><span class="badge badge-primary"><tag:message code="text.countries"/></span></h4></div>
-						<div class="col-lg-10 btn-group">
+						<div class="col-lg-10 btn-group" data-toggle="buttons">
 								<label class="btn btn-primary">		
 									<input type="radio" id="country1" name="country" value="KR" class="attrElemRadio"/>&nbsp;<tag:message code="code.country.KR"/>
 								</label>
@@ -115,7 +116,7 @@
 			<c:set var="profileAttrElemListLength"  value="${profileAttrElemList.size()}"/>
 			<div class="row">
 				<div class="col-lg-2"><h4><span class="badge badge-info"><tag:message code="text.${profileAttrElementInfo.profileAttrName}"/></span></h4></div>
-				<div class="col-lg-10 btn-group">
+				<div class="col-lg-10 btn-group" data-toggle="buttons">
 				<c:if test="${profileAttrElemListLength > 0}">
 					<div class="row btn-group" style="padding-left:15px;"> 
 						<input type="hidden" id="profileAttrList[${index.count-1}].profileAttrId${profileAttrId}" name="profileAttrList[${index.count-1}].profileAttrId" value="${profileAttrId}" />

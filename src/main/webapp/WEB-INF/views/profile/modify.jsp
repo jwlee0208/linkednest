@@ -259,7 +259,7 @@
 		<c:set var="profileStatHitterList" value="${profileInfo.profileStatHitterList}"/>
 		<c:set var="profileStatFielderList" value="${profileInfo.profileStatFielderList}"/>
 
-	<c:if test="${!empty profileStatPitcherList && !empty profileStatHitterList && !empty profileStatFielderList}">			
+	<c:if test="${!empty profileStatPitcherList || !empty profileStatHitterList || !empty profileStatFielderList}">
 		<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>&nbsp;<tag:message code="text.stats"/></h3>
 		<hr/>	
 				

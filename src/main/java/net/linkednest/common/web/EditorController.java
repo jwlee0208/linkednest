@@ -5,7 +5,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.linkednest.board.service.BoardArticleService;
+import net.linkednest.www.board.service.BoardArticleService;
 import net.linkednest.common.util.FileUtil;
 import net.linkednest.openapi.service.FlickrAPIService;
 import org.scribe.model.Token;
@@ -22,10 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import net.linkednest.board.service.BoardArticleService;
 import net.linkednest.common.util.FileUpload;
-import net.linkednest.common.util.FileUtil;
-import net.linkednest.openapi.service.FlickrAPIService;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.SearchParameters;
