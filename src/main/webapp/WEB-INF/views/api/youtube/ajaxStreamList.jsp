@@ -17,7 +17,7 @@
 	</c:choose>	
 		
 		<div class="embed-responsive embed-responsive-16by9" id="stream_${streamInfo.id.videoId}">
-			<iframe width="420" height="315" src="http://www.youtube.com/embed/${streamInfo.id.videoId}?autoplay=0" class="embed-responsive-item"></iframe>
+			<iframe width="420" height="315" src="https://www.youtube.com/embed/${streamInfo.id.videoId}?autoplay=0" class="embed-responsive-item"></iframe>
 		</div>
 		</c:forEach>
 	</c:when>

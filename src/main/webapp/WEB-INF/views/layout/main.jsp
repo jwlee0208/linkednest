@@ -33,6 +33,6 @@
 <%@ include file="/WEB-INF/views/common/include.jsp"%>
 </head>
 <body>
-	<tiles:insertAttribute name="body"/>
+<tiles:insertAttribute name="body"/>
 </body>
 </html>

@@ -18,7 +18,15 @@
 </style>
 <div class="container">
 	<br/>
-	<h1 id="btn-groups" class="page-header">Profile&nbsp;&nbsp;<small>Detail</small></h1>
+	<div class="row">
+		<div class="col">
+			<h1 id="btn-groups" class="page-header">Profile&nbsp;&nbsp;<small>Detail</small></h1>
+		</div>
+		<div class="col">
+			&nbsp;
+			<%--span class="btn btn-info" style="float:right;" data-toggle="modal" data-target="#sendMailForm" id="sendProfileModalOpen">Send Profile</span>--%>
+		</div>
+	</div>
 	<hr/>
 	<form id="viewFrm" name="viewFrm" method="post" class="form-horizontal" role="form">
 		<input type="hidden" id="profileId" 	name="profileId" value="${profileInfo.profileId}"/>
@@ -36,8 +44,8 @@
 		</c:choose>
 
 		<div id="introduce" class="tab-pane" role="tabpanel">
-			<h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.introduce"/></h3>
-			<hr/>
+			<%--<h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.introduce"/></h3>
+			<hr/>--%>
 			<div class="form-group row">
 				<div class="col-sm-12">
 					<p class="form-control-static"><c:out value="${profileInfo.introduce}" escapeXml="false"/></p>
@@ -46,8 +54,8 @@
 		</div>
 
 		<div id="contact" class="tab-pane" role="tabpanel">
-			<h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
-			<hr/>
+			<%--<h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
+			<hr/>--%>
 			<c:if test="${profileInfo.profileContactInfoDto.email ne null && profileInfo.profileContactInfoDto.email ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.email"/></label>
@@ -115,6 +123,41 @@
 			</c:if>
 		</div>
 		<br/>
+
+		<div class="row">
+			<span class="btn btn-primary btn-block" id="goBack">Back</span>
+		</div>
+		<br/>
+		<div class="modal fade" id="sendMailForm" role="dialog" aria-labelledby="sendMailFormLabel" aria-hidden="true">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="sendMailFormLabel">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<label class="col-2 col-form-label">mailTo</label>
+						<input type="text" class="form-control" id="mailTo" name="mailTo" placeholder="수신자 메일을 입력해 주세요">
+					</div>
+					<div class="form-group row">
+						<label class="col-2 col-form-label">message</label>
+						<textarea class="form-control" id="message" name="message" placeholder="메일 내용을 입력해 주세요"></textarea>
+					</div>
+					<div class="form-group row">
+						<label class="col-2 col-form-label">Profile Preview</label>
+						<div id="profilePreviewDiv" class="container"></div>
+						<input type="text" class="form-control" id="profileContent" name="profileContent"/>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="sendProfileModalClose">Close</button>
+					<button type="button" class="btn btn-primary" id="sendProfileMail">Send</button>
+				</div>
+			</div>
+
+		</div>
 	</form>
 </div>
 </div>
@@ -164,6 +207,55 @@
 // 		location.href = "/player/modify";
         });
 
+        $("#sendProfileMail").on("click", function(){
+            alert('1');
+            $.ajax({
+                url : '/profile/sendMail/${profileInfo.profileType}/${profileInfo.profileId}',
+                data : $("#viewFrm").serialize(),
+                dataType : 'json',
+                method : 'post',
+                success : function(data){
+                    console.log(data);
 
+                    var result = data.result;
+                    if(result == 'true'){
+                        location.reload();
+                    }
+                }
+            });
+        });
+
+        $("#sendProfileModalClose").on("click", function(){
+            $(this).modal('toggle');
+        });
+
+        $("#sendProfileModalOpen").on("click", function(){
+            $.ajax({
+                async 		: false,
+                type 		: 'POST',
+                dataType 	: 'html',
+                url : '/profile/sendMailPopup/${profileInfo.profileType}/${profileInfo.profileId}',
+                data : $("#viewFrm").serialize(),
+                processData : true,
+                cache 		: false,
+                success : function(data){
+                    var profileHtml = $(data).find(".container").html();
+                    $("#profilePreviewDiv").html(profileHtml);
+                    $("#profileContent").val(profileHtml);
+                }
+            });
+        });
+
+        $("#goBack").on("click", function(){
+            var url = "/profile/list/";
+            if (${profileInfo.profileType} == '1') {
+                url += "1/01010100";
+            } else if (${profileInfo.profileType} == '2') {
+                url += "2/01010200";
+            } else {
+                url += "3/01010300";
+            }
+            location.href =  url;
+        });
     });
 </script>

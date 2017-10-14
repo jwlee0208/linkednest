@@ -9,8 +9,8 @@
         <module name="linkednest" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="linkednest" target="1.7" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="linkednest" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

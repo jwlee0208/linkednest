@@ -210,7 +210,7 @@ iframe {width : 250px; height : 200px; align:center;}
 			<div class="boardDiv li_1_board" style="padding-top : 10px;">
 				<div class="table-responsive">
 					<table class="table table-striped">
-						<colgroup><col width="10%"/><col width="90%"/></colgroup>
+						<colgroup><col width="15%"/><col width="85%"/></colgroup>
 					<c:choose>		
 						<c:when test="${null ne recentTryoutList && recentTryoutList.size() > 0}">
 							<c:forEach var="article" items="${recentTryoutList}">
