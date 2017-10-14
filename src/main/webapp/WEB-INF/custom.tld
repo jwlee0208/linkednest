@@ -7,7 +7,7 @@
  <tag>
   <description>페이징처리</description>
   <name>pagination</name>
-  <tag-class>net.linkednest.common.paging.PaginationTag</tag-class>
+  <tag-class>net.linkednest.www.common.paging.PaginationTag</tag-class>
   <body-content>empty</body-content>
   <attribute>
    <name>name</name>
@@ -35,7 +35,7 @@
  <tag>
   <description>페이징처리_submit</description>
   <name>paginationAjax</name>
-  <tag-class>net.linkednest.common.paging.PaginationSubmitTag</tag-class>
+  <tag-class>net.linkednest.www.common.paging.PaginationSubmitTag</tag-class>
   <attribute>
    <name>name</name>
    <required>true</required>
