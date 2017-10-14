@@ -23,7 +23,8 @@
 			<h1 id="btn-groups" class="page-header">Profile&nbsp;&nbsp;<small>Detail</small></h1>
 		</div>
 		<div class="col">
-			<span class="btn btn-info" style="float:right;" data-toggle="modal" data-target="#sendMailForm" id="sendProfileModalOpen">Send Profile</span>
+			&nbsp;
+			<<%--span class="btn btn-info" style="float:right;" data-toggle="modal" data-target="#sendMailForm" id="sendProfileModalOpen">Send Profile</span>--%>
 		</div>
 	</div>
 	<hr/>
