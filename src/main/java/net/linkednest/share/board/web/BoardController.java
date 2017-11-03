@@ -2,6 +2,8 @@ package net.linkednest.share.board.web;
 
 import javax.annotation.Resource;
 
+import net.linkednest.share.board.service.BoardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,8 +15,8 @@ public class BoardController {
 	public static final int DEFAULT_PAGE_NO    = 1;
 	public static final int DEFAULT_PAGE_SIZE  = 10;
 
-	@Resource(name="BoardServiceImpl")
-	private BoardServiceImpl boardService;
+	@Autowired
+	private BoardService boardService;
 	
 	
 }

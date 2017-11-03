@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,7 @@ import com.flickr4java.flickr.uploader.Uploader;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-@Service("FlickrAPIServiceImpl")
+@Service
 public class FlickrAPIServiceImpl implements FlickrAPIService{
     
     @Value("${flickr.api.key}")
@@ -81,8 +82,6 @@ public class FlickrAPIServiceImpl implements FlickrAPIService{
         return photoObj;
     }
     
-
-
     @Override
     public PhotoList<Photo> getPhotoListByUserId(String userId){
         PhotoList<Photo> photoList  = null;
@@ -157,7 +156,7 @@ public class FlickrAPIServiceImpl implements FlickrAPIService{
     public JSONObject uploadPhoto(MultipartFile attachFile, String title, String contents, String tokenKey, Token token){
         JSONObject resultObj = new JSONObject();
         InputStream is = null;
-        String responseStr = "";
+        String responseStr = StringUtils.EMPTY;
         Flickr f = new Flickr(apiKey, sharedSecret, new REST());
             
         AuthInterface ai = f.getAuthInterface();

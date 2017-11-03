@@ -1,14 +1,14 @@
 package net.linkednest.share.bookmark.web;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.linkednest.share.bookmark.dto.BookmarkDto;
-import net.linkednest.share.bookmark.service.BookmarkServiceImpl;
+import net.linkednest.share.bookmark.service.BookmarkService;
 import net.linkednest.www.user.dto.UserDto;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +24,8 @@ import net.sf.json.JSONObject;
 public class BookmarkController {
     Log log = LogFactory.getLog(BookmarkController.class);
     
-    @Resource(name="BookmarkServiceImpl")
-    private BookmarkServiceImpl bookmarkService;
+    @Autowired
+    private BookmarkService bookmarkService;
     
     @RequestMapping(value="/{userId}/list", method=RequestMethod.GET)
     public String getBookmarkList(HttpServletRequest request, Model model, BookmarkDto bookmarkDto, @PathVariable String userId, HttpSession session)throws Exception{

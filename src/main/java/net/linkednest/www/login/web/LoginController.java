@@ -2,12 +2,12 @@ package net.linkednest.www.login.web;
 
 import java.util.Locale;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserService;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.LocaleUtils;
@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,16 +26,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import net.linkednest.www.user.service.UserServiceImpl;
-
 @Controller
 @SessionAttributes("userInfo")
 public class LoginController {
 	
     final Log log = LogFactory.getLog(this.getClass());
     
-	@Resource(name="UserServiceImpl")
-	private UserServiceImpl userService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="/")
 	public String index() throws Exception{

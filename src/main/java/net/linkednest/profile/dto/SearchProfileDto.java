@@ -2,9 +2,8 @@ package net.linkednest.profile.dto;
 
 import java.util.List;
 
+import net.linkednest.common.paging.PageParam;
 import org.apache.ibatis.type.Alias;
-
-import net.linkednest.www.common.paging.PageParam;
 
 @Alias("profile.searchProfileDto")
 public class SearchProfileDto extends PageParam{

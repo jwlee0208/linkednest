@@ -14,7 +14,6 @@
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
-
 </style>
 <!-- google analytics -->
 <script>

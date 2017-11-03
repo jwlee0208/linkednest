@@ -5,11 +5,15 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import net.linkednest.profile.service.ProfileService;
 import net.linkednest.share.board.dto.BoardArticleDto;
+import net.linkednest.share.board.service.BoardArticleRedisService;
+import net.linkednest.share.board.service.BoardArticleService;
 import net.linkednest.share.board.service.BoardArticleServiceImpl;
 import net.linkednest.profile.service.ProfileServiceImpl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,15 +27,15 @@ import net.linkednest.profile.dto.ProfileDto;
 public class HomeController {
 	
 	private static final Log logger = LogFactory.getLog(HomeController.class);
-	
-	@Resource(name = "BoardArticleServiceImpl")
-	private BoardArticleServiceImpl boardArticleService;
 
-	@Resource(name = "BoardArticleRedisServiceImpl")
-	private BoardArticleRedisServiceImpl   boardArticleRedisService;	
+	@Autowired
+	private BoardArticleService boardArticleService;
 
-	@Resource(name = "profileService")
-	private ProfileServiceImpl profileService;
+	@Autowired
+	private BoardArticleRedisService boardArticleRedisService;
+
+	@Autowired
+	private ProfileService profileService;
 	
 	// spring-data-redis 사용.
 //	@Autowired

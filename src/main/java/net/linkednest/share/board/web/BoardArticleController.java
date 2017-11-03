@@ -3,6 +3,7 @@ package net.linkednest.share.board.web;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,20 +14,24 @@ import net.linkednest.share.board.dto.BoardArticleDto;
 import net.linkednest.share.board.dto.BoardCategoryDto;
 import net.linkednest.share.board.dto.BoardDto;
 import net.linkednest.share.board.dto.SlideshareLinkDto;
-import net.linkednest.share.board.service.BoardArticleServiceImpl;
-import net.linkednest.share.board.service.BoardCategoryServiceImpl;
-import net.linkednest.share.board.service.BoardServiceImpl;
+import net.linkednest.share.board.service.*;
+import net.linkednest.share.service.ShareService;
 import net.linkednest.www.common.dto.ShareDto;
 import net.linkednest.common.util.FileUpload;
 import net.linkednest.common.util.PagedList;
 import net.linkednest.www.common.web.EditorController;
 import net.linkednest.share.service.ShareServiceImpl;
 import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserService;
 import net.linkednest.www.user.service.UserServiceImpl;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.velocity.runtime.directive.Parse;
 import org.jboss.logging.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,26 +67,26 @@ public class BoardArticleController {
 	private static final int 	THUMBNAIL_IMAGE_WIDTH_LARGE 	= 400;
 	private static final int 	THUMBNAIL_IMAGE_HEIGHT_LARGE 	= 400;
 
-	@Resource(name = "BoardServiceImpl")
-	private BoardServiceImpl boardService;
+	@Autowired
+	private BoardService boardService;
 
-	@Resource(name = "BoardArticleServiceImpl")
-	private BoardArticleServiceImpl boardArticleService;
+	@Autowired
+	private BoardArticleService boardArticleService;
 	
-	@Resource(name = "BoardCategoryServiceImpl")
-	private BoardCategoryServiceImpl boardCategoryService;
+	@Autowired
+	private BoardCategoryService boardCategoryService;
 
-	@Resource(name = "fileUpload")
+	@Autowired
 	private FileUpload fileUpload;
 	
-	@Resource(name = "EditorController")
+	@Autowired
 	private EditorController editorController;
-	
-    @Resource(name = "ShareServiceImpl")
-    private ShareServiceImpl shareService;
 
-    @Resource(name = "UserServiceImpl")
-    private UserServiceImpl userService;
+	@Autowired
+    private ShareService shareService;
+
+	@Autowired
+    private UserService userService;
     
 	/*	
 	// spring-data-redis 사용.
@@ -401,7 +406,6 @@ public class BoardArticleController {
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 log.error(e.getMessage());
-                
             }
         }
                 
@@ -428,8 +432,7 @@ public class BoardArticleController {
         
         return "board/article/view";
     }
-	
-	
+
 	/**
 	 * 게시글 입력 화면 출력
 	 * @param model
@@ -456,8 +459,7 @@ public class BoardArticleController {
     public String writeBoardAsUserId(HttpServletRequest request, Model model, BoardArticleDto boardArticleDto, HttpSession session, @PathVariable String userId) throws Exception{
         return this.writeBoard(request, model, boardArticleDto, session, userId, null);
     }
-    
-    
+
     /**
      * @brief 게시글 입력 화면 출력
      * @param request
@@ -558,45 +560,51 @@ public class BoardArticleController {
 			boardArticleDto.setAuthorNm(sessionInfo.getUserNm());
 			boardArticleDto.setStatus(1);
 	
-			insertedArticleId = this.boardArticleService.insertBoardArticle(boardArticleDto);
-			
 			if(insertedArticleId > 0){
-			    
 			    List<SlideshareLinkDto> slideshareLinkDtos = boardArticleDto.getSlideshareLinkInfos();
-			    
-			    if(slideshareLinkDtos != null && slideshareLinkDtos.size() > 0){
+			    if(CollectionUtils.isNotEmpty(slideshareLinkDtos)){
 			        for(SlideshareLinkDto slideshareLinkObj : slideshareLinkDtos){
-			            if(!StringUtils.isEmpty(slideshareLinkObj.getSlideshareLinkUrl())){
-	                        slideshareLinkObj.setCreateUserId(sessionInfo.getUserId());
-	                        slideshareLinkObj.setArticleId(insertedArticleId);
-	                        this.boardArticleService.insertSlideshareInfo(slideshareLinkObj);        			                
-			            }
+			        	if (!StringUtils.isEmpty(slideshareLinkObj.getSlideshareLinkUrl())) {
+							slideshareLinkObj.setCreateUserId(sessionInfo.getUserId());
+							slideshareLinkObj.setArticleId(insertedArticleId);
+							this.boardArticleService.insertSlideshareInfo(slideshareLinkObj);
+						}
 			        }
 			    }
 			}
-			
-			
+
 			if(bindingResult.hasErrors()){
 				jsonObj.put("validate", false);
 			}			
 			
 			// 게시글 데이터 하나씩 추가될 때마다 redis 키값에 저장된 리스트 데이터 삭제 후 데이터 재설정하는 부분 
-//			try{
-//	            valueOps.set("selectBoardArticle"+ boardId +"ListAll", null);
-//	            
-//	            BoardArticleDto boardArticleObj = new BoardArticleDto();
-//	            boardArticleObj.setBoardId(boardId);
-//	                
-//	            valueOps.set("selectBoardArticle"+ boardId +"ListAll", boardArticleService.getBoardArticleList(boardArticleObj));
-//			}catch(Exception e){
-//			    e.printStackTrace();
-//			}
+			this.updateArticleListForRedis(boardId);
 		}
 		
 		jsonObj.put("result", (insertedArticleId > 0) ? true : false);
 		return jsonObj;
 	}
-	
+
+	/**
+	 * 게시글 데이터 하나씩 추가될 때마다 redis 키값에 저장된 리스트 데이터 삭제 후 데이터 재설정하는 부분
+	 *
+	 * @param boardId
+	 */
+	private void updateArticleListForRedis(int boardId) {
+		try{
+			/*
+			valueOps.set("selectBoardArticle"+ boardId +"ListAll", null);
+
+			BoardArticleDto boardArticleObj = new BoardArticleDto();
+			boardArticleObj.setBoardId(boardId);
+
+			valueOps.set("selectBoardArticle"+ boardId +"ListAll", boardArticleService.getBoardArticleList(boardArticleObj));
+			*/
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 게시글 입력(업로드 파일 있을 때)
 	 * @param boardArticleDto
@@ -613,14 +621,14 @@ public class BoardArticleController {
 		int insertedArticleId = 0;
 		MultipartFile imageFile = boardArticleDto.getThumbImg();
 		
-		String imageUploadResult = "";
-		String thumbnailSize = boardArticleDto.getThumbnailSize();
-		
+		String imageUploadResult = StringUtils.EMPTY;
+
 		int boardId = boardArticleDto.getBoardId();
 
         UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
         
         if(null != sessionInfo){
+			String filePath = StringUtils.EMPTY;
 
             // if boardId가 없고, boardName이 입력되어 넘어오는 경우
             // 1. default boardCategory 를 생성
@@ -629,22 +637,11 @@ public class BoardArticleController {
             boardArticleDto.setAuthorId(sessionInfo.getUserId());
             boardArticleDto.setAuthorNm(sessionInfo.getUserNm());
             boardArticleDto.setStatus(1);
-		
-    		if(boardArticleDto != null){
-    			if(thumbnailSize.equals("small")){
-    				imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_SMALL, THUMBNAIL_IMAGE_HEIGHT_SMALL);
-    			}else if(thumbnailSize.equals("middle")){
-    				imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_MIDDLE, THUMBNAIL_IMAGE_HEIGHT_MIDDLE);
-    			}else if(thumbnailSize.equals("large")){
-    				imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_LARGE, THUMBNAIL_IMAGE_HEIGHT_LARGE);
-    			}
-    		} else {
-    			imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_SMALL, THUMBNAIL_IMAGE_HEIGHT_SMALL);
-    		}
-    		
-    //				fileUpload.uploadFile(imageFile);	// editorController.imageadd(imageFile).toString();
-    		String filePath = "";
-    		if(!imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError")){
+			// Upload Image File
+            imageUploadResult = this.uploadImage(boardArticleDto);
+			// Validate image upload result
+    		boolean isValidImageUploadResult = !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
+    		if(isValidImageUploadResult){
     			filePath = imageUploadResult;
     			
     			boardArticleDto.setFilePath(filePath);
@@ -652,14 +649,10 @@ public class BoardArticleController {
     			boardArticleDto.setStatus(1);
     			
     			insertedArticleId = this.boardArticleService.insertBoardArticle(boardArticleDto);
-    			
-    			
     		}
     		
     		if(insertedArticleId > 0){
-    
                 List<SlideshareLinkDto> slideshareLinkDtos = boardArticleDto.getSlideshareLinkInfos();
-                
                 if(slideshareLinkDtos != null && slideshareLinkDtos.size() > 0){
                     for(SlideshareLinkDto slideshareLinkObj : slideshareLinkDtos){
                         if(!StringUtils.isEmpty(slideshareLinkObj.getSlideshareLinkUrl())){
@@ -669,29 +662,39 @@ public class BoardArticleController {
                         }
                     }
                 }
-    		    
-    		    
-    	        // 게시글 데이터 하나씩 추가될 때마다 redis 키값에 저장된 리스트 데이터 삭제 후 데이터 재설정하는 부분 
-    		    /*
-                try{
-                    valueOps.set("selectBoardArticle"+ boardId +"ListAll", null);
-                    
-                    BoardArticleDto boardArticleObj = new BoardArticleDto();
-                    boardArticleObj.setBoardId(boardId);
-                        
-                    valueOps.set("selectBoardArticle"+ boardId +"ListAll", boardArticleService.getBoardArticleList(boardArticleObj));
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-                */
-    
+    	        // 게시글 데이터 하나씩 추가될 때마다 redis 키값에 저장된 리스트 데이터 삭제 후 데이터 재설정하는 부분
+				this.updateArticleListForRedis(boardId);
     		}
-		
         }
 //		model.addAttribute("result", imageUploadResult);
 		return imageUploadResult;
 	}
-	
+
+	/**
+	 * Upload Image File
+	 *
+	 * @param boardArticleDto
+	 * @return String
+	 */
+	private String uploadImage(BoardArticleDto boardArticleDto) {
+		String imageUploadResult = StringUtils.EMPTY;
+		String thumbnailSize = boardArticleDto.getThumbnailSize();
+		MultipartFile imageFile = boardArticleDto.getThumbImg();
+
+		if(boardArticleDto != null){
+			if(thumbnailSize.equals("small")){
+				imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_SMALL, THUMBNAIL_IMAGE_HEIGHT_SMALL);
+			}else if(thumbnailSize.equals("middle")){
+				imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_MIDDLE, THUMBNAIL_IMAGE_HEIGHT_MIDDLE);
+			}else if(thumbnailSize.equals("large")){
+				imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_LARGE, THUMBNAIL_IMAGE_HEIGHT_LARGE);
+			}
+		} else {
+			imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_SMALL, THUMBNAIL_IMAGE_HEIGHT_SMALL);
+		}
+		return imageUploadResult;
+	}
+
 	/**
 	 * 게시글 수정(json타입 : 업로드 파일 없을 때)
 	 * @param boardArticleDto
@@ -719,7 +722,7 @@ public class BoardArticleController {
 			if(updateResult > 0){
                 List<SlideshareLinkDto> slideshareLinkDtos = boardArticleDto.getSlideshareLinkInfos();
                 
-                if(slideshareLinkDtos != null && slideshareLinkDtos.size() > 0){
+                if(CollectionUtils.isNotEmpty(slideshareLinkDtos)){
                     for(SlideshareLinkDto slideshareLinkObj : slideshareLinkDtos){
                         if(!StringUtils.isEmpty(slideshareLinkObj.getSlideshareLinkUrl())){
                             slideshareLinkObj.setCreateUserId(sessionInfo.getUserId());
@@ -775,33 +778,20 @@ public class BoardArticleController {
         UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
         String imageUploadResult = "";
         if(null != sessionInfo){
+			String filePath = StringUtils.EMPTY;
 
             boardArticleDto.setAuthorId(sessionInfo.getUserId());
             boardArticleDto.setAuthorNm(sessionInfo.getUserNm());
             boardArticleDto.setStatus(1);
-	    
-	    
+
     		int updateResult = 0;
     		MultipartFile imageFile = boardArticleDto.getThumbImg();
-    		
-    		
-    		String thumbnailSize = boardArticleDto.getThumbnailSize();
-    		if(boardArticleDto != null){
-    			if(thumbnailSize.equals("small")){
-    				imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_SMALL, THUMBNAIL_IMAGE_HEIGHT_SMALL);
-    			}else if(thumbnailSize.equals("middle")){
-    				imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_MIDDLE, THUMBNAIL_IMAGE_HEIGHT_MIDDLE);
-    			}else if(thumbnailSize.equals("large")){
-    				imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_LARGE, THUMBNAIL_IMAGE_HEIGHT_LARGE);
-    			}
-    		} else{
-    			imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_SMALL, THUMBNAIL_IMAGE_HEIGHT_SMALL);
-    		}
-    
-    		
-    		//fileUpload.uploadFile(imageFile);	// editorController.imageadd(imageFile).toString();
-    		String filePath = "";
-    		if(!imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError")){
+
+    		// Upload Image File
+			imageUploadResult = this.uploadImage(boardArticleDto);
+			// Validate upload result
+			boolean isValidUploadResult = !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
+    		if(isValidUploadResult){
     			filePath = imageUploadResult;
     			
     			boardArticleDto.setFilePath(filePath);
@@ -812,7 +802,7 @@ public class BoardArticleController {
     			if(updateResult > 0){
                     List<SlideshareLinkDto> slideshareLinkDtos = boardArticleDto.getSlideshareLinkInfos();
                     
-                    if(slideshareLinkDtos != null && slideshareLinkDtos.size() > 0){
+                    if(CollectionUtils.isNotEmpty(slideshareLinkDtos)){
                         for(SlideshareLinkDto slideshareLinkObj : slideshareLinkDtos){
                             if(!StringUtils.isEmpty(slideshareLinkObj.getSlideshareLinkUrl())){
                                 slideshareLinkObj.setCreateUserId(sessionInfo.getUserId());

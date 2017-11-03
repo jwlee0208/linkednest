@@ -5,11 +5,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.linkednest.common.paging.PageHolder;
 import net.linkednest.profile.dto.LeagueInfoDto;
 import net.linkednest.profile.service.ProfileService;
 import net.linkednest.www.user.dto.UserDto;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xerces.impl.dv.util.Base64;
@@ -22,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.linkednest.www.common.paging.PageHolder;
 import net.linkednest.common.util.FileUpload;
 import net.linkednest.profile.dto.ProfileAttrDto;
 import net.linkednest.profile.dto.ProfileDto;
@@ -39,6 +40,7 @@ public class ProfileController {
 
 	@Autowired
 	private ProfileService profileService;
+
 	/**
 	 * @brief Profile View
 	 * 
@@ -61,6 +63,14 @@ public class ProfileController {
 		return "/profile/profileView";
 	}
 
+	/**
+	 * Profile Modification Page
+	 *
+	 * @param model
+	 * @param profileType
+	 * @param profileId
+	 * @return
+	 */
 	@RequestMapping(value="/modify/{profileType}/{profileId}")
 	public String getProfileUpdateInfo(Model model, @PathVariable String profileType, @PathVariable int profileId){
 		
@@ -121,12 +131,12 @@ public class ProfileController {
     public String getAjaxProfileList(HttpServletRequest request, Model model, SearchProfileDto searchProfileDto, HttpSession session){
     	logger.info("[ ProfileController.getAjaxProfileList() ][ Param ] searchProfileDto : " + searchProfileDto.toString());
     	
-    	if(searchProfileDto.getSearchText() != null && searchProfileDto.getSearchText() != ""){
+    	if(StringUtils.isNotEmpty(searchProfileDto.getSearchText())){
     	    searchProfileDto.setSearchText(new String(Base64.decode(searchProfileDto.getSearchText())));
     	}
     	
         List<ProfileDto> 	profileList = null;
-        PageHolder          pageHolder 	= null;
+        PageHolder			pageHolder 	= null;
         int                 profileCnt  = 0;
         
         searchProfileDto.setListSize(9*3);
@@ -151,6 +161,7 @@ public class ProfileController {
     }
     /**
      * @brief Profile Registration Page
+	 *
      * @param model
      * @param session
      * @param profileType
@@ -184,21 +195,30 @@ public class ProfileController {
     	model.addAttribute("leagueInfoList"	, leagueInfoList);
     	return "/profile/regist";
     }
-	
+
+	/**
+	 * Profile Registration
+	 *
+	 * @param profileDto
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
     @RequestMapping(value="/registAction", method=RequestMethod.POST)
     @ResponseBody
     public JSONObject  registProfile(ProfileDto profileDto, HttpSession session) throws Exception{
     	JSONObject 		result 				= new  JSONObject(); 
     	MultipartFile 	profileImg 			= profileDto.getProfileImg();
     	
-    	String 			imageUploadResult 	= "";
-    	String 			filePath			= "";
+    	String 			imageUploadResult 	= StringUtils.EMPTY;
+    	String 			filePath			= StringUtils.EMPTY;
     	
     	if(null != profileImg){
     		imageUploadResult = fileUpload.uploadFile(profileImg);	
     	}
-    	
-    	if(!imageUploadResult.equals("") && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError")){
+
+    	boolean isValidUploadResult = !imageUploadResult.equals("") && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
+    	if(isValidUploadResult){
     		filePath = imageUploadResult;
     		profileDto.setProfileImgPath(filePath);
     	}
@@ -218,22 +238,30 @@ public class ProfileController {
     	
     	return result;
     }
-    
-    
-    @RequestMapping(value="/modifyAction", method=RequestMethod.POST)
+
+	/**
+	 * Profile Modification
+	 *
+	 * @param profileDto
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/modifyAction", method=RequestMethod.POST)
     @ResponseBody
     public JSONObject  modifyProfile(ProfileDto profileDto, HttpSession session) throws Exception{
     	JSONObject 		result 				= new  JSONObject(); 
     	MultipartFile 	profileImg 			= profileDto.getProfileImg();
     	
-    	String 			imageUploadResult 	= "";
-    	String 			filePath			= "";
+    	String 			imageUploadResult 	= StringUtils.EMPTY;
+    	String 			filePath			= StringUtils.EMPTY;
     	
-    	if(null != profileImg){
+    	if(profileImg != null){
     		imageUploadResult = fileUpload.uploadFile(profileImg);	
     	}
-    	
-    	if(!imageUploadResult.equals("") && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError")){
+
+    	boolean isValidImageUploadResult = !imageUploadResult.equals("") && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
+    	if(isValidImageUploadResult){
     		filePath = imageUploadResult;
     		profileDto.setProfileImgPath(filePath);
     	}
@@ -254,19 +282,35 @@ public class ProfileController {
     	return result;
     }
 
+	/**
+	 * View Page For Regist League Info
+	 *
+	 * @param model
+	 * @param session
+	 * @return
+	 */
     @RequestMapping(value="/registLeague", method=RequestMethod.GET)
     public String registLeague(Model model, HttpSession session){
     	return "/profile/registLeague";
     }
-    
+
+	/**
+	 * Regist League Info
+	 *
+	 * @param model
+	 * @param session
+	 * @param leagueInfoDto
+	 * @return
+	 * @throws Exception
+	 */
     @RequestMapping(value="/registLeagueAction", method=RequestMethod.POST)
     @ResponseBody
     public JSONObject registLeague(Model model, HttpSession session, LeagueInfoDto leagueInfoDto) throws Exception{
     	JSONObject resultObj = new JSONObject();
     	MultipartFile leagueLogoImg = leagueInfoDto.getLeagueImg();
     	
-    	String 			imageUploadResult 	= "";
-    	String 			filePath			= "";
+    	String 			imageUploadResult 	= StringUtils.EMPTY;
+    	String 			filePath			= StringUtils.EMPTY;
     	
     	System.out.println("[ LeagueInfo Img ] leagueLogoImg.isEmpty() : " + leagueLogoImg.isEmpty());
     	System.out.println("[ LeagueInfo Img ] leagueLogoImg : " + leagueLogoImg);
@@ -274,8 +318,9 @@ public class ProfileController {
     	if(null != leagueLogoImg){
     		imageUploadResult = fileUpload.uploadFile(leagueLogoImg);	
     	}
-    	
-    	if(!imageUploadResult.equals("") && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError")){
+
+    	boolean isValidImageUploadResult = !imageUploadResult.equals("") && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
+    	if(isValidImageUploadResult){
     		filePath = imageUploadResult;
     		leagueInfoDto.setLeagueImgPath(filePath);
     	}
@@ -295,8 +340,16 @@ public class ProfileController {
     	
     	return resultObj;
     }
-    
-    @RequestMapping(value="/leagueList")
+
+	/**
+	 * get league info list
+	 *
+	 * @param model
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/leagueList")
     public String getLeagueInfoList(Model model, HttpSession session) throws Exception{
     	boolean isLogon     = false;
         UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
@@ -308,8 +361,16 @@ public class ProfileController {
     	model.addAttribute("leagueList", this.profileService.getLeagueInfoList());
     	return "/profile/leagueList";
     }
-    
-    @RequestMapping(value="/leagueView/{leagueId}")
+
+	/**
+	 * get league info detail
+	 *
+	 * @param model
+	 * @param session
+	 * @param leagueId
+	 * @return
+	 */
+	@RequestMapping(value="/leagueView/{leagueId}")
     public String getLeagueInfo(Model model, HttpSession session, @PathVariable int leagueId){
     	
     	LeagueInfoDto leagueInfo = this.profileService.getLeagueInfo(leagueId);

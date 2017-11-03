@@ -205,7 +205,7 @@ public class ProfileServiceImpl implements ProfileService{
 	 */
 	private void insertProfileCareerInfos(int profileId, ProfileDto profileDto) {
 		List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
-		if (profileCareerParamList != null && profileCareerParamList.size() > 0){
+		if (CollectionUtils.isNotEmpty(profileCareerParamList)){
 			for(ProfileCareerDto profileCareerParam : profileCareerParamList){
 				profileCareerParam.setProfileId(profileId);
 				try {
@@ -238,7 +238,7 @@ public class ProfileServiceImpl implements ProfileService{
 		}
 		// 3.2. fielding statistic
 		List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
-		if (profileStatFielderParamList != null && profileStatFielderParamList.size() > 0) {
+		if (CollectionUtils.isNotEmpty(profileStatFielderParamList)) {
 			for(ProfileStatFielderDto profileStatFielderParam : profileStatFielderParamList){
 				profileStatFielderParam.setProfileId(profileId);
 				try {
@@ -279,9 +279,8 @@ public class ProfileServiceImpl implements ProfileService{
 			}
 		}
 
-
 		List<ProfileStreamDto> profileStreamParamList = profileDto.getProfileStreamList();
-		if(profileStreamParamList != null && profileStreamParamList.size() > 0){
+		if(CollectionUtils.isNotEmpty(profileStreamParamList)){
 			for(ProfileStreamDto profileStreamParam : profileStreamParamList){
 				profileStreamParam.setProfileId(profileId);
 				try {
@@ -292,9 +291,8 @@ public class ProfileServiceImpl implements ProfileService{
 			}
 		}
 
-
 		List<ProfileAttrElementMapDto> profileAttrElementMapParamList = profileDto.getProfileAttrElementMapList();
-		if(profileAttrElementMapParamList != null && profileAttrElementMapParamList.size() > 0){
+		if(CollectionUtils.isNotEmpty(profileAttrElementMapParamList)){
 			for(ProfileAttrElementMapDto profileAttrElementMapParam : profileAttrElementMapParamList){
 				if(profileAttrElementMapParam.getProfileAttrElementId() > 0){
 					profileAttrElementMapParam.setProfileId(profileId);
@@ -339,13 +337,18 @@ public class ProfileServiceImpl implements ProfileService{
 				e.printStackTrace();
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			}
-
 		}
 
 		return 1;
 	}
 
 
+	/**
+	 * Update Profile For Player
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
 	private void updateProfileForPlayer(int profileId, ProfileDto profileDto) {
 
 		this.updateProfilePlayerInfo(profileId, profileDto);
@@ -355,6 +358,12 @@ public class ProfileServiceImpl implements ProfileService{
 		this.updateProfileStatInfos(profileId, profileDto);
 	}
 
+	/**
+	 * Update Profile For Coach
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
 	private void updateProfileForCoach(int profileId, ProfileDto profileDto) {
 
 		this.updateProfilePlayerInfo(profileId, profileDto);
@@ -362,6 +371,12 @@ public class ProfileServiceImpl implements ProfileService{
 		this.updateProfileCareerInfos(profileId, profileDto);
 	}
 
+	/**
+	 * Update Profile For Team
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
 	private void updateProfileForTeam(int profileId, ProfileDto profileDto) {
 		ProfileTeamDto profileTeamParam = profileDto.getProfileTeamDto();
 		if(profileTeamParam != null){
@@ -375,8 +390,15 @@ public class ProfileServiceImpl implements ProfileService{
 		}
 	}
 
+	/**
+	 * Update Profile For Common Infos
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
 	private void updateProfileCommonInfos(int profileId, ProfileDto profileDto) {
 		ProfileContactInfoDto profileContactInfoParam = profileDto.getProfileContactInfoDto();
+		// update info for contact
 		if(profileContactInfoParam != null){
 			profileContactInfoParam.setProfileId(profileId);
 			try {
@@ -387,7 +409,7 @@ public class ProfileServiceImpl implements ProfileService{
 			}
 		}
 
-
+		// update list for stream
 		List<ProfileStreamDto> profileStreamParamList = profileDto.getProfileStreamList();
 		if(profileStreamParamList != null && profileStreamParamList.size() > 0){
 			this.profileDao.deleteProfileStreamInfo(profileId);
@@ -402,6 +424,7 @@ public class ProfileServiceImpl implements ProfileService{
 			}
 		}
 
+		// update list for profile's attribute map
 		List<ProfileAttrElementMapDto> profileAttrElementMapParamList = profileDto.getProfileAttrElementMapList();
 		if(profileAttrElementMapParamList != null && profileAttrElementMapParamList.size() > 0){
 			this.profileDao.deleteProfileAttrElemMapInfo(profileId);
@@ -420,7 +443,7 @@ public class ProfileServiceImpl implements ProfileService{
 
 	private void updateProfileCareerInfos(int profileId, ProfileDto profileDto) {
 		List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
-		if(profileCareerParamList != null && profileCareerParamList.size() > 0){
+		if(CollectionUtils.isNotEmpty(profileCareerParamList)){
 //						this.profileDao.deleteProfileCareerInfo(profileId);
 			for(ProfileCareerDto profileCareerParam : profileCareerParamList){
 				profileCareerParam.setProfileId(profileId);
@@ -436,7 +459,7 @@ public class ProfileServiceImpl implements ProfileService{
 
 	private void updateProfileStatInfos(int profileId, ProfileDto profileDto) {
 		List<ProfileStatHitterDto> profileStatHitterParamList = profileDto.getProfileStatHitterList();
-		if(profileStatHitterParamList != null && profileStatHitterParamList.size() > 0){
+		if(CollectionUtils.isNotEmpty(profileStatHitterParamList)){
 			this.profileDao.deleteProfileStatHitterInfo(profileId);
 			for(ProfileStatHitterDto profileStatHitterParam : profileStatHitterParamList){
 				profileStatHitterParam.setProfileId(profileId);
@@ -450,7 +473,7 @@ public class ProfileServiceImpl implements ProfileService{
 		}
 
 		List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
-		if(profileStatFielderParamList != null && profileStatFielderParamList.size() > 0){
+		if(CollectionUtils.isNotEmpty(profileStatFielderParamList)){
 			this.profileDao.deleteProfileStatFielderInfo(profileId);
 			for(ProfileStatFielderDto profileStatFielderParam : profileStatFielderParamList){
 				profileStatFielderParam.setProfileId(profileId);
@@ -464,7 +487,7 @@ public class ProfileServiceImpl implements ProfileService{
 		}
 
 		List<ProfileStatPitcherDto> profileStatPitcherParamList = profileDto.getProfileStatPitcherList();
-		if(profileStatPitcherParamList != null && profileStatPitcherParamList.size() > 0){
+		if(CollectionUtils.isNotEmpty(profileStatPitcherParamList)){
 			this.profileDao.deleteProfileStatPitcherInfo(profileId);
 			for(ProfileStatPitcherDto profileStatPitcherParam : profileStatPitcherParamList){
 				profileStatPitcherParam.setProfileId(profileId);

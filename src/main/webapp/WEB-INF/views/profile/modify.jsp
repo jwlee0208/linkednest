@@ -250,8 +250,6 @@
 								</div>
 							</div>
 						</div>
-
-
 					</c:forEach>
 				</c:if>
 
@@ -262,8 +260,6 @@
 				<c:if test="${!empty profileStatPitcherList || !empty profileStatHitterList || !empty profileStatFielderList}">
 					<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>&nbsp;<tag:message code="text.stats"/></h3>
 					<hr/>
-
-
 					<!-- new  -->
 					<h3>
 						<small>Pitching Stat</small>
@@ -1190,7 +1186,6 @@
 <script>
     $(document).on("ready", function(){
         var className = ($(".thumbImg").hasClass("unset")) ? "unset" : "set";
-
         toggleThumbImage(className);
     });
 
@@ -1228,7 +1223,6 @@
 
             var introduce = tinyMCE.get('introduce').getContent();
             $("#introduce").val(introduce);
-
             var profileImg = $.trim($("#profileImg").val());
 
             if(profileImg.length == 0){
@@ -1256,7 +1250,6 @@
                 frm.attr("method", "post");
                 frm.ajaxForm(FileuploadCallback);
                 frm.submit();
-
             }
         });
 
@@ -1330,7 +1323,6 @@
 
                 $(".tableCareer > tbody:last").append(addCareerHtml);
             }
-
         });
 
         // pitcher stat row adding
@@ -1438,22 +1430,17 @@
                 addFielderHtml += "</tr>";
                 $(".tableFielderStat > tbody:last").append(addFielderHtml);
             }
-
         });
     });
 
     function toggleThumbImage(className){
-
         $(".thumbImg").hide();
-
         $("." + className).show();
-
     }
 
     function delThumbImage(){
         $(".unset").remove();
         toggleThumbImage("set");
-
     }
 </script>
 </html>
