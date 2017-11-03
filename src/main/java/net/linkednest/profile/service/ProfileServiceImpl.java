@@ -27,7 +27,7 @@ import net.linkednest.profile.dto.ProfileStreamDto;
 import net.linkednest.profile.dto.ProfileTeamDto;
 import net.linkednest.profile.dto.SearchProfileDto;
 
-@Service("profileService")
+@Service
 public class ProfileServiceImpl implements ProfileService{
 	
 	private static final Log logger = LogFactory.getLog(ProfileServiceImpl.class);

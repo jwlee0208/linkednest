@@ -35,8 +35,6 @@
 			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(2, '01010200');"><tag:message code="text.coachlist"/></a></li>
 			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(3, '01010300');"><tag:message code="text.teamlist"/></a></li>
 			<li class="nav-item"><a class="nav-link" href="/profile/leagueList"><tag:message code="text.leaguelist"/></a></li>
-			<!-- 				<li><a href="javascript:;" onclick="javascript:alert('ing..');;">컨설팅 요청</a></li> -->
-			<!-- 				<li><a href="javascript:;" onclick="javascript:alert('ing..');;">About Us</a></li> -->
 		</ul>
 		<c:if test="${null ne userInfo}">
 			<ul class="nav navbar-nav navbar-right float-right">
@@ -53,10 +51,8 @@
 		</c:if>
 		<form class="navbar-form navbar-right" role="search">
 			<c:if test="${null eq userInfo}">
-				<a onclick="javascript:goRegist(6);" class="btn btn-outline-secondary"><tag:message
-						code="signup" /></a>
-				<a onclick="javascript:goLogin(7);" class="btn btn-outline-success"><tag:message
-						code="signin" /></a>
+				<a onclick="javascript:goRegist(6);" class="btn btn-outline-secondary"><tag:message code="signup" /></a>
+				<a onclick="javascript:goLogin(7);" class="btn btn-outline-success"><tag:message code="signin" /></a>
 			</c:if>
 		</form>
 	</div>

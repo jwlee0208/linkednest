@@ -2,18 +2,18 @@ package net.linkednest.profile.web;
 
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.linkednest.profile.dto.LeagueInfoDto;
-import net.linkednest.profile.service.ProfileServiceImpl;
+import net.linkednest.profile.service.ProfileService;
 import net.linkednest.www.user.dto.UserDto;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xerces.impl.dv.util.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,11 +34,11 @@ public class ProfileController {
 
 	private static final Log logger = LogFactory.getLog(ProfileController.class);
 	
-	@Resource(name="fileUpload")
+	@Autowired
 	private FileUpload 			fileUpload;
 
-	@Resource(name="profileService")
-	private ProfileServiceImpl profileService;
+	@Autowired
+	private ProfileService profileService;
 	/**
 	 * @brief Profile View
 	 * 
