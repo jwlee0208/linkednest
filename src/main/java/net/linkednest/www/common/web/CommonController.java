@@ -6,9 +6,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.linkednest.www.board.dto.BoardDto;
-import net.linkednest.www.board.service.BoardArticleService;
-import net.linkednest.www.board.service.BoardService;
+import net.linkednest.share.board.dto.BoardDto;
+import net.linkednest.share.board.service.BoardArticleService;
+import net.linkednest.share.board.service.BoardService;
 import net.linkednest.www.common.dto.ShareDto;
 import net.linkednest.www.user.dto.UserDto;
 import net.linkednest.www.user.service.UserService;
@@ -18,9 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import net.linkednest.www.board.dto.BoardCategoryPortalDto;
-import net.linkednest.www.board.dto.SideBoardCategoryPortalDto;
-import net.linkednest.www.share.service.ShareService;
+import net.linkednest.share.board.dto.BoardCategoryPortalDto;
+import net.linkednest.share.board.dto.SideBoardCategoryPortalDto;
+import net.linkednest.share.service.ShareService;
 
 @Controller
 @RequestMapping(value="/common")

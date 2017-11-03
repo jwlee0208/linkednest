@@ -5,17 +5,17 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import net.linkednest.www.board.dto.BoardArticleDto;
-import net.linkednest.www.board.service.BoardArticleServiceImpl;
-import net.linkednest.www.profile.service.ProfileServiceImpl;
+import net.linkednest.share.board.dto.BoardArticleDto;
+import net.linkednest.share.board.service.BoardArticleServiceImpl;
+import net.linkednest.profile.service.ProfileServiceImpl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import net.linkednest.www.board.service.BoardArticleRedisServiceImpl;
-import net.linkednest.www.profile.dto.ProfileDto;
+import net.linkednest.share.board.service.BoardArticleRedisServiceImpl;
+import net.linkednest.profile.dto.ProfileDto;
 
 
 @Controller

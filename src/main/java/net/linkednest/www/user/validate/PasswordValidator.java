@@ -1,8 +1,8 @@
 package net.linkednest.www.user.validate;
 
 
-import net.linkednest.www.common.validate.BaseValidator;
-import net.linkednest.www.common.validate.ValidationUtil;
+import net.linkednest.common.validate.BaseValidator;
+import net.linkednest.common.validate.ValidationUtil;
 import net.linkednest.www.user.dto.UserDto;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;

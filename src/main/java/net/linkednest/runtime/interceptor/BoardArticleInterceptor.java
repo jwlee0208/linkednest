@@ -5,8 +5,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.linkednest.www.board.dto.BoardArticleDto;
-import net.linkednest.www.board.dto.BoardDto;
+import net.linkednest.share.board.dto.BoardArticleDto;
+import net.linkednest.share.board.dto.BoardDto;
 import net.linkednest.www.common.dto.ShareDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;

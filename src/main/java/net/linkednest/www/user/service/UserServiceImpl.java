@@ -2,8 +2,8 @@ package net.linkednest.www.user.service;
 
 import javax.annotation.Resource;
 
-import net.linkednest.www.common.CommonConstant;
-import net.linkednest.www.common.util.AES256Util;
+import net.linkednest.common.CommonConstant;
+import net.linkednest.common.util.AES256Util;
 import net.linkednest.www.user.dao.UserDao;
 import net.linkednest.www.user.dto.UserDto;
 import org.apache.commons.logging.Log;

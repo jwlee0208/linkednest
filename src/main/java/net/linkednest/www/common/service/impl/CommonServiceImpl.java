@@ -119,10 +119,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import net.linkednest.www.common.CommonConstant;
+import net.linkednest.common.CommonConstant;
 import net.linkednest.www.common.dao.CommonDao;
 import net.linkednest.www.common.dto.CodeDto;
-import net.linkednest.www.common.util.AES256Util;
+import net.linkednest.common.util.AES256Util;
 import net.linkednest.www.user.service.UserServiceImpl;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 

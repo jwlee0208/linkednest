@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import net.linkednest.www.board.service.BoardCategoryServiceImpl;
+import net.linkednest.share.board.service.BoardCategoryServiceImpl;
 import net.linkednest.www.common.dto.ShareDto;
 import net.linkednest.www.common.service.impl.CommonServiceImpl;
-import net.linkednest.www.common.util.PagedList;
+import net.linkednest.common.util.PagedList;
 import net.linkednest.www.user.dto.UserDto;
 import net.sf.json.JSONObject;
 
@@ -28,10 +28,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import net.linkednest.www.board.dto.BoardCategoryDto;
-import net.linkednest.www.board.dto.BoardDto;
-import net.linkednest.www.board.service.BoardServiceImpl;
-import net.linkednest.www.share.service.ShareServiceImpl;
+import net.linkednest.share.board.dto.BoardCategoryDto;
+import net.linkednest.share.board.dto.BoardDto;
+import net.linkednest.share.board.service.BoardServiceImpl;
+import net.linkednest.share.service.ShareServiceImpl;
 import net.linkednest.www.user.service.UserServiceImpl;
 @Controller
 @RequestMapping(value="/config")

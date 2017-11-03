@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import net.linkednest.www.common.CommonConstant;
+import net.linkednest.common.CommonConstant;
 import net.linkednest.www.common.dto.CodeDto;
 import net.linkednest.www.common.dto.MailDto;
 import net.linkednest.www.common.dto.ShareDto;
 import net.linkednest.www.common.service.impl.CommonServiceImpl;
-import net.linkednest.www.common.util.AES256Util;
-import net.linkednest.www.common.validate.JsonResponse;
+import net.linkednest.common.util.AES256Util;
+import net.linkednest.common.validate.JsonResponse;
 import net.linkednest.www.user.dto.UserDto;
 import net.linkednest.www.user.service.UserServiceImpl;
 import net.linkednest.www.user.validate.UserValidator;
@@ -47,7 +47,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import net.linkednest.www.share.service.ShareServiceImpl;
+import net.linkednest.share.service.ShareServiceImpl;
 import net.linkednest.www.user.validate.PasswordValidator;
 
 @Controller
