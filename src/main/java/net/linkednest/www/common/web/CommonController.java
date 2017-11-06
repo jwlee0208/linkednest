@@ -106,7 +106,7 @@ public class CommonController {
             model.addAttribute("boardCategoryList"  , this.boardService.getBoardCategoryAndBoardList(boardCategoryPortalDto));
             model.addAttribute("shareInfo"          , shareDto);
             sb.append("ajaxBlogMenu");
-        }else if(menuType.equals("config")){
+        }else if(menuType.equals("properties/config")){
             BoardDto boardDto = new BoardDto();
             model.addAttribute("boardList", this.boardService.getBoardList(boardDto));
             sb.append("ajaxConfigMenu");

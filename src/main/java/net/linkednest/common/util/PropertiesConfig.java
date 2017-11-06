@@ -8,7 +8,7 @@ import org.apache.ibatis.io.Resources;
 
 public class PropertiesConfig {
 	private static final String TRUE = "1";
-	private static String serverconfig_resource = "config/uploadserver-config.properties";
+	private static String serverconfig_resource = "properties/config/uploadserver-config.properties";
 	private Properties server_props = new Properties();
 	private static PropertiesConfig config = null; 
 			

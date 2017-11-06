@@ -29,7 +29,7 @@
 
     <context:component-scan base-package="net.linkednest"/>
     <!-- properties configuration -->
-    <context:property-placeholder location="classpath:properties/tryout.properties" />
+    <context:property-placeholder location="classpath:properties/linkednest.properties" />
 
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
     <resources mapping="/**" 			location="/resources/" />
