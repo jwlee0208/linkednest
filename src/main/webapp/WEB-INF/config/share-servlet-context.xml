@@ -32,7 +32,7 @@
     <context:property-placeholder location="classpath:properties/tryout.properties" />
 
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-    <resources mapping="/**" 			location="/resources/" />
+    <resources mapping="/resources/**" 			location="/resources/" />
 
     <!-- jsonView -->
     <beans:bean id="jsonViewer" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
