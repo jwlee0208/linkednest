@@ -340,10 +340,8 @@ public class ProfileServiceImpl implements ProfileService{
 				e.printStackTrace();
 			}
 		}
-
 		return 1;
 	}
-
 
 	/**
 	 * Update Profile For Player
@@ -539,8 +537,23 @@ public class ProfileServiceImpl implements ProfileService{
 		}
 	}
 
+	/**
+	 * Adding basically profile info
+	 *
+	 * @param profileDto
+	 * @return int
+	 * 			profileId
+	 */
 	private int addProfileInfo(ProfileDto profileDto){
-		return this.profileDao.insertProfileInfo(profileDto);
+		int profileId = 0;
+		try {
+			// insert profile information
+			profileId = this.profileDao.insertProfileInfo(profileDto);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			return profileId;
+		}
 	}
 	
 	private int addProfilePlayerInfo(ProfilePlayerDto profilePlayerDto){
