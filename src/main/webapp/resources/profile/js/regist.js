@@ -28,6 +28,7 @@
 	}
 
 	$(function(){
+		// profile registration
 		$("#saveBtn").click(function(){
 			var introduce = tinyMCE.get('introduce').getContent();
 			$("#introduce").val(introduce);
@@ -35,34 +36,15 @@
 			var profileImg = $.trim($("#profileImg").val());
 			
 			if(profileImg.length == 0){
-				$.ajax({
-					url 		: '/profile/registAction',
-					data 		: $("#actionFrm").serialize(),
-					dataType 	: 'json',
-					method 		: 'post',
-					success 	: function(data){
-						var result = data.result;
-						var msg = data.message;
-												
-						if(result == 'success'){
-							location.href = "/profile/list/"+$("#profileType").val() + "/" + $("#categoryId").val();
-						}else{
-							alert(msg);
-							return;
-						}						
-					}
-				});					
+				this.registProfileNoneImage();
 			}else{
-				// 썸네일 파일 업로드 할 때 저장
-				var frm = $("#actionFrm");
-				frm.attr("action", '/profile/registAction');
-				frm.attr("method", "post");
-				frm.ajaxForm(FileuploadCallback); 
-				frm.submit(); 				
-				
+				this.registProfileWithImage();
 			}
 		});
-		
+
+        /********************************************************
+		 * Remove row
+         ********************************************************/
 		// pitcher stat row removing
 		$("body").on("click", ".removePitcherBtn", function(){
 			$(this).parent().parent().get(0).remove();
@@ -80,7 +62,9 @@
 			$(this).parent().parent().get(0).remove();
 		});
 
-		
+        /********************************************************
+		 * Add row
+         ********************************************************/
 		// youtube stream row adding
 		$(".addStreamBtn").click(function(){
 			
@@ -167,8 +151,37 @@
 			
 				$(".tableCareer > tbody:last").append(addCareerHtml);				
 			}
-		});	
-		
+		});
+
+        function registProfileNoneImage() {
+            $.ajax({
+                url 		: '/profile/registAction',
+                data 		: $("#actionFrm").serialize(),
+                dataType 	: 'json',
+                method 		: 'post',
+                success 	: function(data){
+                    var result = data.result;
+                    var msg = data.message;
+
+                    if(result == 'success'){
+                        location.href = "/profile/list/"+$("#profileType").val() + "/" + $("#categoryId").val();
+                    }else{
+                        alert(msg);
+                        return;
+                    }
+                }
+            });
+        }
+
+		function registProfileWithImage() {
+			// 썸네일 파일 업로드 할 때 저장
+            var frm = $("#actionFrm");
+            frm.attr("action", '/profile/registAction');
+            frm.attr("method", "post");
+            frm.ajaxForm(FileuploadCallback);
+            frm.submit();
+        }
+
 		// validation for career
 		function validateCareer(careerTitle, careerDescription, careerStartDate, careerEndDate, careerStatus) {
 			if (careerTitle == null || careerTitle == '') {
@@ -316,6 +329,7 @@
 				$(".tableHitterStat > tbody:last").append(addHitterHtml);	
 			}	
 		});
+		
 		// fielder stat row adding
 		$(".addFielderBtn").click(function(){
 			
@@ -381,6 +395,7 @@
 			
 		});	
 		
+		// youtube searching
 		$("#searchMyYoutube").click(function(){
 			if ($("#searchYoutubeKeyword").val() != null && $("#searchYoutubeKeyword").val() != '') {
 				$("#youtubeListDiv").load("/api/youtube/streamList", {"keyword" : $("#searchYoutubeKeyword").val(), "type" : "select"});				

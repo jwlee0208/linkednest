@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Insert title here</title>
+	<title>Player's Profile</title>
 	<!-- editor -->
 	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/tinymce/tinymce.min.js"></script>
 	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/common-editor.js"></script>
@@ -51,7 +51,4 @@
 	<br />
 </div>
 </body>
-<script>
-
-</script>
 </html>

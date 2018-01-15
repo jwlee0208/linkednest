@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import net.linkednest.common.DBConstants;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
@@ -34,7 +35,6 @@ public class ProfileServiceImpl implements ProfileService{
 	
 	@Resource(name="profileDao")
 	private ProfileDao profileDao;
-
 
 	private static final String PROFILE_TYPE_PLAYER 	= "1";
 	private static final String PROFILE_TYPE_COACH 		= "2";
@@ -186,12 +186,13 @@ public class ProfileServiceImpl implements ProfileService{
 			ProfilePlayerDto profilePlayerParamObj = profilePlayerParam.get();
 			profilePlayerParamObj.setProfileId(profileId);
 			try {
-				if (StringUtils.equals(actionType, "insert")) {
+				if (StringUtils.equals(actionType, DBConstants.DB_SQL_INSERT)) {
 					this.addProfilePlayerInfo(profilePlayerParamObj);
-				} else if (StringUtils.equals(actionType, "update")) {
+				} else if (StringUtils.equals(actionType, DBConstants.DB_SQL_UPDATE)) {
 					this.updateProfilePlayerInfo(profilePlayerParamObj);
 				}
 			} catch (Exception e) {
+				// Transaction rollback
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			}
 		}
@@ -206,14 +207,14 @@ public class ProfileServiceImpl implements ProfileService{
 	private void insertProfileCareerInfos(int profileId, ProfileDto profileDto) {
 		List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
 		if (CollectionUtils.isNotEmpty(profileCareerParamList)){
-			for(ProfileCareerDto profileCareerParam : profileCareerParamList){
+			profileCareerParamList.stream().forEach(profileCareerParam -> {
 				profileCareerParam.setProfileId(profileId);
 				try {
 					this.addProfileCareerInfo(profileCareerParam);
 				} catch (Exception e) {
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				}
-			}
+			});
 		}
 	}
 
@@ -239,14 +240,14 @@ public class ProfileServiceImpl implements ProfileService{
 		// 3.2. fielding statistic
 		List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
 		if (CollectionUtils.isNotEmpty(profileStatFielderParamList)) {
-			for(ProfileStatFielderDto profileStatFielderParam : profileStatFielderParamList){
+			profileStatFielderParamList.stream().forEach(profileStatFielderParam -> {
 				profileStatFielderParam.setProfileId(profileId);
 				try {
 					this.addProfileStatFielderInfo(profileStatFielderParam);
 				} catch (Exception e) {
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				}
-			}
+			});
 		}
 		// 3.3. pitching statistic
 		List<ProfileStatPitcherDto> profileStatPitcherParamList = profileDto.getProfileStatPitcherList();
@@ -281,28 +282,29 @@ public class ProfileServiceImpl implements ProfileService{
 
 		List<ProfileStreamDto> profileStreamParamList = profileDto.getProfileStreamList();
 		if(CollectionUtils.isNotEmpty(profileStreamParamList)){
-			for(ProfileStreamDto profileStreamParam : profileStreamParamList){
+			profileStreamParamList.stream().forEach(profileStreamParam -> {
 				profileStreamParam.setProfileId(profileId);
 				try {
 					this.addProfileStreamInfo(profileStreamParam);
 				} catch (Exception e) {
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				}
-			}
+			});
 		}
 
 		List<ProfileAttrElementMapDto> profileAttrElementMapParamList = profileDto.getProfileAttrElementMapList();
 		if(CollectionUtils.isNotEmpty(profileAttrElementMapParamList)){
-			for(ProfileAttrElementMapDto profileAttrElementMapParam : profileAttrElementMapParamList){
-				if(profileAttrElementMapParam.getProfileAttrElementId() > 0){
-					profileAttrElementMapParam.setProfileId(profileId);
-					try {
-						this.addProfileAttrElemMapInfo(profileAttrElementMapParam);
-					} catch (Exception e) {
-						TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					}
-				}
-			}
+
+			profileAttrElementMapParamList.stream()
+					.filter(profileAttrElementMapParam -> profileAttrElementMapParam.getProfileAttrElementId() > 0)
+					.forEach(profileAttrElementMapParam -> {
+						profileAttrElementMapParam.setProfileId(profileId);
+						try {
+							this.addProfileAttrElemMapInfo(profileAttrElementMapParam);
+						} catch (Exception e) {
+							TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+						}
+			});
 		}
 	}
 
@@ -334,8 +336,8 @@ public class ProfileServiceImpl implements ProfileService{
 				this.updateProfileCommonInfos(profileId, profileDto);
 
 			} catch (Exception e){
-				e.printStackTrace();
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				e.printStackTrace();
 			}
 		}
 
@@ -384,8 +386,8 @@ public class ProfileServiceImpl implements ProfileService{
 			try {
 				this.updateProfileTeamInfo(profileTeamParam);
 			} catch (Exception e){
-				e.printStackTrace();
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				e.printStackTrace();
 			}
 		}
 	}
@@ -404,16 +406,18 @@ public class ProfileServiceImpl implements ProfileService{
 			try {
 				this.updateProfileContactInfo(profileContactInfoParam);
 			} catch (Exception e){
-				e.printStackTrace();
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				e.printStackTrace();
 			}
 		}
 
 		// update list for stream
 		List<ProfileStreamDto> profileStreamParamList = profileDto.getProfileStreamList();
-		if(profileStreamParamList != null && profileStreamParamList.size() > 0){
+		if(CollectionUtils.isNotEmpty(profileStreamParamList)){
+			// 기존의 동영상 목록 제거(초기화)
 			this.profileDao.deleteProfileStreamInfo(profileId);
-			for(ProfileStreamDto profileStreamParam : profileStreamParamList){
+			// 새로운 동영상 목록 추가
+			profileStreamParamList.stream().forEach(profileStreamParam -> {
 				profileStreamParam.setProfileId(profileId);
 				try {
 					this.addProfileStreamInfo(profileStreamParam);
@@ -421,83 +425,117 @@ public class ProfileServiceImpl implements ProfileService{
 					e.printStackTrace();
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				}
-			}
+			});
 		}
 
 		// update list for profile's attribute map
 		List<ProfileAttrElementMapDto> profileAttrElementMapParamList = profileDto.getProfileAttrElementMapList();
-		if(profileAttrElementMapParamList != null && profileAttrElementMapParamList.size() > 0){
+
+		if (CollectionUtils.isNotEmpty(profileAttrElementMapParamList)) {
+			// 기존의 profile attribute mapping 정보 제거
 			this.profileDao.deleteProfileAttrElemMapInfo(profileId);
-			for(ProfileAttrElementMapDto profileAttrElementMapParam : profileAttrElementMapParamList){
-				if(profileAttrElementMapParam.getProfileAttrElementId() > 0){
-					profileAttrElementMapParam.setProfileId(profileId);
-					this.addProfileAttrElemMapInfo(profileAttrElementMapParam);
-				}
-			}
+			// 새로운 profile attribute mapping 정보 추가
+			profileAttrElementMapParamList.stream()
+					.filter(profileAttrElementMapParam -> profileAttrElementMapParam.getProfileAttrElementId() > 0)
+					.forEach(profileAttrElementMapParam -> {
+				profileAttrElementMapParam.setProfileId(profileId);
+				this.addProfileAttrElemMapInfo(profileAttrElementMapParam);
+			});
 		}
 	}
 
+	/**
+	 * updating player profile
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
 	private void updateProfilePlayerInfo(int profileId, ProfileDto profileDto) {
-		this.mergeProfilePlayerInfo(profileId, profileDto, "update");
+		this.mergeProfilePlayerInfo(profileId, profileDto, DBConstants.DB_SQL_UPDATE);
 	}
 
+	/**
+	 * updating profile > career info
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
 	private void updateProfileCareerInfos(int profileId, ProfileDto profileDto) {
 		List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
 		if(CollectionUtils.isNotEmpty(profileCareerParamList)){
 //						this.profileDao.deleteProfileCareerInfo(profileId);
-			for(ProfileCareerDto profileCareerParam : profileCareerParamList){
+			profileCareerParamList.stream().forEach(profileCareerParam -> {
 				profileCareerParam.setProfileId(profileId);
 				try {
 					this.addProfileCareerInfo(profileCareerParam);
 				} catch (Exception e){
-					e.printStackTrace();
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+					e.printStackTrace();
 				}
-			}
+			});
 		}
 	}
 
+	/**
+	 * updating profile > stat info
+	 *
+	 * @param profileId
+	 * @param profileDto
+	 */
 	private void updateProfileStatInfos(int profileId, ProfileDto profileDto) {
+		/**********************************
+		 * Updation Hitting Stats
+		 **********************************/
 		List<ProfileStatHitterDto> profileStatHitterParamList = profileDto.getProfileStatHitterList();
 		if(CollectionUtils.isNotEmpty(profileStatHitterParamList)){
+			// 기존의 타격 기록 정보 삭제(초기화)
 			this.profileDao.deleteProfileStatHitterInfo(profileId);
-			for(ProfileStatHitterDto profileStatHitterParam : profileStatHitterParamList){
+			// 새로운 타격 기록 정보 추가
+			profileStatHitterParamList.stream().forEach(profileStatHitterParam -> {
 				profileStatHitterParam.setProfileId(profileId);
 				try {
 					this.addProfileStatHitterInfo(profileStatHitterParam);
 				} catch (Exception e){
-					e.printStackTrace();
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+					e.printStackTrace();
 				}
-			}
+			});
 		}
-
+		/**********************************
+		 * Updation Fielding Stats
+		 **********************************/
 		List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
 		if(CollectionUtils.isNotEmpty(profileStatFielderParamList)){
+			// 기존의 수비 기록 정보 삭제(초기화)
 			this.profileDao.deleteProfileStatFielderInfo(profileId);
-			for(ProfileStatFielderDto profileStatFielderParam : profileStatFielderParamList){
+			// 새로운 수비 기록 정보 추가
+			profileStatFielderParamList.stream().forEach(profileStatFielderParam -> {
 				profileStatFielderParam.setProfileId(profileId);
 				try {
 					this.addProfileStatFielderInfo(profileStatFielderParam);
 				} catch (Exception e){
-					e.printStackTrace();
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+					e.printStackTrace();
 				}
-			}
+			});
 		}
-
+		/**********************************
+		 * Updation Ptiching Stats
+		 **********************************/
 		List<ProfileStatPitcherDto> profileStatPitcherParamList = profileDto.getProfileStatPitcherList();
 		if(CollectionUtils.isNotEmpty(profileStatPitcherParamList)){
+			// 기존의 피칭 기록 정보 삭제(초기화)
 			this.profileDao.deleteProfileStatPitcherInfo(profileId);
-			for(ProfileStatPitcherDto profileStatPitcherParam : profileStatPitcherParamList){
+			// 새로운 피칭 기록 정보 추가
+			profileStatPitcherParamList.stream().forEach(profileStatPitcherParam -> {
 				profileStatPitcherParam.setProfileId(profileId);
 				try {
 					this.addProfileStatPitcherInfo(profileStatPitcherParam);
 				} catch (Exception e){
-					e.printStackTrace();
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+					e.printStackTrace();
 				}
-			}
+			});
 		}
 	}
 

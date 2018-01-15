@@ -36,7 +36,7 @@ public class ProfileController {
 	private static final Log logger = LogFactory.getLog(ProfileController.class);
 	
 	@Autowired
-	private FileUpload 			fileUpload;
+	private FileUpload fileUpload;
 
 	@Autowired
 	private ProfileService profileService;
@@ -217,7 +217,7 @@ public class ProfileController {
     		imageUploadResult = fileUpload.uploadFile(profileImg);	
     	}
 
-    	boolean isValidUploadResult = !imageUploadResult.equals("") && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
+    	boolean isValidUploadResult = !imageUploadResult.equals(StringUtils.EMPTY) && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
     	if(isValidUploadResult){
     		filePath = imageUploadResult;
     		profileDto.setProfileImgPath(filePath);
@@ -260,7 +260,7 @@ public class ProfileController {
     		imageUploadResult = fileUpload.uploadFile(profileImg);	
     	}
 
-    	boolean isValidImageUploadResult = !imageUploadResult.equals("") && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
+    	boolean isValidImageUploadResult = !imageUploadResult.equals(StringUtils.EMPTY) && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
     	if(isValidImageUploadResult){
     		filePath = imageUploadResult;
     		profileDto.setProfileImgPath(filePath);
@@ -319,7 +319,7 @@ public class ProfileController {
     		imageUploadResult = fileUpload.uploadFile(leagueLogoImg);	
     	}
 
-    	boolean isValidImageUploadResult = !imageUploadResult.equals("") && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
+    	boolean isValidImageUploadResult = !imageUploadResult.equals(StringUtils.EMPTY) && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
     	if(isValidImageUploadResult){
     		filePath = imageUploadResult;
     		leagueInfoDto.setLeagueImgPath(filePath);
