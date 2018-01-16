@@ -1,4 +1,4 @@
-package net.linkednest.common;
+package net.linkednest.common.Constants;
 /**
  * @brief 공통 param
  * @author leejinwon

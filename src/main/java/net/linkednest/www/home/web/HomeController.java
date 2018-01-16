@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import net.linkednest.profile.ProfileConstants;
 import net.linkednest.profile.service.ProfileService;
 import net.linkednest.share.board.dto.BoardArticleDto;
 import net.linkednest.share.board.service.BoardArticleRedisService;
@@ -47,27 +48,57 @@ public class HomeController {
 	
 	@RequestMapping(value="/home")
 	public String goHome(Model model, HttpSession session) throws Exception{
-		// recent player list 
+		// recent player list
+		this.getRecentPlayerList(model);
+		// recent team list
+		this.getRecentTeamList(model);
+		// recent tryout list
+		this.getRecentTryoutList(model);
+
+	    return "home";
+	}
+
+	/**
+	 * Recent Player List
+	 *
+	 * @param model
+	 * @throws Exception
+	 */
+	private void getRecentPlayerList(Model model) throws Exception {
 		ProfileDto profilePlayerDto = new ProfileDto();
 		profilePlayerDto.setCatId1("01010100");
-		profilePlayerDto.setProfileType("1");
+		profilePlayerDto.setProfileType(ProfileConstants.PROFILE_TYPE_PLAYER.getCode());
 		List<ProfileDto> profilePlayerList = this.profileService.getProfileInfos(profilePlayerDto);
 		model.addAttribute("recentPlayerProfileList", profilePlayerList);
-		// recent team list
+	}
+
+	/**
+	 * Recent Team List
+	 *
+	 * @param model
+	 * @throws Exception
+	 */
+	private void getRecentTeamList(Model model) throws Exception {
 		ProfileDto profileTeamDto = new ProfileDto();
 		profileTeamDto.setCatId1("01010300");
-		profileTeamDto.setProfileType("3");
+		profileTeamDto.setProfileType(ProfileConstants.PROFILE_TYPE_TEAM.getCode());
 		List<ProfileDto> profileTeamList = this.profileService.getProfileInfos(profileTeamDto);
 		model.addAttribute("recentTeamProfileList", profileTeamList);
-		// recent tryout list
-	    BoardArticleDto boardDto01 = new BoardArticleDto();
-	    boardDto01.setBoardId(15);
-	    List<BoardArticleDto> recentTryoutList = this.boardArticleService.selectBoardArticleFive(boardDto01);
-	    model.addAttribute("recentTryoutList"  , recentTryoutList);
-		
-	    return "home";
-	}	
-	
+	}
+
+	/**
+	 * Recent Tryout List
+	 *
+	 * @param model
+	 * @throws Exception
+	 */
+	private void getRecentTryoutList(Model model) throws Exception {
+		BoardArticleDto boardDto01 = new BoardArticleDto();
+		boardDto01.setBoardId(15);
+		List<BoardArticleDto> recentTryoutList = this.boardArticleService.selectBoardArticleFive(boardDto01);
+		model.addAttribute("recentTryoutList"  , recentTryoutList);
+	}
+
 	@RequestMapping(value="/aboutUs")
 	public String goAboutUs() throws Exception{
 		return "/info/aboutUs";

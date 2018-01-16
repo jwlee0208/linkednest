@@ -6,11 +6,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.linkednest.common.paging.PageHolder;
+import net.linkednest.profile.ProfileConstants;
 import net.linkednest.profile.dto.LeagueInfoDto;
 import net.linkednest.profile.service.ProfileService;
+import net.linkednest.profile.validate.ProfilePlayerValidator;
+import net.linkednest.profile.validate.ProfileValidator;
 import net.linkednest.www.user.dto.UserDto;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,6 +22,7 @@ import org.apache.xerces.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +45,8 @@ public class ProfileController {
 
 	@Autowired
 	private ProfileService profileService;
+
+	private static final int PROFILE_LIST_CNT_9X3 = 9*3;
 
 	/**
 	 * @brief Profile View
@@ -101,12 +108,8 @@ public class ProfileController {
 	@RequestMapping(value="/list/{profileType}/{catId}")
 	public String getProfileList(Model model, HttpSession session, @PathVariable int profileType, @PathVariable String catId){
 		
-		boolean isLogon     = false;
         UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
-        
-        if(sessionInfo != null){
-        	isLogon    = true;
-        }
+		boolean isLogon     = (sessionInfo != null) ? true : false;
         
 		ProfileDto profileDto = new ProfileDto();
 		profileDto.setCatId1(catId);
@@ -119,6 +122,7 @@ public class ProfileController {
 		model.addAttribute("attrElementList", attrElementList);
 		return "/profile/profileList";
 	}
+
 	/**
 	 * @brief ajaxProfileList
 	 * @param request
@@ -139,14 +143,14 @@ public class ProfileController {
         PageHolder			pageHolder 	= null;
         int                 profileCnt  = 0;
         
-        searchProfileDto.setListSize(9*3);
+        searchProfileDto.setListSize(this.PROFILE_LIST_CNT_9X3);
         
         try {
             profileList = profileService.getSearchedProfileList(searchProfileDto);
             profileCnt  = profileService.getSearchedProfileListCnt(searchProfileDto);
 
             if(profileCnt > 0){
-                pageHolder = new PageHolder(profileCnt, searchProfileDto.getPage(), 9*3);   
+                pageHolder = new PageHolder(profileCnt, searchProfileDto.getPage(), this.PROFILE_LIST_CNT_9X3);
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -159,6 +163,7 @@ public class ProfileController {
         
         return "/profile/ajaxProfileList";
     }
+
     /**
      * @brief Profile Registration Page
 	 *
@@ -170,13 +175,9 @@ public class ProfileController {
     @RequestMapping(value="/regist/{profileType}/{catId}", method=RequestMethod.GET)
     public String getProfileRegistPage(Model model, HttpSession session, @PathVariable String profileType, @PathVariable String catId){
     	
-        boolean isLogon     = false;
         UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
-        
-        if(sessionInfo != null){
-        	isLogon    = true;
-        }
-        
+		boolean isLogon     = (sessionInfo != null) ? true : false;
+
     	ProfileDto profileDto = new ProfileDto();
     	profileDto.setCatId1(catId);
     	profileDto.setProfileType(profileType);
@@ -184,7 +185,7 @@ public class ProfileController {
     	List<ProfileAttrDto> profileAttrList = this.profileService.getProfileAttrElementList(profileDto);
     	
     	List<LeagueInfoDto> leagueInfoList = null;
-    	if(profileType.equals("3")){
+    	if(profileType.equals(ProfileConstants.PROFILE_TYPE_TEAM)){
     		leagueInfoList = this.profileService.getLeagueInfoList();
     	}
     	
@@ -206,30 +207,19 @@ public class ProfileController {
 	 */
     @RequestMapping(value="/registAction", method=RequestMethod.POST)
     @ResponseBody
-    public JSONObject  registProfile(ProfileDto profileDto, HttpSession session) throws Exception{
-    	JSONObject 		result 				= new  JSONObject(); 
-    	MultipartFile 	profileImg 			= profileDto.getProfileImg();
-    	
-    	String 			imageUploadResult 	= StringUtils.EMPTY;
-    	String 			filePath			= StringUtils.EMPTY;
-    	
-    	if(null != profileImg){
-    		imageUploadResult = fileUpload.uploadFile(profileImg);	
-    	}
+    public JSONObject  registProfile(ProfileDto profileDto, HttpSession session, BindingResult bindingResult) throws Exception{
+    	JSONObject 		result 				= new  JSONObject();
+		// Uploading Profile Image & Setting Image Path
+		this.uploadProfileImage(profileDto);
 
-    	boolean isValidUploadResult = !imageUploadResult.equals(StringUtils.EMPTY) && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
-    	if(isValidUploadResult){
-    		filePath = imageUploadResult;
-    		profileDto.setProfileImgPath(filePath);
-    	}
-    	
     	profileDto.setTitle(profileDto.getName());
     	
-    	System.out.println("profileDto is " + profileDto.toString());
+    	System.out.printf("profileDto is $s\n", profileDto.toString());
     	logger.debug("profileDto is " + profileDto.toString());
     	
     	// validation 
-    	
+		ProfileValidator.insertValidate(bindingResult, profileDto);
+
     	// service call : insert tables
     	int addCnt = this.profileService.addProfileInfos(profileDto);
     	
@@ -251,20 +241,9 @@ public class ProfileController {
     @ResponseBody
     public JSONObject  modifyProfile(ProfileDto profileDto, HttpSession session) throws Exception{
     	JSONObject 		result 				= new  JSONObject(); 
-    	MultipartFile 	profileImg 			= profileDto.getProfileImg();
-    	
-    	String 			imageUploadResult 	= StringUtils.EMPTY;
-    	String 			filePath			= StringUtils.EMPTY;
-    	
-    	if(profileImg != null){
-    		imageUploadResult = fileUpload.uploadFile(profileImg);	
-    	}
 
-    	boolean isValidImageUploadResult = !imageUploadResult.equals(StringUtils.EMPTY) && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
-    	if(isValidImageUploadResult){
-    		filePath = imageUploadResult;
-    		profileDto.setProfileImgPath(filePath);
-    	}
+    	// Uploading Profile Image & Setting Image Path
+    	this.uploadProfileImage(profileDto);
     	
     	profileDto.setTitle(profileDto.getName());
     	
@@ -281,6 +260,30 @@ public class ProfileController {
     	
     	return result;
     }
+
+	/**
+	 * [Common] Uploading Profile Image & Setting Image Path
+	 *
+	 * @param profileDto
+	 * @throws Exception
+	 */
+    private void uploadProfileImage(ProfileDto profileDto) throws Exception {
+		MultipartFile 	profileImg 			= profileDto.getProfileImg();
+
+		String 			imageUploadResult 	= StringUtils.EMPTY;
+		String 			filePath			= StringUtils.EMPTY;
+
+		if(profileImg != null){
+			imageUploadResult = fileUpload.uploadFile(profileImg);
+		}
+
+		boolean isValidImageUploadResult = !imageUploadResult.equals(StringUtils.EMPTY) && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
+		if(isValidImageUploadResult){
+			filePath = imageUploadResult;
+			profileDto.setProfileImgPath(filePath);
+		}
+
+	}
 
 	/**
 	 * View Page For Regist League Info
@@ -351,12 +354,9 @@ public class ProfileController {
 	 */
 	@RequestMapping(value="/leagueList")
     public String getLeagueInfoList(Model model, HttpSession session) throws Exception{
-    	boolean isLogon     = false;
-        UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
-        
-        if(sessionInfo != null){
-        	isLogon    = true;
-        }
+    	UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
+		boolean isLogon     = (sessionInfo != null) ? true : false;
+
         model.addAttribute("isLogon"		, isLogon);
     	model.addAttribute("leagueList", this.profileService.getLeagueInfoList());
     	return "/profile/leagueList";

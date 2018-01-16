@@ -52,11 +52,6 @@ public class BoardArticleController {
 	public static final int 	DEFAULT_PAGE_NO 				= 1;
 	public static final int 	DEFAULT_PAGE_SIZE 				= 3;
 
-	// Related to image upload
-	public static final long 	MAX_UPLOAD_FILE_SIZE 			= 20480000;
-	public static final String 	FILE_EXTENSIONS_IMAGES 			= "jpg, jpeg, png, gif, bmp";
-	public static final int 	DB_RESULT_SUCCESS 				= 1;
-	
 	public static final int 	DEFAULT_THUMBNAIL_IMAGE_WIDTH 	= 314;
 	public static final int 	DEFAULT_THUMBNAIL_IMAGE_HEIGHT 	= 166;
 	
@@ -633,7 +628,6 @@ public class BoardArticleController {
             // if boardId가 없고, boardName이 입력되어 넘어오는 경우
             // 1. default boardCategory 를 생성
             // 2. 새로운 board를 생성
-            
             boardArticleDto.setAuthorId(sessionInfo.getUserId());
             boardArticleDto.setAuthorNm(sessionInfo.getUserNm());
             boardArticleDto.setStatus(1);
@@ -652,16 +646,16 @@ public class BoardArticleController {
     		}
     		
     		if(insertedArticleId > 0){
-                List<SlideshareLinkDto> slideshareLinkDtos = boardArticleDto.getSlideshareLinkInfos();
-                if(slideshareLinkDtos != null && slideshareLinkDtos.size() > 0){
-                    for(SlideshareLinkDto slideshareLinkObj : slideshareLinkDtos){
-                        if(!StringUtils.isEmpty(slideshareLinkObj.getSlideshareLinkUrl())){
-                            slideshareLinkObj.setCreateUserId(sessionInfo.getUserId());
-                            slideshareLinkObj.setArticleId(insertedArticleId);
-//                            this.boardArticleService.insertSlideshareInfo(slideshareLinkObj);                                   
-                        }
-                    }
-                }
+				List<SlideshareLinkDto> slideshareLinkDtos = boardArticleDto.getSlideshareLinkInfos();
+				if(CollectionUtils.isNotEmpty(slideshareLinkDtos)){
+					for(SlideshareLinkDto slideshareLinkObj : slideshareLinkDtos){
+						if (!StringUtils.isEmpty(slideshareLinkObj.getSlideshareLinkUrl())) {
+							slideshareLinkObj.setCreateUserId(sessionInfo.getUserId());
+							slideshareLinkObj.setArticleId(insertedArticleId);
+							this.boardArticleService.insertSlideshareInfo(slideshareLinkObj);
+						}
+					}
+				}
     	        // 게시글 데이터 하나씩 추가될 때마다 redis 키값에 저장된 리스트 데이터 삭제 후 데이터 재설정하는 부분
 				this.updateArticleListForRedis(boardId);
     		}
@@ -720,22 +714,16 @@ public class BoardArticleController {
 			updateResult = this.boardArticleService.updateBoardArticle(boardArticleDto);
 			
 			if(updateResult > 0){
-                List<SlideshareLinkDto> slideshareLinkDtos = boardArticleDto.getSlideshareLinkInfos();
-                
-                if(CollectionUtils.isNotEmpty(slideshareLinkDtos)){
-                    for(SlideshareLinkDto slideshareLinkObj : slideshareLinkDtos){
-                        if(!StringUtils.isEmpty(slideshareLinkObj.getSlideshareLinkUrl())){
-                            slideshareLinkObj.setCreateUserId(sessionInfo.getUserId());
-                            slideshareLinkObj.setArticleId(boardArticleDto.getArticleId());
-                            if(slideshareLinkObj.getSlideId() > 0){
-                                this.boardArticleService.updateSlideshareInfo(slideshareLinkObj);    
-                            }else{
-                                this.boardArticleService.insertSlideshareInfo(slideshareLinkObj);
-                            }
-                        }
-                    }
-                }                   
-            }			
+				boardArticleDto.getSlideshareLinkInfos().stream().filter(slideshareLinkObj -> !StringUtils.isEmpty(slideshareLinkObj.getSlideshareLinkUrl())).forEach(slideshareLinkObj -> {
+					slideshareLinkObj.setCreateUserId(sessionInfo.getUserId());
+					slideshareLinkObj.setArticleId(boardArticleDto.getArticleId());
+					if(slideshareLinkObj.getSlideId() > 0){
+						this.boardArticleService.updateSlideshareInfo(slideshareLinkObj);
+					}else{
+						this.boardArticleService.insertSlideshareInfo(slideshareLinkObj);
+					}
+				});
+            }
 			
 			if(bindingResult.hasErrors()){
 				jsonObj.put("validate", false);
@@ -800,21 +788,15 @@ public class BoardArticleController {
     			updateResult = this.boardArticleService.updateBoardArticle(boardArticleDto);
     			
     			if(updateResult > 0){
-                    List<SlideshareLinkDto> slideshareLinkDtos = boardArticleDto.getSlideshareLinkInfos();
-                    
-                    if(CollectionUtils.isNotEmpty(slideshareLinkDtos)){
-                        for(SlideshareLinkDto slideshareLinkObj : slideshareLinkDtos){
-                            if(!StringUtils.isEmpty(slideshareLinkObj.getSlideshareLinkUrl())){
-                                slideshareLinkObj.setCreateUserId(sessionInfo.getUserId());
-                                slideshareLinkObj.setArticleId(boardArticleDto.getArticleId());
-                                if(slideshareLinkObj.getSlideId() > 0){
-                                    this.boardArticleService.updateSlideshareInfo(slideshareLinkObj);    
-                                }else{
-                                    this.boardArticleService.insertSlideshareInfo(slideshareLinkObj);
-                                }                          
-                            }
-                        }
-                    }    			    
+					boardArticleDto.getSlideshareLinkInfos().stream().filter(slideshareLinkObj -> !StringUtils.isEmpty(slideshareLinkObj.getSlideshareLinkUrl())).forEach(slideshareLinkObj -> {
+						slideshareLinkObj.setCreateUserId(sessionInfo.getUserId());
+						slideshareLinkObj.setArticleId(boardArticleDto.getArticleId());
+						if(slideshareLinkObj.getSlideId() > 0){
+							this.boardArticleService.updateSlideshareInfo(slideshareLinkObj);
+						}else{
+							this.boardArticleService.insertSlideshareInfo(slideshareLinkObj);
+						}
+					});
     			}
     		}
         }

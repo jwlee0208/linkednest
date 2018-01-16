@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import net.linkednest.common.CommonConstant;
+import net.linkednest.common.Constants.CommonConstant;
 import net.linkednest.www.common.dto.CodeDto;
 import net.linkednest.www.common.dto.MailDto;
 import net.linkednest.www.common.dto.ShareDto;

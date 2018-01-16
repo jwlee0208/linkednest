@@ -5,7 +5,8 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
-import net.linkednest.common.DBConstants;
+import net.linkednest.common.Constants.DBConstants;
+import net.linkednest.profile.ProfileConstants;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
@@ -36,10 +37,7 @@ public class ProfileServiceImpl implements ProfileService{
 	@Resource(name="profileDao")
 	private ProfileDao profileDao;
 
-	private static final String PROFILE_TYPE_PLAYER 	= "1";
-	private static final String PROFILE_TYPE_COACH 		= "2";
-	private static final String PROFILE_TYPE_TEAM 		= "3";
-	
+
 	/**
 	 * @brief 프로파일 정보 목록 조회(none-paging)
 	 * @param profileInfo
@@ -100,14 +98,11 @@ public class ProfileServiceImpl implements ProfileService{
 		
 		if (profileId > 0) {
 			String profileType = profileDto.getProfileType();
-			if( StringUtils.equals(profileType, PROFILE_TYPE_PLAYER)) {
-				// insert player's profile infos
+			if( ProfileConstants.PROFILE_TYPE_PLAYER.equals(profileType) ) {	// insert player's profile infos
 				this.insertProfileForPlayer(profileId, profileDto);
-			} else if (StringUtils.equals(profileType, PROFILE_TYPE_COACH)){
-				// insert coach's profile infos
+			} else if ( ProfileConstants.PROFILE_TYPE_COACH.equals(profileType) ){	// insert coach's profile infos
 				this.insertProfileForCoach(profileId, profileDto);
-			} else if (StringUtils.equals(profileType, PROFILE_TYPE_TEAM)){
-				// insert team's profile infos
+			} else if ( ProfileConstants.PROFILE_TYPE_TEAM.equals(profileType) ){	// insert team's profile infos
 				this.insertProfileForTeam(profileId, profileDto);
 			}
 			// insert common profile infos
@@ -325,14 +320,14 @@ public class ProfileServiceImpl implements ProfileService{
 				// update to profile info 
 				this.profileDao.updateProfileInfo(profileDto);		
 				String profileType = profileDto.getProfileType();
-				if (StringUtils.equals(profileType, PROFILE_TYPE_PLAYER)) {
+				if (ProfileConstants.PROFILE_TYPE_PLAYER.equals(profileType)) {
 					this.updateProfileForPlayer(profileId, profileDto);
-				} else if (StringUtils.equals(profileType, PROFILE_TYPE_COACH)) {
+				} else if (ProfileConstants.PROFILE_TYPE_COACH.equals(profileType)) {
 					this.updateProfileForCoach(profileId, profileDto);
-				} else if (StringUtils.equals(profileType, PROFILE_TYPE_TEAM)) {
+				} else if (ProfileConstants.PROFILE_TYPE_TEAM.equals(profileType)) {
 					this.updateProfileForTeam(profileId, profileDto);
 				}
-
+				// Update Profile For Common Infos
 				this.updateProfileCommonInfos(profileId, profileDto);
 
 			} catch (Exception e){
@@ -482,7 +477,7 @@ public class ProfileServiceImpl implements ProfileService{
 	 */
 	private void updateProfileStatInfos(int profileId, ProfileDto profileDto) {
 		/**********************************
-		 * Updation Hitting Stats
+		 * Updating Hitting Stats
 		 **********************************/
 		List<ProfileStatHitterDto> profileStatHitterParamList = profileDto.getProfileStatHitterList();
 		if(CollectionUtils.isNotEmpty(profileStatHitterParamList)){
@@ -500,7 +495,7 @@ public class ProfileServiceImpl implements ProfileService{
 			});
 		}
 		/**********************************
-		 * Updation Fielding Stats
+		 * Updating Fielding Stats
 		 **********************************/
 		List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
 		if(CollectionUtils.isNotEmpty(profileStatFielderParamList)){
@@ -518,7 +513,7 @@ public class ProfileServiceImpl implements ProfileService{
 			});
 		}
 		/**********************************
-		 * Updation Ptiching Stats
+		 * Updating Ptiching Stats
 		 **********************************/
 		List<ProfileStatPitcherDto> profileStatPitcherParamList = profileDto.getProfileStatPitcherList();
 		if(CollectionUtils.isNotEmpty(profileStatPitcherParamList)){

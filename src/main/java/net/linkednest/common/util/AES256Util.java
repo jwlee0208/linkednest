@@ -9,7 +9,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import net.linkednest.common.CommonConstant;
+import net.linkednest.common.Constants.CommonConstant;
 import org.apache.commons.codec.binary.Base64;
 
 /**

@@ -20,9 +20,11 @@ import net.linkednest.www.user.dto.UserDto;
 import net.linkednest.www.user.service.UserService;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -93,8 +95,8 @@ public class ConfigController {
         String startDate       = request.getParameter("startDate");
         String endDate         = request.getParameter("endDate");
 
-        int    pageNo          = (request.getParameter("pageNo") != null) ? Integer.parseInt(request.getParameter("pageNo")) : DEFAULT_PAGE_NO;
-        int    listRowCnt      = (request.getParameter("listRowCnt") != null) ? Integer.parseInt(request.getParameter("listRowCnt")) : 10;
+        int    pageNo          = (StringUtils.isNotEmpty(StringUtils.defaultString(request.getParameter("pageNo")))) ? Integer.parseInt(request.getParameter("pageNo")) : DEFAULT_PAGE_NO;
+        int    listRowCnt      = (StringUtils.isNotEmpty(StringUtils.defaultString(request.getParameter("listRowCnt")))) ? Integer.parseInt(request.getParameter("listRowCnt")) : 10;
 
         String createUserId    = boardDto.getCreateUserId();
 

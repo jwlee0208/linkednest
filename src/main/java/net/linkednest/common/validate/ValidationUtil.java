@@ -45,10 +45,22 @@ public class ValidationUtil extends ValidationUtils{
      * 영어 & 숫자 정규식 체크
      */
     public static final String REG_EX_ENG_NUM          = "^[a-zA-Z0-9]*$";
-   
+    /**
+     * 날짜 정규식 체크(YYYY-MM-DD)
+     */
+    public static final String REG_EX_YYYY_MM_DD       = "^[0-9][0-9][0-9][0-9]\\\\-[0-9][0-9]\\\\-[0-9][0-9]$";
+    /**
+     * 숫자 or 숫자와 소수점 정규식 체크(몸무게 혹은 키)
+     */
+    public static final String REG_EX_DECIMAL_POINT =   "^[0-9]*\\\\.?[0-9]*";
+    /**
+     * URL 정규식 체크
+     */
+    public static final String REG_EX_URL = "^(https?):\\/\\/([^:\\/\\s]+)(:([^\\/]*))?((\\/[^\\s/\\/]+)*)?\\/([^#\\s\\?]*)(\\?([^#\\s]*))?(#(\\w*))?$";
+
     public static final String IMAGE_FILES_EXT		   = "jpg, jpeg, bmp, gif, png";
-    
-    
+
+
     /**
      * 정규식 체크
      * @param errors
@@ -139,6 +151,7 @@ public class ValidationUtil extends ValidationUtils{
             rejectIfEmpty(errors, field, errorCode);
         }
     }
+
     /**
      * 최소 길이 체크
      * @param fieldValue
