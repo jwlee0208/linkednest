@@ -144,7 +144,7 @@ public class UserController {
         UserValidator.insertValidate(result, userDto);
         
         String resultCode   = "REGIST_0000";
-        String resultMsg    = "";
+        String resultMsg    = org.apache.commons.lang3.StringUtils.EMPTY;
         
         int    registResult = 0;
         
@@ -159,8 +159,8 @@ public class UserController {
             
             userDto.setPasswd(hashedPassword);
             
-            String      encryptedEmail       = "";
-            String      encryptedPhoneNo     = "";
+            String      encryptedEmail       = org.apache.commons.lang3.StringUtils.EMPTY;
+            String      encryptedPhoneNo     = org.apache.commons.lang3.StringUtils.EMPTY;
             AES256Util aes256util           = null;
             try {
 
@@ -252,7 +252,7 @@ public class UserController {
         UserValidator.updateValidate(result, userDto);
         
         String resultCode   = "REGIST_0000";
-        String resultMsg    = "";
+        String resultMsg    = org.apache.commons.lang3.StringUtils.EMPTY;
         
         int    updateResult = 0;
         
@@ -309,7 +309,7 @@ public class UserController {
     @RequestMapping(value="/resetPassword")
     public String resetPasswordView(@RequestParam("v") String encryptMail, Model model){
         
-        String decryptedEmail = "";
+        String decryptedEmail = org.apache.commons.lang3.StringUtils.EMPTY;
         AES256Util aes256util = null;
         
         try {
@@ -343,7 +343,7 @@ public class UserController {
         
         if(!StringUtils.isEmpty(email)){
             
-            String encryptedEmail = "";
+            String encryptedEmail = org.apache.commons.lang3.StringUtils.EMPTY;
             AES256Util aes256util = null;
             try {
 
@@ -420,14 +420,9 @@ public class UserController {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            
-            if(updateResult < 1){
-                returnObj.setStatus("UPDATE_PW_0002");
-                returnObj.setResult("Error occurred");
-            }else{
-                returnObj.setStatus("UPDATE_PW_0000");
-                returnObj.setResult("Your password successfully updated.");
-            }            
+
+            returnObj.setStatus(updateResult < 1 ? "UPDATE_PW_0002" : "UPDATE_PW_0000");
+            returnObj.setResult(updateResult < 1 ? "Error occurred" : "Your password successfully updated.");
         }
 
         return returnObj;
@@ -503,7 +498,7 @@ public class UserController {
             } finally{
                 MailDto mailInfo = new MailDto();
                 mailInfo.setContentType("text/html; charset=utf-8");
-                mailInfo.setMailFrom("jwlee0208@gmail.com");
+                mailInfo.setMailFrom("linkednest@gmail.com");
                 mailInfo.setMailTo(decryptedEmail);
                 mailInfo.setMailSubject(title);
                 mailInfo.setTemplateName(mailTemplateUrl);

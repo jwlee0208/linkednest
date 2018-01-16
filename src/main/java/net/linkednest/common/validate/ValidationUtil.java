@@ -66,7 +66,6 @@ public class ValidationUtil extends ValidationUtils{
      * @param errors
      * @param field
      * @param errorCode
-     * @param errorArgs
      * @param defaultMessage
      * @param regEx
      */
@@ -84,7 +83,6 @@ public class ValidationUtil extends ValidationUtils{
      * @param errors
      * @param field
      * @param errorCode
-     * @param errorArgs
      * @param defaultMessage
      * @param minLength
      * @param maxLength
@@ -97,7 +95,6 @@ public class ValidationUtil extends ValidationUtils{
      * @param errors
      * @param field
      * @param errorCode
-     * @param errorArgs
      * @param defaultMessage
      * @param minLength
      */
@@ -115,7 +112,6 @@ public class ValidationUtil extends ValidationUtils{
      * @param errors
      * @param field
      * @param errorCode
-     * @param errorArgs
      * @param defaultMessage
      * @param maxLength
      */
@@ -133,7 +129,6 @@ public class ValidationUtil extends ValidationUtils{
      * @param field
      * @param chkField
      * @param errorCode
-     * @param errorArgs
      * @param defaultMessage
      */
     public static void rejectIfNotMatchedPasswd(Errors errors, String field, String chkField, String errorCode, String defaultMessage){
@@ -156,7 +151,7 @@ public class ValidationUtil extends ValidationUtils{
      * 최소 길이 체크
      * @param fieldValue
      * @param minLength
-     * @return
+     * @return boolean
      */
     public static boolean isNotMin(String fieldValue, int minLength){
         boolean result = false;
@@ -170,7 +165,7 @@ public class ValidationUtil extends ValidationUtils{
      * 최대 길이 체크
      * @param fieldValue
      * @param maxLength
-     * @return
+     * @return boolean
      */
     public static boolean isNotMax(String fieldValue, int maxLength){
         boolean result = false;
@@ -183,7 +178,7 @@ public class ValidationUtil extends ValidationUtils{
      * @brief 문자열 바이트 수가 초과 값인지 체크
      * @param fieldValue
      * @param chkByteSize
-     * @return
+     * @return boolean
      */
     public static boolean chkBytesIsOver(String fieldValue, int chkByteSize){
         int byteLength = ValidationUtil.getByteLength(fieldValue);
@@ -192,7 +187,7 @@ public class ValidationUtil extends ValidationUtils{
     /**
      * @brief 문자열 바이트 길이 조회
      * @param fieldValue
-     * @return
+     * @return int
      */
     public static int getByteLength(String fieldValue){
         int byteLength = 0;
@@ -202,8 +197,14 @@ public class ValidationUtil extends ValidationUtils{
         return byteLength;
     }
 
-    //이미지 파일 용량 체크
-    public static Boolean chkFileSize(long maxSize, MultipartFile uploadFile){
+    /**
+     * 이미지 파일 용량 체크
+     *
+     * @param maxSize
+     * @param uploadFile
+     * @return boolean
+     */
+    public static boolean chkFileSize(long maxSize, MultipartFile uploadFile){
         long fileSize = uploadFile.getSize();
         if (fileSize > maxSize || fileSize <= 0) {
             return false;
@@ -211,8 +212,14 @@ public class ValidationUtil extends ValidationUtils{
         return true;
     }
 
-    //파일 확장자 체크 
-    public static Boolean chkFileExtension(String fileExtensions, MultipartFile uploadFile){
+    /**
+     * 파일 확장자 체크
+     *
+      * @param fileExtensions
+     * @param uploadFile
+     * @return boolean
+     */
+    public static boolean chkFileExtension(String fileExtensions, MultipartFile uploadFile){
         String fileName = uploadFile.getOriginalFilename().trim();
         String fileType = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()).toLowerCase();
         if (fileExtensions.indexOf(fileType) == -1) {
@@ -225,14 +232,12 @@ public class ValidationUtil extends ValidationUtils{
      * @brief 실제 파일 내용과 확장자가 일치하는지 체크
      * @param fileExtensions
      * @param fileObj
-     * @return
+     * @return boolean
      */
     public static boolean chkFileSign(String fileExtensions, File fileObj){
-        Tika chkFileExt = new Tika();
-
         try {
+            Tika chkFileExt = new Tika();
             String chkFileExtStr = chkFileExt.detect(fileObj).toLowerCase();
-
             if(fileExtensions.indexOf(chkFileExtStr) == -1){
                 return false;
             }
@@ -240,19 +245,18 @@ public class ValidationUtil extends ValidationUtils{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         return true;
     }
     /**
      * @brief 실제 파일 내용과 확장자가 일치하는지 체크
      * @param fileExtensions
      * @param is
-     * @return
+     * @return boolean
      */
     public static boolean chkFileSign(String fileExtensions, InputStream is){
-        Tika chkFileExt = new Tika();
-        Pattern p = Pattern.compile("[/]+");
         try {
+            Tika chkFileExt = new Tika();
+            Pattern p = Pattern.compile("[/]+");
             String chkFileExtStr = chkFileExt.detect(is).toLowerCase();
             if(!StringUtils.isEmpty(chkFileExtStr)){
                 chkFileExtStr = p.split(chkFileExtStr)[1];
@@ -270,18 +274,20 @@ public class ValidationUtil extends ValidationUtils{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         return true;
     }
 
-    // 태그 제거
+    /**
+     * 태그 제거
+     *
+     * @param str
+     * @return String
+     */
     public static String stripTag(String str){
-
         String striptTagStr = str.replaceAll("<[^>]*>", "");
         striptTagStr = striptTagStr.replaceAll("<", "");
         striptTagStr = striptTagStr.replaceAll(">", "");
         striptTagStr = striptTagStr.replaceAll("\"", "");
-
         return striptTagStr;
     }
 }
