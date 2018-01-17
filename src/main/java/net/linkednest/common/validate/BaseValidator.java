@@ -12,7 +12,7 @@ public abstract class BaseValidator {
 
     }
 
-    public static void deleteValidate(BindingResult result, Object obj ){
+    public static void deleteValidate(BindingResult result, Object obj) {
 
     }
 }

@@ -11,6 +11,7 @@ import net.linkednest.common.validate.ValidationUtil;
 public class UserValidator extends BaseValidator{
     /**
      * insert validation
+     *
      * @param result
      * @param userDto
      */
@@ -56,6 +57,7 @@ public class UserValidator extends BaseValidator{
     
     /**
      * update validation
+     *
      * @param result
      * @param userDto
      */
@@ -74,6 +76,7 @@ public class UserValidator extends BaseValidator{
     
     /**
      * delete validation
+     *
      * @param result
      * @param userDto
      */

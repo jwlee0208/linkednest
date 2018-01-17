@@ -12,6 +12,8 @@ import java.util.Map.Entry;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
@@ -37,15 +39,33 @@ public class FileUpload{
 		this.servletContext = servletContext;
 	}
 
+	/**
+	 * FTP Upload File For Cafe24 Dir
+	 *
+	 * @param attachFile
+	 * @param width
+	 * @param height
+	 * @return String
+	 */
 	public String uploadFile(MultipartFile attachFile, int width, int height){
-		String uploadFilePath = null;
+		String uploadFilePath = StringUtils.EMPTY;
 		String newFolderDir = DateUtil.formatDateToday() + "/" ;    	
 		//String newFileName = attachFile.getOriginalFilename();
 		String newFileName = Long.toString(System.currentTimeMillis()) + attachFile.getOriginalFilename().substring(attachFile.getOriginalFilename().lastIndexOf("."));
 		String thumbnailUrl = destinationUrl + "/" + newFolderDir + newFileName;
-		
+
+		String ftpUploadId = PropertiesConfig.getInstance().getServerConfig("ftp.upload.id");
+		String ftpUploadPw = PropertiesConfig.getInstance().getServerConfig("ftp.upload.pw");
+
+		if (StringUtils.isNotEmpty(ftpUploadPw)) {
+			ftpUploadPw = new String(Base64.decodeBase64(ftpUploadPw));
+		}
+
+		String ftpUploadUrl = PropertiesConfig.getInstance().getServerConfig("ftp.upload.url");
+		String ftpUploadPort = PropertiesConfig.getInstance().getServerConfig("ftp.upload.port");
+
 		logger.info("[thumbnailUrl]" + thumbnailUrl);
-		
+
 		if ("live".equals(PropertiesConfig.getInstance().getServerConfig("mode"))) {
 			uploadFilePath = PropertiesConfig.getInstance().getServerConfig("thumbnail.uploadpath");
 		} else if ("test".equals(PropertiesConfig.getInstance().getServerConfig("mode"))) {
@@ -78,47 +98,44 @@ public class FileUpload{
 		    ftpClient = new FTPClient();	        
 	        ftpClient.setControlEncoding("EUC-KR");
 	        
-	        ftpClient.connect("iup.cdn3.cafe24.com", 21);
-	        System.out.println(" [ ftpClient ] : connecting.....");
+	        ftpClient.connect(ftpUploadUrl, Integer.parseInt(StringUtils.defaultString(ftpUploadPort, "21")));
+	        System.out.printf(" [ ftpClient ] : connecting.....\n");
 	        int replyCode = ftpClient.getReplyCode();
 	        
-	        System.out.println(" [ ftpClient ] : " + replyCode +", " + FTPReply.isPositiveCompletion(replyCode));
+	        System.out.printf(" [ ftpClient ] : %s, %s\n", replyCode, FTPReply.isPositiveCompletion(replyCode));
 	        
 	        if(!FTPReply.isPositiveCompletion(replyCode)){
-	            System.out.println(" [ ftpClient ] : disconnect.....");
+	            System.out.printf(" [ ftpClient ] : disconnect.....\n");
 	            ftpClient.disconnect();
 	        }else{
 	            // timeout 10초
 	            ftpClient.setSoTimeout(10000);
 	            // login
-	            ftpClient.login("jwlee0208", "in2299out");
-	            System.out.println(" [ ftpClient ] : loging.....");
+	            ftpClient.login(ftpUploadId, ftpUploadPw);
+	            System.out.printf(" [ ftpClient ] : loging.....\n");
 	            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 	            ftpClient.enterLocalPassiveMode();
 	            
 	            FileInputStream is = null;
 	            ByteArrayInputStream bais = null;
-	            
-	            if (attachFile.getInputStream().getClass().equals(FileInputStream.class)) {
-	            	is = (FileInputStream) attachFile.getInputStream();	
 
-	            	System.out.println("[ fileDirpath ] : " + fileDirPath);
-	                System.out.println(" [ ftpClient ] : makeDir : " + ftpClient.makeDirectory(fileDirPath));
-	                System.out.println(" [ ftpClient ] : storeFile : " + ftpClient.storeFile(fileRealPath.toString(), is));
-	                System.out.println(" [ ftpClient ] : uploading.....");
+				System.out.printf("[ fileDirpath ] : %s\n", fileDirPath);
+				System.out.printf(" [ ftpClient ] : makeDir : %s\n", ftpClient.makeDirectory(fileDirPath));
+
+	            if (attachFile.getInputStream().getClass().equals(FileInputStream.class)) {
+	            	is = (FileInputStream) attachFile.getInputStream();
+					System.out.printf("========= [FileInputStream.class] =========");
+	                System.out.printf(" [ ftpClient ] : storeFile : %s\n", ftpClient.storeFile(fileRealPath.toString(), is));
+	                System.out.printf(" [ ftpClient ] : uploading.....\n");
 	                
 	                is.close();
-
 	            } else if (attachFile.getInputStream().getClass().equals(ByteArrayInputStream.class)) {
 	            	bais = (ByteArrayInputStream) attachFile.getInputStream();
-
-	            	System.out.println("[ fileDirpath ] : " + fileDirPath);
-	                System.out.println(" [ ftpClient ] : makeDir : " + ftpClient.makeDirectory(fileDirPath));
-	                System.out.println(" [ ftpClient ] : storeFile : " + ftpClient.storeFile(fileRealPath.toString(), bais));
-	                System.out.println(" [ ftpClient ] : uploading.....");
+					System.out.printf("========= [ByteArrayInputStream.class] =========");
+	                System.out.printf(" [ ftpClient ] : storeFile : %s\n", ftpClient.storeFile(fileRealPath.toString(), bais));
+	                System.out.printf(" [ ftpClient ] : uploading.....\n");
 	                
 	                bais.close();
-
 	            }
 /*	            
 	            FileInputStream is = (FileInputStream) attachFile.getInputStream(); 
@@ -188,8 +205,14 @@ public class FileUpload{
 		return thumbnailUrl;
 		
 	}
-	
-	
+
+	/**
+	 * FTP Upload File
+	 *
+	 * @param attachFile
+	 * @return
+	 * @throws Exception
+	 */
 	public String uploadFile(MultipartFile attachFile) throws Exception {
 		return this.uploadFile(attachFile, 0, 0);
 	}
@@ -239,8 +262,15 @@ public class FileUpload{
         }
         return true;
 	}
-	
-	//이미지 확장자 체크 
+
+	/**
+	 * 이미지 확장자 체크
+	 *
+ 	 * @param fileExtensions
+	 * @param uploadFile
+	 * @return boolean
+	 * @throws Exception
+	 */
 	public Boolean checkFileExtension(String fileExtensions, MultipartFile uploadFile) throws Exception {
 	    String fileName = uploadFile.getOriginalFilename().trim();
 	    String fileType = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()).toLowerCase();
@@ -250,8 +280,16 @@ public class FileUpload{
 	    }
 	    return true;
 	}
-	
-	//이미지 width, height 체크
+
+	/**
+	 * 이미지 width, height 체크
+	 *
+	 * @param width
+	 * @param height
+	 * @param uploadFile
+	 * @return boolean
+	 * @throws Exception
+	 */
 	public Boolean checkImageWidthHeight(int width, int height, MultipartFile uploadFile) throws Exception {
 		BufferedImage image = ImageIO.read(uploadFile.getInputStream());
 		
@@ -268,9 +306,15 @@ public class FileUpload{
 		}
 		return true;
 	}
-	
-	
-	//IP에 맞는 서버ID 가져오기 
+
+
+	/**
+	 * IP에 맞는 서버ID 가져오기
+	 *
+	 * @param serverIP
+	 * @return int
+	 * @throws Exception
+	 */
 	public int getThumbnailServerId(String serverIP) throws Exception {
 		String serverMode = PropertiesConfig.getInstance().getServerConfig("mode");
 		Map<Integer,String> serverMap = new HashMap<Integer,String>();
@@ -297,22 +341,21 @@ public class FileUpload{
 	}
 	
 	public void remoteUpload(String thumbnailUrl, String fileRealPath, File file) throws Exception {
-	        if ("live".equals(PropertiesConfig.getInstance().getServerConfig("mode"))) {
-	            //remote upload
-	            String destionUrl = PropertiesConfig.getInstance().getServerConfig("remote.thumbnail.path");
-	            destionUrl += thumbnailUrl;
-	            logger.info("[destionuRL]" + destionUrl);
-	            SftpUtil sftpUtil = new SftpUtil();
-	            sftpUtil.init((String)PropertiesConfig.getInstance().getServerConfig("uploadserver.ip")
-	                    ,(String)PropertiesConfig.getInstance().getServerConfig("uploadserver.id")
-	                    ,(String)PropertiesConfig.getInstance().getServerConfig("uploadserver.password")
-	                    ,Integer.parseInt(PropertiesConfig.getInstance().getServerConfig("uploadserver.port")));
-	            
-	            sftpUtil.makeFolder(destionUrl);
+		if ("live".equals(PropertiesConfig.getInstance().getServerConfig("mode"))) {
+			//remote upload
+			String destionUrl = PropertiesConfig.getInstance().getServerConfig("remote.thumbnail.path");
+			destionUrl += thumbnailUrl;
+			logger.info("[destionuRL]" + destionUrl);
+			SftpUtil sftpUtil = new SftpUtil();
+			sftpUtil.init((String)PropertiesConfig.getInstance().getServerConfig("uploadserver.ip")
+					,(String)PropertiesConfig.getInstance().getServerConfig("uploadserver.id")
+					,(String)PropertiesConfig.getInstance().getServerConfig("uploadserver.password")
+					,Integer.parseInt(PropertiesConfig.getInstance().getServerConfig("uploadserver.port")));
 
-	            sftpUtil.upload(destionUrl, new File(fileRealPath));
-	            sftpUtil.disconnection();
-	        }
+			sftpUtil.makeFolder(destionUrl);
+
+			sftpUtil.upload(destionUrl, new File(fileRealPath));
+			sftpUtil.disconnection();
+		}
 	 }
-
 }

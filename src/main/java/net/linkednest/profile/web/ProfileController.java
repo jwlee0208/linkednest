@@ -85,11 +85,14 @@ public class ProfileController {
 		profileDto.setProfileId(profileId);
 		profileDto.setProfileType(profileType);
 		logger.debug("[ProfileController][getProfileUpdateInfo] profileDto : " + profileDto.toString());
+
+		// profile 정보 조회
 		ProfileDto selectedProfileInfo = this.profileService.getProfileInfo(profileDto);
 		logger.debug("[ProfileController][getProfileUpdateInfo] selectedProfileInfo : " + selectedProfileInfo.toString());
 		model.addAttribute("profileInfo", selectedProfileInfo);
 		
 		profileDto.setCatId1(selectedProfileInfo.getCatId1());
+		// profile 속성 정보 조회
 		List<ProfileAttrDto> attrElementList = this.profileService.getProfileAttrElementList(profileDto);
 		
 		model.addAttribute("attrElementList", attrElementList);
@@ -113,7 +116,8 @@ public class ProfileController {
         
 		ProfileDto profileDto = new ProfileDto();
 		profileDto.setCatId1(catId);
-		
+
+		// profile 속성 목록 조회
 		List<ProfileAttrDto> attrElementList = this.profileService.getProfileAttrElementList(profileDto);
 		
 		model.addAttribute("isLogon"		, isLogon);
@@ -125,6 +129,7 @@ public class ProfileController {
 
 	/**
 	 * @brief ajaxProfileList
+	 *
 	 * @param request
 	 * @param model
 	 * @param searchProfileDto
@@ -275,6 +280,7 @@ public class ProfileController {
 		String 			filePath			= StringUtils.EMPTY;
 
 		if(profileImg != null){
+			// 물리 경로에 파일 업로드
 			imageUploadResult = fileUpload.uploadFile(profileImg);
 		}
 
@@ -283,7 +289,6 @@ public class ProfileController {
 			filePath = imageUploadResult;
 			profileDto.setProfileImgPath(filePath);
 		}
-
 	}
 
 	/**
