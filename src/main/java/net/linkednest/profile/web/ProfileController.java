@@ -239,7 +239,7 @@ public class ProfileController {
 	 */
 	@RequestMapping(value="/modifyAction", method=RequestMethod.POST)
     @ResponseBody
-    public JSONObject  modifyProfile(ProfileDto profileDto, HttpSession session) throws Exception{
+    public JSONObject  modifyProfile(ProfileDto profileDto, HttpSession session, BindingResult bindingResult) throws Exception{
     	JSONObject 		result 				= new  JSONObject(); 
 
     	// Uploading Profile Image & Setting Image Path
@@ -250,7 +250,8 @@ public class ProfileController {
     	System.out.println("profileDto is " + profileDto.toString());
     	logger.debug("profileDto is " + profileDto.toString());
     	
-    	// validation 
+    	// validation
+		ProfileValidator.updateValidate(bindingResult, profileDto);
     	
     	// service call : insert tables
     	int addCnt = this.profileService.updateProfileInfos(profileDto);

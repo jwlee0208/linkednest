@@ -23,7 +23,7 @@ public class ProfileDto {
 	 * profile status mapping array
 	 */
 	private static final String[] STATUS_CODE = {"0", "1", "2", "3"};
-	private static final String[] STATUS_VALUE = {"Temporary Saved", "Actavation", "Disabled", "Finished"};
+	private static final String[] STATUS_VALUE = {"Temporary Saved", "Activation", "Disabled", "Finished"};
 
 	/**
 	 * 2nd category code mapping array
