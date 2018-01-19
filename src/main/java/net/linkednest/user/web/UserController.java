@@ -23,7 +23,9 @@ import net.linkednest.common.util.AES256Util;
 import net.linkednest.common.validate.JsonResponse;
 import net.linkednest.user.dto.UserDto;
 import net.linkednest.user.service.UserServiceImpl;
+import net.linkednest.user.validate.PasswordValidator;
 import net.linkednest.user.validate.UserValidator;
+import net.linkednest.www.share.service.ShareServiceImpl;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.LocaleUtils;
@@ -47,19 +49,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import net.linkednest.common.CommonConstant;
-import net.linkednest.common.dto.CodeDto;
-import net.linkednest.common.dto.MailDto;
-import net.linkednest.common.dto.ShareDto;
-import net.linkednest.common.service.impl.CommonServiceImpl;
-import net.linkednest.common.util.AES256Util;
-import net.linkednest.common.validate.JsonResponse;
-import net.linkednest.share.service.ShareServiceImpl;
-import net.linkednest.user.dto.UserDto;
-import net.linkednest.user.service.UserServiceImpl;
-import net.linkednest.user.validate.PasswordValidator;
-import net.linkednest.user.validate.UserValidator;
-
 @Controller
 @RequestMapping(value="/user")
 @SessionAttributes("userInfo")
@@ -74,7 +63,7 @@ public class UserController {
 	private CommonServiceImpl commonService;
 	
 	@Resource(name="ShareServiceImpl")
-	private ShareServiceImpl        shareService;
+	private ShareServiceImpl shareService;
 	
     @Inject
     private VelocityEngine          velocityEngine;

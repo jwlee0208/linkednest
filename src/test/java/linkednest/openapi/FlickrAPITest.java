@@ -1,25 +1,5 @@
 package linkednest.openapi;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
-import org.junit.Test;
-
-import com.flickr4java.flickr.Flickr;
-import com.flickr4java.flickr.REST;
-import com.flickr4java.flickr.auth.Auth;
-import com.flickr4java.flickr.galleries.Gallery;
-import com.flickr4java.flickr.groups.Group;
-import com.flickr4java.flickr.groups.GroupsInterface;
-import com.flickr4java.flickr.people.User;
-import com.flickr4java.flickr.photos.Photo;
-import com.flickr4java.flickr.photos.PhotoList;
-import com.flickr4java.flickr.photos.Photocount;
-import com.flickr4java.flickr.photos.PhotosInterface;
-import com.flickr4java.flickr.photos.SearchParameters;
-import com.flickr4java.flickr.test.TestInterface;
 
 public class FlickrAPITest {
     /*
