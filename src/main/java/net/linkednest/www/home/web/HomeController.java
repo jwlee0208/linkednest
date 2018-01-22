@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+<<<<<<< HEAD:src/main/java/net/linkednest/www/home/web/HomeController.java
 import net.linkednest.profile.ProfileConstants;
 import net.linkednest.profile.service.ProfileService;
 import net.linkednest.share.board.dto.BoardArticleDto;
@@ -12,6 +13,11 @@ import net.linkednest.share.board.service.BoardArticleRedisService;
 import net.linkednest.share.board.service.BoardArticleService;
 import net.linkednest.share.board.service.BoardArticleServiceImpl;
 import net.linkednest.profile.service.ProfileServiceImpl;
+=======
+import net.linkednest.www.board.dto.BoardArticleDto;
+import net.linkednest.www.board.service.BoardArticleServiceImpl;
+import net.linkednest.www.profile.service.ProfileServiceImpl;
+>>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/www/home/web/HomeController.java
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +25,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+<<<<<<< HEAD:src/main/java/net/linkednest/www/home/web/HomeController.java
 import net.linkednest.share.board.service.BoardArticleRedisServiceImpl;
 import net.linkednest.profile.dto.ProfileDto;
+=======
+import net.linkednest.www.board.service.BoardArticleRedisServiceImpl;
+import net.linkednest.www.profile.dto.ProfileDto;
+>>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/www/home/web/HomeController.java
 
 
 @Controller

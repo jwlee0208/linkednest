@@ -5,8 +5,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+<<<<<<< HEAD:src/main/java/net/linkednest/www/common/web/EditorController.java
 import net.linkednest.common.Constants.FileConstants;
 import net.linkednest.share.board.service.BoardArticleService;
+=======
+import net.linkednest.www.board.service.BoardArticleService;
+>>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/common/web/EditorController.java
 import net.linkednest.common.util.FileUtil;
 import net.linkednest.openapi.service.FlickrAPIService;
 import org.apache.commons.lang.StringUtils;

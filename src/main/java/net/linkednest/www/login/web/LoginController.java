@@ -7,7 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.linkednest.www.user.dto.UserDto;
+<<<<<<< HEAD:src/main/java/net/linkednest/www/login/web/LoginController.java
 import net.linkednest.www.user.service.UserService;
+=======
+>>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/www/login/web/LoginController.java
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.LocaleUtils;
@@ -26,6 +29,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+<<<<<<< HEAD:src/main/java/net/linkednest/www/login/web/LoginController.java
+=======
+import net.linkednest.www.user.service.UserServiceImpl;
+
+>>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/www/login/web/LoginController.java
 @Controller
 @SessionAttributes("userInfo")
 public class LoginController {

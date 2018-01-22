@@ -21,9 +21,17 @@ import net.linkednest.www.common.dto.ShareDto;
 import net.linkednest.www.common.service.impl.CommonServiceImpl;
 import net.linkednest.common.util.AES256Util;
 import net.linkednest.common.validate.JsonResponse;
+<<<<<<< HEAD:src/main/java/net/linkednest/www/user/web/UserController.java
 import net.linkednest.www.user.dto.UserDto;
 import net.linkednest.www.user.service.UserServiceImpl;
 import net.linkednest.www.user.validate.UserValidator;
+=======
+import net.linkednest.user.dto.UserDto;
+import net.linkednest.user.service.UserServiceImpl;
+import net.linkednest.user.validate.PasswordValidator;
+import net.linkednest.user.validate.UserValidator;
+import net.linkednest.www.share.service.ShareServiceImpl;
+>>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/user/web/UserController.java
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.LocaleUtils;
@@ -47,9 +55,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+<<<<<<< HEAD:src/main/java/net/linkednest/www/user/web/UserController.java
 import net.linkednest.share.service.ShareServiceImpl;
 import net.linkednest.www.user.validate.PasswordValidator;
 
+=======
+>>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/user/web/UserController.java
 @Controller
 @RequestMapping(value="/user")
 @SessionAttributes("userInfo")
@@ -64,7 +75,7 @@ public class UserController {
 	private CommonServiceImpl commonService;
 	
 	@Resource(name="ShareServiceImpl")
-	private ShareServiceImpl        shareService;
+	private ShareServiceImpl shareService;
 	
     @Inject
     private VelocityEngine          velocityEngine;

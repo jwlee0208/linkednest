@@ -107,8 +107,13 @@ import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+<<<<<<< HEAD:src/main/java/net/linkednest/www/common/service/impl/CommonServiceImpl.java
 import net.linkednest.www.common.dto.MailDto;
 import net.linkednest.www.common.service.CommonService;
+=======
+import net.linkednest.common.dto.MailDto;
+import net.linkednest.common.service.CommonService;
+>>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/common/service/impl/CommonServiceImpl.java
 import net.linkednest.www.user.dto.UserDto;
 import org.apache.axis.utils.StringUtils;
 import org.apache.commons.codec.binary.Base64;
@@ -119,9 +124,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+<<<<<<< HEAD:src/main/java/net/linkednest/www/common/service/impl/CommonServiceImpl.java
 import net.linkednest.common.Constants.CommonConstant;
 import net.linkednest.www.common.dao.CommonDao;
 import net.linkednest.www.common.dto.CodeDto;
+=======
+import net.linkednest.common.CommonConstant;
+import net.linkednest.common.dao.CommonDao;
+import net.linkednest.common.dto.CodeDto;
+>>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/common/service/impl/CommonServiceImpl.java
 import net.linkednest.common.util.AES256Util;
 import net.linkednest.www.user.service.UserServiceImpl;
 import org.springframework.ui.velocity.VelocityEngineUtils;

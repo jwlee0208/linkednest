@@ -5,9 +5,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+<<<<<<< HEAD:src/main/java/net/linkednest/runtime/interceptor/BoardArticleInterceptor.java
 import net.linkednest.share.board.dto.BoardArticleDto;
 import net.linkednest.share.board.dto.BoardDto;
 import net.linkednest.www.common.dto.ShareDto;
+=======
+import net.linkednest.common.dto.ShareDto;
+import net.linkednest.www.board.dto.BoardArticleDto;
+import net.linkednest.www.board.dto.BoardDto;
+
+>>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/interceptor/BoardArticleInterceptor.java
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
