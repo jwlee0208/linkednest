@@ -2,8 +2,8 @@ package net.linkednest.www.profile.web;
 
 import net.linkednest.common.paging.PageHolder;
 import net.linkednest.common.util.FileUpload;
-import net.linkednest.profile.ProfileConstants;
-import net.linkednest.profile.validate.ProfileValidator;
+import net.linkednest.www.profile.ProfileConstants;
+import net.linkednest.www.profile.validate.ProfileValidator;
 import net.linkednest.www.profile.dto.*;
 import net.linkednest.www.profile.service.ProfileService;
 import net.linkednest.www.user.dto.UserDto;

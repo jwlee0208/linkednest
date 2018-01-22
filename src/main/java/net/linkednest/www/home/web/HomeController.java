@@ -1,11 +1,11 @@
 package net.linkednest.www.home.web;
 
-import net.linkednest.profile.ProfileConstants;
-import net.linkednest.profile.service.ProfileService;
-import net.linkednest.share.board.service.BoardArticleRedisService;
-import net.linkednest.share.board.service.BoardArticleService;
+import net.linkednest.www.profile.ProfileConstants;
 import net.linkednest.www.board.dto.BoardArticleDto;
+import net.linkednest.www.board.service.BoardArticleRedisService;
+import net.linkednest.www.board.service.BoardArticleService;
 import net.linkednest.www.profile.dto.ProfileDto;
+import net.linkednest.www.profile.service.ProfileService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
