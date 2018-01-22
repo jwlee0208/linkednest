@@ -1,57 +1,32 @@
 package net.linkednest.www.config.web;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import net.linkednest.common.util.PagedList;
+import net.linkednest.www.board.dto.BoardCategoryDto;
+import net.linkednest.www.board.dto.BoardDto;
+import net.linkednest.www.board.service.BoardCategoryService;
+import net.linkednest.www.board.service.BoardService;
+import net.linkednest.www.common.dto.ShareDto;
+import net.linkednest.www.common.service.CommonService;
+import net.linkednest.www.share.service.ShareService;
+import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserService;
+import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
-<<<<<<< HEAD:src/main/java/net/linkednest/www/config/web/ConfigController.java
-import net.linkednest.share.board.service.BoardCategoryService;
-import net.linkednest.share.board.service.BoardService;
-import net.linkednest.share.service.ShareService;
-import net.linkednest.www.common.dto.ShareDto;
-import net.linkednest.www.common.service.CommonService;
-import net.linkednest.common.util.PagedList;
-import net.linkednest.www.user.dto.UserDto;
-import net.linkednest.www.user.service.UserService;
-=======
-import net.linkednest.www.board.service.BoardCategoryServiceImpl;
-import net.linkednest.common.dto.ShareDto;
-import net.linkednest.common.service.impl.CommonServiceImpl;
-import net.linkednest.common.util.PagedList;
-import net.linkednest.www.user.dto.UserDto;
->>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/config/web/ConfigController.java
-import net.sf.json.JSONObject;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.ObjectUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
-<<<<<<< HEAD:src/main/java/net/linkednest/www/config/web/ConfigController.java
-import net.linkednest.share.board.dto.BoardCategoryDto;
-import net.linkednest.share.board.dto.BoardDto;
-
-=======
-import net.linkednest.www.board.dto.BoardCategoryDto;
-import net.linkednest.www.board.dto.BoardDto;
-import net.linkednest.www.board.service.BoardServiceImpl;
-import net.linkednest.www.share.service.ShareServiceImpl;
-import net.linkednest.www.user.service.UserServiceImpl;
->>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/config/web/ConfigController.java
 @Controller
 @RequestMapping(value= "/properties/config")
 @SessionAttributes("userInfo")

@@ -1,18 +1,8 @@
 package net.linkednest.www.login.web;
 
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import net.linkednest.www.user.dto.UserDto;
-<<<<<<< HEAD:src/main/java/net/linkednest/www/login/web/LoginController.java
 import net.linkednest.www.user.service.UserService;
-=======
->>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/www/login/web/LoginController.java
 import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -21,19 +11,15 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-<<<<<<< HEAD:src/main/java/net/linkednest/www/login/web/LoginController.java
-=======
-import net.linkednest.www.user.service.UserServiceImpl;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.Locale;
 
->>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/www/login/web/LoginController.java
 @Controller
 @SessionAttributes("userInfo")
 public class LoginController {

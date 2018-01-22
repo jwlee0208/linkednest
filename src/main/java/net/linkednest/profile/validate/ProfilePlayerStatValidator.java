@@ -2,10 +2,10 @@ package net.linkednest.profile.validate;
 
 import net.linkednest.common.validate.BaseValidator;
 import net.linkednest.common.validate.ValidationUtil;
-import net.linkednest.profile.dto.ProfileDto;
-import net.linkednest.profile.dto.ProfileStatFielderDto;
-import net.linkednest.profile.dto.ProfileStatHitterDto;
-import net.linkednest.profile.dto.ProfileStatPitcherDto;
+import net.linkednest.www.profile.dto.ProfileDto;
+import net.linkednest.www.profile.dto.ProfileStatFielderDto;
+import net.linkednest.www.profile.dto.ProfileStatHitterDto;
+import net.linkednest.www.profile.dto.ProfileStatPitcherDto;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.validation.BindingResult;
 

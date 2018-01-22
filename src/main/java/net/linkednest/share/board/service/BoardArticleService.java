@@ -3,11 +3,11 @@ package net.linkednest.share.board.service;
 import java.util.List;
 import java.util.Map;
 
-import net.linkednest.share.board.dto.BoardArticleDto;
-import net.linkednest.share.board.dto.BoardDto;
-import net.linkednest.share.board.dto.SideBoardCategoryPortalDto;
-import net.linkednest.share.board.dto.SlideshareLinkDto;
 import net.linkednest.common.util.PagedList;
+import net.linkednest.www.board.dto.BoardArticleDto;
+import net.linkednest.www.board.dto.BoardDto;
+import net.linkednest.www.board.dto.SideBoardCategoryPortalDto;
+import net.linkednest.www.board.dto.SlideshareLinkDto;
 
 public interface BoardArticleService {
 	public List<BoardArticleDto>               getBoardArticleList(BoardArticleDto boardArticleDto) throws Exception;

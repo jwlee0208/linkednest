@@ -1,39 +1,18 @@
 package net.linkednest.www.user.web;
 
-import java.io.UnsupportedEncodingException;
-import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 import net.linkednest.common.Constants.CommonConstant;
+import net.linkednest.common.util.AES256Util;
+import net.linkednest.common.validate.JsonResponse;
 import net.linkednest.www.common.dto.CodeDto;
 import net.linkednest.www.common.dto.MailDto;
 import net.linkednest.www.common.dto.ShareDto;
 import net.linkednest.www.common.service.impl.CommonServiceImpl;
-import net.linkednest.common.util.AES256Util;
-import net.linkednest.common.validate.JsonResponse;
-<<<<<<< HEAD:src/main/java/net/linkednest/www/user/web/UserController.java
+import net.linkednest.www.share.service.ShareServiceImpl;
 import net.linkednest.www.user.dto.UserDto;
 import net.linkednest.www.user.service.UserServiceImpl;
+import net.linkednest.www.user.validate.PasswordValidator;
 import net.linkednest.www.user.validate.UserValidator;
-=======
-import net.linkednest.user.dto.UserDto;
-import net.linkednest.user.service.UserServiceImpl;
-import net.linkednest.user.validate.PasswordValidator;
-import net.linkednest.user.validate.UserValidator;
-import net.linkednest.www.share.service.ShareServiceImpl;
->>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/user/web/UserController.java
 import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -45,22 +24,23 @@ import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-<<<<<<< HEAD:src/main/java/net/linkednest/www/user/web/UserController.java
-import net.linkednest.share.service.ShareServiceImpl;
-import net.linkednest.www.user.validate.PasswordValidator;
+import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
-=======
->>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/user/web/UserController.java
 @Controller
 @RequestMapping(value="/user")
 @SessionAttributes("userInfo")

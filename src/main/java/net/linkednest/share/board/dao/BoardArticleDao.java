@@ -3,11 +3,11 @@ package net.linkednest.share.board.dao;
 import java.util.List;
 import java.util.Map;
 
-import net.linkednest.share.board.dto.BoardArticleDto;
-import net.linkednest.share.board.dto.BoardDto;
-import net.linkednest.share.board.dto.SideBoardCategoryPortalDto;
-import net.linkednest.share.board.dto.SlideshareLinkDto;
 import net.linkednest.common.util.SearchCondition;
+import net.linkednest.www.board.dto.BoardArticleDto;
+import net.linkednest.www.board.dto.BoardDto;
+import net.linkednest.www.board.dto.SideBoardCategoryPortalDto;
+import net.linkednest.www.board.dto.SlideshareLinkDto;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 

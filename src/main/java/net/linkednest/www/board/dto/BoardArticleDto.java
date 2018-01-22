@@ -1,16 +1,14 @@
 package net.linkednest.www.board.dto;
 
-import java.util.List;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
+import net.linkednest.common.util.SearchCondition;
+import net.linkednest.www.common.dto.ShareDto;
 import org.apache.ibatis.type.Alias;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.linkednest.common.dto.ShareDto;
-import net.linkednest.common.util.SearchCondition;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Alias("board.boardArticleDto")
 public class BoardArticleDto extends SearchCondition {
@@ -39,7 +37,7 @@ public class BoardArticleDto extends SearchCondition {
 	
 	private List<SlideshareLinkDto>          slideshareLinkInfos;
 	
-	private ShareDto       shareInfo;
+	private ShareDto shareInfo;
 	
 	public int getArticleId() {
 		return articleId;

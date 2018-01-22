@@ -2,7 +2,7 @@ package net.linkednest.profile.validate;
 
 import net.linkednest.common.validate.BaseValidator;
 import net.linkednest.common.validate.ValidationUtil;
-import net.linkednest.profile.dto.ProfilePlayerDto;
+import net.linkednest.www.profile.dto.ProfilePlayerDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindingResult;
 

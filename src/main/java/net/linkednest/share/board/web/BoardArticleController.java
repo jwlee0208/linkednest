@@ -1,35 +1,24 @@
 package net.linkednest.share.board.web;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import net.linkednest.share.board.dto.BoardArticleDto;
-import net.linkednest.share.board.dto.BoardCategoryDto;
-import net.linkednest.share.board.dto.BoardDto;
-import net.linkednest.share.board.dto.SlideshareLinkDto;
-import net.linkednest.share.board.service.*;
-import net.linkednest.share.service.ShareService;
-import net.linkednest.www.common.dto.ShareDto;
 import net.linkednest.common.util.FileUpload;
 import net.linkednest.common.util.PagedList;
+import net.linkednest.www.board.dto.BoardArticleDto;
+import net.linkednest.www.board.dto.BoardCategoryDto;
+import net.linkednest.www.board.dto.BoardDto;
+import net.linkednest.www.board.dto.SlideshareLinkDto;
+import net.linkednest.www.board.service.BoardArticleService;
+import net.linkednest.www.board.service.BoardCategoryService;
+import net.linkednest.www.board.service.BoardService;
+import net.linkednest.www.common.dto.ShareDto;
 import net.linkednest.www.common.web.EditorController;
-import net.linkednest.share.service.ShareServiceImpl;
+import net.linkednest.www.share.service.ShareService;
 import net.linkednest.www.user.dto.UserDto;
 import net.linkednest.www.user.service.UserService;
-import net.linkednest.www.user.service.UserServiceImpl;
+import net.sf.json.JSONObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.velocity.runtime.directive.Parse;
 import org.jboss.logging.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,7 +30,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.sf.json.JSONObject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = {"/board/article", "/share"})
@@ -237,7 +231,7 @@ public class BoardArticleController {
 		paramMap.put("endDate"        , endDate);
 		paramMap.put("type"        	  , type);
 		
-		List<BoardArticleDto> boardArticleList;	
+		List<net.linkednest.www.board.dto.BoardArticleDto> boardArticleList;
 		
 /*
 		try{

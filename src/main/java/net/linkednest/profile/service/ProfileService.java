@@ -1,11 +1,11 @@
 package net.linkednest.profile.service;
 
-import java.util.List;
+import net.linkednest.www.profile.dto.LeagueInfoDto;
+import net.linkednest.www.profile.dto.ProfileAttrDto;
+import net.linkednest.www.profile.dto.ProfileDto;
+import net.linkednest.www.profile.dto.SearchProfileDto;
 
-import net.linkednest.profile.dto.LeagueInfoDto;
-import net.linkednest.profile.dto.ProfileAttrDto;
-import net.linkednest.profile.dto.ProfileDto;
-import net.linkednest.profile.dto.SearchProfileDto;
+import java.util.List;
 
 public interface ProfileService {
 	public List<ProfileDto> getProfileInfos(ProfileDto profileInfo);

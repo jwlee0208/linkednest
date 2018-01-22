@@ -1,25 +1,13 @@
 package net.linkednest.www.profile.web;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-<<<<<<< HEAD:src/main/java/net/linkednest/profile/web/ProfileController.java
 import net.linkednest.common.paging.PageHolder;
+import net.linkednest.common.util.FileUpload;
 import net.linkednest.profile.ProfileConstants;
-import net.linkednest.profile.dto.LeagueInfoDto;
-import net.linkednest.profile.service.ProfileService;
-import net.linkednest.profile.validate.ProfilePlayerValidator;
 import net.linkednest.profile.validate.ProfileValidator;
-=======
 import net.linkednest.www.profile.dto.*;
-import net.linkednest.www.profile.service.ProfileServiceImpl;
->>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/www/profile/web/ProfileController.java
+import net.linkednest.www.profile.service.ProfileService;
 import net.linkednest.www.user.dto.UserDto;
 import net.sf.json.JSONObject;
-
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,13 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.linkednest.common.util.FileUpload;
-<<<<<<< HEAD:src/main/java/net/linkednest/profile/web/ProfileController.java
-import net.linkednest.profile.dto.ProfileAttrDto;
-import net.linkednest.profile.dto.ProfileDto;
-import net.linkednest.profile.dto.SearchProfileDto;
-=======
->>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/www/profile/web/ProfileController.java
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping(value="/profile")
@@ -226,12 +210,8 @@ public class ProfileController {
 		this.uploadProfileImage(profileDto);
 
     	profileDto.setTitle(profileDto.getName());
-<<<<<<< HEAD:src/main/java/net/linkednest/profile/web/ProfileController.java
-    	
-    	System.out.printf("profileDto is $s\n", profileDto.toString());
-=======
 
->>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/www/profile/web/ProfileController.java
+    	System.out.printf("profileDto is $s\n", profileDto.toString());
     	logger.debug("profileDto is " + profileDto.toString());
     	
     	// validation 

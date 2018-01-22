@@ -88,13 +88,23 @@ public class CommonServiceImpl implements CommonService{
 */
 package net.linkednest.www.common.service.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import net.linkednest.common.Constants.CommonConstant;
+import net.linkednest.common.util.AES256Util;
+import net.linkednest.www.common.dao.CommonDao;
+import net.linkednest.www.common.dto.CodeDto;
+import net.linkednest.www.common.dto.MailDto;
+import net.linkednest.www.common.service.CommonService;
+import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserServiceImpl;
+import org.apache.axis.utils.StringUtils;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.velocity.app.VelocityEngine;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -106,36 +116,13 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-<<<<<<< HEAD:src/main/java/net/linkednest/www/common/service/impl/CommonServiceImpl.java
-import net.linkednest.www.common.dto.MailDto;
-import net.linkednest.www.common.service.CommonService;
-=======
-import net.linkednest.common.dto.MailDto;
-import net.linkednest.common.service.CommonService;
->>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/common/service/impl/CommonServiceImpl.java
-import net.linkednest.www.user.dto.UserDto;
-import org.apache.axis.utils.StringUtils;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.velocity.app.VelocityEngine;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-
-<<<<<<< HEAD:src/main/java/net/linkednest/www/common/service/impl/CommonServiceImpl.java
-import net.linkednest.common.Constants.CommonConstant;
-import net.linkednest.www.common.dao.CommonDao;
-import net.linkednest.www.common.dto.CodeDto;
-=======
-import net.linkednest.common.CommonConstant;
-import net.linkednest.common.dao.CommonDao;
-import net.linkednest.common.dto.CodeDto;
->>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/common/service/impl/CommonServiceImpl.java
-import net.linkednest.common.util.AES256Util;
-import net.linkednest.www.user.service.UserServiceImpl;
-import org.springframework.ui.velocity.VelocityEngineUtils;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 @Service("CommonServiceImpl")
 public class CommonServiceImpl implements CommonService {

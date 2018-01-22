@@ -1,12 +1,9 @@
 package net.linkednest.profile.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.Resource;
-
 import net.linkednest.common.Constants.DBConstants;
 import net.linkednest.profile.ProfileConstants;
+import net.linkednest.www.profile.dao.ProfileDao;
+import net.linkednest.www.profile.dto.*;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
@@ -14,20 +11,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import net.linkednest.profile.dao.ProfileDao;
-import net.linkednest.profile.dto.LeagueInfoDto;
-import net.linkednest.profile.dto.ProfileAttrDto;
-import net.linkednest.profile.dto.ProfileAttrElementMapDto;
-import net.linkednest.profile.dto.ProfileCareerDto;
-import net.linkednest.profile.dto.ProfileContactInfoDto;
-import net.linkednest.profile.dto.ProfileDto;
-import net.linkednest.profile.dto.ProfilePlayerDto;
-import net.linkednest.profile.dto.ProfileStatFielderDto;
-import net.linkednest.profile.dto.ProfileStatHitterDto;
-import net.linkednest.profile.dto.ProfileStatPitcherDto;
-import net.linkednest.profile.dto.ProfileStreamDto;
-import net.linkednest.profile.dto.ProfileTeamDto;
-import net.linkednest.profile.dto.SearchProfileDto;
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfileServiceImpl implements ProfileService{

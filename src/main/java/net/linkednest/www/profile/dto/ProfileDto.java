@@ -2,12 +2,9 @@ package net.linkednest.www.profile.dto;
 
 
 import java.util.List;
-<<<<<<< HEAD:src/main/java/net/linkednest/profile/dto/ProfileDto.java
 import org.apache.commons.lang3.*;
-=======
 
 import org.apache.commons.lang3.StringUtils;
->>>>>>> 3acc487a5ec59c3fd34001e63e768877320b663a:src/main/java/net/linkednest/www/profile/dto/ProfileDto.java
 import org.apache.ibatis.type.Alias;
 import org.springframework.web.multipart.MultipartFile;
 

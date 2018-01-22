@@ -5,15 +5,15 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import net.linkednest.share.board.dto.BoardArticleDto;
 import net.linkednest.common.util.PagedList;
+import net.linkednest.www.board.dao.BoardArticleDao;
+import net.linkednest.www.board.dao.BoardArticleRedisDao;
+import net.linkednest.www.board.dto.BoardArticleDto;
+import net.linkednest.www.board.dto.BoardDto;
+import net.linkednest.www.board.dto.SideBoardCategoryPortalDto;
+import net.linkednest.www.board.dto.SlideshareLinkDto;
 import org.springframework.stereotype.Service;
 
-import net.linkednest.share.board.dao.BoardArticleDao;
-import net.linkednest.share.board.dao.BoardArticleRedisDao;
-import net.linkednest.share.board.dto.BoardDto;
-import net.linkednest.share.board.dto.SideBoardCategoryPortalDto;
-import net.linkednest.share.board.dto.SlideshareLinkDto;
 import net.linkednest.common.util.PagingUtil;
 
 @Service("BoardArticleServiceImpl")
@@ -110,8 +110,6 @@ public class BoardArticleServiceImpl implements BoardArticleService{
 	public int deleteBoardArticle(BoardArticleDto boardArticleDto) throws Exception{
 		return this.boardArticleDao.deleteBoardArticle(boardArticleDto);
 	}
-	
-	
 	/**
 	 * 게시 글 조회
 	 */

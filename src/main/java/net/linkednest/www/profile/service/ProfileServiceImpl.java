@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import net.linkednest.common.service.impl.CommonServiceImpl;
+import net.linkednest.www.common.service.impl.CommonServiceImpl;
 import net.linkednest.www.profile.dao.ProfileDao;
 import net.linkednest.www.profile.dto.LeagueInfoDto;
 import net.linkednest.www.profile.dto.ProfileAttrDto;
