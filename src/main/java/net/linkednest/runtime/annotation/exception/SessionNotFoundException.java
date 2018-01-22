@@ -1,4 +1,4 @@
-package net.linkednest.www.annotation.exception;
+package net.linkednest.runtime.annotation.exception;
 
 public class SessionNotFoundException extends Exception{
 

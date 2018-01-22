@@ -1,6 +1,6 @@
 package net.linkednest.www.profile;
 
-import net.linkednest.common.Constants.Constants;
+import net.linkednest.common.constant.Constants;
 import org.springframework.util.StringUtils;
 
 /**

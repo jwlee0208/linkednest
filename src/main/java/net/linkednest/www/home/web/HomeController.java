@@ -32,11 +32,11 @@ public class HomeController {
 	private ProfileService profileService;
 	
 	// spring-data-redis 사용.
-//	@Autowired
-//	private RedisTemplate<String, List<BoardArticleDto>> redisTemplate;
+	/*@Autowired
+	private RedisTemplate<String, List<BoardArticleDto>> redisTemplate;*/
 	// spring-data-redis 사용.
-//	@Resource(name="redisTemplate")
-//	private ValueOperations<String, List<BoardArticleDto>> valueOps;
+	/*@Resource(name="redisTemplate")
+	private ValueOperations<String, List<BoardArticleDto>> valueOps;*/
 	
 	
 	@RequestMapping(value="/home")

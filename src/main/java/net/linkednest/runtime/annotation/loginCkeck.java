@@ -1,4 +1,4 @@
-package net.linkednest.www.annotation;
+package net.linkednest.runtime.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

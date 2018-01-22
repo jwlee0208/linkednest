@@ -5,7 +5,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.linkednest.common.Constants.FileConstants;
+import net.linkednest.common.constant.FileConstants;
 import net.linkednest.common.util.FileUtil;
 import net.linkednest.openapi.service.FlickrAPIService;
 import org.apache.commons.lang.StringUtils;

@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import net.linkednest.common.Constants.DBConstants;
+import net.linkednest.common.constant.DBConstants;
 import net.linkednest.www.profile.ProfileConstants;
 import net.linkednest.www.common.service.impl.CommonServiceImpl;
 import net.linkednest.www.profile.dao.ProfileDao;

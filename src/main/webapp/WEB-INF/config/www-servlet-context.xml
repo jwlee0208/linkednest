@@ -43,26 +43,24 @@
     <beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
         <beans:property name="order" value="0" />
     </beans:bean>
-    <!--     <beans:bean id="bnViewResolver"  class="org.springframework.web.servlet.view.BeanNameViewResolver"> -->
-    <!--         <beans:property name="order" value="1" /> -->
-    <!--     </beans:bean>  -->
+    <!--<beans:bean id="bnViewResolver"  class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <beans:property name="order" value="1" />
+    </beans:bean>-->
 
-    <!-- Resolver 2nd -->
-    <!--     <beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver"> -->
-    <!--         <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" /> -->
-    <!--         <beans:property name="order" value="1" /> -->
-    <!--     </beans:bean> -->
-
-    <!--     <beans:bean  id="tilesViewResolver" class="org.springbyexample.web.servlet.view.tiles2.TilesUrlBasedViewResolver"> -->
-    <!--         <beans:property name="viewClass" value="org.springbyexample.web.servlet.view.tiles2.DynamicTilesView"/> -->
-    <!--         <beans:property name="prefix" value="/WEB-INF/views/"/> -->
-    <!--         <beans:property name="suffix" value=".jsp"/> -->
-    <!--         <beans:property name="tilesDefinitionName" value="default"/> -->
-    <!--         <beans:property name="tilesBodyAttributeName" value="body"/> -->
-    <!--         <beans:property name="tilesDefinitionDelimiter" value="."/> -->
-    <!--         <beans:property name="order" value="2" /> -->
-    <!--     </beans:bean> -->
-
+    <!--Resolver 2nd -->
+    <!--<beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+        <beans:property name="order" value="1" />
+    </beans:bean>
+    <beans:bean  id="tilesViewResolver" class="org.springbyexample.web.servlet.view.tiles2.TilesUrlBasedViewResolver">
+        <beans:property name="viewClass" value="org.springbyexample.web.servlet.view.tiles2.DynamicTilesView"/>
+        <beans:property name="prefix" value="/WEB-INF/views/"/>
+        <beans:property name="suffix" value=".jsp"/>
+        <beans:property name="tilesDefinitionName" value="default"/>
+        <beans:property name="tilesBodyAttributeName" value="body"/>
+        <beans:property name="tilesDefinitionDelimiter" value="."/>
+        <beans:property name="order" value="2" />
+    </beans:bean>-->
 
     <!-- Resolver 0 -->
     <beans:bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
@@ -88,25 +86,21 @@
                 </beans:bean>
             </beans:list>
         </beans:property>
-
         <beans:property name="defaultViews">
             <beans:list>
                 <beans:bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
                     <beans:property name="extractValueFromSingleKeyModel" value="true" />
                     <beans:property name="contentType" value="application/json" />
                 </beans:bean>
-
                 <beans:bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
                     <beans:property name="extractValueFromSingleKeyModel" value="true" />
                     <beans:property name="contentType" value="application/javascript" />
                 </beans:bean>
-
                 <beans:bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
                     <beans:property name="contentType" value="application/xml" />
                 </beans:bean>
             </beans:list>
         </beans:property>
-
         <beans:property name="ignoreAcceptHeader" value="true" />
     </beans:bean>
 
@@ -128,36 +122,34 @@
         <!--         <beans:property name="completeAutoload" value="true"/> -->
     </beans:bean>
     <!-- Redis -->
-    <!--     <beans:bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"> -->
-    <!-- 	    <beans:property name="hostName" value="127.0.0.xx" /> -->
-    <!-- 	    <beans:property name="port" value="6379" /> -->
-    <!-- 	    <beans:property name="password" value="123456" /> -->
-    <!-- 	    <beans:property name="usePool" value="true" />  -->
-    <!-- 	    <beans:property name="database" value="0"/>    -->
-    <!--     </beans:bean> -->
-    <!--     <beans:bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"> -->
-    <!-- 	    <beans:property name="connectionFactory" ref="jedisConnFactory" /> -->
-    <!-- 	</beans:bean> -->
+    <!--<beans:bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <beans:property name="hostName" value="127.0.0.xx" />
+     	<beans:property name="port" value="6379" />
+     	<beans:property name="password" value="123456" />
+     	<beans:property name="usePool" value="true" />
+     	<beans:property name="database" value="0"/>
+    </beans:bean>
+    <beans:bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <beans:property name="connectionFactory" ref="jedisConnFactory" />
+    </beans:bean> -->
 
-
-    <!--   <beans:bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" -->
-    <!--         > -->
-    <!--         <beans:property name="hostName" value="127.0.0.xx" /> -->
-    <!--         <beans:property name="port" value="6379" /> -->
-    <!--         <beans:property name="password" value="123456" /> -->
-    <!--         <beans:property name="usePool" value="true" />   -->
-    <!--   </beans:bean>       -->
+    <!--<beans:bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <beans:property name="hostName" value="127.0.0.xx" />
+        <beans:property name="port" value="6379" />
+        <beans:property name="password" value="123456" />
+        <beans:property name="usePool" value="true" />
+    </beans:bean>-->
 
     <!-- redis template definition -->
-    <!--   <beans:bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" -->
-    <!--     p:connection-factory-ref="jedisConnectionFactory"/>  -->
+    <!--<beans:bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+                p:connection-factory-ref="jedisConnectionFactory"/>-->
 
     <beans:bean class="net.linkednest.runtime.interceptor.RequestInterceptor" />
     <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
         <beans:property name="paramName" value="lang"/>
     </beans:bean>
 
-    <!--     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/> -->
+    <!--<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>-->
 
     <interceptors>
         <interceptor>
@@ -194,21 +186,17 @@
             <exclude-mapping path="/lib/**"/>
             <beans:bean class="net.linkednest.runtime.interceptor.MenuInterceptor" />
         </interceptor>
-
         <interceptor>
             <mapping path="/board/article/**"/>
             <mapping path="/share/**"/>
             <beans:bean class="net.linkednest.runtime.interceptor.BoardArticleInterceptor" />
         </interceptor>
-
         <interceptor>
             <mapping path="/**/popImageSelector"/>
             <mapping path="/share/**"/>
             <beans:bean class="net.linkednest.runtime.interceptor.EditorInterceptor" />
         </interceptor>
-
     </interceptors>
-
 
     <!-- 다국어 처리 관련 -->
     <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -216,12 +204,9 @@
         <beans:property name="defaultEncoding" value="UTF-8"/>
         <beans:property name="cacheSeconds" value="180"/>
     </beans:bean>
-
     <beans:bean id="messageSourceAccessor" class="org.springframework.context.support.MessageSourceAccessor">
         <beans:constructor-arg index="0" ref="messageSource"/>
     </beans:bean>
-
-    <!-- 다국어 처리 -->
     <beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
     <!-- // 다국어 처리 관련 -->
 
@@ -232,10 +217,7 @@
             <beans:ref bean="servletContext" />
         </beans:constructor-arg>
     </beans:bean>
-
-    <beans:bean id="multipartResolver"
-                class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- one of the properties available; the maximum file size in bytes -->
         <beans:property name="maxUploadSize" value="20971520" />	 <!-- 20 M -->
         <beans:property name="defaultEncoding" value="UTF-8" />

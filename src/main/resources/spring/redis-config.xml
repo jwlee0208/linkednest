@@ -24,20 +24,14 @@
 		 	<property name="poolConfig" ref="redisPoolConfig"></property>		 	
 		 	 <property name="database" value="0"></property><!-- default 0 디비  dao영역에서 index 값 파라메터로 던져서 실시간으로 변경 감지 가능함.-->
 		 </bean>
-		 <!-- 
-		<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"  p:connection-factory-ref="connectionFactory"/>	
-		 -->
-		 
-<!-- 		<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"> -->
-<!-- 			<property name="connectionFactory" ref="connectionFactory"></property> -->
-<!-- 		</bean> -->
-		
-			 
+		<!--<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"  p:connection-factory-ref="connectionFactory"/>-->
+
+ 		<!--<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+ 			<property name="connectionFactory" ref="connectionFactory"></property>
+ 		</bean>-->
+
 		<!-- redisTemplate 사용할 경우 아래 주석풀고 사용 -->
-		
-		<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
-		    <property name="connectionFactory" ref="connectionFactory" />
-		</bean>
-<!-- 		 -->
-		 
+		<!--<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        	<property name="connectionFactory" ref="connectionFactory" />
+		</bean>-->
 </beans>			

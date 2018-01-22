@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.apache.ibatis.type.Alias;
 
-import net.linkednest.common.Constants.CommonConstant;
+import net.linkednest.common.constant.CommonConstant;
 import net.linkednest.common.util.AES256Util;
 
 @Alias("profile.profileContactInfoDto")

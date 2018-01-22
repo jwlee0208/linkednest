@@ -1,6 +1,6 @@
 package net.linkednest.www.user.web;
 
-import net.linkednest.common.Constants.CommonConstant;
+import net.linkednest.common.constant.CommonConstant;
 import net.linkednest.common.util.AES256Util;
 import net.linkednest.common.validate.JsonResponse;
 import net.linkednest.www.common.dto.CodeDto;

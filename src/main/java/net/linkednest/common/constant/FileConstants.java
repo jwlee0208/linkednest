@@ -1,4 +1,4 @@
-package net.linkednest.common.Constants;
+package net.linkednest.common.constant;
 
 /**
  * Created by 9000209 on 2018-01-16.

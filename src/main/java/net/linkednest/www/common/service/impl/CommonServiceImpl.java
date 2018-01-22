@@ -88,7 +88,7 @@ public class CommonServiceImpl implements CommonService{
 */
 package net.linkednest.www.common.service.impl;
 
-import net.linkednest.common.Constants.CommonConstant;
+import net.linkednest.common.constant.CommonConstant;
 import net.linkednest.common.util.AES256Util;
 import net.linkednest.www.common.dao.CommonDao;
 import net.linkednest.www.common.dto.CodeDto;
