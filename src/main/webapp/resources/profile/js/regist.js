@@ -162,6 +162,7 @@
                 success 	: function(data){
                     var result = data.result;
                     var msg = data.message;
+					var validate = data.validate;
 
                     if(result == 'success'){
                         location.href = "/profile/list/"+$("#profileType").val() + "/" + $("#categoryId").val();
@@ -169,6 +170,9 @@
                         alert(msg);
                         return;
                     }
+                },
+                error : function(xhr, textStatus, thrownError){
+                    console.log("error : " + xhr.status + ", " + textStatus + ", " + thrownError);
                 }
             });
         }

@@ -225,9 +225,14 @@ public class ProfileController {
     	// validation 
 		ProfileValidator.insertValidate(bindingResult, profileDto);
 
-    	// service call : insert tables
-    	int addCnt = this.profileService.addProfileInfos(profileDto);
-    	
+		int addCnt = 0;
+		if (bindingResult.hasErrors()) {
+
+		} else {
+			// service call : insert tables
+			addCnt = this.profileService.addProfileInfos(profileDto);
+		}
+
     	result.put("result"	, (addCnt > 0) ? "success" : "error");
     	result.put("message", (addCnt > 0) ? "success!!!" : "error!!!");
     	

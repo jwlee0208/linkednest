@@ -31,15 +31,9 @@
 		<input type="hidden" id="catagoryId"			name="catagoryId" 	value="${catagoryId}"/>
 		<c:set var="type" value=""/>
 		<c:choose>
-			<c:when test="${profileType eq 1}">
-				<c:set var="type" value="Player"/>
-			</c:when>
-			<c:when test="${profileType eq 2}">
-				<c:set var="type" value="Coach"/>
-			</c:when>
-			<c:otherwise>
-				<c:set var="type" value="Team"/>
-			</c:otherwise>
+			<c:when test="${profileType eq 1}"><c:set var="type" value="Player"/></c:when>
+			<c:when test="${profileType eq 2}"><c:set var="type" value="Coach"/></c:when>
+			<c:otherwise><c:set var="type" value="Team"/></c:otherwise>
 		</c:choose>
 		<div class="form-group">
 			<h1 id="btn-groups" class="page-header" style="padding-left:10px;padding-top:20px;">Profile List&nbsp;&nbsp;<small>${type}</small></h1>
@@ -56,7 +50,7 @@
 						<div id="areaList" style="margin-top:10px;">
 							<div class="row">
 								<div class="col-lg-2"><h4><span class="badge badge-primary"><tag:message code="text.continent"/></span></h4></div>
-								<div class="col-lg-10 btn-group" data-toggle="buttons">
+								<div class="col-lg-10 btn-group btn-radios" data-toggle="buttons">
 									<label class="btn btn-primary">
 										<input type="radio" id="area1" name="area" value="as" class="attrElemRadio"/>&nbsp;<tag:message code="code.area.as"/>
 									</label>
@@ -79,7 +73,7 @@
 					<div id="countryList">
 						<div class="row">
 							<div class="col-lg-2"><h4><span class="badge badge-primary"><tag:message code="text.countries"/></span></h4></div>
-							<div class="col-lg-10 btn-group" data-toggle="buttons">
+							<div class="col-lg-10 btn-group btn-radios" data-toggle="buttons">
 								<label class="btn btn-primary">
 									<input type="radio" id="country1" name="country" value="KR" class="attrElemRadio"/>&nbsp;<tag:message code="code.country.KR"/>
 								</label>
@@ -172,6 +166,7 @@
 // 	});
 
         $(".attrElemRadio").on("click", function(){
+            alert($(this).is(":checked"));
             loadProfileList();
         });
 // });
