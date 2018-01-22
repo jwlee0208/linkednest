@@ -8,6 +8,7 @@
 <style>
 	iframe {width : 250px; height : 200px; align:center;}
 </style>
+<!-- profile list area -->
 <div class="row">
 <c:choose>
 	<c:when test="${empty profileList}">
@@ -93,21 +94,19 @@
 						</div>
 				</div>
 				<br/>
-			</div>	
-			
+			</div>
 			</c:forEach>
 	</c:otherwise>
 </c:choose>
 </div>
-
-
-                        <!-- 리스트 페이징 영역 -->
-                    <c:choose>    
-                        <c:when test="${pageHolder.totalRows > 0}">
-                            <custom:paginationAjax name="pageHolder" scriptName="ajaxPagination"/>
-                        </c:when>
-                        <c:otherwise>
-                            <div style="padding: 52px 0 27px;"></div>
-                        </c:otherwise>
-                   </c:choose>     
-                        <!-- // 리스트 페이징 영역 -->	
+<!-- // profile list area -->
+<!-- 리스트 페이징 영역 -->
+<c:choose>
+	<c:when test="${pageHolder.totalRows > 0}">
+    <custom:paginationAjax name="pageHolder" scriptName="ajaxPagination"/>
+    </c:when>
+    <c:otherwise>
+    <div style="padding: 52px 0 27px;"></div>
+    </c:otherwise>
+</c:choose>
+<!-- // 리스트 페이징 영역 -->

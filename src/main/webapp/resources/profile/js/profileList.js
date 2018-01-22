@@ -4,7 +4,6 @@
 		});
 //		setChildCategory();
 		loadProfileList();
-		
 	});
 
 	$(function() {
