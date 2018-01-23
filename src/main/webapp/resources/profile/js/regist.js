@@ -8,7 +8,6 @@
 	
 	//파일전송 후 콜백 함수
 	function FileuploadCallback(data, state){
-	
 	   if (data=="error"){
 	      alert("파일전송중 에러 발생!!");
 	      return false;
@@ -30,15 +29,19 @@
 	$(function(){
 		// profile registration
 		$("#saveBtn").click(function(){
-			var introduce = tinyMCE.get('introduce').getContent();
-			$("#introduce").val(introduce);
+			// validation check
+			var isValid = validateBeforeRegist();
+			if (isValid) {
+                var introduce = tinyMCE.get('introduce').getContent();
+                $("#introduce").val(introduce);
 
-			var profileImg = $.trim($("#profileImg").val());
-			
-			if(profileImg.length == 0){
-				this.registProfileNoneImage();
-			}else{
-				this.registProfileWithImage();
+                var profileImg = $.trim($("#profileImg").val());
+
+                if(profileImg.length == 0){
+                    this.registProfileNoneImage();
+                }else{
+                    this.registProfileWithImage();
+                }
 			}
 		});
 
@@ -71,12 +74,12 @@
 			var title = $("#youtubeTitle").val();
 			var url = $("#youtubeUrl").val().replace('"', '&quot;');
 			
-			if (title == null || title == '') {
+			if (isEmpty(title)) {
 				alert('Please fill out stream title');
 				return false;
 			}
 
-			if (url == null || url == '') {
+			if (isEmpty(url)) {
 				alert('Please fill out stream url');
 				return false;
 			}
@@ -119,17 +122,17 @@
 			
 			// validation for career
 //			validateCareer(careerTitle, careerDescription, careerStartDate, careerEndDate, careerStatus);
-			if (careerTitle == null || careerTitle == '') {
+			if (isEmpty(careerTitle)) {
 				alert('Please fill out career title');
 				return false;
 			}
 
-			if (careerDescription == null || careerDescription == '') {
+			if (isEmpty(careerDescription)) {
 				alert('Please fill out career description');
 				return false;
 			}
 
-			if (careerStatus == null || careerStatus == '') {
+			if (isEmpty(careerStatus)) {
 				alert('Please select career status');
 				return false;
 			}
@@ -188,23 +191,22 @@
 
 		// validation for career
 		function validateCareer(careerTitle, careerDescription, careerStartDate, careerEndDate, careerStatus) {
-			if (careerTitle == null || careerTitle == '') {
+			if (isEmpty(careerTitle)) {
 				alert('Please fill out career title');
 				return false;
 			}
 
-			if (careerDescription == null || careerDescription == '') {
+			if (isEmpty(careerDescription)) {
 				alert('Please fill out career description');
 				return false;
 			}
 
-			if (careerStatus == null || careerStatus == '') {
+			if (isEmpty(careerStatus)) {
 				alert('Please select career status');
 				return false;
 			}
 			return true;
 		}
-		
 		
 		// pitcher stat row adding
 		$(".addPitcherBtn").click(function(){
@@ -233,7 +235,7 @@
 			var whip = $("#whip_pitch_stat").val();
 			var k = $("#k_pitch_stat").val();
 
-			if (teamName == null || teamName == '') {
+			if (isEmpty(teamName)) {
 				alert('There is no Team Name');
 				return false;
 			}
@@ -299,7 +301,7 @@
 			var ops = $("#ops_hit_stat").val();
 
 
-			if (teamName == null || teamName == '') {
+			if (isEmpty(teamName)) {
 				alert('There is no Team Name');
 				return false;
 			}			
@@ -362,11 +364,10 @@
 			var rf = $("#rf_field_stat").val();
 
 
-			if (teamName == null || teamName == '') {
+			if (isEmpty(teamName)) {
 				alert('There is no Team Name');
 				return false;
-			}			
-
+			}
 			
 			var rowCount = $(".fielder_tr").size();
 			if(rowCount >= 10){
@@ -401,10 +402,11 @@
 		
 		// youtube searching
 		$("#searchMyYoutube").click(function(){
-			if ($("#searchYoutubeKeyword").val() != null && $("#searchYoutubeKeyword").val() != '') {
+			if (!isEmpty($("#searchYoutubeKeyword").val())) {
 				$("#youtubeListDiv").load("/api/youtube/streamList", {"keyword" : $("#searchYoutubeKeyword").val(), "type" : "select"});				
 			} else {
 				alert("There is no keyword.");
+                $("#searchYoutubeKeyword").focus();
 				return false;
 			}
 		});
@@ -418,3 +420,8 @@
 	function hideDiv(type){
 		$("#"+type+"Div").hide();
 	}
+
+	var regexEmail = /([a-z0-9_\ .-]+)@([/da-z\ .-]+)\ .([a-z\ .]{2,6})/;
+	var regexName =  /^[a-z0-9_-]{3,16}&/;
+	var regexDecimalPoint = /^[-]?\d+(?:[.]\d+)?$/;
+

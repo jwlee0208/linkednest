@@ -17,12 +17,8 @@
 	<form id="actionFrm" name="actionFrm" method="post" class="form-horizontal" role="form">
 		<h1 id="btn-groups" class="page-header">
 <c:choose>
-	<c:when test="${userInfo ne null}">
-		Modification
-	</c:when>		
-	<c:otherwise>
-		Sign up
-	</c:otherwise>
+	<c:when test="${userInfo ne null}">Modification</c:when>
+	<c:otherwise>Sign up</c:otherwise>
 </c:choose>
 		</h1>
 		<h2>Required</h2>
@@ -98,7 +94,7 @@
 		</div>		
 		
 		<div class="form-group">
-			<label for="nationallity" class="col-sm-2 control-label">Nationality</label>
+			<label for="nationality" class="col-sm-2 control-label">Nationality</label>
 			<div class="col-sm-10">
 				<select class="form-control" id="nationality" name="nationality">
 					<option value="">국가를 선택해주세요.</option>
