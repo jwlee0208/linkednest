@@ -1,6 +1,7 @@
 -- tb_board  table creation
 CREATE TABLE `TB_BOARD` (
   `board_id` int(11) NOT NULL AUTO_INCREMENT,
+  `board_category_id` int(11) DEFAULT NULL,
   `board_name` varchar(45) DEFAULT NULL,
   `board_type` char(1) CHARACTER SET latin1 DEFAULT NULL COMMENT '0 : 기본 게시판, 1: 이미지 게시판',
   `create_user_id` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
