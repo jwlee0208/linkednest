@@ -7,9 +7,10 @@
         http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <beans:import resource="www-servlet-context.xml"/>
+    <beans:import resource="linkednest-servlet.xml"/>
+<!--    <beans:import resource="www-servlet-context.xml"/>
     <beans:import resource="openapi-servlet-context.xml"/>
     <beans:import resource="profile-servlet-context.xml"/>
-    <beans:import resource="share-servlet-context.xml"/>
+    <beans:import resource="share-servlet-context.xml"/>-->
 
 </beans:beans>

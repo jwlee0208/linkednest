@@ -29,18 +29,16 @@
 	$(function(){
 		// profile registration
 		$("#saveBtn").click(function(){
-			// validation check
+            var introduce = tinyMCE.get('introduce').getContent();
+            $("#introduce").val(introduce);
+            // validation check
 			var isValid = validateBeforeRegist();
 			if (isValid) {
-                var introduce = tinyMCE.get('introduce').getContent();
-                $("#introduce").val(introduce);
-
                 var profileImg = $.trim($("#profileImg").val());
-
                 if(profileImg.length == 0){
-                    this.registProfileNoneImage();
+                    registProfileNoneImage();
                 }else{
-                    this.registProfileWithImage();
+                    registProfileWithImage();
                 }
 			}
 		});

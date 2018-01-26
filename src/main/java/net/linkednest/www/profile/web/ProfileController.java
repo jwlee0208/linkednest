@@ -171,7 +171,7 @@ public class ProfileController {
      */
     @RequestMapping(value="/regist/{profileType}/{catId}", method=RequestMethod.GET)
     public String getProfileRegistPage(Model model, HttpSession session, @PathVariable String profileType, @PathVariable String catId){
-    	
+		System.out.printf(" ----------- [start] regist profile page ---------- \n");
         UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
 		boolean isLogon     = (sessionInfo != null) ? true : false;
 
@@ -205,6 +205,8 @@ public class ProfileController {
     @RequestMapping(value="/registAction", method=RequestMethod.POST)
     @ResponseBody
     public JSONObject  registProfile(ProfileDto profileDto, HttpSession session, BindingResult bindingResult) throws Exception{
+		System.out.printf(" ----------- [start] regist profile action ---------- \n");
+
     	JSONObject 		result 				= new  JSONObject();
 		// Uploading Profile Image & Setting Image Path
 		this.uploadProfileImage(profileDto);

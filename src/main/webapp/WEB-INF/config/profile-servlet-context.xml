@@ -27,7 +27,7 @@
     <context:annotation-config/>
     <aop:aspectj-autoproxy />
 
-    <context:component-scan base-package="net.linkednest.profile"/>
+    <context:component-scan base-package="net.linkednest.www.profile"/>
     <!-- properties configuration -->
     <context:property-placeholder location="classpath:properties/linkednest.properties" />
 
@@ -211,7 +211,7 @@
 
     <!-- 다국어 처리 관련 -->
     <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <beans:property name="basename" value="/WEB-INF/messages/Locale"/>
+        <beans:property name="basename" value="/WEB-INF/messages/locale"/>
         <beans:property name="defaultEncoding" value="UTF-8"/>
         <beans:property name="cacheSeconds" value="180"/>
     </beans:bean>

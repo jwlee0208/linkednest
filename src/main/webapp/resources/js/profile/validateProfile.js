@@ -6,15 +6,15 @@ function validateBeforeRegist() {
             $("#name").focus();
             return false;
         } else {
-            if (!regexName.test($("#name").val())) {
+            /*if (regexName.test($("#name").val())) {
                 alert('You can fill out your name using only text.');
                 $("#name").focus();
                 return false;
-            }
+            }*/
         }
 
         if (profileType == '1') {
-            if (isEmpty($("catId2").val())) {
+            if (isEmpty($("#catId2").val())) {
                 alert('please, choice your main position.');
                 $("#catId2").focus();
                 return false;
@@ -26,7 +26,7 @@ function validateBeforeRegist() {
             $("#height").focus();
             return false;
         } else {
-            if (regexDecimalPoint.test($("#height").val())) {
+            if (!regexDecimalPoint.test($("#height").val())) {
                 alert('You can fill out your height using number and point.');
                 $("#height").focus();
                 return false;
@@ -38,7 +38,7 @@ function validateBeforeRegist() {
             $("#weight").focus();
             return false;
         } else {
-            if (regexDecimalPoint.test($("#weight").val())) {
+            if (!regexDecimalPoint.test($("#weight").val())) {
                 alert('You can fill out your weight using number and point.');
                 $("#weight").focus();
                 return false;
@@ -128,11 +128,11 @@ function validateBeforeRegist() {
             $("#name").focus();
             return false;
         } else {
-            if (!regexName.test($("#name").val())) {
+            /*if (!regexName.test($("#name").val())) {
                 alert('You can fill out your name using only text.');
                 $("#name").focus();
                 return false;
-            }
+            }*/
         }
 
         if (isEmpty($("#introduce").val())) {
@@ -172,4 +172,13 @@ function validateBeforeRegist() {
         }
     }
     return true;
+}
+
+function isEmpty(val){
+    var result = false;
+
+    if(val == '' || val == null || val == 'undefined'){
+        result = true;
+    }
+    return result;
 }

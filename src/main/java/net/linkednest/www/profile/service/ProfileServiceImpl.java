@@ -36,7 +36,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.google.common.base.Optional;
 
-@Service("profileService")
+@Service
 public class ProfileServiceImpl implements ProfileService{
 	
 	private static final Log logger = LogFactory.getLog(ProfileServiceImpl.class);
@@ -47,11 +47,6 @@ public class ProfileServiceImpl implements ProfileService{
 	@Resource(name="CommonServiceImpl")
 	private CommonServiceImpl commonService;
 
-
-	private static final String PROFILE_TYPE_PLAYER 	= "1";
-	private static final String PROFILE_TYPE_COACH 		= "2";
-	private static final String PROFILE_TYPE_TEAM 		= "3";
-	
 	/**
 	 * @brief 프로파일 정보 목록 조회(none-paging)
 	 * @param profileInfo

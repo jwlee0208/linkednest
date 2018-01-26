@@ -29,7 +29,7 @@
 	
 	<context:component-scan base-package="net.linkednest"/>
 	<!-- properties configuration -->
-	<context:property-placeholder location="classpath:properties/tryout.properties" />
+	<context:property-placeholder location="classpath:properties/linkednest.properties" />
 	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/**" 			location="/resources/" />
@@ -148,7 +148,7 @@
    <!--<beans:bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
      p:connection-factory-ref="jedisConnectionFactory"/>-->
 
-    <beans:bean class="net.linkednest.common.interceptor.RequestInterceptor" />
+    <beans:bean class="net.linkednest.runtime.interceptor.RequestInterceptor" />
     <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
     	<beans:property name="paramName" value="lang"/>
     </beans:bean>
@@ -203,9 +203,9 @@
 	 </interceptors>    
 
     <!-- 다국어 처리 관련 -->
-    <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-    	<beans:property name="basename" value="/WEB-INF/messages/Locale"/>
-    	<beans:property name="defaultEncoding" value="UTF-8"/>
+    <beans:bean id="messageSource" class=" org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <beans:property name="basename" value="/WEB-INF/messages/locale" />
+        <beans:property name="defaultEncoding" value="UTF-8"/>
     	<beans:property name="cacheSeconds" value="180"/>
     </beans:bean>
     <beans:bean id="messageSourceAccessor" class="org.springframework.context.support.MessageSourceAccessor">
