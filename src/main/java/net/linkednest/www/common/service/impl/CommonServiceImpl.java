@@ -124,7 +124,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-@Service("CommonServiceImpl")
+@Service
 public class CommonServiceImpl implements CommonService {
     final Log log = LogFactory.getLog(this.getClass());
 

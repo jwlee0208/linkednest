@@ -84,16 +84,45 @@
 </div>
 <br />
 <div class="form-group row">
-	<label class="col-2 col-form-label" for="languageSearch" >Language</label>
+	<div class="form-group">
+		<label for="language" class="col-sm-2 control-label"><tag:message code="common.language"/></label>
+		<div class="col-sm-10">
+			<select class="form-control" id="language" name="profilePlayerDto.language">
+				<option value=""><tag:message code="select.language"/></option>
+				<c:if test="${!empty languageList}">
+					<c:forEach var="langInfo" items="${languageList}">
+						<option value="${langInfo.codeValue}">${langInfo.codeName}</option>
+					</c:forEach>
+				</c:if>
+			</select>
+		</div>
+	</div>
+	<%--<label class="col-2 col-form-label" for="languageSearch" >Language</label>
 	<div class="col-4">
 		<input type="text" class="form-control" id="languageSearch" />
 		<input type="hidden" class="form-control" id="language" name="profilePlayerDto.language" />
+	</div>--%>
+
+	<div class="form-group">
+		<label for="nationality" class="col-sm-2 control-label"><tag:message code="common.nationality"/></label>
+		<div class="col-sm-10">
+			<select class="form-control" id="nationality" name="profilePlayerDto.nationality">
+				<option value=""><tag:message code="select.nationality"/></option>
+				<c:if test="${!empty nationList}">
+					<c:forEach var="nationInfo" items="${nationList}">
+						<option value="${nationInfo.codeValue}">${nationInfo.codeName}</option>
+					</c:forEach>
+				</c:if>
+			</select>
+		</div>
 	</div>
-	<label class="col-2 col-form-label" for="nationalitySearch" >Nationality</label>
+
+
+	<%--<label class="col-2 col-form-label" for="nationalitySearch" >Nationality</label>
 	<div class="col-4">
 		<input type="text" class="form-control" id="nationalitySearch" />
 		<input type="hidden" class="form-control" id="nationality" name="profilePlayerDto.nationality" />
-	</div>
+	</div>--%>
 </div>
 <br />
 <div class="form-group row" for="introduce" >

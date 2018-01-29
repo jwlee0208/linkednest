@@ -9,19 +9,19 @@
 
     <sec:global-method-security secured-annotations="enabled" />
 
-	<sec:http auto-config="true" use-expressions="true" >    
-    
-    <sec:intercept-url pattern="/login/*"  requires-channel="https" />
-    <sec:intercept-url pattern="/commons/popImageSelector"  requires-channel="https" />
-	<sec:intercept-url pattern="/**/commons/popImageSelector"  requires-channel="https" />
-	
-	<sec:intercept-url pattern="/*"  requires-channel="http" />
-	<sec:intercept-url pattern="/**/**"  requires-channel="http" />
-	
-	<sec:port-mappings>
-	        <sec:port-mapping http="80" https="42988" />
-	        <sec:port-mapping http="8080" https="42988" />
-	 </sec:port-mappings>
+	<sec:http auto-config="true" use-expressions="true" >
+		<sec:intercept-url pattern="/login/*"  requires-channel="https" />
+		<sec:intercept-url pattern="/commons/popImageSelector"  requires-channel="https" />
+		<sec:intercept-url pattern="/**/commons/popImageSelector"  requires-channel="https" />
+
+		<sec:intercept-url pattern="/*"  requires-channel="http" />
+		<sec:intercept-url pattern="/**/**"  requires-channel="http" />
+
+		<sec:port-mappings>
+			<sec:port-mapping http="80" https="42988" />
+			<sec:port-mapping http="8080" https="42988" />
+		</sec:port-mappings>
+		<sec:csrf disabled="true"/>
 	</sec:http>
       <sec:authentication-manager />
 </beans>

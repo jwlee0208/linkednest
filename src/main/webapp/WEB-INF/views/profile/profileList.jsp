@@ -145,9 +145,11 @@
 
         // for filter search
         $(".label-for-check").on("click",function(){
-            if ($(this).hasClass("active")) {
+            console.log("1 : " + $(this).children().val());
+//            if ($(this).hasClass("active")) {
+//                alert('2 : ' + $(this).hasClass("active"));
                 loadProfileList();
-			}
+//			}
 		});
     });
 
@@ -155,7 +157,6 @@
     function ajaxPagination(page){
         var newPage = isEmpty(page) ? "1" : page;
         $("input[name=page]").val(newPage);
-
         loadProfileList();
     }
 

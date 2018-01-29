@@ -65,7 +65,7 @@
 		</div>		
 
 		<div class="form-group">
-			<label for="nationallity" class="col-sm-2 control-label"><tag:message code="common.nationality"/></label>
+			<label for="nationality" class="col-sm-2 control-label"><tag:message code="common.nationality"/></label>
 			<div class="col-sm-10">
 				<select class="form-control" id="nationality" name="nationality">
 					<option value=""><tag:message code="select.nationality"/></option>
@@ -77,9 +77,7 @@
 				</select>			
 			</div>
 		</div>
-		
 		<div class="form-group">
-			
 			<label for="language" class="col-sm-2 control-label"><tag:message code="common.language"/></label>
 			<div class="col-sm-10">
 				<select class="form-control" id="language" name="language">

@@ -8,8 +8,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import net.linkednest.common.constant.DBConstants;
+import net.linkednest.www.common.service.CommonService;
 import net.linkednest.www.profile.ProfileConstants;
-import net.linkednest.www.common.service.impl.CommonServiceImpl;
 import net.linkednest.www.profile.dao.ProfileDao;
 import net.linkednest.www.profile.dto.LeagueInfoDto;
 import net.linkednest.www.profile.dto.ProfileAttrDto;
@@ -31,6 +31,7 @@ import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
@@ -44,8 +45,8 @@ public class ProfileServiceImpl implements ProfileService{
 	@Resource(name="profileDao")
 	private ProfileDao profileDao;
 
-	@Resource(name="CommonServiceImpl")
-	private CommonServiceImpl commonService;
+	@Autowired
+	private CommonService commonService;
 
 	/**
 	 * @brief 프로파일 정보 목록 조회(none-paging)
@@ -638,7 +639,7 @@ public class ProfileServiceImpl implements ProfileService{
 		contentMap.put("message"		, request.getMessage());
 
 		// Send Mail
-		this.commonService.commonSendMailTemplate(sessionInfo, "[linkedNest.net] Check Out!!" + profileInfoRes.getName() + "'s Profile!!!", "mailTemplates/profileTemplate.vm", contentMap);
+		this.commonService.commonSendMailTemplate(sessionInfo, "[linkedNest.net] Check Out!!" + profileInfoRes.getName() + "'s Profile!!!", "WEB-INF/mailTemplate/profileTemplate.vm", contentMap);
 	}
 
 	private String getBody(ProfileDto profileInfo) {

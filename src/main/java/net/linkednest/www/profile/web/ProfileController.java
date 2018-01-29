@@ -2,6 +2,8 @@ package net.linkednest.www.profile.web;
 
 import net.linkednest.common.paging.PageHolder;
 import net.linkednest.common.util.FileUpload;
+import net.linkednest.www.common.dto.CodeDto;
+import net.linkednest.www.common.service.CommonService;
 import net.linkednest.www.profile.ProfileConstants;
 import net.linkednest.www.profile.validate.ProfileValidator;
 import net.linkednest.www.profile.dto.*;
@@ -37,6 +39,9 @@ public class ProfileController {
 
 	@Autowired
 	private ProfileService profileService;
+
+	@Autowired
+	private CommonService commonService;
 
 	private static final int PROFILE_LIST_CNT_9X3 = 9*3;
 
@@ -170,7 +175,7 @@ public class ProfileController {
      * @return
      */
     @RequestMapping(value="/regist/{profileType}/{catId}", method=RequestMethod.GET)
-    public String getProfileRegistPage(Model model, HttpSession session, @PathVariable String profileType, @PathVariable String catId){
+    public String getProfileRegistPage(Model model, HttpSession session, @PathVariable String profileType, @PathVariable String catId) throws Exception {
 		System.out.printf(" ----------- [start] regist profile page ---------- \n");
         UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
 		boolean isLogon     = (sessionInfo != null) ? true : false;
@@ -185,13 +190,26 @@ public class ProfileController {
     	if(profileType.equals(ProfileConstants.PROFILE_TYPE_TEAM)){
     		leagueInfoList = this.profileService.getLeagueInfoList();
     	}
-    	
-    	model.addAttribute("isLogon"		, isLogon);
+
+		// Nation List
+		CodeDto nationCodeDto = new CodeDto();
+		nationCodeDto.setCodeType("01");
+		List<CodeDto> nationList    = commonService.selectCodeList(nationCodeDto);
+
+		// Language List
+		CodeDto       langCodeDto   = new CodeDto();
+		langCodeDto.setCodeType("02");
+		List<CodeDto> languageList  = commonService.selectCodeList(langCodeDto);
+
+		model.addAttribute("isLogon"		, isLogon);
     	model.addAttribute("profileType"	, profileType);
     	model.addAttribute("categoryId"		, catId);	
     	model.addAttribute("profileAttrList", profileAttrList);
     	model.addAttribute("leagueInfoList"	, leagueInfoList);
-    	return "/profile/regist";
+		model.addAttribute("nationList"     , nationList);
+		model.addAttribute("languageList"   , languageList);
+
+		return "/profile/regist";
     }
 
 	/**
@@ -217,7 +235,7 @@ public class ProfileController {
     	logger.debug("profileDto is " + profileDto.toString());
     	
     	// validation 
-		ProfileValidator.insertValidate(bindingResult, profileDto);
+		// ProfileValidator.insertValidate(bindingResult, profileDto);
 
 		int addCnt = 0;
 		if (bindingResult.hasErrors()) {

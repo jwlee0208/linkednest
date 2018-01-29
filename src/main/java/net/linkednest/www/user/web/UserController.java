@@ -6,7 +6,7 @@ import net.linkednest.common.validate.JsonResponse;
 import net.linkednest.www.common.dto.CodeDto;
 import net.linkednest.www.common.dto.MailDto;
 import net.linkednest.www.common.dto.ShareDto;
-import net.linkednest.www.common.service.impl.CommonServiceImpl;
+import net.linkednest.www.common.service.CommonService;
 import net.linkednest.www.share.service.ShareServiceImpl;
 import net.linkednest.www.user.dto.UserDto;
 import net.linkednest.www.user.service.UserServiceImpl;
@@ -18,6 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,8 +52,8 @@ public class UserController {
 	@Resource(name="UserServiceImpl")
 	private UserServiceImpl userService;
 	
-	@Resource(name="CommonServiceImpl")
-	private CommonServiceImpl commonService;
+	@Autowired
+	private CommonService commonService;
 	
 	@Resource(name="ShareServiceImpl")
 	private ShareServiceImpl shareService;
@@ -437,7 +438,7 @@ public class UserController {
         contentMap.put("userId"			, userDto.getUserId());
 
         // Sending Mail
-        this.commonSendMailTemplate(userDto, "[linkedNest.net] Congraturation! Happy join us!!", "mailTemplates/welcomeJoinningTemplate.vm", contentMap);
+        this.commonSendMailTemplate(userDto, "[linkedNest.net] Congraturation! Happy join us!!", "./src/main/webapp/resources/mailTemplate/welcomeJoinningTemplate.vm", contentMap);
     }
     
     private void sendForgotPwMail(UserDto userDto){
@@ -464,7 +465,7 @@ public class UserController {
             contentMap.put("encryptedMail"  , userDto.getEmail());
 
             // Sending Mail
-            this.commonSendMailTemplate(userDto, "[linkedNest.net] Reset your password!!", "mailTemplates/forgotPassword.vm", contentMap);
+            this.commonSendMailTemplate(userDto, "[linkedNest.net] Reset your password!!", "./src/main/webapp/resources/mailTemplate/forgotPassword.vm", contentMap);
             
         }
     }
