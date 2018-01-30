@@ -2,8 +2,10 @@ package net.linkednest.www.profile.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.ibatis.type.Alias;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Alias("profile.profileAttrElementDto")
 public class ProfileAttrElementDto extends ProfileAttrDto{
 

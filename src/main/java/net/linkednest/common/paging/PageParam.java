@@ -99,6 +99,11 @@ public class PageParam {
 
     @Override
     public String toString() {
-        return "PageParam [page=" + page + ", pageSize=" + pageSize + ", listSize=" + listSize + "]";
+        final StringBuffer sb = new StringBuffer("PageParam{");
+        sb.append("page=").append(page);
+        sb.append(", pageSize=").append(pageSize);
+        sb.append(", listSize=").append(listSize);
+        sb.append('}');
+        return sb.toString();
     }
 }

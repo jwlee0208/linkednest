@@ -1,7 +1,9 @@
 package net.linkednest.www.profile.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.ibatis.type.Alias;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Alias("profile.profileAttrElementMapDto")
 public class ProfileAttrElementMapDto extends ProfileAttrElementDto{
 

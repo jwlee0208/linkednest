@@ -2,12 +2,15 @@ package net.linkednest.www.profile.dto;
 
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.lang3.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.Alias;
 import org.springframework.web.multipart.MultipartFile;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Alias("profile.profileDto")
 public class ProfileDto {
 	private int 	profileId;
