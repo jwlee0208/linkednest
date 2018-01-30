@@ -40,18 +40,21 @@
 <div class="form-group row">
 	<label class="col-2 col-form-label" for="height">Height (cm)</label>
 	<div class="col-4">
-		<input type="text" class="form-control" id="height" name="profilePlayerDto.height" />
+		<input type="text" class="form-control" id="height" name="profilePlayerDto.height" aria-describedby="heightHelpInline"/>
+		<small id="heightHelpInline" class="text-muted">Allow digit and '.'</small>
 	</div>
 	<label class="col-2 col-form-label" for="weight">Weight (kg)</label>
 	<div class="col-4">
-		<input type="text" class="form-control" id="weight" name="profilePlayerDto.weight" />
+		<input type="text" class="form-control" id="weight" name="profilePlayerDto.weight" aria-describedby="weightHelpInline"/>
+		<small id="weightHelpInline" class="text-muted">Allow digit and '.'</small>
 	</div>
 </div>
 <br />
 <div class="form-group row">
 	<label class="col-2 col-form-label" for="birthDate">Date Of Birth</label>
 	<div class="col-10">
-		<input type="date" class="form-control" id="birthDate" name="profilePlayerDto.birthDate" />
+		<input type="date" class="form-control" id="birthDate" name="profilePlayerDto.birthDate" aria-describedby="birthDateHelpInline"/>
+		<small id="birthDateHelpInline" class="text-muted">YYYY-MM-DD</small>
 	</div>
 </div>
 <br />
@@ -116,8 +119,6 @@
 			</select>
 		</div>
 	</div>
-
-
 	<%--<label class="col-2 col-form-label" for="nationalitySearch" >Nationality</label>
 	<div class="col-4">
 		<input type="text" class="form-control" id="nationalitySearch" />

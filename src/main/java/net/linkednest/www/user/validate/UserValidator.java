@@ -44,15 +44,15 @@ public class UserValidator extends BaseValidator{
             }
         }
         // 전화번호
+        ValidationUtil.rejectIfEmpty(result, "phoneNo", "user.regist.phoneNo.empty", "전화번호가 입력되지 않았습니다.");
         if(StringUtils.hasLength(userDto.getPhoneNo())){
             ValidationUtil.rejectIfNotRegEx(result, "phoneNo", "user.regist.phoneNo.regex", "전화번호 형식에 맞지 않습니다.", ValidationUtil.REG_EX_CELL_PHONE_NO);
         }
         //이메일
+        ValidationUtil.rejectIfEmpty(result, "email", "user.regist.email.empty", "이메일이 입력되지 않았습니다.");
         if(!StringUtils.isEmpty(userDto.getEmail())){
-            ValidationUtil.rejectIfEmpty(result, "email", "user.regist.email.empty", "이메일이 입력되지 않았습니다.");
             ValidationUtil.rejectIfNotRegEx(result, "email", "user.regist.email.regex", "이메일 형식에 맞지 않습니다.", ValidationUtil.REG_EX_EMAIL);
         }
-        
     }
     
     /**

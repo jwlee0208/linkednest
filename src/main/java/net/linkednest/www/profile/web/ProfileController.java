@@ -135,7 +135,7 @@ public class ProfileController {
 	 */
     @RequestMapping("/ajaxProfileList")
     public String getAjaxProfileList(HttpServletRequest request, Model model, SearchProfileDto searchProfileDto, HttpSession session){
-    	logger.info("[ ProfileController.getAjaxProfileList() ][ Param ] searchProfileDto : " + searchProfileDto.toString());
+    	logger.error("[ ProfileController.getAjaxProfileList() ][ Param ] searchProfileDto : " + searchProfileDto.toString());
     	
     	if(StringUtils.isNotEmpty(searchProfileDto.getSearchText())){
     	    searchProfileDto.setSearchText(new String(Base64.decode(searchProfileDto.getSearchText())));

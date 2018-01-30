@@ -1,32 +1,12 @@
 package net.linkednest.www.profile.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
-
+import com.google.common.base.Optional;
 import net.linkednest.common.constant.DBConstants;
 import net.linkednest.www.common.service.CommonService;
 import net.linkednest.www.profile.ProfileConstants;
 import net.linkednest.www.profile.dao.ProfileDao;
-import net.linkednest.www.profile.dto.LeagueInfoDto;
-import net.linkednest.www.profile.dto.ProfileAttrDto;
-import net.linkednest.www.profile.dto.ProfileAttrElementMapDto;
-import net.linkednest.www.profile.dto.ProfileCareerDto;
-import net.linkednest.www.profile.dto.ProfileContactInfoDto;
-import net.linkednest.www.profile.dto.ProfileDto;
-import net.linkednest.www.profile.dto.ProfileMailReq;
-import net.linkednest.www.profile.dto.ProfilePlayerDto;
-import net.linkednest.www.profile.dto.ProfileStatFielderDto;
-import net.linkednest.www.profile.dto.ProfileStatHitterDto;
-import net.linkednest.www.profile.dto.ProfileStatPitcherDto;
-import net.linkednest.www.profile.dto.ProfileStreamDto;
-import net.linkednest.www.profile.dto.ProfileTeamDto;
-import net.linkednest.www.profile.dto.SearchProfileDto;
+import net.linkednest.www.profile.dto.*;
 import net.linkednest.www.user.dto.UserDto;
-
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
@@ -35,7 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.google.common.base.Optional;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProfileServiceImpl implements ProfileService{
@@ -91,8 +75,9 @@ public class ProfileServiceImpl implements ProfileService{
 	 * @return
 	 */
 	public List<ProfileAttrDto> getProfileAttrElementList(ProfileDto profileDto) {
-//		logger.debug("[ProfileServiceImpl.getProfileAttrElementList] select result : " + this.profileDao.selectProfileAttrElementList(profileDto));
-		return this.profileDao.selectProfileAttrElementList(profileDto);
+		List<ProfileAttrDto> profileAttrList = this.profileDao.selectProfileAttrElementList(profileDto);
+		logger.error("[ProfileServiceImpl.getProfileAttrElementList] select result : " + profileAttrList);
+		return profileAttrList;
 	}
 
 	/**
@@ -104,7 +89,7 @@ public class ProfileServiceImpl implements ProfileService{
 	public int addProfileInfos(ProfileDto profileDto) {
 		
 		int profileId = this.addProfileInfo(profileDto);
-		logger.debug("profileId is " + profileId);
+		logger.info("profileId is " + profileId);
 		
 		if (profileId > 0) {
 			String profileType = profileDto.getProfileType();
