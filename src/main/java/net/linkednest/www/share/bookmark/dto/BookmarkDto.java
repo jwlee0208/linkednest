@@ -54,14 +54,18 @@ public class BookmarkDto {
     public void setModifyDate(String modifyDate) {
         this.modifyDate = modifyDate;
     }
-    
+
     @Override
     public String toString() {
-        return "BookmarkDto [webBookmarkId=" + webBookmarkId + ", userId="
-                + userId + ", bookmarkUrl=" + bookmarkUrl + ", bookmarkName="
-                + bookmarkName + ", bookmarkDescription=" + bookmarkDescription
-                + ", createDate=" + createDate + ", modifyDate=" + modifyDate
-                + "]";
+        final StringBuffer sb = new StringBuffer("BookmarkDto{");
+        sb.append("webBookmarkId=").append(webBookmarkId);
+        sb.append(", userId='").append(userId).append('\'');
+        sb.append(", bookmarkUrl='").append(bookmarkUrl).append('\'');
+        sb.append(", bookmarkName='").append(bookmarkName).append('\'');
+        sb.append(", bookmarkDescription='").append(bookmarkDescription).append('\'');
+        sb.append(", createDate='").append(createDate).append('\'');
+        sb.append(", modifyDate='").append(modifyDate).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
-        
 }

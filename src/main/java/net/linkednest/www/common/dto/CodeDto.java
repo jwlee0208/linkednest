@@ -41,11 +41,16 @@ public class CodeDto {
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
+
     @Override
     public String toString() {
-        return "CodeDto [codeId=" + codeId + ", codeName=" + codeName
-                + ", codeValue=" + codeValue + ", codeType=" + codeType + "]";
+        final StringBuffer sb = new StringBuffer("CodeDto{");
+        sb.append("codeId=").append(codeId);
+        sb.append(", codeName='").append(codeName).append('\'');
+        sb.append(", codeValue='").append(codeValue).append('\'');
+        sb.append(", codeType='").append(codeType).append('\'');
+        sb.append(", createDate=").append(createDate);
+        sb.append('}');
+        return sb.toString();
     }
-    
-    
 }

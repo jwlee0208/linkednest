@@ -33,9 +33,15 @@ public class ProfileStreamDto {
 	public void setStreamUrl(String streamUrl) {
 		this.streamUrl = streamUrl;
 	}
+
 	@Override
 	public String toString() {
-		return "ProfileStreamDto [streamId=" + streamId + ", profileId=" + profileId + ", streamTitle=" + streamTitle
-				+ ", streamUrl=" + streamUrl + "]";
+		final StringBuffer sb = new StringBuffer("ProfileStreamDto{");
+		sb.append("streamId=").append(streamId);
+		sb.append(", profileId=").append(profileId);
+		sb.append(", streamTitle='").append(streamTitle).append('\'');
+		sb.append(", streamUrl='").append(streamUrl).append('\'');
+		sb.append('}');
+		return sb.toString();
 	}
 }

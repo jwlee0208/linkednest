@@ -153,13 +153,32 @@ public class ProfileStatHitterDto{
 	public void setEtc(String etc) {
 		this.etc = etc;
 	}
+
 	@Override
 	public String toString() {
-		return "ProfileStatHitterDto [statHitterId=" + statHitterId + ", profileId=" + profileId + ", hTeamName="
-				+ hTeamName + ", hStatYear=" + hStatYear + ", g=" + g + ", ab=" + ab + ", r=" + r + ", h=" + h
-				+ ", twoB=" + twoB + ", threeB=" + threeB + ", hr=" + hr + ", rbi=" + rbi + ", bb=" + bb + ", so=" + so
-				+ ", sb=" + sb + ", cs=" + cs + ", avg=" + avg + ", obp=" + obp + ", slg=" + slg + ", ops=" + ops
-				+ ", etc=" + etc + "]";
+		final StringBuffer sb = new StringBuffer("ProfileStatHitterDto{");
+		sb.append("statHitterId=").append(statHitterId);
+		sb.append(", profileId=").append(profileId);
+		sb.append(", hTeamName='").append(hTeamName).append('\'');
+		sb.append(", hStatYear='").append(hStatYear).append('\'');
+		sb.append(", g=").append(g);
+		sb.append(", ab=").append(ab);
+		sb.append(", r=").append(r);
+		sb.append(", h=").append(h);
+		sb.append(", twoB=").append(twoB);
+		sb.append(", threeB=").append(threeB);
+		sb.append(", hr=").append(hr);
+		sb.append(", rbi=").append(rbi);
+		sb.append(", bb=").append(bb);
+		sb.append(", so=").append(so);
+		sb.append(", sb=").append(sb);
+		sb.append(", cs=").append(cs);
+		sb.append(", avg=").append(avg);
+		sb.append(", obp=").append(obp);
+		sb.append(", slg=").append(slg);
+		sb.append(", ops=").append(ops);
+		sb.append(", etc='").append(etc).append('\'');
+		sb.append('}');
+		return sb.toString();
 	}
-
 }

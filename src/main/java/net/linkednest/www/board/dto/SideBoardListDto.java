@@ -28,11 +28,14 @@ public class SideBoardListDto {
     public void setBoardInfo(BoardDto boardInfo) {
         this.boardInfo = boardInfo;
     }
-    
+
     @Override
     public String toString() {
-        return "SideBoardListDto [boardId=" + boardId + ", boardArticleCnt="
-                + boardArticleCnt + ", boardInfo=" + boardInfo + "]";
+        final StringBuffer sb = new StringBuffer("SideBoardListDto{");
+        sb.append("boardId=").append(boardId);
+        sb.append(", boardArticleCnt=").append(boardArticleCnt);
+        sb.append(", boardInfo=").append(boardInfo);
+        sb.append('}');
+        return sb.toString();
     }
-    
 }

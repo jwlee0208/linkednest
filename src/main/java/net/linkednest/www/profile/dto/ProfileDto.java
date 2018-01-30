@@ -206,29 +206,30 @@ public class ProfileDto {
 
 	@Override
 	public String toString() {
-		return "ProfileDto{" +
-				"profileId=" + profileId +
-				", profileType='" + profileType + '\'' +
-				", catId1='" + catId1 + '\'' +
-				", catId2='" + catId2 + '\'' +
-				", title='" + title + '\'' +
-				", name='" + name + '\'' +
-				", profileImg=" + profileImg +
-				", profileImgPath='" + profileImgPath + '\'' +
-				", introduce='" + introduce + '\'' +
-				", createDate='" + createDate + '\'' +
-				", status='" + status + '\'' +
-				", profilePlayerDto=" + profilePlayerDto +
-				", leagueInfoDto=" + leagueInfoDto +
-				", profileTeamDto=" + profileTeamDto +
-				", profileContactInfoDto=" + profileContactInfoDto +
-				", profileStatHitterList=" + profileStatHitterList +
-				", profileStatFielderList=" + profileStatFielderList +
-				", profileStatPitcherList=" + profileStatPitcherList +
-				", profileCareerList=" + profileCareerList +
-				", profileAttrList=" + profileAttrList +
-				", profileStreamList=" + profileStreamList +
-				", profileAttrElementMapList=" + profileAttrElementMapList +
-				'}';
+		final StringBuffer sb = new StringBuffer("ProfileDto{");
+		sb.append("profileId=").append(profileId);
+		sb.append(", profileType='").append(profileType).append('\'');
+		sb.append(", catId1='").append(catId1).append('\'');
+		sb.append(", catId2='").append(catId2).append('\'');
+		sb.append(", title='").append(title).append('\'');
+		sb.append(", name='").append(name).append('\'');
+		sb.append(", profileImg=").append(profileImg);
+		sb.append(", profileImgPath='").append(profileImgPath).append('\'');
+		sb.append(", introduce='").append(introduce).append('\'');
+		sb.append(", createDate='").append(createDate).append('\'');
+		sb.append(", status='").append(status).append('\'');
+		sb.append(", profilePlayerDto=").append(profilePlayerDto);
+		sb.append(", leagueInfoDto=").append(leagueInfoDto);
+		sb.append(", profileTeamDto=").append(profileTeamDto);
+		sb.append(", profileContactInfoDto=").append(profileContactInfoDto);
+		sb.append(", profileStatHitterList=").append(profileStatHitterList);
+		sb.append(", profileStatFielderList=").append(profileStatFielderList);
+		sb.append(", profileStatPitcherList=").append(profileStatPitcherList);
+		sb.append(", profileCareerList=").append(profileCareerList);
+		sb.append(", profileAttrList=").append(profileAttrList);
+		sb.append(", profileStreamList=").append(profileStreamList);
+		sb.append(", profileAttrElementMapList=").append(profileAttrElementMapList);
+		sb.append('}');
+		return sb.toString();
 	}
 }

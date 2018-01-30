@@ -33,13 +33,15 @@ public class BoardCategoryDto {
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
-    
+
     @Override
     public String toString() {
-        return "BoardCategoryDto [boardCategoryId=" + boardCategoryId
-                + ", boardCategoryName=" + boardCategoryName
-                + ", createUserId=" + createUserId + ", createDate="
-                + createDate + "]";
+        final StringBuffer sb = new StringBuffer("BoardCategoryDto{");
+        sb.append("boardCategoryId=").append(boardCategoryId);
+        sb.append(", boardCategoryName='").append(boardCategoryName).append('\'');
+        sb.append(", createUserId='").append(createUserId).append('\'');
+        sb.append(", createDate='").append(createDate).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
-    
 }

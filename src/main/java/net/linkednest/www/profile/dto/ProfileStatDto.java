@@ -66,18 +66,19 @@ public class ProfileStatDto {
 	public void setProfileStatFielderList(List<ProfileStatFielderDto> profileStatFielderList) {
 		this.profileStatFielderList = profileStatFielderList;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "ProfileStatDto [statId=" + statId + ", profileId=" + profileId + ", statType=" + statType
-				+ ", createDate=" + createDate + ", createUserId=" + createUserId + ", profileStatPitcherList="
-				+ profileStatPitcherList + ", profileStatHitterList=" + profileStatHitterList
-				+ ", profileStatFielderList=" + profileStatFielderList + ", getStatId()=" + getStatId()
-				+ ", getProfileId()=" + getProfileId() + ", getStatType()=" + getStatType() + ", getCreateDate()="
-				+ getCreateDate() + ", getCreateUserId()=" + getCreateUserId() + ", getProfileStatPitcherList()="
-				+ getProfileStatPitcherList() + ", getProfileStatHitterList()=" + getProfileStatHitterList()
-				+ ", getProfileStatFielderList()=" + getProfileStatFielderList() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+		final StringBuffer sb = new StringBuffer("ProfileStatDto{");
+		sb.append("statId=").append(statId);
+		sb.append(", profileId=").append(profileId);
+		sb.append(", statType='").append(statType).append('\'');
+		sb.append(", createDate=").append(createDate);
+		sb.append(", createUserId='").append(createUserId).append('\'');
+		sb.append(", profileStatPitcherList=").append(profileStatPitcherList);
+		sb.append(", profileStatHitterList=").append(profileStatHitterList);
+		sb.append(", profileStatFielderList=").append(profileStatFielderList);
+		sb.append('}');
+		return sb.toString();
 	}
-
 }

@@ -65,13 +65,19 @@ public class ProfileAttrElementDto extends ProfileAttrDto{
 	public void setProfileAttrElementMapList(List<ProfileAttrElementMapDto> profileAttrElementMapList) {
 		this.profileAttrElementMapList = profileAttrElementMapList;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "ProfileAttrElementDto [profileAttrElementId=" + profileAttrElementId + ", profileAttrId="
-				+ profileAttrId + ", profileAttrElementName=" + profileAttrElementName + ", createDate=" + createDate
-				+ ", createUserId=" + createUserId + ", modifyDate=" + modifyDate + ", modifyUserId=" + modifyUserId
-				+ ", profileAttrElementMapList=" + profileAttrElementMapList + "]";
+		final StringBuffer sb = new StringBuffer("ProfileAttrElementDto{");
+		sb.append("profileAttrElementId=").append(profileAttrElementId);
+		sb.append(", profileAttrId=").append(profileAttrId);
+		sb.append(", profileAttrElementName='").append(profileAttrElementName).append('\'');
+		sb.append(", createDate='").append(createDate).append('\'');
+		sb.append(", createUserId='").append(createUserId).append('\'');
+		sb.append(", modifyDate='").append(modifyDate).append('\'');
+		sb.append(", modifyUserId='").append(modifyUserId).append('\'');
+		sb.append(", profileAttrElementMapList=").append(profileAttrElementMapList);
+		sb.append('}');
+		return sb.toString();
 	}
-	
 }

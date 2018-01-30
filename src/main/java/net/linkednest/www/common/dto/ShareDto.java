@@ -48,12 +48,17 @@ public class ShareDto {
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
-    
+
     @Override
     public String toString() {
-        return "ShareDto [shareId=" + shareId + ", shareName=" + shareName
-                + ", shareType=" + shareType + ", introduce=" + introduce
-                + ", userId=" + userId + ", createDate=" + createDate + "]";
+        final StringBuffer sb = new StringBuffer("ShareDto{");
+        sb.append("shareId=").append(shareId);
+        sb.append(", shareName='").append(shareName).append('\'');
+        sb.append(", shareType='").append(shareType).append('\'');
+        sb.append(", introduce='").append(introduce).append('\'');
+        sb.append(", userId='").append(userId).append('\'');
+        sb.append(", createDate='").append(createDate).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
-    
 }

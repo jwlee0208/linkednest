@@ -40,13 +40,16 @@ public class SlideshareLinkDto {
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
-    
+
     @Override
     public String toString() {
-        return "SlideshareLinkDto [slideId=" + slideId + ", articleId="
-                + articleId + ", slideshareLinkUrl=" + slideshareLinkUrl
-                + ", createUserId=" + createUserId + ", createDate="
-                + createDate + "]";
+        final StringBuffer sb = new StringBuffer("SlideshareLinkDto{");
+        sb.append("slideId=").append(slideId);
+        sb.append(", articleId=").append(articleId);
+        sb.append(", slideshareLinkUrl='").append(slideshareLinkUrl).append('\'');
+        sb.append(", createUserId='").append(createUserId).append('\'');
+        sb.append(", createDate='").append(createDate).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
-    
 }

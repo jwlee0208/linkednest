@@ -87,9 +87,16 @@ public class SearchProfileDto extends PageParam{
 
 	@Override
 	public String toString() {
-		return "SearchProfileDto [searchCondition=" + searchCondition + ", searchText=" + searchText + ", profileId="
-				+ profileId + ", profileType=" + profileType + ", catId1=" + catId1 + ", area=" + area + ", country="
-				+ country + ", profileAttrList=" + profileAttrList + "]";
+		final StringBuffer sb = new StringBuffer("SearchProfileDto{");
+		sb.append("searchCondition='").append(searchCondition).append('\'');
+		sb.append(", searchText='").append(searchText).append('\'');
+		sb.append(", profileId=").append(profileId);
+		sb.append(", profileType=").append(profileType);
+		sb.append(", catId1='").append(catId1).append('\'');
+		sb.append(", area='").append(area).append('\'');
+		sb.append(", country='").append(country).append('\'');
+		sb.append(", profileAttrList=").append(profileAttrList);
+		sb.append('}');
+		return sb.toString();
 	}
-	
 }

@@ -27,4 +27,13 @@ public class ProfileMailReq {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("ProfileMailReq{");
+        sb.append("mailTo='").append(mailTo).append('\'');
+        sb.append(", message='").append(message).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

@@ -83,13 +83,22 @@ public class ProfileAttrElementMapDto extends ProfileAttrElementDto{
 	public void setModifyUserId(String modifyUserId) {
 		this.modifyUserId = modifyUserId;
 	}
+
 	@Override
 	public String toString() {
-		return "ProfileAttrElementMapDto [profileAttrElementMapId=" + profileAttrElementMapId + ", profileId="
-				+ profileId + ", profileAttrId=" + profileAttrId + ", profileAttrName=" + profileAttrName
-				+ ", profileAttrElementId=" + profileAttrElementId + ", profileAttrElementName="
-				+ profileAttrElementName + ", profileAttrElementMapName=" + profileAttrElementMapName + ", createDate="
-				+ createDate + ", createUserId=" + createUserId + ", modifyDate=" + modifyDate + ", modifyUserId="
-				+ modifyUserId + "]";
+		final StringBuffer sb = new StringBuffer("ProfileAttrElementMapDto{");
+		sb.append("profileAttrElementMapId=").append(profileAttrElementMapId);
+		sb.append(", profileId=").append(profileId);
+		sb.append(", profileAttrId=").append(profileAttrId);
+		sb.append(", profileAttrName='").append(profileAttrName).append('\'');
+		sb.append(", profileAttrElementId=").append(profileAttrElementId);
+		sb.append(", profileAttrElementName='").append(profileAttrElementName).append('\'');
+		sb.append(", profileAttrElementMapName='").append(profileAttrElementMapName).append('\'');
+		sb.append(", createDate='").append(createDate).append('\'');
+		sb.append(", createUserId='").append(createUserId).append('\'');
+		sb.append(", modifyDate='").append(modifyDate).append('\'');
+		sb.append(", modifyUserId='").append(modifyUserId).append('\'');
+		sb.append('}');
+		return sb.toString();
 	}
 }

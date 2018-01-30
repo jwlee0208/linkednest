@@ -154,13 +154,32 @@ public class ProfileStatFielderDto {
 	public void setProfileId(int profileId) {
 		this.profileId = profileId;
 	}
+
 	@Override
 	public String toString() {
-		return "ProfileStatFielderDto [statFielderId=" + statFielderId + ", profileId=" + profileId + ", fTeamName="
-				+ fTeamName + ", fStatYear=" + fStatYear + ", pos=" + pos + ", g=" + g + ", gs=" + gs + ", inn=" + inn
-				+ ", tc=" + tc + ", po=" + po + ", a=" + a + ", e=" + e + ", dp=" + dp + ", sb=" + sb + ", cs=" + cs
-				+ ", sbpct=" + sbpct + ", pb=" + pb + ", cWp=" + cWp + ", fpct=" + fpct + ", rf=" + rf + ", etc=" + etc
-				+ "]";
+		final StringBuffer sb = new StringBuffer("ProfileStatFielderDto{");
+		sb.append("statFielderId=").append(statFielderId);
+		sb.append(", profileId=").append(profileId);
+		sb.append(", fTeamName='").append(fTeamName).append('\'');
+		sb.append(", fStatYear='").append(fStatYear).append('\'');
+		sb.append(", pos='").append(pos).append('\'');
+		sb.append(", g=").append(g);
+		sb.append(", gs=").append(gs);
+		sb.append(", inn=").append(inn);
+		sb.append(", tc=").append(tc);
+		sb.append(", po=").append(po);
+		sb.append(", a=").append(a);
+		sb.append(", e=").append(e);
+		sb.append(", dp=").append(dp);
+		sb.append(", sb=").append(sb);
+		sb.append(", cs=").append(cs);
+		sb.append(", sbpct=").append(sbpct);
+		sb.append(", pb=").append(pb);
+		sb.append(", cWp=").append(cWp);
+		sb.append(", fpct=").append(fpct);
+		sb.append(", rf=").append(rf);
+		sb.append(", etc='").append(etc).append('\'');
+		sb.append('}');
+		return sb.toString();
 	}
-
 }

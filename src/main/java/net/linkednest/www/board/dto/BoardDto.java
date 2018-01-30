@@ -75,16 +75,21 @@ public class BoardDto extends BoardCategoryDto{
 	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-	
-    @Override
-    public String toString() {
-        return "BoardDto [boardId=" + boardId + ", boardCategoryId="
-                + boardCategoryId + ", boardName=" + boardName + ", boardType="
-                + boardType + ", createUserId=" + createUserId
-                + ", createUserName=" + createUserName + ", createDate="
-                + createDate + ", modifyUserId=" + modifyUserId
-                + ", modifyUserName=" + modifyUserName + ", modifyDate="
-                + modifyDate + "]";
-    }
-	
+
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer("BoardDto{");
+		sb.append("boardId=").append(boardId);
+		sb.append(", boardCategoryId=").append(boardCategoryId);
+		sb.append(", boardName='").append(boardName).append('\'');
+		sb.append(", boardType='").append(boardType).append('\'');
+		sb.append(", createUserId='").append(createUserId).append('\'');
+		sb.append(", createUserName='").append(createUserName).append('\'');
+		sb.append(", createDate='").append(createDate).append('\'');
+		sb.append(", modifyUserId='").append(modifyUserId).append('\'');
+		sb.append(", modifyUserName='").append(modifyUserName).append('\'');
+		sb.append(", modifyDate='").append(modifyDate).append('\'');
+		sb.append('}');
+		return sb.toString();
+	}
 }

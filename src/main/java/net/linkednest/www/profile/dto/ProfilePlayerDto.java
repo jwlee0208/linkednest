@@ -93,12 +93,22 @@ public class ProfilePlayerDto extends ProfileDto {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
+
 	@Override
 	public String toString() {
-		return "ProfilePlayerDto [profilePlayerId=" + profilePlayerId + ", birthDate=" + birthDate + ", height="
-				+ height + ", wgt=" + wgt + ", weight=" + weight + ", birthPlace=" + birthPlace + ", education="
-				+ education + ", hobbies=" + hobbies + ", favoriteFood=" + favoriteFood + ", nationality="
-				+ nationality + ", language=" + language + "]";
+		final StringBuffer sb = new StringBuffer("ProfilePlayerDto{");
+		sb.append("profilePlayerId=").append(profilePlayerId);
+		sb.append(", birthDate='").append(birthDate).append('\'');
+		sb.append(", height=").append(height);
+		sb.append(", wgt=").append(wgt);
+		sb.append(", weight=").append(weight);
+		sb.append(", birthPlace='").append(birthPlace).append('\'');
+		sb.append(", education='").append(education).append('\'');
+		sb.append(", hobbies='").append(hobbies).append('\'');
+		sb.append(", favoriteFood='").append(favoriteFood).append('\'');
+		sb.append(", nationality='").append(nationality).append('\'');
+		sb.append(", language='").append(language).append('\'');
+		sb.append('}');
+		return sb.toString();
 	}
-	
 }
