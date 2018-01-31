@@ -26,9 +26,7 @@
 		<sec:logout logout-success-url="/share"/>
 	</sec:http>
 	<sec:authentication-manager>
-		<sec:authentication-provider ref="customAuthenticationProvider">
-			<sec:password-encoder ref="passwordEncoder" />
-		</sec:authentication-provider>
+		<sec:authentication-provider ref="customAuthenticationProvider"/>
 	</sec:authentication-manager>
 	<bean id="customAuthenticationProvider" class="net.linkednest.runtime.CustomAuthenticationProvider"  />
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
