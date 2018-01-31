@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,9 @@ public class LoginController {
     
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@RequestMapping(value="/")
 	public String index() throws Exception{
@@ -78,7 +82,7 @@ public class LoginController {
 		}else{
 			// 입력된 passwd와 비교한다.
 			String 	hashedPasswd = userInfo.getPasswd();	// BCrypt.hashpw(passwd, BCrypt.gensalt(15));			
-			boolean isOk 		 = BCrypt.checkpw(passwd, hashedPasswd);
+			boolean isOk 		 = passwordEncoder.matches(passwd, hashedPasswd);	// BCrypt.checkpw(passwd, hashedPasswd);
 			
 			if(isOk){
 				resultCode 	= "LOGIN_0000";

@@ -20,6 +20,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineUtils;
@@ -64,6 +65,9 @@ public class UserController {
     @Inject
     private MessageSourceAccessor   messageSource;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
 	@RequestMapping(value="/regist")
 	public String registUser(Model model, HttpServletRequest request) throws Exception{
 	    this.setRequiredInfos(model, request);
@@ -105,7 +109,7 @@ public class UserController {
 			resultMsg    = "invalid_parameter";
 		}else{
 			
-			String hashedPassword = BCrypt.hashpw(userDto.getPasswd(), BCrypt.gensalt());
+			String hashedPassword = passwordEncoder.encode(userDto.getPasswd());    // BCrypt.hashpw(userDto.getPasswd(), BCrypt.gensalt());
 			
 			userDto.setPasswd(hashedPassword);
 			
@@ -147,7 +151,7 @@ public class UserController {
             returnObj.setResult(result.getAllErrors());
         }else{
             
-            String hashedPassword = BCrypt.hashpw(userDto.getPasswd(), BCrypt.gensalt());
+            String hashedPassword = passwordEncoder.encode(userDto.getPasswd());    // BCrypt.hashpw(userDto.getPasswd(), BCrypt.gensalt());
             
             userDto.setPasswd(hashedPassword);
             
@@ -403,7 +407,7 @@ public class UserController {
             returnObj.setResult(result.getAllErrors());
         }else{
             // 2. update password
-            String hashedPassword = BCrypt.hashpw(userDto.getPasswd(), BCrypt.gensalt());
+            String hashedPassword = passwordEncoder.encode(userDto.getPasswd());    // BCrypt.hashpw(userDto.getPasswd(), BCrypt.gensalt());
             userDto.setPasswd(hashedPassword);
             
             try {
