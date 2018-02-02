@@ -3,17 +3,20 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="tag"%>
 <h3>Personal Information</h3>
 <hr />
+<%--
 <div class="form-group row">
 	<label class="col-2 col-form-label" for="profileImg">Profile Image</label>
 	<div class="col-10">
-		<input type="file" class="form-control" id="profileImg" name="profileImg" placeholder="upload your profile image" />
+		<input type="file" class="form-control" id="profileImg" name="profileImg" placeholder="upload your profile image"/>
 	</div>
 </div>
+--%>
 <br />
 <div class="form-group row">
 	<label class="col-2 col-form-label" for="name">Name</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="name" name="name" placeholder="write your name" />
+		<span id="nameErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -34,6 +37,7 @@
 			<option value="01010109">Right Fielder</option>
 			<option value="01010110">DH</option>
 		</select>
+		<span id="catId2Err" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -42,11 +46,13 @@
 	<div class="col-4">
 		<input type="text" class="form-control" id="height" name="profilePlayerDto.height" aria-describedby="heightHelpInline"/>
 		<small id="heightHelpInline" class="text-muted">Allow digit and '.'</small>
+		<span id="heightErr" class="errorMsg" style="display: none;"></span>
 	</div>
 	<label class="col-2 col-form-label" for="weight">Weight (kg)</label>
 	<div class="col-4">
 		<input type="text" class="form-control" id="weight" name="profilePlayerDto.weight" aria-describedby="weightHelpInline"/>
 		<small id="weightHelpInline" class="text-muted">Allow digit and '.'</small>
+		<span id="weightErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -55,6 +61,7 @@
 	<div class="col-10">
 		<input type="date" class="form-control" id="birthDate" name="profilePlayerDto.birthDate" aria-describedby="birthDateHelpInline"/>
 		<small id="birthDateHelpInline" class="text-muted">YYYY-MM-DD</small>
+		<span id="birthDateErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -62,6 +69,7 @@
 	<label class="col-2 col-form-label" for="birthPlace">Birth Place</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="birthPlace" name="profilePlayerDto.birthPlace" />
+		<span id="birthPlaceErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -76,6 +84,7 @@
 	<label class="col-2 col-form-label" for="hobbies">Hobbies</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="hobbies" name="profilePlayerDto.hobbies" />
+		<span id="hobbiesErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -83,22 +92,35 @@
 	<label class="col-2 col-form-label" for="favoriteFood">Favorite Foods</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="favoriteFood" name="profilePlayerDto.favoriteFood" />
+		<span id="favoriteFoodErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
 <div class="form-group row">
-	<div class="form-group">
-		<label for="language" class="col-sm-2 control-label"><tag:message code="common.language"/></label>
-		<div class="col-sm-10">
-			<select class="form-control" id="language" name="profilePlayerDto.language">
-				<option value=""><tag:message code="select.language"/></option>
-				<c:if test="${!empty languageList}">
-					<c:forEach var="langInfo" items="${languageList}">
-						<option value="${langInfo.codeValue}">${langInfo.codeName}</option>
-					</c:forEach>
-				</c:if>
-			</select>
-		</div>
+	<label for="language" class="col-sm-2 control-label"><tag:message code="common.language"/></label>
+	<div class="col-sm-4">
+		<select class="form-control" id="language" name="profilePlayerDto.language">
+			<option value=""><tag:message code="select.language"/></option>
+			<c:if test="${!empty languageList}">
+				<c:forEach var="langInfo" items="${languageList}">
+					<option value="${langInfo.codeValue}">${langInfo.codeName}</option>
+				</c:forEach>
+			</c:if>
+		</select>
+		<span id="languageErr" class="errorMsg" style="display: none;"></span>
+	</div>
+
+	<label for="nationality" class="col-sm-2 control-label"><tag:message code="common.nationality"/></label>
+	<div class="col-sm-4">
+		<select class="form-control" id="nationality" name="profilePlayerDto.nationality">
+			<option value=""><tag:message code="select.nationality"/></option>
+			<c:if test="${!empty nationList}">
+				<c:forEach var="nationInfo" items="${nationList}">
+					<option value="${nationInfo.codeValue}">${nationInfo.codeName}</option>
+				</c:forEach>
+			</c:if>
+		</select>
+		<span id="nationalityErr" class="errorMsg" style="display: none;"></span>
 	</div>
 	<%--<label class="col-2 col-form-label" for="languageSearch" >Language</label>
 	<div class="col-4">
@@ -106,19 +128,6 @@
 		<input type="hidden" class="form-control" id="language" name="profilePlayerDto.language" />
 	</div>--%>
 
-	<div class="form-group">
-		<label for="nationality" class="col-sm-2 control-label"><tag:message code="common.nationality"/></label>
-		<div class="col-sm-10">
-			<select class="form-control" id="nationality" name="profilePlayerDto.nationality">
-				<option value=""><tag:message code="select.nationality"/></option>
-				<c:if test="${!empty nationList}">
-					<c:forEach var="nationInfo" items="${nationList}">
-						<option value="${nationInfo.codeValue}">${nationInfo.codeName}</option>
-					</c:forEach>
-				</c:if>
-			</select>
-		</div>
-	</div>
 	<%--<label class="col-2 col-form-label" for="nationalitySearch" >Nationality</label>
 	<div class="col-4">
 		<input type="text" class="form-control" id="nationalitySearch" />
@@ -130,6 +139,7 @@
 	<label class="col-2 col-form-label">Introduce</label>
 	<div class="col-10">
 		<textarea class="form-control tinymce" id="introduce" name="introduce"></textarea>
+		<span id="introduceErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -146,15 +156,17 @@
 					<c:set var="profileAttrElemList" value="${profileAttrInfo.profileAttrElementList}" />
 					<c:if test="${!empty profileAttrElemList}">
 						<c:forEach var="profileAttrElemInfo" items="${profileAttrElemList}" varStatus="index">
+					<label class="form-check-label" for="profileAttrElementMapList[${rowCnt}].profileAttrElementId">
 							<input type="hidden" name="profileAttrElementMapList[${rowCnt}].profileAttrId" value="${profileAttrInfo.profileAttrId}" />
 							<input type="hidden" name="profileAttrElementMapList[${rowCnt}].profileAttrName" value='<c:out value="${profileAttrInfo.profileAttrName}"/>' />
 							<input type="hidden" name="profileAttrElementMapList[${rowCnt}].profileAttrElementName" value="${profileAttrElemInfo.profileAttrElementName}">
-							<input type="checkbox" id="" name="profileAttrElementMapList[${rowCnt}].profileAttrElementId" aria-label="Checkbox for following text input" value="${profileAttrElemInfo.profileAttrElementId}">
+							<input type="checkbox" id="profileAttrElementMapList[${rowCnt}].profileAttrElementId" name="profileAttrElementMapList[${rowCnt}].profileAttrElementId" aria-label="Checkbox for following text input" value="${profileAttrElemInfo.profileAttrElementId}">
 							<tag:message code='attr.${profileAttrInfo.profileAttrName}.${profileAttrElemInfo.profileAttrElementName}' />
 							<input type="hidden" class="form-control" aria-label="Text input with checkbox"
 								   name="profileAttrElementMapList[${rowCnt}].profileAttrElementMapName"
 								   value="<tag:message code='attr.${profileAttrInfo.profileAttrName}.${profileAttrElemInfo.profileAttrElementName}'/>"/>
 							<c:set var="rowCnt" value="${rowCnt+1}" />
+					</label>
 						</c:forEach>
 					</c:if>
 				</div>
@@ -162,6 +174,72 @@
 		</div>
 	</c:forEach>
 </c:if>
+<br/>
+<h3>Contact Info.</h3>
+<hr />
+<div class="form-group row">
+	<label class="col-2 col-form-label" for="email">Email</label>
+	<div class="col-10">
+		<input type="email" class="form-control" id="email" name="profileContactInfoDto.email" placeholder="write your e-mail" />
+		<span id="emailErr" class="errorMsg" style="display: none;"></span>
+	</div>
+</div>
+<br />
+<div class="form-group row">
+	<label class="col-2 col-form-label" for="phoneNo">Phone No.</label>
+	<div class="col-10">
+		<input type="tel" class="form-control" id="phoneNo" name="profileContactInfoDto.phoneNo" placeholder="write your phone No." />
+		<span id="phoneNoErr" class="errorMsg" style="display: none;"></span>
+	</div>
+</div>
+<br />
+<div class="form-group row">
+	<label class="col-2 col-form-label" for="cellPhoneNo">cellPhoneNo</label>
+	<div class="col-10">
+		<input type="tel" class="form-control" id="cellPhoneNo" name="profileContactInfoDto.cellPhoneNo" placeholder="write your cell phone No." />
+		<span id="cellPhoneNoErr" class="errorMsg" style="display: none;"></span>
+	</div>
+</div>
+<br />
+<div class="form-group row">
+	<label class="col-2 col-form-label" for="websiteUrl">website url</label>
+	<div class="col-10">
+		<input type="url" class="form-control" id="websiteUrl" name="profileContactInfoDto.websiteUrl" placeholder="write your website url" aria-describedby="basic-addon3" />
+		<span id="websiteUrlErr" class="errorMsg" style="display: none;"></span>
+	</div>
+</div>
+<br />
+<div class="form-group row">
+	<label class="col-2 col-form-label" for="facebookUrl">facebook</label>
+	<div class="col-10">
+		<input type="text" class="form-control" id="facebookUrl" name="profileContactInfoDto.faceebookUrl" placeholder="write your facebook id" />
+		<span id="faceebookUrlErr" class="errorMsg" style="display: none;"></span>
+	</div>
+</div>
+<br />
+<div class="form-group row">
+	<label class="col-2 col-form-label" for="twitterUrl">twitter</label>
+	<div class="col-10">
+		<input type="text" class="form-control" id="twitterUrl" name="profileContactInfoDto.twitterUrl" placeholder="write your twitter id" />
+		<span id="twitterUrlErr" class="errorMsg" style="display: none;"></span>
+	</div>
+</div>
+<br />
+<div class="form-group row">
+	<label class="col-2 col-form-label" for="instagramUrl">instagram</label>
+	<div class="col-10">
+		<input type="text" class="form-control" id="instagramUrl" name="profileContactInfoDto.instagramUrl" placeholder="write your instagram id" />
+		<span id="instagramUrlErr" class="errorMsg" style="display: none;"></span>
+	</div>
+</div>
+<br />
+<div class="form-group row">
+	<label class="col-2 col-form-label" for="address">Address</label>
+	<div class="col-10">
+		<input type="text" class="form-control" id="address" name="profileContactInfoDto.address" placeholder="write your address" />
+		<span id="addressErr" class="errorMsg" style="display: none;"></span>
+	</div>
+</div>
 <br />
 <h3>Career</h3>
 <hr />
@@ -258,64 +336,6 @@
 				<button type="button" class="btn btn-primary">Save changes</button>
 			</div>
 		</div>
-	</div>
-</div>
-<br />
-<h3>Contact Info.</h3>
-<hr />
-<div class="form-group row">
-	<label class="col-2 col-form-label" for="email">Email</label>
-	<div class="col-10">
-		<input type="email" class="form-control" id="email" name="profileContactInfoDto.email" placeholder="write your e-mail" />
-	</div>
-</div>
-<br />
-<div class="form-group row">
-	<label class="col-2 col-form-label" for="phoneNo">Phone No.</label>
-	<div class="col-10">
-		<input type="tel" class="form-control" id="phoneNo" name="profileContactInfoDto.phoneNo" placeholder="write your phone No." />
-	</div>
-</div>
-<br />
-<div class="form-group row">
-	<label class="col-2 col-form-label" for="cellPhoneNo">cellPhoneNo</label>
-	<div class="col-10">
-		<input type="tel" class="form-control" id="cellPhoneNo" name="profileContactInfoDto.cellPhoneNo" placeholder="write your cell phone No." />
-	</div>
-</div>
-<br />
-<div class="form-group row">
-	<label class="col-2 col-form-label" for="websiteUrl">website url</label>
-	<div class="col-10">
-		<input type="url" class="form-control" id="websiteUrl" name="profileContactInfoDto.websiteUrl" placeholder="write your website url" aria-describedby="basic-addon3" />
-	</div>
-</div>
-<br />
-<div class="form-group row">
-	<label class="col-2 col-form-label" for="facebookUrl">facebook</label>
-	<div class="col-10">
-		<input type="text" class="form-control" id="facebookUrl" name="profileContactInfoDto.faceebookUrl" placeholder="write your facebook id" />
-	</div>
-</div>
-<br />
-<div class="form-group row">
-	<label class="col-2 col-form-label" for="twitterUrl">twitter</label>
-	<div class="col-10">
-		<input type="text" class="form-control" id="twitterUrl" name="profileContactInfoDto.twitterUrl" placeholder="write your twitter id" />
-	</div>
-</div>
-<br />
-<div class="form-group row">
-	<label class="col-2 col-form-label" for="instagramUrl">instagram</label>
-	<div class="col-10">
-		<input type="text" class="form-control" id="instagramUrl" name="profileContactInfoDto.instagramUrl" placeholder="write your instagram id" />
-	</div>
-</div>
-<br />
-<div class="form-group row">
-	<label class="col-2 col-form-label" for="address">Address</label>
-	<div class="col-10">
-		<input type="text" class="form-control" id="address" name="profileContactInfoDto.address" placeholder="write your address" />
 	</div>
 </div>
 <br />

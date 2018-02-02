@@ -47,7 +47,7 @@ public class FileUpload{
 	 * @param height
 	 * @return String
 	 */
-	public String uploadFile(MultipartFile attachFile, int width, int height){
+	public String uploadFileForCafe24(MultipartFile attachFile, int width, int height){
 		String uploadFilePath = StringUtils.EMPTY;
 		String newFolderDir = DateUtil.formatDateToday() + "/" ;    	
 		//String newFileName = attachFile.getOriginalFilename();
@@ -99,52 +99,45 @@ public class FileUpload{
 	        ftpClient.setControlEncoding("EUC-KR");
 	        
 	        ftpClient.connect(ftpUploadUrl, Integer.parseInt(StringUtils.defaultString(ftpUploadPort, "21")));
-	        System.out.printf(" [ ftpClient ] : connecting.....\n");
+	        logger.info(" [ ftpClient ] : connecting.....\n");
 	        int replyCode = ftpClient.getReplyCode();
 	        
-	        System.out.printf(" [ ftpClient ] : %s, %s\n", replyCode, FTPReply.isPositiveCompletion(replyCode));
+	        logger.info(" [ ftpClient ] : " + replyCode +", " + FTPReply.isPositiveCompletion(replyCode));
 	        
 	        if(!FTPReply.isPositiveCompletion(replyCode)){
-	            System.out.printf(" [ ftpClient ] : disconnect.....\n");
+	            logger.info(" [ ftpClient ] : disconnect.....\n");
 	            ftpClient.disconnect();
 	        }else{
 	            // timeout 10초
 	            ftpClient.setSoTimeout(10000);
 	            // login
 	            ftpClient.login(ftpUploadId, ftpUploadPw);
-	            System.out.printf(" [ ftpClient ] : loging.....\n");
+	            logger.info(" [ ftpClient ] : loging.....\n");
 	            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 	            ftpClient.enterLocalPassiveMode();
 	            
 	            FileInputStream is = null;
 	            ByteArrayInputStream bais = null;
 
-				System.out.printf("[ fileDirpath ] : %s\n", fileDirPath);
-				System.out.printf(" [ ftpClient ] : makeDir : %s\n", ftpClient.makeDirectory(fileDirPath));
+				logger.info("[ fileDirpath ] : " + fileDirPath);
+				logger.info(" [ ftpClient ] : makeDir : " + ftpClient.makeDirectory(fileDirPath));
 
 	            if (attachFile.getInputStream().getClass().equals(FileInputStream.class)) {
 	            	is = (FileInputStream) attachFile.getInputStream();
-					System.out.printf("========= [FileInputStream.class] =========");
-	                System.out.printf(" [ ftpClient ] : storeFile : %s\n", ftpClient.storeFile(fileRealPath.toString(), is));
-	                System.out.printf(" [ ftpClient ] : uploading.....\n");
+					logger.info("========= [FileInputStream.class] =========\n");
+	                logger.info(" [ ftpClient ] : storeFile : " + ftpClient.storeFile(fileRealPath.toString(), is));
+	                logger.info(" [ ftpClient ] : uploading.....\n");
 	                
 	                is.close();
 	            } else if (attachFile.getInputStream().getClass().equals(ByteArrayInputStream.class)) {
 	            	bais = (ByteArrayInputStream) attachFile.getInputStream();
-					System.out.printf("========= [ByteArrayInputStream.class] =========");
-	                System.out.printf(" [ ftpClient ] : storeFile : %s\n", ftpClient.storeFile(fileRealPath.toString(), bais));
-	                System.out.printf(" [ ftpClient ] : uploading.....\n");
+					logger.info("========= [ByteArrayInputStream.class] =========");
+	                logger.info(" [ ftpClient ] : storeFile : " + ftpClient.storeFile(fileRealPath.toString(), bais));
+	                logger.info(" [ ftpClient ] : uploading.....\n");
 	                
 	                bais.close();
 	            }
-/*	            
-	            FileInputStream is = (FileInputStream) attachFile.getInputStream(); 
-                System.out.println("[ fileDirpath ] : " + fileDirPath);
-                System.out.println(" [ ftpClient ] : makeDir : " + ftpClient.makeDirectory(fileDirPath));
-                System.out.println(" [ ftpClient ] : storeFile : " + ftpClient.storeFile(fileRealPath.toString(), is));
-                System.out.println(" [ ftpClient ] : uploading.....");
-                is.close();
-*/                
+				logger.info(" [ ftpClient ] : done.\n");
                 ftpClient.logout();
 
 	        }
@@ -214,7 +207,7 @@ public class FileUpload{
 	 * @throws Exception
 	 */
 	public String uploadFile(MultipartFile attachFile) throws Exception {
-		return this.uploadFile(attachFile, 0, 0);
+		return this.uploadFileForCafe24(attachFile, 0, 0);
 	}
 	
 	/*

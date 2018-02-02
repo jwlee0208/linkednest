@@ -48,16 +48,16 @@
 					<!-- (Additional) Team Search Condition : Continent -->
 					<c:if test="${profileType eq 3}">
 						<div id="areaList" style="margin-top:10px;">
-							<div class="row">
+							<div class="form-group row">
 								<div class="col-lg-2"><h4><span class="badge badge-primary"><tag:message code="text.continent"/></span></h4></div>
-								<div class="col-lg-10 form-check form-check-inline">
+								<div class="col-lg-8 form-check form-check-inline">
 									<label class="form-check-label" for="area1"><input type="radio" id="area1" name="area" value="as" class="attrElemRadio form-check-input"/>&nbsp;<tag:message code="code.area.as"/></label>
 									<label class="form-check-label" for="area2"><input type="radio" id="area2" name="area" value="na" class="attrElemRadio form-check-input"/>&nbsp;<tag:message code="code.area.na"/></label>
 									<label class="form-check-label" for="area3"><input type="radio" id="area3" name="area" value="sa" class="attrElemRadio form-check-input"/>&nbsp;<tag:message code="code.area.sa"/></label>
 									<label class="form-check-label" for="area4"><input type="radio" id="area4" name="area" value="eu" class="attrElemRadio form-check-input"/>&nbsp;<tag:message code="code.area.eu"/></label>
 									<label class="form-check-label" for="area5"><input type="radio" id="area5" name="area" value="af" class="attrElemRadio form-check-input"/>&nbsp;<tag:message code="code.area.af"/></label>
 								</div>
-								<%--<div class="col-lg-10 btn-group btn-radios" data-toggle="buttons">
+								<%--<div class="col-lg-8 btn-group btn-radios" data-toggle="buttons">
 									<label class="btn btn-outline-primary label-for-check" for="area1"><input type="radio" id="area1" name="area" value="as" class="attrElemRadio" autocomplete="off"/>&nbsp;<tag:message code="code.area.as"/></label>
 									<label class="btn btn-outline-primary label-for-check" for="area2"><input type="radio" id="area2" name="area" value="na" class="attrElemRadio" autocomplete="off"/>&nbsp;<tag:message code="code.area.na"/></label>
 									<label class="btn btn-outline-primary label-for-check" for="area3"><input type="radio" id="area3" name="area" value="sa" class="attrElemRadio" autocomplete="off"/>&nbsp;<tag:message code="code.area.sa"/></label>
@@ -68,16 +68,16 @@
 						</div>
 					</c:if>
 					<div id="countryList">
-						<div class="row">
+						<div class="form-group row">
 							<div class="col-lg-2"><h4><span class="badge badge-primary"><tag:message code="text.countries"/></span></h4></div>
-							<div class="col-lg-10 form-check form-check-inline">
+							<div class="col-lg-8 form-check form-check-inline">
 								<label class="form-check-label" for="country1"><input type="radio" id="country1" name="country" value="KR" class="form-check-input attrElemRadio"/>&nbsp;<tag:message code="code.country.KR"/></label>
 								<label class="form-check-label" for="country2"><input type="radio" id="country2" name="country" value="JP" class="form-check-input attrElemRadio"/>&nbsp;<tag:message code="code.country.JP"/></label>
 								<label class="form-check-label" for="country3"><input type="radio" id="country3" name="country" value="AU" class="form-check-input attrElemRadio"/>&nbsp;<tag:message code="code.country.AU"/></label>
 								<label class="form-check-label" for="country4"><input type="radio" id="country4" name="country" value="DE" class="form-check-input attrElemRadio"/>&nbsp;<tag:message code="code.country.DE"/></label>
 								<label class="form-check-label" for="country5"><input type="radio" id="country5" name="country" value="US" class="form-check-input attrElemRadio"/>&nbsp;<tag:message code="code.country.US"/></label>
 							</div>
-							<%--<div class="col-lg-10 btn-group btn-radios" data-toggle="buttons">
+							<%--<div class="col-lg-8 btn-group btn-radios" data-toggle="buttons">
 								<label class="btn btn-outline-primary label-for-check" for="country1"><input type="radio" id="country1" name="country" value="KR" class="attrElemRadio" autocomplete="off"/>&nbsp;<tag:message code="code.country.KR"/></label>
 								<label class="btn btn-outline-primary label-for-check" for="country2"><input type="radio" id="country2" name="country" value="JP" class="attrElemRadio" autocomplete="off"/>&nbsp;<tag:message code="code.country.JP"/></label>
 								<label class="btn btn-outline-primary label-for-check" for="country3"><input type="radio" id="country3" name="country" value="AU" class="attrElemRadio" autocomplete="off"/>&nbsp;<tag:message code="code.country.AU"/></label>
@@ -99,9 +99,9 @@
 								<c:set var="profileAttrId" 				value="${profileAttrElementInfo.profileAttrId}"/>
 								<c:set var="profileAttrElemList" 		value="${profileAttrElementInfo.profileAttrElementList}"/>
 								<c:set var="profileAttrElemListLength"  value="${profileAttrElemList.size()}"/>
-						<div class="row">
+						<div class="form-group row">
 							<div class="col-lg-2"><h4><span class="badge badge-info"><tag:message code="text.${profileAttrElementInfo.profileAttrName}"/></span></h4></div>
-							<div class="col-lg-10 form-check form-check-inline">
+							<div class="col-lg-8 form-check form-check-inline">
 								<c:if test="${profileAttrElemListLength > 0}">
 									<div class="row btn-group" style="padding-left:15px;">
 										<input type="hidden" id="profileAttrList[${index.count-1}].profileAttrId${profileAttrId}" name="profileAttrList[${index.count-1}].profileAttrId" value="${profileAttrId}" />
@@ -116,7 +116,7 @@
 									</div>
 								</c:if>
 							</div>
-							<%--<div class="col-lg-10 btn-group" data-toggle="buttons">
+							<%--<div class="col-lg-8 btn-group" data-toggle="buttons">
 							<c:if test="${profileAttrElemListLength > 0}">
 								<div class="row btn-group" style="padding-left:15px;">
 									<input type="hidden" id="profileAttrList[${index.count-1}].profileAttrId${profileAttrId}" name="profileAttrList[${index.count-1}].profileAttrId" value="${profileAttrId}" />

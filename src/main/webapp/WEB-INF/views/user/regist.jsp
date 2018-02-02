@@ -9,62 +9,62 @@
 	<form id="actionFrm" name="actionFrm" method="post" class="form-horizontal" role="form">
 		<h1 id="btn-groups" class="page-header"><tag:message code="signup"/></h1>
 		<h2><tag:message code="required"/></h2>
-		<div class="form-group">
+		<div class="form-group row">
 			<label for="userId" class="col-sm-2 control-label"><tag:message code="common.userid"/></label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control form-control-danger" id="userId" name="userId"/><span id="userIdErr" class="errorMsg" style="display: none;"></span>
 			</div>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group row">
 			<label for="userNm" class="col-sm-2 control-label"><tag:message code="common.username"/></label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control form-control-danger" id="userNm" name="userNm" style="ime-mode: active"/><span id="userNmErr" class="errorMsg form-control-feedback" style="display: none;"></span>
 			</div>
 		</div>
 		
-		<div class="form-group">
+		<div class="form-group row">
 			<label for="passwd" class="col-sm-2 control-label"><tag:message code="common.password"/></label>
 			<div class="col-sm-10">
-				<input type="password" class="form-control form-control-danger" id="passwd" name="passwd" minlength="8" maxlength="15"/><span id="passwdErr form-control-feedback" class="errorMsg" style="display: none;"></span>
+				<input type="password" class="form-control form-control-danger" id="passwd" name="passwd" minlength="8" maxlength="15"/><span id="passwdErr" class="errorMsg form-control-feedback" style="display: none;"></span>
 			</div>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group row">
 			<label for="passwdChk" class="col-sm-2 control-label"><tag:message code="common.passwordchk"/></label>
 			<div class="col-sm-10">
-				<input type="password" class="form-control form-control-danger" id="passwdChk" name="passwdChk" minlength="8" maxlength="15"/><span id="passwdChkErr form-control-feedback" class="errorMsg" style="display: none;"></span>
+				<input type="password" class="form-control form-control-danger" id="passwdChk" name="passwdChk" minlength="8" maxlength="15"/><span id="passwdChkErr" class="errorMsg form-control-feedback" style="display: none;"></span>
 			</div>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group row">
 			<label for="email" class="col-sm-2 control-label"><tag:message code="common.email"/></label>
 			<div class="col-sm-10">
 				<input type="email" class="form-control form-control-danger" id="email" name="email"/><span id="emailErr" class="errorMsg form-control-feedback" style="display: none;"></span>
 			</div>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group row">
 			<label for="phoneNo" class="col-sm-2 control-label"><tag:message code="common.cellphone"/></label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control form-control-danger" id="phoneNo" name="phoneNo"/><span id="phoneNoErr" class="errorMsg form-control-feedback" style="display: none;"></span>
 			</div>
 		</div>
 		<h2><tag:message code="optional"/></h2>
-		<div class="form-group">
+		<div class="form-group row">
 			<label for="fbUserId" class="col-sm-2 control-label">Facebook UserId</label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control form-control-danger" id="fbUserId" name="fbUserId"/><span id="fbUserIdErr" class="errorMsg form-control-feedback" style="display: none;"></span>
 			</div>
 		</div>		
-		<div class="form-group">
+		<div class="form-group row">
 			<label for="twUserId" class="col-sm-2 control-label">Twitter UserId</label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control form-control-danger" id="twUserId" name="twUserId"/><span id="twUserIdErr" class="errorMsg form-control-feedback" style="display: none;"></span>
 			</div>
 		</div>		
 
-		<div class="form-group">
+		<div class="form-group row">
 			<label for="nationality" class="col-sm-2 control-label"><tag:message code="common.nationality"/></label>
 			<div class="col-sm-10">
 				<select class="form-control form-control-danger" id="nationality" name="nationality">
@@ -77,7 +77,7 @@
 				</select>			
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="form-group row">
 			<label for="language" class="col-sm-2 control-label"><tag:message code="common.language"/></label>
 			<div class="col-sm-10">
 				<select class="form-control form-control-danger" id="language" name="language">
@@ -161,6 +161,7 @@ $().ready(function() {
 							if(result != null && length > 0){
 
 								for(var i = 0 ; i < length ; i++){
+								    console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);
 									$("#" + result[i].field+"Err").html(result[i].defaultMessage);
 									$("#" + result[i].field+"Err").parent().parent().addClass("has-danger");
 									$("#" + result[i].field+"Err").show();

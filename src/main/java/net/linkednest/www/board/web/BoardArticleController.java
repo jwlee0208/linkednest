@@ -676,14 +676,14 @@ public class BoardArticleController {
 
 		if(boardArticleDto != null){
 			if(thumbnailSize.equals("small")){
-				imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_SMALL, THUMBNAIL_IMAGE_HEIGHT_SMALL);
+				imageUploadResult = fileUpload.uploadFileForCafe24(imageFile, THUMBNAIL_IMAGE_WIDTH_SMALL, THUMBNAIL_IMAGE_HEIGHT_SMALL);
 			}else if(thumbnailSize.equals("middle")){
-				imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_MIDDLE, THUMBNAIL_IMAGE_HEIGHT_MIDDLE);
+				imageUploadResult = fileUpload.uploadFileForCafe24(imageFile, THUMBNAIL_IMAGE_WIDTH_MIDDLE, THUMBNAIL_IMAGE_HEIGHT_MIDDLE);
 			}else if(thumbnailSize.equals("large")){
-				imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_LARGE, THUMBNAIL_IMAGE_HEIGHT_LARGE);
+				imageUploadResult = fileUpload.uploadFileForCafe24(imageFile, THUMBNAIL_IMAGE_WIDTH_LARGE, THUMBNAIL_IMAGE_HEIGHT_LARGE);
 			}
 		} else {
-			imageUploadResult = fileUpload.uploadFile(imageFile, THUMBNAIL_IMAGE_WIDTH_SMALL, THUMBNAIL_IMAGE_HEIGHT_SMALL);
+			imageUploadResult = fileUpload.uploadFileForCafe24(imageFile, THUMBNAIL_IMAGE_WIDTH_SMALL, THUMBNAIL_IMAGE_HEIGHT_SMALL);
 		}
 		return imageUploadResult;
 	}

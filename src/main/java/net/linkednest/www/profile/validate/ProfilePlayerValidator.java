@@ -25,12 +25,12 @@ public class ProfilePlayerValidator extends BaseValidator {
 
     private static void commonValidate(BindingResult result, ProfilePlayerDto profilePlayerDto) {
         // height
-        ValidationUtil.rejectIfEmpty(result, "height", "profile.player.height.empty", "키를 입력해 주세요.");
+        ValidationUtil.rejectIfNotMinLength(result, "height", "profile.player.height.empty", "키를 입력해 주세요.", 1);
         if (profilePlayerDto.getHeight() > 0) {
             ValidationUtil.rejectIfNotRegEx(result, "height", "profile.player.height.regex", "키는 숫자와 \".\"만 입력 가능합니다.", ValidationUtil.REG_EX_DECIMAL_POINT);
         }
         // weight
-        ValidationUtil.rejectIfEmpty(result, "weight", "profile.player.weight.empty", "몸무게를 입력해 주세요.");
+        ValidationUtil.rejectIfNotMinLength(result, "weight", "profile.player.weight.empty", "몸무게를 입력해 주세요.", 1);
         if (profilePlayerDto.getWeight() > 0) {
             ValidationUtil.rejectIfNotRegEx(result, "weight", "profile.player.weight.regex", "몸무게는 숫자와 \".\"만 입력 가능합니다.", ValidationUtil.REG_EX_DECIMAL_POINT);
         }

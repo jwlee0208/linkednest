@@ -5,7 +5,7 @@ import net.linkednest.common.util.FileUpload;
 import net.linkednest.www.common.dto.CodeDto;
 import net.linkednest.www.common.service.CommonService;
 import net.linkednest.www.profile.ProfileConstants;
-import net.linkednest.www.profile.validate.ProfileValidator;
+import net.linkednest.www.profile.validate.*;
 import net.linkednest.www.profile.dto.*;
 import net.linkednest.www.profile.service.ProfileService;
 import net.linkednest.www.user.dto.UserDto;
@@ -15,17 +15,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -222,31 +222,50 @@ public class ProfileController {
 	 */
     @RequestMapping(value="/registAction", method=RequestMethod.POST)
     @ResponseBody
-    public JSONObject  registProfile(ProfileDto profileDto, HttpSession session, BindingResult bindingResult) throws Exception{
+    public JSONObject  registProfile(@Valid ProfileDto profileDto, HttpSession session, BindingResult bindingResult) throws Exception{
 		System.out.printf(" ----------- [start] regist profile action ---------- \n");
+		logger.info(" [profileDto] : " + profileDto);
+		/*// validation
+		ProfileValidator.insertValidate(bindingResult, profileDto);
+		// Contact Info
+		ProfileContactValidator.insertValidate(bindingResult, profileDto.getProfileContactInfoDto());
+		if (StringUtils.equals("01010100", profileDto.getCatId1())) {
+			ProfilePlayerValidator.insertValidate(bindingResult, profileDto.getProfilePlayerDto());
+			ProfilePlayerStatValidator.insertValidate(bindingResult, profileDto);
+		} else if (StringUtils.equals("01010200", profileDto.getCatId1())) {
 
-    	JSONObject 		result 				= new  JSONObject();
-		// Uploading Profile Image & Setting Image Path
-		this.uploadProfileImage(profileDto);
+		} else if (StringUtils.equals("01010300", profileDto.getCatId1())) {
+			ProfileTeamValidator.insertValidate(bindingResult, profileDto.getProfileTeamDto());
+		}*/
 
-    	profileDto.setTitle(profileDto.getName());
-
-    	System.out.printf("profileDto is $s\n", profileDto.toString());
-    	logger.debug("profileDto is " + profileDto.toString());
-    	
-    	// validation 
-		// ProfileValidator.insertValidate(bindingResult, profileDto);
-
-		int addCnt = 0;
+		JSONObject 		result 				= new  JSONObject();
+		String resultCode = StringUtils.EMPTY;
+		String resultMsg = StringUtils.EMPTY;
 		if (bindingResult.hasErrors()) {
-
+			bindingResult.getAllErrors().stream().forEach( e -> {
+				logger.info(e.getClass() + ", " + e.getCode() +", " + e.getDefaultMessage());
+			});
+			resultCode = "validateError";
+			resultMsg  = "invalid information";
 		} else {
+
+			// Uploading Profile Image & Setting Image Path
+			//this.uploadProfileImage(profileDto);
+
+			profileDto.setTitle(profileDto.getName());
+
+			System.out.printf("profileDto is $s\n", profileDto.toString());
+			logger.debug("profileDto is " + profileDto.toString());
+
+			int addCnt = 0;
 			// service call : insert tables
 			addCnt = this.profileService.addProfileInfos(profileDto);
+			resultCode = (addCnt > 0) ? "success" : "error";
+			resultMsg = (addCnt > 0) ? "success!!!" : "insert error!!!";
 		}
 
-    	result.put("result"	, (addCnt > 0) ? "success" : "error");
-    	result.put("message", (addCnt > 0) ? "success!!!" : "error!!!");
+    	result.put("result"	, resultCode);
+    	result.put("message", resultMsg);
     	
     	return result;
     }
@@ -262,19 +281,28 @@ public class ProfileController {
 	@RequestMapping(value="/modifyAction", method=RequestMethod.POST)
     @ResponseBody
     public JSONObject  modifyProfile(ProfileDto profileDto, HttpSession session, BindingResult bindingResult) throws Exception{
-    	JSONObject 		result 				= new  JSONObject(); 
+    	JSONObject 		result 				= new  JSONObject();
+		// validation
+		ProfileValidator.updateValidate(bindingResult, profileDto);
+		// Contact Info
+		ProfileContactValidator.updateValidate(bindingResult, profileDto.getProfileContactInfoDto());
+		if (StringUtils.equals("01010100", profileDto.getCatId1())) {
+			ProfilePlayerValidator.updateValidate(bindingResult, profileDto.getProfilePlayerDto());
+			ProfilePlayerStatValidator.updateValidate(bindingResult, profileDto);
+		} else if (StringUtils.equals("01010200", profileDto.getCatId1())) {
+
+		} else if (StringUtils.equals("01010300", profileDto.getCatId1())) {
+			ProfileTeamValidator.updateValidate(bindingResult, profileDto.getProfileTeamDto());
+		}
 
     	// Uploading Profile Image & Setting Image Path
-    	this.uploadProfileImage(profileDto);
+    	/*this.uploadProfileImage(profileDto);*/
     	
     	profileDto.setTitle(profileDto.getName());
     	
     	logger.debug("profileDto is " + profileDto.toString());
     	
-    	// validation
-		ProfileValidator.updateValidate(bindingResult, profileDto);
-    	
-    	// service call : insert tables
+		// service call : insert tables
     	int addCnt = this.profileService.updateProfileInfos(profileDto);
     	
     	result.put("result"	, (addCnt > 0) ? "success" : "error");
@@ -305,6 +333,33 @@ public class ProfileController {
 			filePath = imageUploadResult;
 			profileDto.setProfileImgPath(filePath);
 		}
+	}
+
+	@RequestMapping(value="/uploadImage", method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity uploadImage(@RequestParam("profileImg") MultipartFile multipartFile) throws Exception {
+		MultipartFile profileImg = multipartFile;
+
+		JSONObject 		result 				= new  JSONObject();
+
+		String 			imageUploadResult 	= StringUtils.EMPTY;
+
+		if(profileImg != null){
+			// 물리 경로에 파일 업로드
+			imageUploadResult = fileUpload.uploadFile(profileImg);
+ 		}
+
+		boolean isValidImageUploadResult = !imageUploadResult.equals(StringUtils.EMPTY) && !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
+		if(isValidImageUploadResult){
+			result.put("result", "success");
+			result.put("data", imageUploadResult);
+		} else {
+			/*result.put("result", "error");
+			result.put("data", "Please, Select Your Profile Image.");*/
+			return new ResponseEntity("Please, Select Your Profile Image.", HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity(imageUploadResult, HttpStatus.OK);
 	}
 
 	/**

@@ -5,7 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.ibatis.type.Alias;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
 @Alias("profile.profileAttrDto")
 public class ProfileAttrDto {
 	private int 	profileAttrId;

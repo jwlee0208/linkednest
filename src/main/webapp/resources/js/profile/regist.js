@@ -23,7 +23,7 @@
 	   }
 	   alert("정상적으로 등록 되었습니다.");
 	   // 정상 등록 후 목록 화면으로 이동.
-	   location.href = "/profile/list/"+ $("#profileType").val() +"/" + $("#categoryId").val();	
+	   location.href = "/profile/list/"+ $("#profileType").val() +"/" + $("#catId1").val();
 	}
 
 	$(function(){
@@ -31,16 +31,7 @@
 		$("#saveBtn").click(function(){
             var introduce = tinyMCE.get('introduce').getContent();
             $("#introduce").val(introduce);
-            // validation check
-			var isValid = validateBeforeRegist();
-			if (isValid) {
-                var profileImg = $.trim($("#profileImg").val());
-                if(profileImg.length == 0){
-                    registProfileNoneImage();
-                }else{
-                    registProfileWithImage();
-                }
-			}
+            registProfile();
 		});
 
         /********************************************************
@@ -154,7 +145,7 @@
 			}
 		});
 
-        function registProfileNoneImage() {
+        function registProfile() {
             $.ajax({
                 url 		: '/profile/registAction',
                 data 		: $("#actionFrm").serialize(),
@@ -162,30 +153,41 @@
                 method 		: 'post',
                 success 	: function(data){
                     var result = data.result;
-                    var msg = data.message;
-					var validate = data.validate;
 
                     if(result == 'success'){
                         location.href = "/profile/list/"+$("#profileType").val() + "/" + $("#categoryId").val();
-                    }else{
-                        alert(msg);
-                        return;
+                    }else if (result == 'validateErr'){
+                        var length = result.length;
+                        if(result != null && length > 0){
+                            for(var i = 0 ; i < length ; i++){
+                                console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);
+                                $("#" + result[i].field+"Err").html(result[i].defaultMessage);
+                                $("#" + result[i].field+"Err").parent().parent().addClass("has-danger");
+                                $("#" + result[i].field+"Err").show();
+                            }
+                        }
                     }
                 },
                 error : function(xhr, textStatus, thrownError){
-                    console.log("error : " + xhr.status + ", " + textStatus + ", " + thrownError);
+                    /*console.log("error : " + xhr.status + ", " + textStatus + ", " + thrownError);*/
                 }
             });
         }
 
-		function registProfileWithImage() {
+		/*function registProfileWithImage() {
 			// 썸네일 파일 업로드 할 때 저장
             var frm = $("#actionFrm");
             frm.attr("action", '/profile/registAction');
             frm.attr("method", "post");
             frm.ajaxForm(FileuploadCallback);
             frm.submit();
-        }
+        }*/
+
+        $(".form-control").on("click", function(e){
+            $("#" + e.target.id +"Err").parent().parent().removeClass("has-danger");
+            $("#" + e.target.id + "Err").hide();
+            $("#" + e.target.id + "Err").html('');
+        });
 
 		// validation for career
 		function validateCareer(careerTitle, careerDescription, careerStartDate, careerEndDate, careerStatus) {
@@ -412,6 +414,36 @@
 		$("body").on("click", ".deleteStream", function(){
 			$(this).parent().parent().get(0).remove();
 		});
+
+		$("#profileImg").bind("change", function() {
+			alert('profile image upload');
+            // 썸네일 파일 업로드 할 때 저장
+			if (!isEmpty($(this).val())) {
+
+                var imgData = new FormData($("#uploadFrm")[0]);
+				// imgData.append("profileImg", $("#profileImg")[0].files[0]);
+                $.ajax({
+                    type : "POST",
+                    enctype: 'multipart/form-data',
+                    url : "/profile/uploadImage",
+                    data : imgData,
+                    processData : false,
+                    contentType : false,
+                    cache : false,
+                    success : function (data) {
+						$("#profileImgPath").val(data);
+                    }, error : function (e) {
+                        /*console.log(e);*/
+                    }
+                });
+
+				/*var frm = $("#actionFrm");
+				 frm.attr("action", '/profile/uploadImage');
+				 frm.attr("method", "post");
+				 frm.ajaxForm(FileuploadCallback);
+				 frm.submit();*/
+			}
+        });
 		
 	});	
 	

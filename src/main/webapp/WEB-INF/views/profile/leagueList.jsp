@@ -22,7 +22,7 @@
 		<h1 id="btn-groups" class="page-header">League List</h1>
 		<div class="form-group">
 	
-			<div class="form-group" role="search">	
+			<div class="form-group row" role="search">
 				<input type="hidden" 	id="searchCondition" 	name="searchCondition" value="name"/>
 				<input type="hidden" 	id="searchText" 		name="searchText" />
 				<input type="text" 		id="searchTextStr" 		name="searchTextStr" class="form-control ui-autocomplete-input" placeholder="<tag:message code='text.request.insert.search.keyword'/>"/>

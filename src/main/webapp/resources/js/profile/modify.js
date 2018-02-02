@@ -8,7 +8,6 @@ $(document).ajaxError(function(event, request){
 
 //파일전송 후 콜백 함수
 function FileuploadCallback(data, state){
-
     if (data=="error"){
         alert("파일전송중 에러 발생!!");
         return false;
@@ -32,16 +31,11 @@ $(function(){
 
         var introduce = tinyMCE.get('introduce').getContent();
         $("#introduce").val(introduce);
-        var profileImg = $.trim($("#profileImg").val());
 
-        if(profileImg.length == 0){
-            modifyProfileNoneImage();
-        }else{
-            modifyProfileWithImage();
-        }
+        modifyProfile();
     });
 
-    function modifyProfileNoneImage() {
+    function modifyProfile() {
         $.ajax({
             url 		: '/profile/modifyAction',
             data 		: $("#actionFrm").serialize(),
@@ -53,9 +47,16 @@ $(function(){
 
                 if(result == 'success'){
                     location.href = "/profile/list/" + $("#profileType").val() + "/" +  + $("#catId1").val();
-                }else{
-                    alert(msg);
-                    return;
+                }else if (result == 'validateErr'){
+                    var length = result.length;
+                    if(result != null && length > 0){
+                        for(var i = 0 ; i < length ; i++){
+                            console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);
+                            $("#" + result[i].field+"Err").html(result[i].defaultMessage);
+                            $("#" + result[i].field+"Err").parent().parent().addClass("has-danger");
+                            $("#" + result[i].field+"Err").show();
+                        }
+                    }
                 }
             },
             error : function(xhr, textStatus, thrownError){

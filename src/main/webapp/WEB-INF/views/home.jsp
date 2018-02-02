@@ -103,8 +103,8 @@ iframe {width : 250px; height : 200px; align:center;}
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				<div style="text-align:center; min-height : 70px;vertical-align: middle;">
-					<h3><tag:message code='text.noregistplayer'/></h3>
+				<div style="padding-left : 20px; min-height : 70px; vertical-align: middle;">
+					<p><tag:message code='text.noregistplayer'/></p>
 				</div>
 			</c:otherwise>	
 		</c:choose>
@@ -197,8 +197,8 @@ iframe {width : 250px; height : 200px; align:center;}
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				<div style="text-align:center; min-height : 70px;vertical-align: middle;">
-					<h3><tag:message code='text.noregistplayer'/></h3>
+				<div style="padding-left : 20px; min-height : 70px; vertical-align: middle;">
+					<p><tag:message code='text.noregistplayer'/></p>
 				</div>
 			</c:otherwise>	
 		</c:choose>	
@@ -221,7 +221,7 @@ iframe {width : 250px; height : 200px; align:center;}
 							</c:forEach> 
 						</c:when>
 						<c:otherwise>
-						<tr><td colspan="2">데이터가 없습니다.</td></tr>
+						<tr><td colspan="2">There is no article.</td></tr>
 						</c:otherwise>	
 					</c:choose>		
 					</table>

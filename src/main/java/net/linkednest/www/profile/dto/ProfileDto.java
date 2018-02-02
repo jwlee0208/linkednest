@@ -4,23 +4,34 @@ package net.linkednest.www.profile.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.apache.commons.lang3.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.Alias;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @Alias("profile.profileDto")
 public class ProfileDto {
 	private int 	profileId;
 	private String 	profileType;
+	/*@NotEmpty(message = "not selected first category.")
+	@NotNull(message = "not selected first category.")*/
 	private String 	catId1;
+	/*@NotEmpty(message = "not selected second category.")
+	@NotNull(message = "not selected second category.")*/
 	private String 	catId2;
 	private String 	title;
+	/*@NotEmpty(message = "Please, write your name.")
+	@NotNull(message = "Please, write your name.")
+	@Size(max = 50, message = "it's too long.")*/
 	private String 	name;
 	private MultipartFile profileImg;
 	private String 	profileImgPath;
+	/*@NotEmpty(message = "Please, write your introduce.")
+	@NotNull(message = "Please, write your introduce.")*/
 	private String 	introduce;
 	private String 	createDate;
 	private String  status;

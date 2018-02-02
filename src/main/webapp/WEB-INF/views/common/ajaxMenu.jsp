@@ -3,13 +3,11 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="tag"%>
 <%@ page session="false" contentType="text/html; charset=UTF-8"%>
 <%@ page import="net.linkednest.www.user.dto.UserDto"%>
-<!-- <script type="text/javascript" -->
-<%-- 	src="${pageContext.request.contextPath}/js/home/home.js"></script> --%>
 <%
 	UserDto userInfo = (UserDto) request.getSession().getAttribute("userInfo");
 %>
 <c:set var="userInfo" value="<%=userInfo%>" />
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary" role="navigation" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary navbar-expand-lg navbar-light" role="navigation" style="background-color: #e3f2fd;">
 	<input type="hidden" id="menuId" name="menuId" value="${param.menuId}" />
 	<!-- 	<div class="container-fluid"> -->
 
@@ -20,15 +18,9 @@
 	<!-- mobile menu list button -->
 	<!-- 		<div class="navbar-header"> -->
 
-	<a class="navbar-brand" href="javascript:;"
-	   onclick="javascript:goHome();"><span
-			style="color: white; font-size: 25px; font-weight: bold;">L</span>inked<span
-			style="color: white; font-size: 25px; font-weight: bold;">N</span>est
-		- <span style="color: white; font-size: 15px;">Looking For Chances</span>
-	</a>
+	<a class="navbar-brand" href="javascript:;" onclick="javascript:goHome();"><span style="color: white; font-size: 25px; font-weight: bold;">L</span>inked<span style="color: white; font-size: 25px; font-weight: bold;">N</span>est - <span style="color: white; font-size: 15px;">Looking For Chances</span></a>
 	<!-- 		</div> -->
-	<div class="collapse navbar-collapse"
-		 id="nav-collapse-player-menu-list">
+	<div class="collapse navbar-collapse" id="nav-collapse-player-menu-list">
 		<ul class="nav navbar-nav  mr-auto">
 			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goHome();">Home</a></li>
 			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(1, '01010100');"><tag:message code="text.playerlist"/></a></li>

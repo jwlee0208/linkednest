@@ -9,14 +9,11 @@
 	<title>::: LinkedNest.net >> Registration Player's Profile</title>
 	<!-- editor -->
 	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/tinymce/tinymce.min.js"></script>
-	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/common-editor.js"></script>
+	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/common-editor.min.js"></script>
 	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/board/article/common.js"></script>
-
 	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/regist.js"></script>
 	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/validateProfile.js"></script>
-
-	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/autocomplete.js"></script>
-
+	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/autocomplete.min.js"></script>
 	<style>
 		.fixed-height {padding: 1px;max-height: 200px;overflow: auto;}
 	</style>
@@ -27,28 +24,33 @@
 		Registration&nbsp;&nbsp;<small>Profile</small>
 	</h1>
 	<br/>
+
+	<form id="uploadFrm" name="uploadFrm" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+		<div class="form-group row">
+			<label class="col-2 col-form-label" for="profileImg">Profile Image</label>
+			<div class="col-10">
+				<input type="file" class="form-control" id="profileImg" name="profileImg" placeholder="upload your profile image"/>
+			</div>
+		</div>
+	</form>
+
+
 	<form id="actionFrm" name="actionFrm" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
 		<input type="hidden" id="profileType" name="profileType" value="${profileType}" />
 		<input type="hidden" id="categoryId"  name="categoryId"  value="${categoryId}" />
+		<input type="hidden" id="profileImgPath" name="profileImgPath"/>
 		<c:set var="param" value="${profileAttrList}"/>
 		<c:choose>
-			<c:when test="${profileType eq 1}">
-				<%@include file="/WEB-INF/views/profile/ajaxRegistPlayer.jsp"%>
-			</c:when>
-			<c:when test="${profileType eq 2}">
-				<%@include file="/WEB-INF/views/profile/ajaxRegistCoach.jsp"%>
-			</c:when>
-			<c:when test="${profileType eq 3}">
-				<%@include file="/WEB-INF/views/profile/ajaxRegistTeam.jsp"%>
-			</c:when>
+			<c:when test="${profileType eq 1}"><%@include file="/WEB-INF/views/profile/ajaxRegistPlayer.jsp"%></c:when>
+			<c:when test="${profileType eq 2}"><%@include file="/WEB-INF/views/profile/ajaxRegistCoach.jsp"%></c:when>
+			<c:when test="${profileType eq 3}"><%@include file="/WEB-INF/views/profile/ajaxRegistTeam.jsp"%></c:when>
 		</c:choose>
 	</form>
 	<br />
 	<div class="form-group row">
-		<input type="button" class="btn btn-primary btn-block" id="saveBtn"
-			   value="Save" data-loading-text="Processing..." />
+		<input type="button" class="btn btn-primary btn-block" id="saveBtn" value="Save" data-loading-text="Processing..." />
 	</div>
-	<br />
+	<br/>
 </div>
 </body>
 </html>

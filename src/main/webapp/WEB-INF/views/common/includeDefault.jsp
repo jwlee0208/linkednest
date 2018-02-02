@@ -7,7 +7,11 @@
 
 <!-- bootstrap -->
 <link 	rel="stylesheet" 			href="${pageContext.request.contextPath}/lib/bootstrapV4/css/bootstrap.min.css">
+<link 	rel="stylesheet" 			href="${pageContext.request.contextPath}/lib/bootstrapV4/css/bootstrap-grid.css">
+<link 	rel="stylesheet" 			href="${pageContext.request.contextPath}/lib/bootstrapV4/css/bootstrap-reboot.css">
+
 <script type="text/javascript" 		src="${pageContext.request.contextPath}/lib/bootstrapV4/js/bootstrap.min.js"></script>
+<script type="text/javascript" 		src="${pageContext.request.contextPath}/lib/bootstrapV4/js/bootstrap.bundle.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/lib/tether/js/tether.min.js"></script>
 

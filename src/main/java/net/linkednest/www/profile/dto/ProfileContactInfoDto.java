@@ -8,18 +8,27 @@ import org.apache.ibatis.type.Alias;
 
 import net.linkednest.common.constant.CommonConstant;
 import net.linkednest.common.util.AES256Util;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 
 @Alias("profile.profileContactInfoDto")
 public class ProfileContactInfoDto {
 	private int contactInfoId;
 	private int profileId;
 	private String phoneNo;
+	/*@NotEmpty(message = "Please, write your cell phone no.")
+	@NotNull(message = "Please, write your cell phone no.")*/
 	private String cellPhoneNo;
+	/*@Email(message = "invalid email format.")*/
 	private String email;
 	private String websiteUrl;
 	private String facebookUrl;
 	private String twitterUrl;
 	private String instagramUrl;
+	/*@NotEmpty(message = "Please, write your address.")
+	@NotNull(message = "Please, write your address.")*/
 	private String address;
 	private String createDate;
 	private String createUserId;
