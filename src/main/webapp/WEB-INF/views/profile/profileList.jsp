@@ -11,13 +11,6 @@
 <meta name="description" 			content="Checkout Future's MVP"/>
 <meta name="robots" 				content="index,follow" />
 <meta name="keywords" 				content="blog, baseball, link, player, profile"/>
-
-<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/profileList.js"></script>
-<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/profileView.js"></script>
-<script type="text/javascript"	src="${pageContext.request.contextPath}/js/holder.js"></script>
-
-<link 	rel="stylesheet" 		href="${pageContext.request.contextPath}/css/pagination.css">
-<link 	rel="stylesheet" 		href="${pageContext.request.contextPath}/css/profileList.css">
 </head>
 <body>
 <form id="listFrm" name="listFrm" method="post">
@@ -180,4 +173,10 @@
         return (val == '' || val == null || val == 'undefined') ? true : false;
     }
 </script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/profileList.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/profileView.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/holder.js"></script>
+
+<link 	rel="stylesheet" 		href="${pageContext.request.contextPath}/css/pagination.css">
+<link 	rel="stylesheet" 		href="${pageContext.request.contextPath}/css/profileList.css">
 </html>

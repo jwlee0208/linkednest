@@ -7,16 +7,6 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>::: LinkedNest.net >> Registration Player's Profile</title>
-	<!-- editor -->
-	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/tinymce/tinymce.min.js"></script>
-	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/common-editor.min.js"></script>
-	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/board/article/common.js"></script>
-	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/regist.js"></script>
-	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/validateProfile.js"></script>
-	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/autocomplete.min.js"></script>
-	<style>
-		.fixed-height {padding: 1px;max-height: 200px;overflow: auto;}
-	</style>
 </head>
 <body>
 <div class="container">
@@ -25,7 +15,7 @@
 	</h1>
 	<br/>
 
-	<form id="uploadFrm" name="uploadFrm" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+	<form id="uploadFrm" name="uploadFrm" method="post" class="form-horizontal was-validated" role="form" enctype="multipart/form-data">
 		<div class="form-group row">
 			<label class="col-2 col-form-label" for="profileImg">Profile Image</label>
 			<div class="col-10">
@@ -53,4 +43,13 @@
 	<br/>
 </div>
 </body>
+<!-- editor -->
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/common-editor.min.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/board/article/common.min.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/regist.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/autocomplete.min.js"></script>
+<style>
+	.fixed-height {padding: 1px;max-height: 200px;overflow: auto;}
+</style>
 </html>

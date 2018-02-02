@@ -7,7 +7,7 @@
 	);
 	
 	//파일전송 후 콜백 함수
-	function FileuploadCallback(data, state){
+	/*function FileuploadCallback(data, state){
 	   if (data=="error"){
 	      alert("파일전송중 에러 발생!!");
 	      return false;
@@ -24,7 +24,7 @@
 	   alert("정상적으로 등록 되었습니다.");
 	   // 정상 등록 후 목록 화면으로 이동.
 	   location.href = "/profile/list/"+ $("#profileType").val() +"/" + $("#catId1").val();
-	}
+	}*/
 
 	$(function(){
 		// profile registration
@@ -152,19 +152,27 @@
                 dataType 	: 'json',
                 method 		: 'post',
                 success 	: function(data){
+                    var status = data.status;
                     var result = data.result;
 
-                    if(result == 'success'){
+                    if(status == 'success'){
+                    	alert('Successfully registed!!!');
                         location.href = "/profile/list/"+$("#profileType").val() + "/" + $("#categoryId").val();
-                    }else if (result == 'validateErr'){
+                    }else if (status == 'validateErr'){
+                        alert('Not Registed cause invalid information. check out invalid informations.');
                         var length = result.length;
                         if(result != null && length > 0){
                             for(var i = 0 ; i < length ; i++){
-                                console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);
-                                $("#" + result[i].field+"Err").html(result[i].defaultMessage);
-                                $("#" + result[i].field+"Err").parent().parent().addClass("has-danger");
-                                $("#" + result[i].field+"Err").show();
+                                var fieldNm = result[i].field;
+                                var message = result[i].defaultMessage;
+                                console.log(i + ", " + fieldNm + ", " + message);
+                                /*$("input[name="+result[i].field+"]").addClass("form-control-danger");*/
+                                $("[name=" + fieldNm.replace(".", "_")+"Err]").html(message);
+                                $("[name=" + fieldNm.replace(".", "_")+"Err]").parent().parent().addClass("has-danger");
+                                $("[name=" + fieldNm.replace(".", "_")+"Err]").addClass("form-control-feedback");
+                                $("[name=" + fieldNm.replace(".", "_")+"Err]").show();
                             }
+                            // $("input[name="+result[0].field+"]").focus();
                         }
                     }
                 },

@@ -1,5 +1,6 @@
 package net.linkednest.www.profile.validate;
 
+import net.linkednest.common.constant.DBConstants;
 import net.linkednest.common.validate.BaseValidator;
 import net.linkednest.common.validate.ValidationUtil;
 import net.linkednest.www.profile.dto.ProfileDto;
@@ -37,5 +38,27 @@ public class ProfileValidator extends BaseValidator {
         ValidationUtil.rejectIfEmpty(result, "catId2", "profile.player.catId2.empty", "두번째 카테고리가 선택되지 않았습니다.");
         // introduce
         ValidationUtil.rejectIfEmpty(result, "introduce", "profile.player.introduce.empty", "자기소개를 입력해 주세요.");
+
+        if (StringUtils.equals(cudType, DBConstants.DB_SQL_INSERT)) {
+            if (StringUtils.equals("01010100", profileDto.getCatId1())) {
+                ProfilePlayerValidator.insertValidate(result, profileDto.getProfilePlayerDto());
+                ProfilePlayerStatValidator.insertValidate(result, profileDto);
+            } else if (StringUtils.equals("01010200", profileDto.getCatId1())) {
+
+            } else if (StringUtils.equals("01010300", profileDto.getCatId1())) {
+                ProfileTeamValidator.insertValidate(result, profileDto.getProfileTeamDto());
+            }
+            ProfileContactValidator.insertValidate(result, profileDto.getProfileContactInfoDto());
+        } else {
+            if (StringUtils.equals("01010100", profileDto.getCatId1())) {
+                ProfilePlayerValidator.updateValidate(result, profileDto.getProfilePlayerDto());
+                ProfilePlayerStatValidator.updateValidate(result, profileDto);
+            } else if (StringUtils.equals("01010200", profileDto.getCatId1())) {
+
+            } else if (StringUtils.equals("01010300", profileDto.getCatId1())) {
+                ProfileTeamValidator.updateValidate(result, profileDto.getProfileTeamDto());
+            }
+            ProfileContactValidator.updateValidate(result, profileDto.getProfileContactInfoDto());
+        }
     }
 }

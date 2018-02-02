@@ -156,25 +156,23 @@ $().ready(function() {
 						if(status == 'REGIST_0000'){
 							location.replace('/user/registOk');	//$("#prevPage").val();
 						}else if(status == 'REGIST_0001'){
-							
 							var length = result.length;
 							if(result != null && length > 0){
-
 								for(var i = 0 ; i < length ; i++){
 								    console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);
 									$("#" + result[i].field+"Err").html(result[i].defaultMessage);
 									$("#" + result[i].field+"Err").parent().parent().addClass("has-danger");
 									$("#" + result[i].field+"Err").show();
 								}
+                                $("input[name="+result[0].field+"]").focus();
 							}
 						}else{
 							alert(result);
 							$("#userId").focus();
 							return false;
 						}
-						
 					},
-					error : function(data){
+					error : function(xhr, textStatus, thrownError){
 
 					}
 				});

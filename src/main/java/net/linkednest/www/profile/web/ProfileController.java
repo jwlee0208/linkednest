@@ -2,6 +2,7 @@ package net.linkednest.www.profile.web;
 
 import net.linkednest.common.paging.PageHolder;
 import net.linkednest.common.util.FileUpload;
+import net.linkednest.common.validate.JsonResponse;
 import net.linkednest.www.common.dto.CodeDto;
 import net.linkednest.www.common.service.CommonService;
 import net.linkednest.www.profile.ProfileConstants;
@@ -222,13 +223,13 @@ public class ProfileController {
 	 */
     @RequestMapping(value="/registAction", method=RequestMethod.POST)
     @ResponseBody
-    public JSONObject  registProfile(@Valid ProfileDto profileDto, HttpSession session, BindingResult bindingResult) throws Exception{
+    public JsonResponse  registProfile(ProfileDto profileDto, HttpSession session, BindingResult bindingResult) throws Exception{
 		System.out.printf(" ----------- [start] regist profile action ---------- \n");
 		logger.info(" [profileDto] : " + profileDto);
-		/*// validation
+		// validation
 		ProfileValidator.insertValidate(bindingResult, profileDto);
 		// Contact Info
-		ProfileContactValidator.insertValidate(bindingResult, profileDto.getProfileContactInfoDto());
+		/*ProfileContactValidator.insertValidate(bindingResult, profileDto.getProfileContactInfoDto());
 		if (StringUtils.equals("01010100", profileDto.getCatId1())) {
 			ProfilePlayerValidator.insertValidate(bindingResult, profileDto.getProfilePlayerDto());
 			ProfilePlayerStatValidator.insertValidate(bindingResult, profileDto);
@@ -238,19 +239,16 @@ public class ProfileController {
 			ProfileTeamValidator.insertValidate(bindingResult, profileDto.getProfileTeamDto());
 		}*/
 
-		JSONObject 		result 				= new  JSONObject();
+		JsonResponse returnObj = new JsonResponse();
 		String resultCode = StringUtils.EMPTY;
 		String resultMsg = StringUtils.EMPTY;
 		if (bindingResult.hasErrors()) {
-			bindingResult.getAllErrors().stream().forEach( e -> {
+			/*bindingResult.getAllErrors().stream().forEach( e -> {
 				logger.info(e.getClass() + ", " + e.getCode() +", " + e.getDefaultMessage());
-			});
-			resultCode = "validateError";
-			resultMsg  = "invalid information";
+			});*/
+			returnObj.setStatus("validateErr");
+			returnObj.setResult(bindingResult.getAllErrors());
 		} else {
-
-			// Uploading Profile Image & Setting Image Path
-			//this.uploadProfileImage(profileDto);
 
 			profileDto.setTitle(profileDto.getName());
 
@@ -262,12 +260,11 @@ public class ProfileController {
 			addCnt = this.profileService.addProfileInfos(profileDto);
 			resultCode = (addCnt > 0) ? "success" : "error";
 			resultMsg = (addCnt > 0) ? "success!!!" : "insert error!!!";
-		}
 
-    	result.put("result"	, resultCode);
-    	result.put("message", resultMsg);
-    	
-    	return result;
+			returnObj.setStatus(resultCode);
+			returnObj.setResult(resultMsg);
+		}
+    	return returnObj;
     }
 
 	/**

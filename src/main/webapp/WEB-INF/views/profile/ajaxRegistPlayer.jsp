@@ -16,7 +16,7 @@
 	<label class="col-2 col-form-label" for="name">Name</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="name" name="name" placeholder="write your name" />
-		<span id="nameErr" class="errorMsg" style="display: none;"></span>
+		<span name="nameErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -37,22 +37,22 @@
 			<option value="01010109">Right Fielder</option>
 			<option value="01010110">DH</option>
 		</select>
-		<span id="catId2Err" class="errorMsg" style="display: none;"></span>
+		<span name="catId2Err" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
 <div class="form-group row">
 	<label class="col-2 col-form-label" for="height">Height (cm)</label>
 	<div class="col-4">
-		<input type="text" class="form-control" id="height" name="profilePlayerDto.height" aria-describedby="heightHelpInline"/>
+		<input type="text" class="form-control" id="height" name="profilePlayerDto.height" aria-describedby="heightHelpInline" value="0"/>
 		<small id="heightHelpInline" class="text-muted">Allow digit and '.'</small>
-		<span id="heightErr" class="errorMsg" style="display: none;"></span>
+		<span name="heightErr" class="errorMsg" style="display: none;"></span>
 	</div>
 	<label class="col-2 col-form-label" for="weight">Weight (kg)</label>
 	<div class="col-4">
-		<input type="text" class="form-control" id="weight" name="profilePlayerDto.weight" aria-describedby="weightHelpInline"/>
+		<input type="text" class="form-control" id="weight" name="profilePlayerDto.weight" aria-describedby="weightHelpInline" value="0"/>
 		<small id="weightHelpInline" class="text-muted">Allow digit and '.'</small>
-		<span id="weightErr" class="errorMsg" style="display: none;"></span>
+		<span name="weightErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -61,7 +61,7 @@
 	<div class="col-10">
 		<input type="date" class="form-control" id="birthDate" name="profilePlayerDto.birthDate" aria-describedby="birthDateHelpInline"/>
 		<small id="birthDateHelpInline" class="text-muted">YYYY-MM-DD</small>
-		<span id="birthDateErr" class="errorMsg" style="display: none;"></span>
+		<span name="profilePlayerDto_birthDateErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -69,7 +69,7 @@
 	<label class="col-2 col-form-label" for="birthPlace">Birth Place</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="birthPlace" name="profilePlayerDto.birthPlace" />
-		<span id="birthPlaceErr" class="errorMsg" style="display: none;"></span>
+		<span name="profilePlayerDto_birthPlaceErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -77,6 +77,7 @@
 	<label class="col-2 col-form-label" for="education">Education</label>
 	<div class="col-10">
 		<textarea class="form-control" id="education" name="profilePlayerDto.education"></textarea>
+		<span name="profilePlayerDto_educationErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -84,7 +85,7 @@
 	<label class="col-2 col-form-label" for="hobbies">Hobbies</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="hobbies" name="profilePlayerDto.hobbies" />
-		<span id="hobbiesErr" class="errorMsg" style="display: none;"></span>
+		<span name="profilePlayerDto_hobbiesErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -92,7 +93,7 @@
 	<label class="col-2 col-form-label" for="favoriteFood">Favorite Foods</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="favoriteFood" name="profilePlayerDto.favoriteFood" />
-		<span id="favoriteFoodErr" class="errorMsg" style="display: none;"></span>
+		<span name="profilePlayerDto_favoriteFoodErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -107,7 +108,7 @@
 				</c:forEach>
 			</c:if>
 		</select>
-		<span id="languageErr" class="errorMsg" style="display: none;"></span>
+		<span name="profilePlayerDto_languageErr" class="errorMsg" style="display: none;"></span>
 	</div>
 
 	<label for="nationality" class="col-sm-2 control-label"><tag:message code="common.nationality"/></label>
@@ -120,7 +121,7 @@
 				</c:forEach>
 			</c:if>
 		</select>
-		<span id="nationalityErr" class="errorMsg" style="display: none;"></span>
+		<span name="profilePlayerDto_nationalityErr" class="errorMsg" style="display: none;"></span>
 	</div>
 	<%--<label class="col-2 col-form-label" for="languageSearch" >Language</label>
 	<div class="col-4">
@@ -181,7 +182,7 @@
 	<label class="col-2 col-form-label" for="email">Email</label>
 	<div class="col-10">
 		<input type="email" class="form-control" id="email" name="profileContactInfoDto.email" placeholder="write your e-mail" />
-		<span id="emailErr" class="errorMsg" style="display: none;"></span>
+		<span name="profileContactInfoDto_emailErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -189,7 +190,7 @@
 	<label class="col-2 col-form-label" for="phoneNo">Phone No.</label>
 	<div class="col-10">
 		<input type="tel" class="form-control" id="phoneNo" name="profileContactInfoDto.phoneNo" placeholder="write your phone No." />
-		<span id="phoneNoErr" class="errorMsg" style="display: none;"></span>
+		<span name="profileContactInfoDto_phoneNoErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -197,7 +198,7 @@
 	<label class="col-2 col-form-label" for="cellPhoneNo">cellPhoneNo</label>
 	<div class="col-10">
 		<input type="tel" class="form-control" id="cellPhoneNo" name="profileContactInfoDto.cellPhoneNo" placeholder="write your cell phone No." />
-		<span id="cellPhoneNoErr" class="errorMsg" style="display: none;"></span>
+		<span name="profileContactInfoDto_cellPhoneNoErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -205,7 +206,7 @@
 	<label class="col-2 col-form-label" for="websiteUrl">website url</label>
 	<div class="col-10">
 		<input type="url" class="form-control" id="websiteUrl" name="profileContactInfoDto.websiteUrl" placeholder="write your website url" aria-describedby="basic-addon3" />
-		<span id="websiteUrlErr" class="errorMsg" style="display: none;"></span>
+		<span name="profileContactInfoDto_websiteUrlErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -213,7 +214,7 @@
 	<label class="col-2 col-form-label" for="facebookUrl">facebook</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="facebookUrl" name="profileContactInfoDto.faceebookUrl" placeholder="write your facebook id" />
-		<span id="faceebookUrlErr" class="errorMsg" style="display: none;"></span>
+		<span name="profileContactInfoDto_faceebookUrlErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -221,7 +222,7 @@
 	<label class="col-2 col-form-label" for="twitterUrl">twitter</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="twitterUrl" name="profileContactInfoDto.twitterUrl" placeholder="write your twitter id" />
-		<span id="twitterUrlErr" class="errorMsg" style="display: none;"></span>
+		<span name="profileContactInfoDto_twitterUrlErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -229,7 +230,7 @@
 	<label class="col-2 col-form-label" for="instagramUrl">instagram</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="instagramUrl" name="profileContactInfoDto.instagramUrl" placeholder="write your instagram id" />
-		<span id="instagramUrlErr" class="errorMsg" style="display: none;"></span>
+		<span name="profileContactInfoDto_instagramUrlErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -237,7 +238,7 @@
 	<label class="col-2 col-form-label" for="address">Address</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="address" name="profileContactInfoDto.address" placeholder="write your address" />
-		<span id="addressErr" class="errorMsg" style="display: none;"></span>
+		<span name="profileContactInfoDto_addressErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />

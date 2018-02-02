@@ -3,16 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" 		prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" 	prefix="tag" %>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/circle.css"/>
-<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/profileView.js"></script>
-<style>
-.jumbotron {
-background: #000 url("../img/home/img06.jpg") center center;
-background-size: cover; 
-overflow: hidden;
-}
-iframe {width : 250px; height : 200px; align:center;}
-</style>
 
 	<div class="jumbotron jumbotron-fluid">
 		<div class="container">
@@ -284,4 +274,15 @@ iframe {width : 250px; height : 200px; align:center;}
 	    parallax();
 	});
 </script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/circle.css"/>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/profileView.js"></script>
+<style>
+	.jumbotron {
+		background: #000 url("../img/home/img06.jpg") center center;
+		background-size: cover;
+		overflow: hidden;
+	}
+	iframe {width : 250px; height : 200px; align:center;}
+</style>
+
 

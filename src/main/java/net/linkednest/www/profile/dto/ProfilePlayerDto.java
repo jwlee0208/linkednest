@@ -14,11 +14,9 @@ public class ProfilePlayerDto extends ProfileDto {
 	@NotNull(message = "where is your birth date?")*/
 	private String 	birthDate;
 
-	private double 	height = 0.0;
-
-	private double	wgt = 0.0;
-
-	private double 	weight = 0.0;
+	private float 	height = 0;
+	private float	wgt = 0;
+	private float 	weight = 0;
 	private String 	birthPlace;
 	private String 	education;
 	private String 	hobbies;
@@ -43,23 +41,27 @@ public class ProfilePlayerDto extends ProfileDto {
 		this.birthDate = birthDate;
 	}
 
-	public double getHeight() {
+	public float getHeight() {
 		return height;
 	}
 
-	public void setHeight(double height) {
+	public void setHeight(float height) {
 		this.height = height;
 	}
 
-	public void setWgt(double wgt) {
+	public float getWgt() {
+		return wgt;
+	}
+
+	public void setWgt(float wgt) {
 		this.wgt = wgt;
 	}
 
-	public double getWeight() {
+	public float getWeight() {
 		return weight;
 	}
 
-	public void setWeight(double weight) {
+	public void setWeight(float weight) {
 		this.weight = weight;
 	}
 
