@@ -53,6 +53,11 @@
 		$("body").on("click", ".removeCareerBtn", function(){
 			$(this).parent().parent().get(0).remove();
 		});
+		// stream row removing
+        $("body").on("click", ".deleteStream", function(){
+            $(this).parent().parent().get(0).remove();
+        });
+
 
         /********************************************************
 		 * Add row
@@ -110,7 +115,6 @@
 			var careerStatus = $("#careerStatus").val();
 			
 			// validation for career
-//			validateCareer(careerTitle, careerDescription, careerStartDate, careerEndDate, careerStatus);
 			if (isEmpty(careerTitle)) {
 				alert('Please fill out career title');
 				return false;
@@ -182,41 +186,7 @@
             });
         }
 
-		/*function registProfileWithImage() {
-			// 썸네일 파일 업로드 할 때 저장
-            var frm = $("#actionFrm");
-            frm.attr("action", '/profile/registAction');
-            frm.attr("method", "post");
-            frm.ajaxForm(FileuploadCallback);
-            frm.submit();
-        }*/
-
-        $(".form-control").on("click", function(e){
-            $("#" + e.target.id +"Err").parent().parent().removeClass("has-danger");
-            $("#" + e.target.id + "Err").hide();
-            $("#" + e.target.id + "Err").html('');
-        });
-
-		// validation for career
-		function validateCareer(careerTitle, careerDescription, careerStartDate, careerEndDate, careerStatus) {
-			if (isEmpty(careerTitle)) {
-				alert('Please fill out career title');
-				return false;
-			}
-
-			if (isEmpty(careerDescription)) {
-				alert('Please fill out career description');
-				return false;
-			}
-
-			if (isEmpty(careerStatus)) {
-				alert('Please select career status');
-				return false;
-			}
-			return true;
-		}
-		
-		// pitcher stat row adding
+ 		// pitcher stat row adding
 		$(".addPitcherBtn").click(function(){
 			var teamName = $("#pTeamName_pitch_stat").val();
 			var statYear = $("#pStatYear_pitch_stat").val();
@@ -279,7 +249,6 @@
 			
 				$(".tablePitcherStat > tbody:last").append(addPitcherHtml);				
 			}
-			
 		});	
 		
 		// hitter stat row adding
@@ -404,8 +373,7 @@
 				addFielderHtml += "<td><input type=\"button\" 		class=\"btn btn-default removeFielderBtn\" value=\"-\"/></td>";
 				addFielderHtml += "</tr>";
 				$(".tableFielderStat > tbody:last").append(addFielderHtml);	
-			}	
-			
+			}
 		});	
 		
 		// youtube searching
@@ -419,9 +387,6 @@
 			}
 		});
 		
-		$("body").on("click", ".deleteStream", function(){
-			$(this).parent().parent().get(0).remove();
-		});
 
 		$("#profileImg").bind("change", function() {
 			alert('profile image upload');
@@ -444,15 +409,8 @@
                         /*console.log(e);*/
                     }
                 });
-
-				/*var frm = $("#actionFrm");
-				 frm.attr("action", '/profile/uploadImage');
-				 frm.attr("method", "post");
-				 frm.ajaxForm(FileuploadCallback);
-				 frm.submit();*/
 			}
         });
-		
 	});	
 	
 	function hideDiv(type){
@@ -463,3 +421,12 @@
 	var regexName =  /^[a-z0-9_-]{3,16}&/;
 	var regexDecimalPoint = /^[-]?\d+(?:[.]\d+)?$/;
 
+    function isEmpty(val){
+        return (val == '' || val == null || val == 'undefined') ? true : false;
+    }
+
+    $(".form-control").on("click", function(e){
+        $("#" + e.target.id +"Err").parent().parent().removeClass("has-danger");
+        $("#" + e.target.id + "Err").hide();
+        $("#" + e.target.id + "Err").html('');
+    });

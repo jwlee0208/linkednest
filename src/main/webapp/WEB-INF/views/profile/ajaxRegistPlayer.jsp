@@ -46,13 +46,13 @@
 	<div class="col-4">
 		<input type="text" class="form-control" id="height" name="profilePlayerDto.height" aria-describedby="heightHelpInline" value="0"/>
 		<small id="heightHelpInline" class="text-muted">Allow digit and '.'</small>
-		<span name="heightErr" class="errorMsg" style="display: none;"></span>
+		<span name="profilePlayerDto_heightErr" class="errorMsg" style="display: none;"></span>
 	</div>
 	<label class="col-2 col-form-label" for="weight">Weight (kg)</label>
 	<div class="col-4">
 		<input type="text" class="form-control" id="weight" name="profilePlayerDto.weight" aria-describedby="weightHelpInline" value="0"/>
 		<small id="weightHelpInline" class="text-muted">Allow digit and '.'</small>
-		<span name="weightErr" class="errorMsg" style="display: none;"></span>
+		<span name="profilePlayerDto_weightErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
 <br />
@@ -313,7 +313,7 @@
 		<!-- 		    		<input type="text" class="form-control" id="streamUrl_0" name="profileStreamList[0].streamUrl"/> -->
 	</div>
 	<div class="col-2">
-		<input type="button" class="btn btn-default addStreamBtn" value="+" />
+		<input type="button" class="btn btn-default addStreamBtn  btn-block" value="+" />
 	</div>
 </div>
 <div id="streamList"></div>
@@ -436,7 +436,7 @@
 	</div>
 </div>
 <div class="form-group row">
-	<input type="button" class="btn btn-outline-primary addPitcherBtn" value="Add Pitching Stat(+)" />
+	<input type="button" class="btn btn-outline-primary addPitcherBtn btn-block" value="Add Pitching Stat(+)" />
 </div>
 <table class="table tablePitcherStat">
 	<thead class="">
@@ -557,7 +557,7 @@
 	<div class="col-6"></div>
 </div>
 <div class="form-group row">
-	<input type="button" class="btn btn-outline-primary addHitterBtn" value="Add Hitting Stat(+)" />
+	<input type="button" class="btn btn-outline-primary addHitterBtn btn-block" value="Add Hitting Stat(+)" />
 </div>
 <table class="table tableHitterStat">
 	<thead class="">
@@ -690,7 +690,7 @@
 	</div>
 </div>
 <div class="form-group row">
-	<input type="button" class="btn btn-outline-primary addFielderBtn" value="Add Fielding Stat(+)" />
+	<input type="button" class="btn btn-outline-primary addFielderBtn btn-block" value="Add Fielding Stat(+)" />
 </div>
 
 <table class="table tableFielderStat">

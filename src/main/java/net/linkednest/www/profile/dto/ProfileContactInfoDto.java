@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.Alias;
 
 import net.linkednest.common.constant.CommonConstant;
@@ -18,21 +19,50 @@ public class ProfileContactInfoDto {
 	private int contactInfoId;
 	private int profileId;
 	private String phoneNo;
-	/*@NotEmpty(message = "Please, write your cell phone no.")
-	@NotNull(message = "Please, write your cell phone no.")*/
 	private String cellPhoneNo;
-	/*@Email(message = "invalid email format.")*/
 	private String email;
 	private String websiteUrl;
 	private String facebookUrl;
 	private String twitterUrl;
 	private String instagramUrl;
-	/*@NotEmpty(message = "Please, write your address.")
-	@NotNull(message = "Please, write your address.")*/
 	private String address;
 	private String createDate;
 	private String createUserId;
-		
+
+	/***********************
+	 * 암호화 파라미터
+	 ***********************/
+	public String getEncryptedPhoneNo(){
+		return getEncryptedData(this.phoneNo);
+	}
+
+	public String getEncryptedCellPhoneNo(){
+		return getEncryptedData(this.cellPhoneNo);
+	}
+
+	public String getEncryptedEmail(){
+		return getEncryptedData(this.email);
+	}
+
+	public String getEncryptedWebsiteUrl(){
+		return getEncryptedData(this.websiteUrl);
+	}
+
+	public String getEncryptedFacebookUrl(){
+		return getEncryptedData(this.facebookUrl);
+	}
+
+	public String getEncryptedTwitterUrl(){
+		return getEncryptedData(this.twitterUrl);
+	}
+
+	public String getEncryptedInstagramUrl(){
+		return getEncryptedData(this.instagramUrl);
+	}
+
+	/***********************
+	 * 복호화 파라미터
+	 ***********************/
 	public String getDecryptedPhoneNo(){
 		return getDecryptedData(this.phoneNo);
 	}
@@ -157,6 +187,26 @@ public class ProfileContactInfoDto {
 		}
 		return resultStr;
 	}
-	
-	
+
+	public String getEncryptedData(String dataStr){
+		String resultStr = StringUtils.EMPTY;
+		try {
+			if(!org.apache.commons.lang.StringUtils.isEmpty(dataStr)){
+				AES256Util aes256Util = new AES256Util(CommonConstant.IV);
+				try {
+					resultStr = aes256Util.encrypt(dataStr);
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (GeneralSecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultStr;
+	}
 }

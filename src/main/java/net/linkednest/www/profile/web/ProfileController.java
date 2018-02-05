@@ -228,16 +228,6 @@ public class ProfileController {
 		logger.info(" [profileDto] : " + profileDto);
 		// validation
 		ProfileValidator.insertValidate(bindingResult, profileDto);
-		// Contact Info
-		/*ProfileContactValidator.insertValidate(bindingResult, profileDto.getProfileContactInfoDto());
-		if (StringUtils.equals("01010100", profileDto.getCatId1())) {
-			ProfilePlayerValidator.insertValidate(bindingResult, profileDto.getProfilePlayerDto());
-			ProfilePlayerStatValidator.insertValidate(bindingResult, profileDto);
-		} else if (StringUtils.equals("01010200", profileDto.getCatId1())) {
-
-		} else if (StringUtils.equals("01010300", profileDto.getCatId1())) {
-			ProfileTeamValidator.insertValidate(bindingResult, profileDto.getProfileTeamDto());
-		}*/
 
 		JsonResponse returnObj = new JsonResponse();
 		String resultCode = StringUtils.EMPTY;
@@ -281,20 +271,7 @@ public class ProfileController {
     	JSONObject 		result 				= new  JSONObject();
 		// validation
 		ProfileValidator.updateValidate(bindingResult, profileDto);
-		// Contact Info
-		ProfileContactValidator.updateValidate(bindingResult, profileDto.getProfileContactInfoDto());
-		if (StringUtils.equals("01010100", profileDto.getCatId1())) {
-			ProfilePlayerValidator.updateValidate(bindingResult, profileDto.getProfilePlayerDto());
-			ProfilePlayerStatValidator.updateValidate(bindingResult, profileDto);
-		} else if (StringUtils.equals("01010200", profileDto.getCatId1())) {
 
-		} else if (StringUtils.equals("01010300", profileDto.getCatId1())) {
-			ProfileTeamValidator.updateValidate(bindingResult, profileDto.getProfileTeamDto());
-		}
-
-    	// Uploading Profile Image & Setting Image Path
-    	/*this.uploadProfileImage(profileDto);*/
-    	
     	profileDto.setTitle(profileDto.getName());
     	
     	logger.debug("profileDto is " + profileDto.toString());

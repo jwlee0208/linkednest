@@ -63,7 +63,7 @@ public class EditorController extends BaseController {
 
 		StringBuffer sb = this.fileUploadByEditor(imageFile);
 
-		System.out.printf("image upload result : $s\n", sb.toString());
+		System.out.printf("image upload result : %s\n", sb.toString());
 		System.out.printf("====================================\n");
 		return sb.toString();
 	}

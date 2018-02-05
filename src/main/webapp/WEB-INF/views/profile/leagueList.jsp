@@ -112,13 +112,7 @@ function goLeagueSearch(){
 }
 
 function isEmpty(val){
-	var result = false;
-	
-	if(val == '' || val == null || val == 'undefined'){
-		result = true;
-	}
-	return result;
-	
+    return (val == '' || val == null || val == 'undefined') ? true : false;
 }
 
 function goDetailLeague(leagueId){

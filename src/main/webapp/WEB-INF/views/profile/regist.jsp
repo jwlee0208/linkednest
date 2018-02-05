@@ -10,9 +10,7 @@
 </head>
 <body>
 <div class="container">
-	<h1 id="btn-groups" class="page-header">
-		Registration&nbsp;&nbsp;<small>Profile</small>
-	</h1>
+	<h1 id="btn-groups" class="page-header">Registration&nbsp;&nbsp;<small>Profile</small></h1>
 	<br/>
 
 	<form id="uploadFrm" name="uploadFrm" method="post" class="form-horizontal was-validated" role="form" enctype="multipart/form-data">

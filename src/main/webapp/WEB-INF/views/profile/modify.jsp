@@ -20,14 +20,32 @@
 <body>
 <div class="container">
 	<h1 id="btn-groups" class="page-header">Modifying&nbsp;&nbsp;<small>Profile</small></h1>
+	<form id="uploadFrm" name="uploadFrm" method="post" class="form-horizontal was-validated" role="form" enctype="multipart/form-data">
+		<c:if test="${profileInfo.profileImgPath ne '' && profileInfo.profileImgPath ne null}">
+			<div class="thumbImg unset">
+				<img src="http://jwlee0208.cdn3.cafe24.com/${profileInfo.profileImgPath}" class="img-fluid rounded mx-auto d-block"/>
+				<input type="hidden" id="profileImgPath" 			name="profileImgPath" 		value="${profileInfo.profileImgPath}" />
+				<hr/>
+				<input type="button" class="btn btn-outline-danger btn-block" value="이미지 삭제" onclick="javascript:delThumbImage('set');">
+			</div>
+		</c:if>
+		<div class="thumbImg set">
+			<img onerror="this.src='${pageContext.request.contextPath}/img/no_image.png'" class="img-fluid rounded mx-auto d-block"/>
+			<input type="file" class="form-control" id="profileImg" name="profileImg" placeholder="upload your profile image" />
+		</div>
+	</form>
+
 	<form id="actionFrm" name="actionFrm" method="post" class="form-horizontal" role="form"  enctype="multipart/form-data">
 		<input type="hidden" id="profileType" 	name="profileType" 	value="${profileType}"/>
 		<input type="hidden" id="categoryId" 	name="categoryId" 	value="${categoryId}"/>
 		<input type="hidden" id="profileId" 	name="profileId" 	value="${profileInfo.profileId}"/>
 		<input type="hidden" id="profileImgPath" name="profileImgPath"/>
+		<c:set var="param" value="${profileAttrList}"/>
+		<c:set var="profileInfo" value="${profileInfo}"/>
 		<c:choose>
 			<c:when test="${profileType eq 1}">
-				<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;<tag:message code="text.personalinfo"/></h3>
+				<%@include file="/WEB-INF/views/profile/ajaxModifyPlayer.jsp"%>
+				<%--<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;<tag:message code="text.personalinfo"/></h3>
 				<hr/>
 
 				<div class="row">
@@ -187,52 +205,52 @@
 								</div>
 							</div>
 						</c:forEach>
-					</div>
-				</c:if>
-<br/>
+					</div>--%>
+				<%--</c:if>--%>
+<%--<br/>
 		<h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
 		<hr/>
 		<div class="form-group row">
 			<label for="email" class="col-sm-2 col-form-label"><tag:message code="text.email"/></label>
 			<div class="col-sm-10">
-				<p class="form-control-static"><input type="email" class="form-control" id="email" name="profileContactInfoDto.email" placeholder="write your e-mail" value="${profileInfo.profileContactInfoDto.email}"/></p>
+				<p class="form-control-static"><input type="email" class="form-control" id="email" name="profileContactInfoDto.email" placeholder="write your e-mail" value="${profileInfo.profileContactInfoDto.decryptedEmail}"/></p>
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="phoneNo" class="col-sm-2 col-form-label">Phone No.</label>
 			<div class="col-sm-10">
-				<p class="form-control-static"><input type="tel" class="form-control" id="phoneNo" name="profileContactInfoDto.phoneNo" placeholder="write your phone No." value="${profileInfo.profileContactInfoDto.phoneNo}"/></p>
+				<p class="form-control-static"><input type="tel" class="form-control" id="phoneNo" name="profileContactInfoDto.phoneNo" placeholder="write your phone No." value="${profileInfo.profileContactInfoDto.decryptedPhoneNo}"/></p>
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="cellPhoneNo" class="col-sm-2 col-form-label">Cell Phone No.</label>
 			<div class="col-sm-10">
-				<p class="form-control-static"><input type="tel" class="form-control" id="cellPhoneNo" name="profileContactInfoDto.cellPhoneNo" placeholder="write your cell phone No." value="${profileInfo.profileContactInfoDto.cellPhoneNo}"/></p>
+				<p class="form-control-static"><input type="tel" class="form-control" id="cellPhoneNo" name="profileContactInfoDto.cellPhoneNo" placeholder="write your cell phone No." value="${profileInfo.profileContactInfoDto.decryptedCellPhoneNo}"/></p>
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="websiteUrl" class="col-sm-2 col-form-label"><tag:message code="text.website"/></label>
 			<div class="col-sm-10">
-				<p class="form-control-static"><input type="url" class="form-control" id="websiteUrl" name="profileContactInfoDto.websiteUrl" placeholder="write your website url" aria-describedby="basic-addon3" value="${profileInfo.profileContactInfoDto.websiteUrl}"/></p>
+				<p class="form-control-static"><input type="url" class="form-control" id="websiteUrl" name="profileContactInfoDto.websiteUrl" placeholder="write your website url" aria-describedby="basic-addon3" value="${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}"/></p>
 			</div>
 		</div>
 
 		<div class="form-group row">
 			<label for="facebookUrl" class="col-sm-2 col-form-label"><tag:message code="text.facebook.id"/></label>
 			<div class="col-sm-10">
-				<p class="form-control-static"><input type="text" class="form-control" id="facebookUrl" name="profileContactInfoDto.faceebookUrl" placeholder="write your facebook id" value="${profileInfo.profileContactInfoDto.facebookUrl}"/></p>
+				<p class="form-control-static"><input type="text" class="form-control" id="facebookUrl" name="profileContactInfoDto.faceebookUrl" placeholder="write your facebook id" value="${profileInfo.profileContactInfoDto.decryptedFacebookUrl}"/></p>
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="twitterUrl" class="col-sm-2 col-form-label"><tag:message code="text.twitter.id"/></label>
 			<div class="col-sm-10">
-				<p class="form-control-static"><input type="text" class="form-control" id="twitterUrl" name="profileContactInfoDto.twitterUrl" placeholder="write your twitter id" value="${profileInfo.profileContactInfoDto.twitterUrl}"/></p>
+				<p class="form-control-static"><input type="text" class="form-control" id="twitterUrl" name="profileContactInfoDto.twitterUrl" placeholder="write your twitter id" value="${profileInfo.profileContactInfoDto.decryptedTwitterUrl}"/></p>
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="instagramUrl" class="col-sm-2 col-form-label"><tag:message code="text.instagram.id"/></label>
 			<div class="col-sm-10">
-				<p class="form-control-static"><input type="text" class="form-control" id="instagramUrl" name="profileContactInfoDto.instagramUrl" placeholder="write your instagram id" value="${profileInfo.profileContactInfoDto.instagramUrl}"/></p>
+				<p class="form-control-static"><input type="text" class="form-control" id="instagramUrl" name="profileContactInfoDto.instagramUrl" placeholder="write your instagram id" value="${profileInfo.profileContactInfoDto.decryptedInstagramUrl}"/></p>
 			</div>
 		</div>
 		<div class="form-group row">
@@ -282,34 +300,31 @@
 					<th>Start Date</th>
 					<th>End Date</th>
 					<th>Status</th>
-					<!-- 						<th>Seq</th> -->
 				</tr>
 				</thead>
 				<tbody>
-
 				<c:set var="profileCareerList" value="${profileInfo.profileCareerList}"/>
 				<c:if test="${!empty profileCareerList}">
 
-						<c:forEach var="profileCareerInfo" items="${profileCareerList}" varStatus="index">
-							<tr id="career_tr_${index.count-1}" class="career_tr">
-								<th class="row"><p class="form-control-static">
-									<input type="text" class="form-control" id="careerTitle" name="profileCareerList[0].careerTitle" value="${profileCareerInfo.careerTitle}"/></p>
-									<input type="hidden" class="form-control" name="profileCareerList[0].profileId" value="${profileInfo.profileId}"/>
-									<input type="hidden" class="form-control" name="profileCareerList[0].careerId" value="${profileCareerInfo.careerId}"/>
-								</th>
-								<td><p class="form-control-static"><textarea class="form-control" id="careerTitle" name="profileCareerList[0].careerDescription" row="5" col="20">${profileCareerInfo.careerDescription}</textarea></p></td>
-								<td><p class="form-control-static"><input type="date" class="form-control" id="careerStartDate" name="profileCareerList[0].startDate" value="${profileCareerInfo.startDate}"/></p></td>
-								<td><p class="form-control-static"><input type="date" class="form-control" id="careerEndDate" name="profileCareerList[0].endDate" value="${profileCareerInfo.endDate}"/></p></td>
-								<td>${profileCareerInfo.careerStatus}<p class="form-control-static">
-									<select class="form-control" id="careerTitle" name="profileCareerList[0].careerStatus">
-										<option <c:if test="${profileCareerInfo.careerStatus eq -1}">selected</c:if> value="-1">::: status :::</option>
-										<option <c:if test="${profileCareerInfo.careerStatus eq 0}">selected</c:if>value="0">not playing</option>
-										<option <c:if test="${profileCareerInfo.careerStatus eq 1}">selected</c:if>value="1">playing</option>
-									</select>
-								</p></td>
-									<%-- 		    			<td><p class="form-control-static"><input type="number" class="form-control" id="careerSeq" name="profileCareerList[0].careerSeq" min="0" max="100" value="${profileCareerInfo.careerSeq}"/></p></td> --%>
-							</tr>
-						</c:forEach>
+					<c:forEach var="profileCareerInfo" items="${profileCareerList}" varStatus="index">
+						<tr id="career_tr_${index.count-1}" class="career_tr">
+							<th class="row"><p class="form-control-static">
+								<input type="text" class="form-control" id="careerTitle" name="profileCareerList[0].careerTitle" value="${profileCareerInfo.careerTitle}"/></p>
+								<input type="hidden" class="form-control" name="profileCareerList[0].profileId" value="${profileInfo.profileId}"/>
+								<input type="hidden" class="form-control" name="profileCareerList[0].careerId" value="${profileCareerInfo.careerId}"/>
+							</th>
+							<td><p class="form-control-static"><textarea class="form-control" id="careerTitle" name="profileCareerList[0].careerDescription" row="5" col="20">${profileCareerInfo.careerDescription}</textarea></p></td>
+							<td><p class="form-control-static"><input type="date" class="form-control" id="careerStartDate" name="profileCareerList[0].startDate" value="${profileCareerInfo.startDate}"/></p></td>
+							<td><p class="form-control-static"><input type="date" class="form-control" id="careerEndDate" name="profileCareerList[0].endDate" value="${profileCareerInfo.endDate}"/></p></td>
+							<td>${profileCareerInfo.careerStatus}<p class="form-control-static">
+								<select class="form-control" id="careerTitle" name="profileCareerList[0].careerStatus">
+									<option <c:if test="${profileCareerInfo.careerStatus eq -1}">selected</c:if> value="-1">::: status :::</option>
+									<option <c:if test="${profileCareerInfo.careerStatus eq 0}">selected</c:if>value="0">not playing</option>
+									<option <c:if test="${profileCareerInfo.careerStatus eq 1}">selected</c:if>value="1">playing</option>
+								</select>
+							</p></td>
+						</tr>
+					</c:forEach>
 				</c:if>
 				</tbody>
 				</table>
@@ -388,10 +403,6 @@
 				<c:set var="profileStatPitcherList" value="${profileInfo.profileStatPitcherList}"/>
 				<c:set var="profileStatHitterList" value="${profileInfo.profileStatHitterList}"/>
 				<c:set var="profileStatFielderList" value="${profileInfo.profileStatFielderList}"/>
-
-<%--
-				<c:if test="${!empty profileStatPitcherList || !empty profileStatHitterList || !empty profileStatFielderList}">
---%>
 					<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>&nbsp;<tag:message code="text.stats"/></h3>
 					<hr/>
 					<!-- new  -->
@@ -401,116 +412,95 @@
 					<div class="form-group row">
 						<label class="col-1 col-form-label">Team Name</label>
 						<div class="col-2">
-							<input type="text" class="form-control" id="pTeamName_pitch_stat"
-								   name="pitch_stat_pTeamName" />
+							<input type="text" class="form-control" id="pTeamName_pitch_stat" name="pitch_stat_pTeamName" />
 						</div>
 						<label class="col-1 col-form-label">Year</label>
 						<div class="col-2">
-							<input type="month" class="form-control"
-								   id="pStatYear_pitch_stat" name="pitch_stat_pStatYear"/>
+							<input type="month" class="form-control" id="pStatYear_pitch_stat" name="pitch_stat_pStatYear"/>
 						</div>
 						<label class="col-1 col-form-label">INN</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="inn_pitch_stat"
-								   name="pitch_stat_inn" value="0.0" />
+							<input type="number" class="form-control" id="inn_pitch_stat" name="pitch_stat_inn" value="0.0" />
 						</div>
 						<label class="col-1 col-form-label">W</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="w_pitch_stat"
-								   name="pitch_stat_w" value="0" />
+							<input type="number" class="form-control" id="w_pitch_stat" name="pitch_stat_w" value="0" />
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-1 col-form-label">L</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="l_pitch_stat"
-								   name="pitch_stat_l" value="0" />
+							<input type="number" class="form-control" id="l_pitch_stat" name="pitch_stat_l" value="0" />
 						</div>
 						<label class="col-1 col-form-label">ERA</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="era_pitch_stat"
-								   name="pitch_stat_era" value="0.0" />
+							<input type="number" class="form-control" id="era_pitch_stat" name="pitch_stat_era" value="0.0" />
 						</div>
 						<label class="col-1 col-form-label">G</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="g_pitch_stat"
-								   name="pitch_stat_g" value="0" />
+							<input type="number" class="form-control" id="g_pitch_stat" name="pitch_stat_g" value="0" />
 						</div>
 						<label class="col-1 col-form-label">GS</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="gs_pitch_stat"
-								   name="pitch_stat_gs" value="0" />
+							<input type="number" class="form-control" id="gs_pitch_stat" name="pitch_stat_gs" value="0" />
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-1 col-form-label">SV</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="sv_pitch_stat"
-								   name="pitch_stat_sv" value="0" />
+							<input type="number" class="form-control" id="sv_pitch_stat" name="pitch_stat_sv" value="0" />
 						</div>
 						<label class="col-1 col-form-label">SVO</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="svo_pitch_stat"
-								   name="pitch_stat_svo" value="0" />
+							<input type="number" class="form-control" id="svo_pitch_stat" name="pitch_stat_svo" value="0" />
 						</div>
 						<label class="col-1 col-form-label">IP</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="ip_pitch_stat"
-								   name="pitch_stat_ip" value="0.0" />
+							<input type="number" class="form-control" id="ip_pitch_stat" name="pitch_stat_ip" value="0.0" />
 						</div>
 						<label class="col-1 col-form-label">H</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="h_pitch_stat"
-								   name="pitch_stat_h" value="0" />
+							<input type="number" class="form-control" id="h_pitch_stat" name="pitch_stat_h" value="0" />
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-1 col-form-label">R</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="r_pitch_stat"
-								   name="pitch_stat_r" value="0" />
+							<input type="number" class="form-control" id="r_pitch_stat" name="pitch_stat_r" value="0" />
 						</div>
 						<label class="col-1 col-form-label">ER</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="er_pitch_stat"
-								   name="pitch_stat_er" value="0" />
+							<input type="number" class="form-control" id="er_pitch_stat" name="pitch_stat_er" value="0" />
 						</div>
 						<label class="col-1 col-form-label">HR</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="hr_pitch_stat"
-								   name="pitch_stat_hr" value="0" />
+							<input type="number" class="form-control" id="hr_pitch_stat" name="pitch_stat_hr" value="0" />
 						</div>
 						<label class="col-1 col-form-label">BB</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="bb_pitch_stat"
-								   name="pitch_stat_bb" value="0" />
+							<input type="number" class="form-control" id="bb_pitch_stat" name="pitch_stat_bb" value="0" />
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-1 col-form-label">SO</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="so_pitch_stat"
-								   name="pitch_stat_so" value="0" />
+							<input type="number" class="form-control" id="so_pitch_stat" name="pitch_stat_so" value="0" />
 						</div>
 						<label class="col-1 col-form-label">AVG</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="avg_pitch_stat"
-								   name="pitch_stat_avg" value="0.0" />
+							<input type="number" class="form-control" id="avg_pitch_stat" name="pitch_stat_avg" value="0.0" />
 						</div>
 						<label class="col-1 col-form-label">WHIP</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="whip_pitch_stat"
-								   name="pitch_stat_whip" value="0.0" />
+							<input type="number" class="form-control" id="whip_pitch_stat" name="pitch_stat_whip" value="0.0" />
 						</div>
 						<label class="col-1 col-form-label">K</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="k_pitch_stat"
-								   name="pitch_stat_k" value="0" />
+							<input type="number" class="form-control" id="k_pitch_stat" name="pitch_stat_k" value="0" />
 						</div>
 					</div>
 					<div class="form-group row">
-						<input type="button" class="btn btn-outline-primary addPitcherBtn"
-							   value="Add Pitching Stat(+)" />
+						<input type="button" class="btn btn-outline-primary addPitcherBtn" value="Add Pitching Stat(+)" />
 					</div>
 					<table class="table tablePitcherStat">
 						<thead class="">
@@ -548,109 +538,88 @@
 					<div class="form-group row">
 						<label class="col-1 col-form-label">Team Name</label>
 						<div class="col-2">
-							<input type="text" class="form-control" id="hTeamName_hit_stat"
-								   name="hit_stat_hTeamName" />
+							<input type="text" class="form-control" id="hTeamName_hit_stat" name="hit_stat_hTeamName" />
 						</div>
 						<label class="col-1 col-form-label">Year</label>
 						<div class="col-2">
-							<input type="month" class="form-control" id="hStatYear_hit_stat"
-								   name="hit_stat_hStatYear" />
+							<input type="month" class="form-control" id="hStatYear_hit_stat" name="hit_stat_hStatYear" />
 						</div>
 						<label class="col-1 col-form-label">G</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="g_hit_stat"
-								   name="hit_stat_g" value="0" />
+							<input type="number" class="form-control" id="g_hit_stat" name="hit_stat_g" value="0" />
 						</div>
 						<label class="col-1 col-form-label">AB</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="ab_hit_stat"
-								   name="hit_stat_ab" value="0" />
+							<input type="number" class="form-control" id="ab_hit_stat" name="hit_stat_ab" value="0" />
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-1 col-form-label">R</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="r_hit_stat"
-								   name="hit_stat_r" value="0" />
+							<input type="number" class="form-control" id="r_hit_stat" name="hit_stat_r" value="0" />
 						</div>
 						<label class="col-1 col-form-label">H</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="h_hit_stat"
-								   name="hit_stat_h" value="0" />
+							<input type="number" class="form-control" id="h_hit_stat" name="hit_stat_h" value="0" />
 						</div>
 						<label class="col-1 col-form-label">2B</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="twoB_hit_stat"
-								   name="hit_stat_twoB" value="0" />
+							<input type="number" class="form-control" id="twoB_hit_stat" name="hit_stat_twoB" value="0" />
 						</div>
 						<label class="col-1 col-form-label">3B</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="threeB_hit_stat"
-								   name="hit_stat_threeB" value="0" />
+							<input type="number" class="form-control" id="threeB_hit_stat" name="hit_stat_threeB" value="0" />
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-1 col-form-label">HR</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="hr_hit_stat"
-								   name="hit_stat_hr" value="0" />
+							<input type="number" class="form-control" id="hr_hit_stat" name="hit_stat_hr" value="0" />
 						</div>
 						<label class="col-1 col-form-label">RBI</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="rbi_hit_stat"
-								   name="hit_stat_rbi" value="0" />
+							<input type="number" class="form-control" id="rbi_hit_stat" name="hit_stat_rbi" value="0" />
 						</div>
 						<label class="col-1 col-form-label">BB</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="bb_hit_stat"
-								   name="hit_stat_bb" value="0" />
+							<input type="number" class="form-control" id="bb_hit_stat" name="hit_stat_bb" value="0" />
 						</div>
 						<label class="col-1 col-form-label">SO</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="so_hit_stat"
-								   name="hit_stat_so" value="0" />
+							<input type="number" class="form-control" id="so_hit_stat" name="hit_stat_so" value="0" />
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-1 col-form-label">SB</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="sb_hit_stat"
-								   name="hit_stat_sb" value="0" />
+							<input type="number" class="form-control" id="sb_hit_stat" name="hit_stat_sb" value="0" />
 						</div>
 						<label class="col-1 col-form-label">CS</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="cs_hit_stat"
-								   name="hit_stat_cs" value="0" />
+							<input type="number" class="form-control" id="cs_hit_stat" name="hit_stat_cs" value="0" />
 						</div>
 						<label class="col-1 col-form-label">AVG</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="avg_hit_stat"
-								   name="hit_stat_avg" value="0.0" />
+							<input type="number" class="form-control" id="avg_hit_stat" name="hit_stat_avg" value="0.0" />
 						</div>
-
 						<label class="col-1 col-form-label">OBP</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="obp_hit_stat"
-								   name="hit_stat_obp" value="0.0" />
+							<input type="number" class="form-control" id="obp_hit_stat" name="hit_stat_obp" value="0.0" />
 						</div>
-
 					</div>
 					<div class="form-group row">
 						<label class="col-1 col-form-label">SLG</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="slg_hit_stat"
-								   name="hit_stat_slg" value="0.0" />
+							<input type="number" class="form-control" id="slg_hit_stat" name="hit_stat_slg" value="0.0" />
 						</div>
 						<label class="col-1 col-form-label">OPS</label>
 						<div class="col-2">
-							<input type="number" class="form-control" id="ops_hit_stat"
-								   name="hit_stat_ops" value="0.0" />
+							<input type="number" class="form-control" id="ops_hit_stat" name="hit_stat_ops" value="0.0" />
 						</div>
 						<div class="col-6"></div>
 					</div>
 					<div class="form-group row">
-						<input type="button" class="btn btn-outline-primary addHitterBtn"
-							   value="Add Hitting Stat(+)" />
+						<input type="button" class="btn btn-outline-primary addHitterBtn" value="Add Hitting Stat(+)" />
 					</div>
 					<table class="table tableHitterStat">
 						<thead class="">
@@ -685,15 +654,9 @@
 					</h3>
 					<div class="form-group row">
 						<label class="col-1 col-form-label">Team Name</label>
-						<div class="col-2">
-							<input type="text" class="form-control" id="fTeamName_field_stat"
-								   name="field_stat_fTeamName" />
-						</div>
+						<div class="col-2"><input type="text" class="form-control" id="fTeamName_field_stat" name="field_stat_fTeamName" /></div>
 						<label class="col-1 col-form-label">Year</label>
-						<div class="col-2">
-							<input type="month" class="form-control"
-								   id="fStatYear_field_stat" name="field_stat_fStatYear"/>
-						</div>
+						<div class="col-2"><input type="month" class="form-control" id="fStatYear_field_stat" name="field_stat_fStatYear"/></div>
 						<label class="col-1 col-form-label">POS</label>
 						<div class="col-2">
 							<select id="pos_field_stat" name="field_stat_pos" class="form-control">
@@ -711,99 +674,48 @@
 							</select>
 						</div>
 						<label class="col-1 col-form-label">G</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="g_field_stat"
-								   name="field_stat_g" value="0" />
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="g_field_stat" name="field_stat_g" value="0" /></div>
 					</div>
 					<div class="form-group row">
 						<label class="col-1 col-form-label">GS</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="gs_field_stat"
-								   name="field_stat_gs" value="0" />
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="gs_field_stat" name="field_stat_gs" value="0" /></div>
 						<label class="col-1 col-form-label">INN</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="inn_field_stat"
-								   name="field_stat_inn" value="0.0" />
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="inn_field_stat" name="field_stat_inn" value="0.0" /></div>
 						<label class="col-1 col-form-label">TC</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="tc_field_stat"
-								   name="field_stat_tc" value="0" />
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="tc_field_stat" name="field_stat_tc" value="0" /></div>
 						<label class="col-1 col-form-label">PO</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="po_field_stat"
-								   name="field_stat_po" value="0" />
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="po_field_stat" name="field_stat_po" value="0" /></div>
 					</div>
 					<div class="form-group row">
 						<label class="col-1 col-form-label">A</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="a_field_stat"
-								   name="field_stat_a" value="0" />
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="a_field_stat" name="field_stat_a" value="0" /></div>
 						<label class="col-1 col-form-label">E</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="e_field_stat"
-								   name="field_stat_e" value="0" />
-						</div>
-
+						<div class="col-2"><input type="number" class="form-control" id="e_field_stat" name="field_stat_e" value="0" /></div>
 						<label class="col-1 col-form-label">DP</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="dp_field_stat"
-								   name="field_stat_dp" value="0" />
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="dp_field_stat" name="field_stat_dp" value="0" /></div>
 						<label class="col-1 col-form-label">SB</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="sb_field_stat"
-								   name="field_stat_sb" value="0" />
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="sb_field_stat" name="field_stat_sb" value="0" /></div>
 					</div>
-
 					<div class="form-group row">
 						<label class="col-1 col-form-label">CS</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="cs_field_stat"
-								   name="field_stat_cs" value="0" />
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="cs_field_stat" name="field_stat_cs" value="0" /></div>
 						<label class="col-1 col-form-label">SBPCT</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="sbpct_field_stat"
-								   name="field_stat_sbpct" value="0" />
-						</div>
-
+						<div class="col-2"><input type="number" class="form-control" id="sbpct_field_stat" name="field_stat_sbpct" value="0" /></div>
 						<label class="col-1 col-form-label">PB</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="pb_field_stat"
-								   name="field_stat_pb" value="0" />
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="pb_field_stat" name="field_stat_pb" value="0" /></div>
 						<label class="col-1 col-form-label">cWP</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="cwp_field_stat"
-								   name="field_stat_cwp" value="0" />
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="cwp_field_stat" name="field_stat_cwp" value="0" /></div>
 					</div>
 					<div class="form-group row">
 						<label class="col-1 col-form-label">FPCT</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="fpct_field_stat"
-								   name="field_stat_fpct" value="0.0" />
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="fpct_field_stat" name="field_stat_fpct" value="0.0" /></div>
 						<label class="col-1 col-form-label">RF</label>
-						<div class="col-2">
-							<input type="number" class="form-control" id="rf_field_stat"
-								   name="field_stat_rf" value="0.0" />
-						</div>
-						<div class="col-6">
-						</div>
+						<div class="col-2"><input type="number" class="form-control" id="rf_field_stat" name="field_stat_rf" value="0.0" /></div>
+						<div class="col-6"></div>
 					</div>
 					<div class="form-group row">
-						<input type="button"
-							   class="btn btn-outline-primary addFielderBtn" value="Add Fielding Stat(+)" />
+						<input type="button" class="btn btn-outline-primary addFielderBtn" value="Add Fielding Stat(+)" />
 					</div>
-
 					<table class="table tableFielderStat">
 						<thead class="">
 						<tr>
@@ -957,7 +869,7 @@
 							</c:forEach>
 							</tbody>
 						</table>
-					</c:if>
+					</c:if>--%>
 				<%--</c:if>--%>
 			</c:when>
 			<c:when test="${profileInfo.profileType eq 2}">

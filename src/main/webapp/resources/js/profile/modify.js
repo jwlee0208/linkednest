@@ -35,44 +35,29 @@ $(function(){
         modifyProfile();
     });
 
-    function modifyProfile() {
-        $.ajax({
-            url 		: '/profile/modifyAction',
-            data 		: $("#actionFrm").serialize(),
-            dataType 	: 'json',
-            method 		: 'post',
-            success 	: function(data){
-                var result = data.result;
-                var msg = data.message;
-
-                if(result == 'success'){
-                    location.href = "/profile/list/" + $("#profileType").val() + "/" +  + $("#catId1").val();
-                }else if (result == 'validateErr'){
-                    var length = result.length;
-                    if(result != null && length > 0){
-                        for(var i = 0 ; i < length ; i++){
-                            console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);
-                            $("#" + result[i].field+"Err").html(result[i].defaultMessage);
-                            $("#" + result[i].field+"Err").parent().parent().addClass("has-danger");
-                            $("#" + result[i].field+"Err").show();
-                        }
-                    }
-                }
-            },
-            error : function(xhr, textStatus, thrownError){
-                console.log("error : " + xhr.status + ", " + textStatus + ", " + thrownError);
-            }
-        });
-    }
-
-    function modifyProfileWithImage() {
+    $("#profileImg").bind("change", function() {
+        alert('profile image upload');
         // 썸네일 파일 업로드 할 때 저장
-        var frm = $("#actionFrm");
-        frm.attr("action", '/profile/modifyAction');
-        frm.attr("method", "post");
-        frm.ajaxForm(FileuploadCallback);
-        frm.submit();
-    }
+        if (!isEmpty($(this).val())) {
+
+            var imgData = new FormData($("#uploadFrm")[0]);
+            // imgData.append("profileImg", $("#profileImg")[0].files[0]);
+            $.ajax({
+                type : "POST",
+                enctype: 'multipart/form-data',
+                url : "/profile/uploadImage",
+                data : imgData,
+                processData : false,
+                contentType : false,
+                cache : false,
+                success : function (data) {
+                    $("#profileImgPath").val(data);
+                }, error : function (e) {
+                    /*console.log(e);*/
+                }
+            });
+        }
+    });
 
     /********************************************************
      * Remove row
@@ -89,63 +74,98 @@ $(function(){
     $("body").on("click", ".removeFielderBtn", function(){
         $(this).parent().parent().get(0).remove();
     });
+    // career row removing
+    $("body").on("click", ".removeCareerBtn", function(){
+        $(this).parent().parent().get(0).remove();
+    });
+    // stream row removing
+    $("body").on("click", ".deleteStream", function(){
+        $(this).parent().parent().get(0).remove();
+    });
 
     /********************************************************
      * Add row
      ********************************************************/
     // youtube stream row adding
     $(".addStreamBtn").click(function(){
+
+        var title = $("#youtubeTitle").val();
+        var url = $("#youtubeUrl").val().replace('"', '&quot;');
+
+        if (isEmpty(title)) {
+            alert('Please fill out stream title');
+            return false;
+        }
+
+        if (isEmpty(url)) {
+            alert('Please fill out stream url');
+            return false;
+        }
+
         var rowCount = $(".stream_div").size();
+
         if(rowCount >= 10){
             alert('you can add your stats until 10 rows.');
             return false;
         }else{
 
-            var addStreamHtml = "<div class=\"row stream_div\" style=\"padding-bottom:5px;\">";
-            addStreamHtml += "<div class=\"col-lg-6\">";
-            addStreamHtml += "<div class=\"input-group\">";
-            addStreamHtml += "	<span class=\"input-group-addon\">Title</span>";
-            addStreamHtml += "	<input type=\"hidden\" class=\"form-control\" name=\"profileStreamList["+ rowCount +"].profileId\" value=\""+$("#profileId").val()+"\"/>";
-            addStreamHtml += "	<input type=\"text\" class=\"form-control\" id=\"streamTitle_"+ rowCount +"\" name=\"profileStreamList["+ rowCount +"].streamTitle\"/>";
-            addStreamHtml += "	</div>";
-            addStreamHtml += "	</div>";
-            addStreamHtml += "	<div class=\"col-lg-6\">";
-            addStreamHtml += "	<div class=\"input-group\">";
-            addStreamHtml += "		<span class=\"input-group-addon\">URL</span>";
-            addStreamHtml += "		<input type=\"text\" class=\"form-control\" id=\"streamUrl_" + rowCount + "\" name=\"profileStreamList[" + rowCount + "].streamUrl\"/>";
-            addStreamHtml += "	</div>";
-            addStreamHtml += "	</div>";
-            addStreamHtml += "	</div>";
+            var addStreamHtml = "";
+            addStreamHtml += '<div class=\"form-group row stream_div stream_'+ rowCount +'\">';
+            addStreamHtml += "<div class=\"col-10\">";
+            addStreamHtml += '<h3><small>' + title + '</small></h3>';
+            addStreamHtml += '<div class=\"embed-responsive embed-responsive-16by9\" width=\"50%\">' + url + '</div>';
+            addStreamHtml += "	<input type=\"hidden\" class=\"form-control\" id=\"streamTitle_"+ rowCount +"\" name='profileStreamList["+ rowCount +"].streamTitle' value='" + title + "'/>";
+            addStreamHtml += '	<input type=\"text\" class=\"form-control\" id=\"streamUrl_' + rowCount + '\" name=\"profileStreamList[' + rowCount + "].streamUrl\" value='" + url + "'/>";
+            addStreamHtml += '</div>';
+            addStreamHtml += '<div class=\"col-2\">';
+            addStreamHtml += '<input type=\"button\" class=\"btn btn-outline-warning deleteStream\" rowCount=\""+rowCount+"\" value=\"-\"/>';
+            addStreamHtml += '</div>';
+            addStreamHtml += '</div>';
 
-            $(".stream_div:last").after(addStreamHtml);
+            if(rowCount > 0) {
+                $("#streamList").append(addStreamHtml);
+            } else {
+                $("#streamList").html(addStreamHtml);
+            }
         }
-
     });
 
     // career row adding
     $(".addCareerBtn").click(function(){
         var rowCount = $(".career_tr").size();
+        var careerTitle = $("#careerTitle").val();
+        var careerDescription = $("#careerDescription").val();
+        var careerStartDate = $("#careerStartDate").val();
+        var careerEndDate = $("#careerEndDate").val();
+        var careerStatus = $("#careerStatus").val();
+
+        // validation for career
+        if (isEmpty(careerTitle)) {
+            alert('Please fill out career title');
+            return false;
+        }
+
+        if (isEmpty(careerDescription)) {
+            alert('Please fill out career description');
+            return false;
+        }
+
+        if (isEmpty(careerStatus)) {
+            alert('Please select career status');
+            return false;
+        }
+        
         if(rowCount >= 10){
             alert('you can add your stats until 10 rows.');
             return false;
         }else{
-
             var addCareerHtml = "<tr id=\"career_tr_"+ rowCount +"\" class=\"career_tr\">";
-            addCareerHtml += "<th class=\"row\">";
-            addCareerHtml += "	<input type=\"text\" class=\"form-control\" id=\"careerTitle\" name=\"profileCareerList[" + rowCount + "].careerTitle\"/>";
-            addCareerHtml += "	<input type=\"hidden\" class=\"form-control\" name=\"profileCareerList["+ rowCount +"].profileId\" value=\""+$("#profileId").val()+"\"/>";
-            addCareerHtml += "</th>";
-            addCareerHtml += "<td><textarea class=\"form-control\" id=\"careerTitle\" name=\"profileCareerList[" + rowCount + "].careerDescription\" row=\"5\" col=\"20\"></textarea></td>";
-            addCareerHtml += "<td><input type=\"month\" class=\"form-control\" id=\"careerStartDate\" name=\"profileCareerList[" + rowCount + "].startDate\"/></td>";
-            addCareerHtml += "<td><input type=\"month\" class=\"form-control\" id=\"careerEndDate\" name=\"profileCareerList[" + rowCount + "].endDate\"/></td>";
-            addCareerHtml += "<td>";
-            addCareerHtml += "	<select class=\"form-control\" id=\"careerTitle\" name=\"profileCareerList[" + rowCount + "].careerStatus\">";
-            addCareerHtml += "		<option value=\"-1\">::: status :::</option>";
-            addCareerHtml += "		<option value=\"0\">not playing</option>";
-            addCareerHtml += "		<option value=\"1\">playing</option>";
-            addCareerHtml += "	</select>";
-            addCareerHtml += "</td>";
-            addCareerHtml += "<td><input type=\"number\" class=\"form-control\" id=\"careerSeq\" name=\"profileCareerList[0].careerSeq\" min=\"0\" max=\"100\"/></td>";
+            addCareerHtml += "<th class=\"row\"><input type=\"hidden\" class=\"form-control\" id=\"careerTitle\" name=\"profileCareerList[" + rowCount + "].careerTitle\" value=\""+ careerTitle +"\"/>"+ careerTitle +"</th>";
+            addCareerHtml += "<td><input type=\"hidden\" class=\"form-control\" id=\"careerTitle\" name=\"profileCareerList[" + rowCount + "].careerDescription\" value=\""+ careerDescription +"\">"+ careerDescription +"</textarea></td>";
+            addCareerHtml += "<td><input type=\"hidden\" class=\"form-control\" id=\"careerStartDate\" name=\"profileCareerList[" + rowCount + "].startDate\"/ value=\""+ careerStartDate  +"\">"+ careerStartDate +"</td>";
+            addCareerHtml += "<td><input type=\"hidden\" class=\"form-control\" id=\"careerEndDate\" name=\"profileCareerList[" + rowCount + "].endDate\"/ value=\""+ careerEndDate +"\">"+ careerEndDate +"</td>";
+            addCareerHtml += "<td><input type=\"hidden\" class=\"form-control\" id=\"careerStatus\" name=\"profileCareerList[" + rowCount + "].careerStatus\" value=\""+ careerStatus +"\">" + careerStatus + "</td>";
+            addCareerHtml += "<td><input type=\"hidden\" class=\"form-control\" id=\"careerSeq\" name=\"profileCareerList[0].careerSeq\" value=\""+rowCount+"\"><input type=\"button\" 		class=\"btn btn-default removeCareerBtn\" value=\"-\"/></td>";
             addCareerHtml += "</tr>";
 
             $(".tableCareer > tbody:last").append(addCareerHtml);
@@ -154,71 +174,124 @@ $(function(){
 
     // pitcher stat row adding
     $(".addPitcherBtn").click(function(){
+        var teamName = $("#pTeamName_pitch_stat").val();
+        var statYear = $("#pStatYear_pitch_stat").val();
+        var inn = $("#inn_pitch_stat").val();
+        var w = $("#w_pitch_stat").val();
+
+        var l = $("#l_pitch_stat").val();
+        var era = $("#era_pitch_stat").val();
+        var g = $("#g_pitch_stat").val();
+        var gs = $("#gs_pitch_stat").val();
+
+        var sv = $("#sv_pitch_stat").val();
+        var svo = $("#svo_pitch_stat").val();
+        var ip = $("#ip_pitch_stat").val();
+        var h = $("#h_pitch_stat").val();
+
+        var r = $("#r_pitch_stat").val();
+        var er = $("#er_pitch_stat").val();
+        var hr = $("#hr_pitch_stat").val();
+        var bb = $("#bb_pitch_stat").val();
+
+        var so = $("#so_pitch_stat").val();
+        var avg = $("#avg_pitch_stat").val();
+        var whip = $("#whip_pitch_stat").val();
+        var k = $("#k_pitch_stat").val();
+
+        if (isEmpty(teamName)) {
+            alert('There is no Team Name');
+            return false;
+        }
+
         var rowCount = $(".pitcher_tr").size();
         if(rowCount >= 10){
             alert('you can add your stats until 10 rows.');
             return false;
         }else{
-            var addPitcherHtml = "<tr id=\"pitcher_tr_"+ rowCount +"\" class=\"pitcher_tr\">";
-            addPitcherHtml += "<td>";
-            addPitcherHtml += "	<input type=\"text\" 		class=\"form-control\" id=\"pTeamName_"+ rowCount +"\" name=\"profileStatPitcherList[" + rowCount + "].pTeamName\"/>"
-            addPitcherHtml += "	<input type=\"hidden\" class=\"form-control\" name=\"profileStatPitcherList["+ rowCount +"].profileId\" value=\""+$("#profileId").val()+"\"/>";
-            addPitcherHtml += "</td>";
-            addPitcherHtml += "<td><input type=\"month\" 		class=\"form-control\" id=\"pStatYear_"+ rowCount +"\" name=\"profileStatPitcherList[" + rowCount + "].pStatYear\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"inn_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].inn\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"w_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].w\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"l_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].l\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"era_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].era\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"g_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].g\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"gs_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].gs\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"sv_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].sv\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\"		class=\"form-control\" id=\"svo_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].svo\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"ip_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].ip\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"h_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].h\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"r_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].r\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"er_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].er\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"hr_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].hr\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"bb_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].bb\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"so_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].so\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"avg_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].avg\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"whip_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].whip\"/></td>";
-            addPitcherHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"k_"+ rowCount +"\" 		name=\"profileStatPitcherList[" + rowCount + "].k\"/></td>";
-            addPitcherHtml += "<td><input type=\"button\" 		class=\"btn btn-default removePitcherBtn\" value=\"-\"/></td>";
-            addPitcherHtml += "</tr>";
+            var addPitcherHtml = '<tr id=\"pitcher_tr_"+ rowCount +"\" class=\"pitcher_tr\">';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"pTeamName_"+ rowCount +"\" name=\"profileStatPitcherList[' + rowCount + '].pTeamName\" value=\"' + teamName +'\"/>' + teamName + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"pStatYear_"+ rowCount +"\" name=\"profileStatPitcherList[' + rowCount + '].pStatYear\" value=\"' + statYear +'\"/>' + statYear + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"inn_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].inn\" value=\"' + inn +'\"/>' + inn + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"w_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].w\" value=\"' + w +'\"/>' + w + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"l_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].l\" value=\"' + l +'\"/>' + l + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"era_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].era\" value=\"' + era +'\"/>' + era + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"g_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].g\" value=\"' + g +'\"/>' + g + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"gs_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].gs\" value=\"' + gs +'\"/>' + gs + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"sv_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].sv\" value=\"' + sv +'\"/>' + sv + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\"		class=\"form-control\" id=\"svo_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].svo\" value=\"' + svo +'\"/>' + svo + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"ip_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].ip\" value=\"' + ip +'\"/>' + ip + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"h_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].h\" value=\"' + h +'\"/>' + h + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"r_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].r\" value=\"' + r +'\"/>' + r + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"er_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].er\" value=\"' + er +'\"/>' + er + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"hr_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].hr\" value=\"' + hr +'\"/>' + hr + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"bb_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].bb\" value=\"' + bb +'\"/>' + bb + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"so_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].so\" value=\"' + so +'\"/>' + so + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"avg_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].avg\" value=\"' + avg +'\"/>' + avg + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"whip_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].whip\" value=\"' + whip +'\"/>' + whip + '</td>';
+            addPitcherHtml += '<td><input type=\"hidden\" 		class=\"form-control\" id=\"k_"+ rowCount +"\" 		name=\"profileStatPitcherList[' + rowCount + '].k\" value=\"' + k +'\"/>' + k + '</td>';
+            addPitcherHtml += '<td><input type=\"button\" 		class=\"btn btn-default removePitcherBtn\" value=\"-\"/></td>';
+            addPitcherHtml += '</tr>';
 
             $(".tablePitcherStat > tbody:last").append(addPitcherHtml);
         }
-
     });
     // hitter stat row adding
     $(".addHitterBtn").click(function(){
+
+        var teamName = $("#hTeamName_hit_stat").val();
+        var statYear = $("#hStatYear_hit_stat").val();
+        var g = $("#g_hit_stat").val();
+        var ab = $("#ab_hit_stat").val();
+
+        var r = $("#r_hit_stat").val();
+        var h = $("#h_hit_stat").val();
+        var twoB = $("#twoB_hit_stat").val();
+        var threeB = $("#threeB_hit_stat").val();
+
+        var hr = $("#hr_hit_stat").val();
+        var rbi = $("#rbi_hit_stat").val();
+        var bb = $("#bb_hit_stat").val();
+        var so = $("#so_hit_stat").val();
+
+        var sb = $("#sb_hit_stat").val();
+        var cs = $("#cs_hit_stat").val();
+        var avg = $("#avg_hit_stat").val();
+        var obp = $("#obp_hit_stat").val();
+
+        var slg = $("#slg_hit_stat").val();
+        var ops = $("#ops_hit_stat").val();
+
+
+        if (isEmpty(teamName)) {
+            alert('There is no Team Name');
+            return false;
+        }
+
         var rowCount = $(".hitter_tr").size();
         if(rowCount >= 10){
             alert('you can add your stats until 10 rows.');
             return false;
         }else{
             var addHitterHtml = "<tr id=\"hitter_tr_"+ rowCount +"\" class=\"hitter_tr\">";
-            addHitterHtml += "<td>";
-            addHitterHtml += "	<input type=\"hidden\" class=\"form-control\" name=\"profileStatHitterList["+ rowCount +"].profileId\" value=\""+$("#profileId").val()+"\"/>";
-            addHitterHtml += "	<input type=\"text\" 			class=\"form-control\" id=\"hTeamName_"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].hTeamName\"/>";
-            addHitterHtml += "</td>";
-            addHitterHtml += "<td><input type=\"month\" 		class=\"form-control\" id=\"hStatYear_"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].hStatYear\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"g"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].g\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"ab"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].ab\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"r"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].r\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"h"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].h\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"twoB"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].twoB\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"threeB"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].threeB\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"hr"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].hr\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"rbi"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].rbi\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"bb"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].bb\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"so"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].so\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"sb"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].sb\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"cs"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].cs\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"avg"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].avg\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"obp"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].obp\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"slg"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].slg\"/></td>";
-            addHitterHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"ops"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].ops\"/></td>";
+            addHitterHtml += "<td><input type=\"hidden\" 			class=\"form-control\" id=\"hTeamName_"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].hTeamName\" value=\""+ teamName +"\"  />" + teamName + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"hStatYear_"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].hStatYear\" value=\""+ statYear +"\" />" + statYear + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"g"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].g\" value=\""+ g +"\" />" + g + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"ab"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].ab\" value=\""+ ab +"\" />" + ab + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"r"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].r\" value=\""+ r +"\" />" + r + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"h"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].h\" value=\""+ h +"\" />" + h + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"twoB"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].twoB\" value=\""+ twoB +"\" />" + twoB + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"threeB"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].threeB\" value=\""+ threeB +"\" />" + threeB + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"hr"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].hr\" value=\""+ hr +"\" />" + hr + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"rbi"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].rbi\" value=\""+ rbi +"\" />" + rbi + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"bb"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].bb\" value=\""+ bb +"\" />" + bb + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"so"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].so\" value=\""+ so +"\" />" + so + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"sb"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].sb\" value=\""+ sb +"\" />" + sb + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"cs"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].cs\" value=\""+ cs +"\" />" + cs + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"avg"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].avg\" value=\""+ avg +"\" />" + avg + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"obp"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].obp\" value=\""+ obp +"\" />" + obp + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"slg"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].slg\" value=\""+ slg +"\" />" + slg + "</td>";
+            addHitterHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"ops"+ rowCount +"\" 		name=\"profileStatHitterList[" + rowCount + "].ops\" value=\""+ ops +"\" />" + ops + "</td>";
             addHitterHtml += "<td><input type=\"button\" 		class=\"btn btn-default removeHitterBtn\" value=\"-\"/></td>";
             addHitterHtml += "</tr>";
             $(".tableHitterStat > tbody:last").append(addHitterHtml);
@@ -226,39 +299,96 @@ $(function(){
     });
     // fielder stat row adding
     $(".addFielderBtn").click(function(){
+        var teamName = $("#fTeamName_field_stat").val();
+        var statYear = $("#fStatYear_field_stat").val();
+        var pos = $("#pos_field_stat").val();
+        var g = $("#g_field_stat").val();
+
+        var gs = $("#gs_field_stat").val();
+        var inn = $("#inn_field_stat").val();
+        var tc = $("#tc_field_stat").val();
+        var po = $("#po_field_stat").val();
+
+        var a = $("#a_field_stat").val();
+        var e = $("#e_field_stat").val();
+        var dp = $("#dp_field_stat").val();
+        var sb = $("#sb_field_stat").val();
+
+        var cs = $("#cs_field_stat").val();
+        var sbpct = $("#sbpct_field_stat").val();
+
+        var pb = $("#pb_field_stat").val();
+        var cwp = $("#cwp_field_stat").val();
+
+        var fpct = $("#fpct_field_stat").val();
+        var rf = $("#rf_field_stat").val();
+
+
+        if (isEmpty(teamName)) {
+            alert('There is no Team Name');
+            return false;
+        }
+
         var rowCount = $(".fielder_tr").size();
         if(rowCount >= 10){
             alert('you can add your stats until 10 rows.');
             return false;
         }else{
             var addFielderHtml = "<tr id=\"fielder_tr_"+ rowCount +"\" class=\"fielder_tr\">";
-            addFielderHtml += "<th class=\"row\">";
-            addFielderHtml += "	<input type=\"text\" 		class=\"form-control\" id=\"fTeamName\" 		name=\"profileStatFielderList[" + rowCount + "].fTeamName\"/>";
-            addFielderHtml += "	<input type=\"hidden\" class=\"form-control\" name=\"profileStatFielderList["+ rowCount +"].profileId\" value=\""+$("#profileId").val()+"\"/>";
-            addFielderHtml += "</th>";
-            addFielderHtml += "<td><input type=\"month\" 		class=\"form-control\" id=\"fStatYear\" 		name=\"profileStatFielderList[" + rowCount + "].fStatYear\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"pos\" 		name=\"profileStatFielderList[" + rowCount + "].pos\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"g\" 		name=\"profileStatFielderList[" + rowCount + "].g\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"gs\" 		name=\"profileStatFielderList[" + rowCount + "].gs\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"inn\" 		name=\"profileStatFielderList[" + rowCount + "].inn\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"tc\" 		name=\"profileStatFielderList[" + rowCount + "].tc\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"po\" 		name=\"profileStatFielderList[" + rowCount + "].po\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"a\" 		name=\"profileStatFielderList[" + rowCount + "].a\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"e\" 		name=\"profileStatFielderList[" + rowCount + "].e\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"dp\" 		name=\"profileStatFielderList[" + rowCount + "].dp\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"sb\" 		name=\"profileStatFielderList[" + rowCount + "].sb\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"cs\" 		name=\"profileStatFielderList[" + rowCount + "].cs\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"sbpct\" 		name=\"profileStatFielderList[" + rowCount + "].sbpct\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"pb\" 		name=\"profileStatFielderList[" + rowCount + "].pb\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"cWp\" 		name=\"profileStatFielderList[" + rowCount + "].cWp\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"fpct\" 		name=\"profileStatFielderList[" + rowCount + "].fpct\"/></td>";
-            addFielderHtml += "<td><input type=\"number\" 		class=\"form-control\" id=\"rf\" 		name=\"profileStatFielderList[" + rowCount + "].rf\"/></td>";
+            addFielderHtml += "<th class=\"row\"><input type=\"hidden\" 		class=\"form-control\" id=\"fTeamName\" 		name=\"profileStatFielderList[" + rowCount + "].fTeamName\" value=\""+ teamName +"\" />" + teamName + "</th>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"fStatYear\" 		name=\"profileStatFielderList[" + rowCount + "].fStatYear\" value=\""+ statYear +"\" />" + statYear + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"pos\" 		name=\"profileStatFielderList[" + rowCount + "].pos\" value=\""+ pos +"\" />" + pos + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"g\" 		name=\"profileStatFielderList[" + rowCount + "].g\" value=\""+ g +"\" />" + g + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"gs\" 		name=\"profileStatFielderList[" + rowCount + "].gs\" value=\""+ gs +"\" />" + gs + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"inn\" 		name=\"profileStatFielderList[" + rowCount + "].inn\" value=\""+ inn +"\" />" + inn + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"tc\" 		name=\"profileStatFielderList[" + rowCount + "].tc\" value=\""+ tc +"\" />" + tc + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"po\" 		name=\"profileStatFielderList[" + rowCount + "].po\" value=\""+ po +"\" />" + po + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"a\" 		name=\"profileStatFielderList[" + rowCount + "].a\" value=\""+ a +"\" />" + a + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"e\" 		name=\"profileStatFielderList[" + rowCount + "].e\" value=\""+ e +"\" />" + e + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"dp\" 		name=\"profileStatFielderList[" + rowCount + "].dp\" value=\""+ dp +"\" />" + dp + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"sb\" 		name=\"profileStatFielderList[" + rowCount + "].sb\" value=\""+ sb +"\" />" + sb + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"cs\" 		name=\"profileStatFielderList[" + rowCount + "].cs\" value=\""+ cs +"\" />" + cs + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"sbpct\" 		name=\"profileStatFielderList[" + rowCount + "].sbpct\" value=\""+ sbpct +"\" />" + sbpct + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"pb\" 		name=\"profileStatFielderList[" + rowCount + "].pb\" value=\""+ pb +"\" />" + pb + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"cWp\" 		name=\"profileStatFielderList[" + rowCount + "].cWp\" value=\""+ cwp +"\" />" + cwp + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"fpct\" 		name=\"profileStatFielderList[" + rowCount + "].fpct\" value=\""+ fpct +"\" />" + fpct + "</td>";
+            addFielderHtml += "<td><input type=\"hidden\" 		class=\"form-control\" id=\"rf\" 		name=\"profileStatFielderList[" + rowCount + "].rf\" value=\""+ rf +"\" />" + rf + "</td>";
             addFielderHtml += "<td><input type=\"button\" 		class=\"btn btn-default removeFielderBtn\" value=\"-\"/></td>";
             addFielderHtml += "</tr>";
             $(".tableFielderStat > tbody:last").append(addFielderHtml);
         }
     });
 });
+
+function modifyProfile() {
+    $.ajax({
+        url 		: '/profile/modifyAction',
+        data 		: $("#actionFrm").serialize(),
+        dataType 	: 'json',
+        method 		: 'post',
+        success 	: function(data){
+            var result = data.result;
+            var msg = data.message;
+
+            if(result == 'success'){
+                location.href = "/profile/list/" + $("#profileType").val() + "/" +  + $("#catId1").val();
+            }else if (result == 'validateErr'){
+                var length = result.length;
+                if(result != null && length > 0){
+                    for(var i = 0 ; i < length ; i++){
+                        console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);
+                        $("#" + result[i].field+"Err").html(result[i].defaultMessage);
+                        $("#" + result[i].field+"Err").parent().parent().addClass("has-danger");
+                        $("#" + result[i].field+"Err").show();
+                    }
+                }
+            }
+        },
+        error : function(xhr, textStatus, thrownError){
+            console.log("error : " + xhr.status + ", " + textStatus + ", " + thrownError);
+        }
+    });
+}
 
 function toggleThumbImage(className){
     $(".thumbImg").hide();
@@ -269,3 +399,9 @@ function delThumbImage(){
     $(".unset").remove();
     toggleThumbImage("set");
 }
+
+$(".form-control").on("click", function(e){
+    $("#" + e.target.id +"Err").parent().parent().removeClass("has-danger");
+    $("#" + e.target.id + "Err").hide();
+    $("#" + e.target.id + "Err").html('');
+});

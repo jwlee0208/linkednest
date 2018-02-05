@@ -139,7 +139,9 @@ public class ProfileDao extends SqlSessionDaoSupport{
 	}
 	
 	public int deleteProfileStatPitcherInfo(int param){
-		return getSqlSession().delete("sql.profile.deleteProfileStatPitcherInfo", param);
+		ProfileStatPitcherDto profileStatPitcherDto = new ProfileStatPitcherDto();
+		profileStatPitcherDto.setProfileId(param);
+		return getSqlSession().delete("sql.profile.deleteProfileStatPitcherInfo", profileStatPitcherDto);
 	}
 	
 	public int deleteProfileStreamInfo(int param){
@@ -151,7 +153,9 @@ public class ProfileDao extends SqlSessionDaoSupport{
 	}
 	
 	public int deleteProfileCareerInfo(int param){
-		return getSqlSession().delete("sql.profile.deleteProfileCareerInfo", param);
+		ProfileCareerDto profileCareerDto = new ProfileCareerDto();
+		profileCareerDto.setProfileId(param);
+		return getSqlSession().delete("sql.profile.deleteProfileCareerInfo", profileCareerDto);
 	}
 	
 	

@@ -42,7 +42,7 @@ public class ProfileValidator extends BaseValidator {
         if (StringUtils.equals(cudType, DBConstants.DB_SQL_INSERT)) {
             if (StringUtils.equals("01010100", profileDto.getCatId1())) {
                 ProfilePlayerValidator.insertValidate(result, profileDto.getProfilePlayerDto());
-                ProfilePlayerStatValidator.insertValidate(result, profileDto);
+                /*ProfilePlayerStatValidator.insertValidate(result, profileDto);*/
             } else if (StringUtils.equals("01010200", profileDto.getCatId1())) {
 
             } else if (StringUtils.equals("01010300", profileDto.getCatId1())) {
@@ -52,7 +52,7 @@ public class ProfileValidator extends BaseValidator {
         } else {
             if (StringUtils.equals("01010100", profileDto.getCatId1())) {
                 ProfilePlayerValidator.updateValidate(result, profileDto.getProfilePlayerDto());
-                ProfilePlayerStatValidator.updateValidate(result, profileDto);
+                /*ProfilePlayerStatValidator.updateValidate(result, profileDto);*/
             } else if (StringUtils.equals("01010200", profileDto.getCatId1())) {
 
             } else if (StringUtils.equals("01010300", profileDto.getCatId1())) {

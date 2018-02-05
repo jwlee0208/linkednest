@@ -56,60 +56,60 @@
 		<div id="contact" class="tab-pane" role="tabpanel">
 			<%--<h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
 			<hr/>--%>
-			<c:if test="${profileInfo.profileContactInfoDto.email ne null && profileInfo.profileContactInfoDto.email ne ''}">
+			<c:if test="${profileInfo.profileContactInfoDto.decryptedEmail ne null && profileInfo.profileContactInfoDto.decryptedEmail ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.email"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="mailto: ${profileInfo.profileContactInfoDto.email}">${profileInfo.profileContactInfoDto.email}</a></p>
+						<p class="form-control-static"><a href="mailto: ${profileInfo.profileContactInfoDto.decryptedEmail}">${profileInfo.profileContactInfoDto.decryptedEmail}</a></p>
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.phoneNo ne null && profileInfo.profileContactInfoDto.phoneNo ne ''}">
+			<c:if test="${profileInfo.profileContactInfoDto.decryptedPhoneNo ne null && profileInfo.profileContactInfoDto.decryptedPhoneNo ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label">Phone No.</label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.phoneNo}">${profileInfo.profileContactInfoDto.phoneNo}</a></p>
+						<p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.decryptedPhoneNo}">${profileInfo.profileContactInfoDto.decryptedPhoneNo}</a></p>
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.cellPhoneNo ne null && profileInfo.profileContactInfoDto.cellPhoneNo ne ''}">
+			<c:if test="${profileInfo.profileContactInfoDto.decryptedCellPhoneNo ne null && profileInfo.profileContactInfoDto.decryptedCellPhoneNo ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label">Cell Phone No.</label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.cellPhoneNo}">${profileInfo.profileContactInfoDto.cellPhoneNo}</a></p>
+						<p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.decryptedCellPhoneNo}">${profileInfo.profileContactInfoDto.decryptedCellPhoneNo}</a></p>
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.websiteUrl ne null && profileInfo.profileContactInfoDto.websiteUrl ne ''}">
+			<c:if test="${profileInfo.profileContactInfoDto.decryptedWebsiteUrl ne null && profileInfo.profileContactInfoDto.decryptedWebsiteUrl ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.website"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="http://${profileInfo.profileContactInfoDto.websiteUrl}" target="_blank">${profileInfo.profileContactInfoDto.websiteUrl}</a></p>
+						<p class="form-control-static"><a href="http://${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}" target="_blank">${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}</a></p>
 					</div>
 				</div>
 			</c:if>
 
-			<c:if test="${profileInfo.profileContactInfoDto.facebookUrl ne null && profileInfo.profileContactInfoDto.facebookUrl ne ''}">
+			<c:if test="${profileInfo.profileContactInfoDto.decryptedFacebookUrl ne null && profileInfo.profileContactInfoDto.decryptedFacebookUrl ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.facebook.id"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="https://www.facebook.com/${profileInfo.profileContactInfoDto.facebookUrl}">${profileInfo.profileContactInfoDto.facebookUrl}</a></p>
+						<p class="form-control-static"><a href="https://www.facebook.com/${profileInfo.profileContactInfoDto.decryptedFacebookUrl}">${profileInfo.profileContactInfoDto.decryptedFacebookUrl}</a></p>
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.twitterUrl ne null && profileInfo.profileContactInfoDto.twitterUrl ne ''}">
+			<c:if test="${profileInfo.profileContactInfoDto.decryptedTwitterUrl ne null && profileInfo.profileContactInfoDto.decryptedTwitterUrl ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.twitter.id"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="https://twitter.com/${profileInfo.profileContactInfoDto.twitterUrl}">${profileInfo.profileContactInfoDto.twitterUrl}</a></p>
+						<p class="form-control-static"><a href="https://twitter.com/${profileInfo.profileContactInfoDto.decryptedTwitterUrl}">${profileInfo.profileContactInfoDto.decryptedTwitterUrl}</a></p>
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.instagramUrl ne null && profileInfo.profileContactInfoDto.instagramUrl ne ''}">
+			<c:if test="${profileInfo.profileContactInfoDto.decryptedInstagramUrl ne null && profileInfo.profileContactInfoDto.decryptedInstagramUrl ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.instagram.id"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="https://instagram.com/${profileInfo.profileContactInfoDto.instagramUrl}">${profileInfo.profileContactInfoDto.instagramUrl}</a></p>
+						<p class="form-control-static"><a href="https://instagram.com/${profileInfo.profileContactInfoDto.decryptedInstagramUrl}">${profileInfo.profileContactInfoDto.decryptedInstagramUrl}</a></p>
 					</div>
 				</div>
 			</c:if>

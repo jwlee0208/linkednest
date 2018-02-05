@@ -311,24 +311,18 @@ public class ProfileServiceImpl implements ProfileService{
 		logger.debug("profileId is " + profileId);
 		
 		if(profileId > 0){
-			try {
-				// update to profile info 
-				this.profileDao.updateProfileInfo(profileDto);		
-				String profileType = profileDto.getProfileType();
-				if (ProfileConstants.PROFILE_TYPE_PLAYER.equals(profileType)) {
-					this.updateProfileForPlayer(profileId, profileDto);
-				} else if (ProfileConstants.PROFILE_TYPE_COACH.equals(profileType)) {
-					this.updateProfileForCoach(profileId, profileDto);
-				} else if (ProfileConstants.PROFILE_TYPE_TEAM.equals(profileType)) {
-					this.updateProfileForTeam(profileId, profileDto);
-				}
-				// Update Profile For Common Infos
-				this.updateProfileCommonInfos(profileId, profileDto);
-
-			} catch (Exception e){
-				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				e.printStackTrace();
+			// update to profile info
+			this.profileDao.updateProfileInfo(profileDto);
+			String profileType = profileDto.getProfileType();
+			if (ProfileConstants.PROFILE_TYPE_PLAYER.equals(profileType)) {
+				this.updateProfileForPlayer(profileId, profileDto);
+			} else if (ProfileConstants.PROFILE_TYPE_COACH.equals(profileType)) {
+				this.updateProfileForCoach(profileId, profileDto);
+			} else if (ProfileConstants.PROFILE_TYPE_TEAM.equals(profileType)) {
+				this.updateProfileForTeam(profileId, profileDto);
 			}
+			// Update Profile For Common Infos
+			this.updateProfileCommonInfos(profileId, profileDto);
 		}
 		return 1;
 	}
@@ -451,7 +445,9 @@ public class ProfileServiceImpl implements ProfileService{
 	private void updateProfileCareerInfos(int profileId, ProfileDto profileDto) {
 		List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
 		if(CollectionUtils.isNotEmpty(profileCareerParamList)){
-//						this.profileDao.deleteProfileCareerInfo(profileId);
+			// 1. initiate data
+			this.profileDao.deleteProfileCareerInfo(profileId);
+			// 2. insert data
 			profileCareerParamList.stream().forEach(profileCareerParam -> {
 				profileCareerParam.setProfileId(profileId);
 				try {
@@ -476,9 +472,9 @@ public class ProfileServiceImpl implements ProfileService{
 		 **********************************/
 		List<ProfileStatHitterDto> profileStatHitterParamList = profileDto.getProfileStatHitterList();
 		if(CollectionUtils.isNotEmpty(profileStatHitterParamList)){
-			// 기존의 타격 기록 정보 삭제(초기화)
+			// 1. initiate data : 기존의 타격 기록 정보 삭제(초기화)
 			this.profileDao.deleteProfileStatHitterInfo(profileId);
-			// 새로운 타격 기록 정보 추가
+			// 2. insert data : 새로운 타격 기록 정보 추가
 			profileStatHitterParamList.stream().forEach(profileStatHitterParam -> {
 				profileStatHitterParam.setProfileId(profileId);
 				try {
@@ -494,9 +490,9 @@ public class ProfileServiceImpl implements ProfileService{
 		 **********************************/
 		List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
 		if(CollectionUtils.isNotEmpty(profileStatFielderParamList)){
-			// 기존의 수비 기록 정보 삭제(초기화)
+			// 1. initiate data : 기존의 수비 기록 정보 삭제(초기화)
 			this.profileDao.deleteProfileStatFielderInfo(profileId);
-			// 새로운 수비 기록 정보 추가
+			// 2. insert data : 새로운 수비 기록 정보 추가
 			profileStatFielderParamList.stream().forEach(profileStatFielderParam -> {
 				profileStatFielderParam.setProfileId(profileId);
 				try {
@@ -512,9 +508,9 @@ public class ProfileServiceImpl implements ProfileService{
 		 **********************************/
 		List<ProfileStatPitcherDto> profileStatPitcherParamList = profileDto.getProfileStatPitcherList();
 		if(CollectionUtils.isNotEmpty(profileStatPitcherParamList)){
-			// 기존의 피칭 기록 정보 삭제(초기화)
+			// 1. initiate data : 기존의 피칭 기록 정보 삭제(초기화)
 			this.profileDao.deleteProfileStatPitcherInfo(profileId);
-			// 새로운 피칭 기록 정보 추가
+			// 2. insert data : 새로운 피칭 기록 정보 추가
 			profileStatPitcherParamList.stream().forEach(profileStatPitcherParam -> {
 				profileStatPitcherParam.setProfileId(profileId);
 				try {

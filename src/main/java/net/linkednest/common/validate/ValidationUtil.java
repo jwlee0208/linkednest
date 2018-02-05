@@ -48,11 +48,13 @@ public class ValidationUtil extends ValidationUtils{
     /**
      * 날짜 정규식 체크(YYYY-MM-DD)
      */
-    public static final String REG_EX_YYYY_MM_DD       = "^[0-9][0-9][0-9][0-9]\\\\-[0-9][0-9]\\\\-[0-9][0-9]$";
+    public static final String REG_EX_YYYY_MM_DD       =
+            /*"^((19|20)\\d\\d)?([- /.])?(0[1-9]|1[012])([- /.])?(0[1-9]|[12][0-9]|3[01])$";*/
+            "^[0-9][0-9][0-9][0-9]\\-[0-9][0-9]\\-[0-9][0-9]$";
     /**
      * 숫자 or 숫자와 소수점 정규식 체크(몸무게 혹은 키)
      */
-    public static final String REG_EX_DECIMAL_POINT =   "^[0-9]*\\\\.?[0-9]*";
+    public static final String REG_EX_DECIMAL_POINT =   "^[0-9]*\\.?[0-9]*";
     /**
      * URL 정규식 체크
      */
@@ -72,6 +74,7 @@ public class ValidationUtil extends ValidationUtils{
     public static void rejectIfNotRegEx(Errors errors, String field, String errorCode, String defaultMessage, String regEx) {
         Object value = errors.getFieldValue(field);
         if (value != null && StringUtils.hasLength(value.toString())) {
+
             if(!Pattern.matches(regEx, value.toString())){
                 errors.rejectValue(field, errorCode, defaultMessage);
             }
