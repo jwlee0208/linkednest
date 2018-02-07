@@ -153,7 +153,7 @@
     	<beans:property name="paramName" value="lang"/>
     </beans:bean>
     
-<!--     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/> -->
+     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
     
      <interceptors>
         <interceptor>
