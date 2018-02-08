@@ -20,5 +20,7 @@
 
 <!--[if (gte IE 6)&(lte IE 8)]><script type="text/javascript" src="${pageContext.request.contextPath}/js/selectivizr-min.js"></script><![endif]-->
 
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/common/common.js"></script>
+
 <!-- angular js -->
 <%-- <script type="text/javascript" 		src="${pageContext.request.contextPath}/lib/angular.min.js"></script> --%>

@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" 		prefix="c"%>    
 <%@ taglib uri="http://www.springframework.org/tags" 	prefix="tag" %>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base.css"/>
+
 <div class="container" style="min-height: 800px;">
 	<div class="card"></div>
 	<input type="hidden" id="prevPage" name="prevPage" value="${prevPage}"/>
@@ -103,89 +104,16 @@
 		</div>
 	</form>
 </div>
+<div class="loader"></div>
 <script>
 $().ready(function() {
-	
+    $(".loader").hide();
 	var numberRegExg = /[0-9]/gi;
 	var unNumberRegExg = /[^0-9]/gi;
 	var koreanRegExg 	= /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 	var specialCharRegExg 	= /[~!@\#$%^&*\()\-=+_']/gi;
 
-	$(function(){
-		
-		$("#phoneNo").on("keyup", function(){
-			$(this).val($(this).val().replace(unNumberRegExg,""));
-		});
-		$("#userNm").on("keyup", function(){
-			$(this).val($(this).val()
-							   .replace(numberRegExg, "")
-							   .replace(specialCharRegExg, ""));
-		});
-		$("#userId").on("keyup", function(){
-			$(this).val($(this).val()
-							   .replace(koreanRegExg, "")
-							   .replace(specialCharRegExg, ""));
-		});
 
-		$("#homeBtn").on("click", function(){
-			history.go(-1);
-		});
-
-		$("#cancelBtn").on("click", function(){
-			history.go(0);
-		});
-		
-		$("#registBtn").on("click", function(){
-			var isValid = $("form").valid();
-
-			if(isValid){
-				$.ajax({
-// 					url : '/user/regist.json',
-					url 	 : '/user/registAction',
-					data 	 : $("#actionFrm").serialize(),
-					dataType : 'json',
-					method 	 : 'post',
-					success  : function(data){
-
-						// ajax loading...
-						loading();
-
-						var status = data.status;
-						var result = data.result;
-						
-						if(status == 'REGIST_0000'){
-							location.replace('/user/registOk');	//$("#prevPage").val();
-						}else if(status == 'REGIST_0001'){
-							var length = result.length;
-							if(result != null && length > 0){
-								for(var i = 0 ; i < length ; i++){
-								    console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);
-									$("#" + result[i].field+"Err").html(result[i].defaultMessage);
-									$("#" + result[i].field+"Err").parent().parent().addClass("has-danger");
-									$("#" + result[i].field+"Err").show();
-								}
-                                $("input[name="+result[0].field+"]").focus();
-							}
-						}else{
-							alert(result);
-							$("#userId").focus();
-							return false;
-						}
-					},
-					error : function(xhr, textStatus, thrownError){
-
-					}
-				});
-			}
-		});		
-	});
-
-
-	$(".form-control").on("click", function(e){
-        $("#" + e.target.id +"Err").parent().parent().removeClass("has-danger");
-		$("#" + e.target.id + "Err").hide();
-		$("#" + e.target.id + "Err").html('');
-	});
 	/*
 	$("form").validate({
 		rules: {
@@ -250,6 +178,89 @@ $().ready(function() {
 	*/
 });
 
+$(function(){
+
+    $("#phoneNo").on("keyup", function(){
+        $(this).val($(this).val().replace(unNumberRegExg,""));
+    });
+    $("#userNm").on("keyup", function(){
+        $(this).val($(this).val()
+            .replace(numberRegExg, "")
+            .replace(specialCharRegExg, ""));
+    });
+    $("#userId").on("keyup", function(){
+        $(this).val($(this).val()
+            .replace(koreanRegExg, "")
+            .replace(specialCharRegExg, ""));
+    });
+
+    $("#homeBtn").on("click", function(){
+        history.go(-1);
+    });
+
+    $("#cancelBtn").on("click", function(){
+        history.go(0);
+    });
+
+    $("#registBtn").on("click", function(){
+//			var isValid = $("form").valid();
+
+//			if(isValid){
+        $.ajax({
+// 					url : '/user/regist.json',
+            url 	 : '/user/registAction',
+            data 	 : $("#actionFrm").serialize(),
+            dataType : 'json',
+            method 	 : 'post',
+            success  : function(data){
+
+                // ajax loading...
+				/*loading();*/
+                var status = data.status;
+                var result = data.result;
+
+                if(status == 'REGIST_0000'){
+                    location.replace('/user/registOk');	//$("#prevPage").val();
+                }else if(status == 'REGIST_0001'){
+                    var length = result.length;
+                    if(result != null && length > 0){
+                        for(var i = 0 ; i < length ; i++){
+                            console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);
+                            $("#" + result[i].field+"Err").html(result[i].defaultMessage);
+                            $("#" + result[i].field+"Err").parent().parent().addClass("has-danger");
+                            $("#" + result[i].field+"Err").show();
+                        }
+                        $("input[name="+result[0].field+"]").focus();
+                    }
+                }else{
+                    alert(result);
+                    $("#userId").focus();
+                }
+            },
+            error : function(xhr, textStatus, thrownError){
+
+            }
+        });
+//			}
+    });
+});
+
+$(document).ajaxStart(function(){
+    $(".loader").show();
+    $(".btn-group").hide();
+});
+$(document).ajaxComplete(function(){
+    $(".loader").hide();
+    $(".btn-group").show();
+});
+
+
+$(".form-control").on("click", function(e){
+    $("#" + e.target.id +"Err").parent().parent().removeClass("has-danger");
+    $("#" + e.target.id + "Err").hide();
+    $("#" + e.target.id + "Err").html('');
+});
+
 function loading(){
     $(document).ajaxStart(function(){
         $(".pull-right").attr("id", "loading");
@@ -260,5 +271,35 @@ function loading(){
         $(".pull-right").attr("value", "Create an account");
     });	
 }
-
 </script>
+<style>
+	/*spiner*/
+	.loader {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		z-index: 1;
+		width: 300px;
+		height: 300px;
+		margin: -75px 0 0 -75px;
+		border: 16px solid #f3f3f3;
+		border-radius: 50%;
+		border-top: 16px solid #3498db;
+		width: 120px;
+		height: 120px;
+		-webkit-animation: spin 2s linear infinite;
+		animation: spin 2s linear infinite;
+		background-color: transparent;
+	}
+
+	/* Safari */
+	@-webkit-keyframes spin {
+		0% { -webkit-transform: rotate(0deg); }
+		100% { -webkit-transform: rotate(360deg); }
+	}
+
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+</style>

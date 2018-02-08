@@ -4,6 +4,7 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8"%>
 <%@ page import="net.linkednest.www.user.dto.UserDto"%>
 <script type="text/javascript" 		src="${pageContext.request.contextPath}/js/home/home.js"></script>
+<div class="loader"></div>
 <div class="navbar navbar-light navbar-toggleable-md bd-navbar">
     <div id="google_translate_element"></div>
     <script type="text/javascript">

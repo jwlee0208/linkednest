@@ -389,7 +389,7 @@
 		
 
 		$("#profileImg").bind("change", function() {
-			alert('profile image upload');
+			// alert('profile image upload');
             // 썸네일 파일 업로드 할 때 저장
 			if (!isEmpty($(this).val())) {
 
