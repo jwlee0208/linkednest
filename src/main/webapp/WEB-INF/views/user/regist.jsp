@@ -90,16 +90,16 @@
 			</c:if>		
 				</select>			
 			</div>
-		</div>		
-		<div class="row" style="padding-top : 20px; padding-bottom : 20px;">
-			<div class="col-sm">
-				<input type="button" class="btn btn-default btn-block" value="<tag:message code='common.home'/>" id="homeBtn">
+		</div>
+		<div class="btn-group btn-group-justified" style="padding-top : 20px; padding-bottom : 20px;">
+			<div class="btn-group">
+				<input type="button" class="btn btn-default" value="<tag:message code='common.home'/>" id="homeBtn">
 			</div>
-			<div class="col-sm">
-				<input type="button" class="btn btn-default btn-block" value="<tag:message code="common.cancel"/>" id="cancelBtn">
+			<div class="btn-group">
+				<input type="button" class="btn btn-default" value="<tag:message code="common.cancel"/>" id="cancelBtn">
 			</div>
-			<div class="col-sm">
-				<input type="button" class="btn btn-primary btn-block pull-right" value="<tag:message code="common.createaccount"/>" id="registBtn">
+			<div class="btn-group">
+				<input type="button" class="btn btn-primary pull-right" value="<tag:message code="common.createaccount"/>" id="registBtn">
 			</div>					
 		</div>
 	</form>
@@ -108,14 +108,13 @@
 <script>
 $().ready(function() {
     $(".loader").hide();
-	var numberRegExg = /[0-9]/gi;
-	var unNumberRegExg = /[^0-9]/gi;
-	var koreanRegExg 	= /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-	var specialCharRegExg 	= /[~!@\#$%^&*\()\-=+_']/gi;
-
 });
 
 $(function(){
+    var numberRegExg = /[0-9]/gi;
+    var unNumberRegExg = /[^0-9]/gi;
+    var koreanRegExg 	= /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    var specialCharRegExg 	= /[~!@\#$%^&*\()\-=+_']/gi;
 
     $("#phoneNo").on("keyup", function(){
         $(this).val($(this).val().replace(unNumberRegExg,""));

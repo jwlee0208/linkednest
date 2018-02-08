@@ -6,9 +6,7 @@
 <script type="text/javascript" 		src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
 
 <!-- bootstrap -->
-<link 	rel="stylesheet" 			href="${pageContext.request.contextPath}/lib/bootstrapV4/css/bootstrap.min.css">
-<link 	rel="stylesheet" 			href="${pageContext.request.contextPath}/lib/bootstrapV4/css/bootstrap-grid.min.css">
-<link 	rel="stylesheet" 			href="${pageContext.request.contextPath}/lib/bootstrapV4/css/bootstrap-reboot.min.css">
+<link 	rel="stylesheet" 			href="${pageContext.request.contextPath}/lib/bootstrap/css/bootstrap.min.css">
 <%--<link 	rel="stylesheet" 			href="${pageContext.request.contextPath}/lib/bootstrapV4/css/bootstrap-combined.min.css">--%>
 <%--<link 	rel="stylesheet" 			href="${pageContext.request.contextPath}/lib/bootstrapV4/css/bootstrap-theme.min.css">--%>
 <script type="text/javascript" 		src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.min.js"></script>

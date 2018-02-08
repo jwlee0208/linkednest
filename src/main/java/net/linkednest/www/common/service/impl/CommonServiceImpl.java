@@ -243,7 +243,6 @@ public class CommonServiceImpl implements CommonService {
         }catch(Exception e){
             e.printStackTrace();
         }
-
     }
     /**
      * @brief : searching private info
