@@ -40,6 +40,7 @@
 	</div>
 	<br/>
 </div>
+<div class="loader"></div>
 </body>
 <!-- editor -->
 <script type="text/javascript"	src="${pageContext.request.contextPath}/js/tinymce/tinymce.min.js"></script>
@@ -47,7 +48,53 @@
 <script type="text/javascript"	src="${pageContext.request.contextPath}/js/board/article/common.min.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/regist.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/autocomplete.min.js"></script>
+<script>
+    $().ready(function() {
+    	$(".loader").hide();
+    });
+</script>
 <style>
 	.fixed-height {padding: 1px;max-height: 200px;overflow: auto;}
+	/*spiner*/
+	.loader {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		z-index: 1;
+		width: 300px;
+		height: 300px;
+		margin: -75px 0 0 -75px;
+		border: 16px solid #f3f3f3;
+		border-radius: 50%;
+		border-top: 16px solid #3498db;
+		width: 120px;
+		height: 120px;
+		-webkit-animation: spin 2s linear infinite;
+		animation: spin 2s linear infinite;
+		background-color: transparent;
+	}
+
+	/* Safari */
+	@-webkit-keyframes spin {
+		0% { -webkit-transform: rotate(0deg); }
+		100% { -webkit-transform: rotate(360deg); }
+	}
+
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+
+	.errorMsg {color:red;}
 </style>
+<script>
+    $(document).ajaxStart(function(){
+        $(".loader").show();
+        $("#saveBtn").hide();
+    });
+    $(document).ajaxComplete(function(){
+        $(".loader").hide();
+        $("#saveBtn").show();
+    });
+</script>
 </html>

@@ -91,15 +91,15 @@
 				</select>			
 			</div>
 		</div>		
-		<div class="btn-group btn-group-justified" style="padding-top : 20px; padding-bottom : 20px;">
-			<div class="btn-group">
-				<input type="button" class="btn btn-default" value="<tag:message code='common.home'/>" id="homeBtn">
+		<div class="row" style="padding-top : 20px; padding-bottom : 20px;">
+			<div class="col-sm">
+				<input type="button" class="btn btn-default btn-block" value="<tag:message code='common.home'/>" id="homeBtn">
 			</div>
-			<div class="btn-group">
-				<input type="button" class="btn btn-default" value="<tag:message code="common.cancel"/>" id="cancelBtn">
+			<div class="col-sm">
+				<input type="button" class="btn btn-default btn-block" value="<tag:message code="common.cancel"/>" id="cancelBtn">
 			</div>
-			<div class="btn-group">
-				<input type="button" class="btn btn-primary pull-right" value="<tag:message code="common.createaccount"/>" id="registBtn">
+			<div class="col-sm">
+				<input type="button" class="btn btn-primary btn-block pull-right" value="<tag:message code="common.createaccount"/>" id="registBtn">
 			</div>					
 		</div>
 	</form>
@@ -113,69 +113,6 @@ $().ready(function() {
 	var koreanRegExg 	= /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 	var specialCharRegExg 	= /[~!@\#$%^&*\()\-=+_']/gi;
 
-
-	/*
-	$("form").validate({
-		rules: {
-			userId: {
-				required 	: true,
-				minlength 	: 8,
-				maxlength 	: 15
-			},
-			userNm: {
-				required 	: true,
-				minlength 	: 2,
-				maxlength 	: 10
-			},
-			passwd: {
-				required 	: true,
-				minlength 	: 8,
-				maxlength 	: 15
-			},
-			passwdChk: {
-				required 	: true,
-				minlength 	: 8,
-				maxlength 	: 15,
-				equalTo 	: "#passwd"				
-			},
-			email : {
-				email : true
-			},
-			phoneNo : {
-				number : true
-			}
-		},
-		messages : {
-			userId : {
-				required 	: "사용자 아이디 입력은 필수 입니다.",
-				minlength 	: "길이는 최소 {0}자 이상이어야 합니다.",
-				maxlength 	: "길이는 최대 {0}자까지 허용합니다."
-			},
-			userNm : {
-				required 	: "사용자 이름 입력은 필수 입니다.",
-				minlength 	: "길이는 최소 {0}자 이상이어야 합니다.",
-				maxlength 	: "길이는 최대 {0}자까지 허용합니다."
-			},
-			passwd : {
-				required 	: "패스워드를 입력해 주세요.",
-				minlength 	: "길이는 최소 {0}자 이상이어야 합니다.",
-				maxlength 	: "길이는 최대 {0}자까지 허용합니다."
-			},
-			passwdChk: {
-				required  	: "패스워드를 한번 더 입력해 주세요.",
-				minlength 	: "길이는 최소 {0}자 이상이어야 합니다.",
-				maxlength 	: "길이는 최대 {0}자까지 허용합니다.",
-				equalTo 	: "위의 패스워드와 동일해야 합니다."				
-			},			
-			email : {
-				email : "이메일 형식에 맞게 입력해 주셔야 합니다."
-			},
-			phoneNo : {
-				number : "숫자만 입력이 가능합니다."
-			} 
-		}
-	});
-	*/
 });
 
 $(function(){
@@ -302,4 +239,7 @@ function loading(){
 		0% { transform: rotate(0deg); }
 		100% { transform: rotate(360deg); }
 	}
+
+	.errorMsg {color:red;}
 </style>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/user/validator.js"></script>

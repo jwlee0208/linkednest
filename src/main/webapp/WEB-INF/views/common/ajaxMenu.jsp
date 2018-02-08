@@ -22,29 +22,29 @@
 	<!-- 		</div> -->
 	<div class="collapse navbar-collapse" id="nav-collapse-player-menu-list">
 		<ul class="nav navbar-nav  mr-auto">
-			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goHome();">Home</a></li>
-			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(1, '01010100');"><tag:message code="text.playerlist"/></a></li>
-			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(2, '01010200');"><tag:message code="text.coachlist"/></a></li>
-			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(3, '01010300');"><tag:message code="text.teamlist"/></a></li>
-			<li class="nav-item"><a class="nav-link" href="/profile/leagueList"><tag:message code="text.leaguelist"/></a></li>
+			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goHome();" style="color: white;">Home</a></li>
+			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(1, '01010100');" style="color: white; "><span><tag:message code="text.playerlist"/></span></a></li>
+			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(2, '01010200');" style="color: white; "><span><tag:message code="text.coachlist"/></span></a></li>
+			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(3, '01010300');" style="color: white; "><span><tag:message code="text.teamlist"/></span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/profile/leagueList"><span style="color: white; "><tag:message code="text.leaguelist"/></span></a></li>
 		</ul>
 		<c:if test="${null ne userInfo}">
 			<ul class="nav navbar-nav navbar-right float-right">
 				<li class="dropdown nav-item">
 					<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="dropdown_menu" role="button" aria-haspopup="true" aria-expanded="false"><tag:message code="menu.hi"/>, "${userInfo.userNm}"</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown_menu">
-						<a class="dropdown-item" href="/share/${userInfo.userId}" ><tag:message code="common.myshare"/></a>
-						<a class="dropdown-item" href="#" onclick="javascript:goConfig();"><tag:message code="common.config"/></a>
+						<a class="dropdown-item" href="/share/${userInfo.userId}" style="font-weight: bold;"><tag:message code="common.myshare"/></a>
+						<a class="dropdown-item" href="#" onclick="javascript:goConfig();" style="font-weight: bold;"><tag:message code="common.config"/></a>
 						<a role="separator" class="divider"></a>
-						<a class="dropdown-item" href="#" onclick="javascript:logout();"><tag:message code="logout"/></a>
+						<a class="dropdown-item" href="#" onclick="javascript:logout();" style="font-weight: bold;"><tag:message code="logout"/></a>
 					</div>
 				</li>
 			</ul>
 		</c:if>
 		<form class="navbar-form navbar-right" role="search">
 			<c:if test="${null eq userInfo}">
-				<a onclick="javascript:goRegist(6);" class="btn btn-outline-secondary"><tag:message code="signup" /></a>
-				<a onclick="javascript:goLogin(7);" class="btn btn-outline-success"><tag:message code="signin" /></a>
+				<a onclick="javascript:goRegist(6);" class="btn btn-outline-secondary" style="color: white; "><tag:message code="signup" /></a>
+				<a onclick="javascript:goLogin(7);" class="btn btn-outline-success" style="color: white; "><tag:message code="signin" /></a>
 			</c:if>
 		</form>
 	</div>
