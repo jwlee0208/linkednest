@@ -243,7 +243,7 @@
 			INNER JOIN TB_LEAGUE_INFO 			  li 	ON li.league_id = pt.league_id
 			LEFT JOIN TB_CONTACT_INFO 			  ci 	ON p.profile_id = ci.profile_id
 			LEFT JOIN TB_PROFILE_ATTR 	  		  pa	ON p.cat_id1 	= pa.cat_id
-			LEFT JOIN TB_PROFILE_ATTR_ELEMENT_MAP paem 	ON p.profile_id = paem.profile_id AND pa.profile_attr_id = paem.profile_attr_id		
+			LEFT JOIN TB_PROFILE_ATTR_ELEMENT_MAP paem 	ON p.profile_id = paem.profile_id AND pa.profile_attr_id = paem.profile_attr_id
  		</sql>
     	
     	<sql id="searchProfileConditionSql">
@@ -323,16 +323,16 @@
 			AND p.profile_id = #{profileId}  	
 				</if>
 			</where>
-			ORDER BY p.create_date DESC   
+
 			<choose>
 				<when test="profileType == 1">
-				, psh.h_stat_year DESC, psf.f_stat_year DESC, psp.p_stat_year DESC
+			 ORDER BY p.create_date DESC, psh.h_stat_year DESC, psf.f_stat_year DESC, psp.p_stat_year DESC
 				</when>	
 				<when test="profileType == 2">
-				
+			 ORDER BY p.create_date DESC
 				</when>
 				<when test="profileType == 3">
-				
+			 ORDER BY p.create_date DESC
 				</when>	
 			</choose>	
     	</select>

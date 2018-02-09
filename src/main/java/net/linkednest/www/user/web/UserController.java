@@ -68,6 +68,14 @@ public class UserController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    /**
+     * View Page For Joinning Member
+     *
+     * @param model
+     * @param request
+     * @return
+     * @throws Exception
+     */
 	@RequestMapping(value="/regist")
 	public String registUser(Model model, HttpServletRequest request) throws Exception{
 	    this.setRequiredInfos(model, request);
@@ -93,7 +101,16 @@ public class UserController {
         model.addAttribute("languageList"   , languageList);
 	    
 	}
-	
+
+    /**
+     * [OLD] Action For Joinning Member
+     *
+     * @param model
+     * @param userDto
+     * @param result
+     * @return
+     * @throws Exception
+     */
 	@RequestMapping(value="/regist.json")
 	@ResponseBody
 	public JSONObject registUser(Model model, @Valid @ModelAttribute UserDto userDto, BindingResult result) throws Exception{
@@ -128,7 +145,17 @@ public class UserController {
 		
 		return returnObj;
 	}
-	
+
+    /**
+     * Action For Joinning Member
+     *
+     * @param model
+     * @param request
+     * @param userDto
+     * @param result
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/registAction")
     @ResponseBody	
     public JsonResponse registUser2(Model model, HttpServletRequest request, @ModelAttribute UserDto userDto, BindingResult result) throws Exception{
@@ -223,20 +250,47 @@ public class UserController {
 
         return returnObj;
     }
-	
+
+    /**
+     * Complete Joinning Member
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(method = RequestMethod.GET, value="/registOk")
     public String registOk(HttpServletRequest request) throws Exception{
         return "/user/registOk";
     }
-    
+
+    /**
+     * View Page For Modifying Member
+     *
+     * @param request
+     * @param model
+     * @param session
+     * @param userId
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/modify/{userId}")
     public String modifyUser(HttpServletRequest request, Model model, HttpSession session, @PathVariable String userId) throws Exception{
         this.commonService.getPrivateInfo(request, model, session);
         this.setRequiredInfos(model, request);
         return "/user/ajaxRegistForm";
     }
-    
-    
+
+    /**
+     * Action For Modifying Member
+     *
+     * @param model
+     * @param request
+     * @param session
+     * @param status
+     * @param userDto
+     * @param result
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/modifyAction")
     @ResponseBody   
     public JsonResponse modifyUser(Model model, HttpServletRequest request, HttpSession session, SessionStatus status, @ModelAttribute UserDto userDto, BindingResult result) throws Exception{
@@ -301,7 +355,14 @@ public class UserController {
     public String forgotPasswordView(){
         return "/user/forgotPassword";
     }
-    
+
+    /**
+     * Reset Password
+     *
+     * @param encryptMail
+     * @param model
+     * @return
+     */
     @RequestMapping(value="/resetPassword")
     public String resetPasswordView(@RequestParam("v") String encryptMail, Model model){
         
@@ -423,6 +484,12 @@ public class UserController {
 
         return returnObj;
     }
+
+    /**
+     * Send Mail For Welcome
+     *
+     * @param userDto
+     */
     private void sendWelcomeMail(UserDto userDto){
         // 메시지 다국어 처리
         String welcomeMsg = null;
@@ -442,7 +509,7 @@ public class UserController {
         contentMap.put("userId"			, userDto.getUserId());
 
         // Sending Mail
-        this.commonSendMailTemplate(userDto, "[linkedNest.net] Congraturation! Happy join us!!", "./src/main/webapp/resources/mailTemplate/welcomeJoinningTemplate.vm", contentMap);
+        this.commonSendMailTemplate(userDto, "[linkedNest.net] Congraturation! Happy join us!!", "mailTemplate/welcomeJoinningTemplate.vm", contentMap);
     }
     
     private void sendForgotPwMail(UserDto userDto){
@@ -469,7 +536,7 @@ public class UserController {
             contentMap.put("encryptedMail"  , userDto.getEmail());
 
             // Sending Mail
-            this.commonSendMailTemplate(userDto, "[linkedNest.net] Reset your password!!", "./src/main/webapp/resources/mailTemplate/forgotPassword.vm", contentMap);
+            this.commonSendMailTemplate(userDto, "[linkedNest.net] Reset your password!!", "mailTemplate/forgotPassword.vm", contentMap);
             
         }
     }

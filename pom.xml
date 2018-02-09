@@ -710,13 +710,13 @@
 				</includes>
 				<filtering>false</filtering>
 			</resource>
-
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
 				<includes>
 					<include>**/*.xml</include>
 					<include>**/*.html</include>
 					<include>**/*.properties</include>
+					<include>**/*.vm</include>
 				</includes>
 				<filtering>false</filtering>
 			</resource>

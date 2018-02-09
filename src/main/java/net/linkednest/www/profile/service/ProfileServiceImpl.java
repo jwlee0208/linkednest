@@ -738,7 +738,7 @@ public class ProfileServiceImpl implements ProfileService{
 		contentMap.put("message"		, request.getMessage());
 
 		// Send Mail
-		this.commonService.commonSendMailTemplate(sessionInfo, "[linkedNest.net] Check Out!!" + profileInfoRes.getName() + "'s Profile!!!", "WEB-INF/mailTemplate/profileTemplate.vm", contentMap);
+		this.commonService.commonSendMailTemplate(sessionInfo, "[linkedNest.net] Check Out!!" + profileInfoRes.getName() + "'s Profile!!!", "mailTemplate/profileTemplate.vm", contentMap);
 	}
 
 	private String getBody(ProfileDto profileInfo) {

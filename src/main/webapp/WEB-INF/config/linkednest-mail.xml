@@ -9,18 +9,13 @@
   
     <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
         <property name="velocityProperties">
-            <props>
-                <prop key="resource.loader">file</prop>
-                <prop key="class.resource.loader.class">org.apache.velocity.runtime.resource.loader.FileResourceLoader</prop>
-                <prop key="file.resource.loader.cache">false</prop>
-            </props>
-            <!--<value>
+            <value>
                 resource.loader=class
                 class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
                 input.encoding=UTF-8
                 output.encoding=UTF-8
-            </value>-->
+            </value>
         </property>
-        <property name="resourceLoaderPath" value="WEB-INF/mailTemplate"/>
+        <property name="resourceLoaderPath" value="classpath:mailTemplate"/>
     </bean>
 </beans>
