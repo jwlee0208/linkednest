@@ -3,6 +3,9 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="tag"%>
 <h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;<tag:message code="text.personalinfo"/></h3>
 <hr/>
+<c:if test="${profileInfo.profileImgPath ne null && profileInfo.profileImgPath ne ''}">
+    <input type="hidden" id="profileImgPath" 			name="profileImgPath" 		value="${profileInfo.profileImgPath}" />
+</c:if>
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group row">

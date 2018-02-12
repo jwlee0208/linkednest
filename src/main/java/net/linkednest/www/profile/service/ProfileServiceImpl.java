@@ -496,47 +496,34 @@ public class ProfileServiceImpl implements ProfileService{
 	}
 
 	private int addProfileContactInfo(ProfileContactInfoDto profileContactInfoDto){
-		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getPhoneNo())) {
-			profileContactInfoDto.setPhoneNo(profileContactInfoDto.getEncryptedPhoneNo());
-		}
-		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getCellPhoneNo())) {
-			profileContactInfoDto.setCellPhoneNo(profileContactInfoDto.getEncryptedCellPhoneNo());
-		}
-		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getEmail())) {
-			profileContactInfoDto.setEmail(profileContactInfoDto.getEncryptedEmail());
-		}
-		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getFacebookUrl())) {
-			profileContactInfoDto.setFacebookUrl(profileContactInfoDto.getEncryptedFacebookUrl());
-		}
-		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getTwitterUrl())) {
-			profileContactInfoDto.setTwitterUrl(profileContactInfoDto.getEncryptedTwitterUrl());
-		}
-		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getInstagramUrl())) {
-			profileContactInfoDto.setInstagramUrl(profileContactInfoDto.getEncryptedInstagramUrl());
-		}
+		this.setEncryptedContactParams(profileContactInfoDto);
 		return this.profileDao.insertProfileContactInfo(profileContactInfoDto);
 	}
 
 	private int updateProfileContactInfo(ProfileContactInfoDto profileContactInfoDto){
-		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getPhoneNo())) {
+		this.setEncryptedContactParams(profileContactInfoDto);
+		return this.profileDao.updateProfileContactInfo(profileContactInfoDto);
+	}
+
+	private void setEncryptedContactParams(ProfileContactInfoDto profileContactInfoDto) {
+		if (org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getPhoneNo())) {
 			profileContactInfoDto.setPhoneNo(profileContactInfoDto.getEncryptedPhoneNo());
 		}
-		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getCellPhoneNo())) {
+		if (org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getCellPhoneNo())) {
 			profileContactInfoDto.setCellPhoneNo(profileContactInfoDto.getEncryptedCellPhoneNo());
 		}
-		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getEmail())) {
+		if (org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getEmail())) {
 			profileContactInfoDto.setEmail(profileContactInfoDto.getEncryptedEmail());
 		}
-		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getFacebookUrl())) {
+		if (org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getFacebookUrl())) {
 			profileContactInfoDto.setFacebookUrl(profileContactInfoDto.getEncryptedFacebookUrl());
 		}
-		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getTwitterUrl())) {
+		if (org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getTwitterUrl())) {
 			profileContactInfoDto.setTwitterUrl(profileContactInfoDto.getEncryptedTwitterUrl());
 		}
-		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getInstagramUrl())) {
+		if (org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getInstagramUrl())) {
 			profileContactInfoDto.setInstagramUrl(profileContactInfoDto.getEncryptedInstagramUrl());
 		}
-		return this.profileDao.updateProfileContactInfo(profileContactInfoDto);
 	}
 
 	private int addProfileStatHitterInfo(ProfileStatHitterDto profileStatHitterDto){

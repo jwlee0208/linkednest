@@ -24,7 +24,6 @@
 		<c:if test="${profileInfo.profileImgPath ne '' && profileInfo.profileImgPath ne null}">
 			<div class="thumbImg unset">
 				<img src="http://jwlee0208.cdn3.cafe24.com/${profileInfo.profileImgPath}" class="img-fluid rounded mx-auto d-block"/>
-				<input type="hidden" id="profileImgPath" 			name="profileImgPath" 		value="${profileInfo.profileImgPath}" />
 				<hr/>
 				<input type="button" class="btn btn-outline-danger btn-block" value="이미지 삭제" onclick="javascript:delThumbImage('set');">
 			</div>
