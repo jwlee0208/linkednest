@@ -185,19 +185,6 @@ public class ProfileServiceImpl implements ProfileService{
 				this.updateProfilePlayerInfo(profilePlayerParamObj);
 			}
 		}
-		/*if(profilePlayerParam.isPresent()){
-			ProfilePlayerDto profilePlayerParamObj = profilePlayerParam.get();
-			profilePlayerParamObj.setProfileId(profileId);
-			try {
-				if (StringUtils.equals(actionType, DBConstants.DB_SQL_INSERT)) {
-					this.addProfilePlayerInfo(profilePlayerParamObj);
-				} else if (StringUtils.equals(actionType, DBConstants.DB_SQL_UPDATE)) {
-					this.updateProfilePlayerInfo(profilePlayerParamObj);
-				}
-			} catch (Exception e) {
-				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			}
-		}*/
 	}
 
 	/**
@@ -215,19 +202,6 @@ public class ProfileServiceImpl implements ProfileService{
 			});
 		}
 	}
-	/*private void insertProfileCareerInfos(int profileId, ProfileDto profileDto) {
-		List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
-		if (CollectionUtils.isNotEmpty(profileCareerParamList)){
-			profileCareerParamList.stream().forEach(profileCareerParam -> {
-				profileCareerParam.setProfileId(profileId);
-				try {
-					this.addProfileCareerInfo(profileCareerParam);
-				} catch (Exception e) {
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				}
-			});
-		}
-	}*/
 
 	/**
 	 * Insert Profile Statistics Infos
@@ -244,17 +218,7 @@ public class ProfileServiceImpl implements ProfileService{
 				this.addProfileStatHitterInfo(profileStatHitterParam);
 			});
 		}
-		/*List<ProfileStatHitterDto> profileStatHitterParamList = profileDto.getProfileStatHitterList();
-		if (CollectionUtils.isNotEmpty(profileStatHitterParamList)) {
-			profileStatHitterParamList.stream().forEach(profileStatHitterParam -> {
-				profileStatHitterParam.setProfileId(profileId);
-				try {
-					this.addProfileStatHitterInfo(profileStatHitterParam);
-				} catch (Exception e) {
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				}
-			});
-		}*/
+
 		// 3.2. fielding statistic
 		List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
 		if (CollectionUtils.isNotEmpty(profileStatFielderParamList)) {
@@ -263,17 +227,7 @@ public class ProfileServiceImpl implements ProfileService{
 				this.addProfileStatFielderInfo(profileStatFielderParam);
 			});
 		}
-		/*List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
-		if (CollectionUtils.isNotEmpty(profileStatFielderParamList)) {
-			profileStatFielderParamList.stream().forEach(profileStatFielderParam -> {
-				profileStatFielderParam.setProfileId(profileId);
-				try {
-					this.addProfileStatFielderInfo(profileStatFielderParam);
-				} catch (Exception e) {
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				}
-			});
-		}*/
+
 		// 3.3. pitching statistic
 		List<ProfileStatPitcherDto> profileStatPitcherParamList = profileDto.getProfileStatPitcherList();
 		if (CollectionUtils.isNotEmpty(profileStatPitcherParamList)) {
@@ -282,17 +236,6 @@ public class ProfileServiceImpl implements ProfileService{
 				this.addProfileStatPitcherInfo(profileStatPitcherParam);
 			});
 		}
-		/*List<ProfileStatPitcherDto> profileStatPitcherParamList = profileDto.getProfileStatPitcherList();
-		if (CollectionUtils.isNotEmpty(profileStatPitcherParamList)) {
-			profileStatPitcherParamList.stream().forEach(profileStatPitcherParam -> {
-				profileStatPitcherParam.setProfileId(profileId);
-				try {
-					this.addProfileStatPitcherInfo(profileStatPitcherParam);
-				} catch (Exception e) {
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				}
-			});
-		}*/
 	}
 
 	/**
@@ -307,15 +250,6 @@ public class ProfileServiceImpl implements ProfileService{
 			profileContactInfoParam.setProfileId(profileId);
 			this.addProfileContactInfo(profileContactInfoParam);
 		}
-		/*ProfileContactInfoDto profileContactInfoParam = profileDto.getProfileContactInfoDto();
-		if(profileContactInfoParam != null){
-			profileContactInfoParam.setProfileId(profileId);
-			try {
-				this.addProfileContactInfo(profileContactInfoParam);
-			} catch (Exception e) {
-				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			}
-		}*/
 
 		List<ProfileStreamDto> profileStreamParamList = profileDto.getProfileStreamList();
 		if(CollectionUtils.isNotEmpty(profileStreamParamList)){
@@ -324,17 +258,6 @@ public class ProfileServiceImpl implements ProfileService{
 				this.addProfileStreamInfo(profileStreamParam);
 			});
 		}
-		/*List<ProfileStreamDto> profileStreamParamList = profileDto.getProfileStreamList();
-		if(CollectionUtils.isNotEmpty(profileStreamParamList)){
-			profileStreamParamList.stream().forEach(profileStreamParam -> {
-				profileStreamParam.setProfileId(profileId);
-				try {
-					this.addProfileStreamInfo(profileStreamParam);
-				} catch (Exception e) {
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				}
-			});
-		}*/
 
 		List<ProfileAttrElementMapDto> profileAttrElementMapParamList = profileDto.getProfileAttrElementMapList();
 		if(CollectionUtils.isNotEmpty(profileAttrElementMapParamList)){
@@ -345,20 +268,6 @@ public class ProfileServiceImpl implements ProfileService{
 						this.addProfileAttrElemMapInfo(profileAttrElementMapParam);
 					});
 		}
-		/*List<ProfileAttrElementMapDto> profileAttrElementMapParamList = profileDto.getProfileAttrElementMapList();
-		if(CollectionUtils.isNotEmpty(profileAttrElementMapParamList)){
-
-			profileAttrElementMapParamList.stream()
-					.filter(profileAttrElementMapParam -> profileAttrElementMapParam.getProfileAttrElementId() > 0)
-					.forEach(profileAttrElementMapParam -> {
-						profileAttrElementMapParam.setProfileId(profileId);
-						try {
-							this.addProfileAttrElemMapInfo(profileAttrElementMapParam);
-						} catch (Exception e) {
-							TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-						}
-			});
-		}*/
 	}
 
 	/**
@@ -451,15 +360,6 @@ public class ProfileServiceImpl implements ProfileService{
 			profileContactInfoParam.setProfileId(profileId);
 			this.updateProfileContactInfo(profileContactInfoParam);
 		}
-		/*if(profileContactInfoParam != null){
-			profileContactInfoParam.setProfileId(profileId);
-			try {
-				this.updateProfileContactInfo(profileContactInfoParam);
-			} catch (Exception e){
-				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				e.printStackTrace();
-			}
-		}*/
 
 		// update list for stream
 		List<ProfileStreamDto> profileStreamParamList = profileDto.getProfileStreamList();
@@ -472,21 +372,6 @@ public class ProfileServiceImpl implements ProfileService{
 				this.addProfileStreamInfo(profileStreamParam);
 			});
 		}
-		/*List<ProfileStreamDto> profileStreamParamList = profileDto.getProfileStreamList();
-		if(CollectionUtils.isNotEmpty(profileStreamParamList)){
-			// 기존의 동영상 목록 제거(초기화)
-			this.profileDao.deleteProfileStreamInfo(profileId);
-			// 새로운 동영상 목록 추가
-			profileStreamParamList.stream().forEach(profileStreamParam -> {
-				profileStreamParam.setProfileId(profileId);
-				try {
-					this.addProfileStreamInfo(profileStreamParam);
-				} catch (Exception e){
-					e.printStackTrace();
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				}
-			});
-		}*/
 
 		// update list for profile's attribute map
 		List<ProfileAttrElementMapDto> profileAttrElementMapParamList = profileDto.getProfileAttrElementMapList();
@@ -531,21 +416,6 @@ public class ProfileServiceImpl implements ProfileService{
 				this.addProfileCareerInfo(profileCareerParam);
 			});
 		}
-		/*List<ProfileCareerDto> profileCareerParamList = profileDto.getProfileCareerList();
-		if(CollectionUtils.isNotEmpty(profileCareerParamList)){
-			// 1. initiate data
-			this.profileDao.deleteProfileCareerInfo(profileId);
-			// 2. insert data
-			profileCareerParamList.stream().forEach(profileCareerParam -> {
-				profileCareerParam.setProfileId(profileId);
-				try {
-					this.addProfileCareerInfo(profileCareerParam);
-				} catch (Exception e){
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					e.printStackTrace();
-				}
-			});
-		}*/
 	}
 
 	/**
@@ -568,21 +438,7 @@ public class ProfileServiceImpl implements ProfileService{
 				this.addProfileStatHitterInfo(profileStatHitterParam);
 			});
 		}
-		/*List<ProfileStatHitterDto> profileStatHitterParamList = profileDto.getProfileStatHitterList();
-		if(CollectionUtils.isNotEmpty(profileStatHitterParamList)){
-			// 1. initiate data : 기존의 타격 기록 정보 삭제(초기화)
-			this.profileDao.deleteProfileStatHitterInfo(profileId);
-			// 2. insert data : 새로운 타격 기록 정보 추가
-			profileStatHitterParamList.stream().forEach(profileStatHitterParam -> {
-				profileStatHitterParam.setProfileId(profileId);
-				try {
-					this.addProfileStatHitterInfo(profileStatHitterParam);
-				} catch (Exception e){
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					e.printStackTrace();
-				}
-			});
-		}*/
+
 		/**********************************
 		 * Updating Fielding Stats
 		 **********************************/
@@ -596,21 +452,7 @@ public class ProfileServiceImpl implements ProfileService{
 				this.addProfileStatFielderInfo(profileStatFielderParam);
 			});
 		}
-		/*List<ProfileStatFielderDto> profileStatFielderParamList = profileDto.getProfileStatFielderList();
-		if(CollectionUtils.isNotEmpty(profileStatFielderParamList)){
-			// 1. initiate data : 기존의 수비 기록 정보 삭제(초기화)
-			this.profileDao.deleteProfileStatFielderInfo(profileId);
-			// 2. insert data : 새로운 수비 기록 정보 추가
-			profileStatFielderParamList.stream().forEach(profileStatFielderParam -> {
-				profileStatFielderParam.setProfileId(profileId);
-				try {
-					this.addProfileStatFielderInfo(profileStatFielderParam);
-				} catch (Exception e){
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					e.printStackTrace();
-				}
-			});
-		}*/
+
 		/**********************************
 		 * Updating Ptiching Stats
 		 *********************************/
@@ -624,21 +466,6 @@ public class ProfileServiceImpl implements ProfileService{
 				this.addProfileStatPitcherInfo(profileStatPitcherParam);
 			});
 		}
-		/*List<ProfileStatPitcherDto> profileStatPitcherParamList = profileDto.getProfileStatPitcherList();
-		if(CollectionUtils.isNotEmpty(profileStatPitcherParamList)){
-			// 1. initiate data : 기존의 피칭 기록 정보 삭제(초기화)
-			this.profileDao.deleteProfileStatPitcherInfo(profileId);
-			// 2. insert data : 새로운 피칭 기록 정보 추가
-			profileStatPitcherParamList.stream().forEach(profileStatPitcherParam -> {
-				profileStatPitcherParam.setProfileId(profileId);
-				try {
-					this.addProfileStatPitcherInfo(profileStatPitcherParam);
-				} catch (Exception e){
-					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-					e.printStackTrace();
-				}
-			});
-		}*/
 	}
 
 	/**
@@ -669,10 +496,46 @@ public class ProfileServiceImpl implements ProfileService{
 	}
 
 	private int addProfileContactInfo(ProfileContactInfoDto profileContactInfoDto){
+		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getPhoneNo())) {
+			profileContactInfoDto.setPhoneNo(profileContactInfoDto.getEncryptedPhoneNo());
+		}
+		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getCellPhoneNo())) {
+			profileContactInfoDto.setCellPhoneNo(profileContactInfoDto.getEncryptedCellPhoneNo());
+		}
+		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getEmail())) {
+			profileContactInfoDto.setEmail(profileContactInfoDto.getEncryptedEmail());
+		}
+		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getFacebookUrl())) {
+			profileContactInfoDto.setFacebookUrl(profileContactInfoDto.getEncryptedFacebookUrl());
+		}
+		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getTwitterUrl())) {
+			profileContactInfoDto.setTwitterUrl(profileContactInfoDto.getEncryptedTwitterUrl());
+		}
+		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getInstagramUrl())) {
+			profileContactInfoDto.setInstagramUrl(profileContactInfoDto.getEncryptedInstagramUrl());
+		}
 		return this.profileDao.insertProfileContactInfo(profileContactInfoDto);
 	}
 
 	private int updateProfileContactInfo(ProfileContactInfoDto profileContactInfoDto){
+		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getPhoneNo())) {
+			profileContactInfoDto.setPhoneNo(profileContactInfoDto.getEncryptedPhoneNo());
+		}
+		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getCellPhoneNo())) {
+			profileContactInfoDto.setCellPhoneNo(profileContactInfoDto.getEncryptedCellPhoneNo());
+		}
+		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getEmail())) {
+			profileContactInfoDto.setEmail(profileContactInfoDto.getEncryptedEmail());
+		}
+		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getFacebookUrl())) {
+			profileContactInfoDto.setFacebookUrl(profileContactInfoDto.getEncryptedFacebookUrl());
+		}
+		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getTwitterUrl())) {
+			profileContactInfoDto.setTwitterUrl(profileContactInfoDto.getEncryptedTwitterUrl());
+		}
+		if (!org.apache.commons.lang3.StringUtils.isNotEmpty(profileContactInfoDto.getInstagramUrl())) {
+			profileContactInfoDto.setInstagramUrl(profileContactInfoDto.getEncryptedInstagramUrl());
+		}
 		return this.profileDao.updateProfileContactInfo(profileContactInfoDto);
 	}
 
