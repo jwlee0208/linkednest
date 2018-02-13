@@ -9,10 +9,8 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import net.linkednest.common.CommonConstant;
+import net.linkednest.common.constant.CommonConstant;
 import org.apache.commons.codec.binary.Base64;
-
-import net.linkednest.common.CommonConstant;
 
 /**
  * 양방향 암호화 알고리즘인 AES256 암호화를 지원하는 클래스

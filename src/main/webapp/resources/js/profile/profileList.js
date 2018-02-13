@@ -2,11 +2,8 @@
 		$("input[name='goToRegistProfile']").on("click", function() {
 			location.href = "/profile/regist/" + $("#profileType").val() + "/" + $("#catagoryId").val();
 		});
-		
 //		setChildCategory();
-		
 		loadProfileList();
-		
 	});
 
 	$(function() {
@@ -50,9 +47,7 @@
 	}
 	
 	var Base64 = {
-
 		    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-
 		    encode: function(input) {
 		        var output = "";
 		        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
@@ -76,15 +71,10 @@
 		            } else if (isNaN(chr3)) {
 		                enc4 = 64;
 		            }
-
 		            output = output + this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) + this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
-
 		        }
-
 		        return output;
 		    },
-
-
 		    decode: function(input) {
 		        var output = "";
 		        var chr1, chr2, chr3;
@@ -105,30 +95,22 @@
 		            chr3 = ((enc3 & 3) << 6) | enc4;
 
 		            output = output + String.fromCharCode(chr1);
-
 		            if (enc3 != 64) {
 		                output = output + String.fromCharCode(chr2);
 		            }
 		            if (enc4 != 64) {
 		                output = output + String.fromCharCode(chr3);
 		            }
-
 		        }
-
 		        output = Base64._utf8_decode(output);
-
 		        return output;
-
 		    },
-
 		    _utf8_encode: function(string) {
 		        string = string.replace(/\r\n/g, "\n");
 		        var utftext = "";
 
 		        for (var n = 0; n < string.length; n++) {
-
 		            var c = string.charCodeAt(n);
-
 		            if (c < 128) {
 		                utftext += String.fromCharCode(c);
 		            }
@@ -141,21 +123,16 @@
 		                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
 		                utftext += String.fromCharCode((c & 63) | 128);
 		            }
-
 		        }
-
 		        return utftext;
 		    },
-
 		    _utf8_decode: function(utftext) {
 		        var string = "";
 		        var i = 0;
 		        var c = c1 = c2 = 0;
 
 		        while (i < utftext.length) {
-
 		            c = utftext.charCodeAt(i);
-
 		            if (c < 128) {
 		                string += String.fromCharCode(c);
 		                i++;
@@ -171,10 +148,7 @@
 		                string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
 		                i += 3;
 		            }
-
 		        }
-
 		        return string;
 		    }
-
 		}	

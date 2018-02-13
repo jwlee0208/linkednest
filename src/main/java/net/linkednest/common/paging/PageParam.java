@@ -1,10 +1,13 @@
 package net.linkednest.common.paging;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.lang.reflect.Method;
 import java.net.URLEncoder;
 
-import org.apache.commons.lang.StringUtils;
-
+/**
+ * Created by 9000209 on 2017-11-03.
+ */
 public class PageParam {
     private Integer page = Integer.valueOf(1);
     private int pageSize = PageHolder.DEFAULT_PAGESIZE;
@@ -55,7 +58,7 @@ public class PageParam {
             String methodName = method.getName();
             if (((StringUtils.contains(method.getDeclaringClass().toString(),
                     className)) || (methodName.equals("getPage")) || (methodName
-                        .equals("getListSize")))
+                    .equals("getListSize")))
                     && (methodName.startsWith("get"))) {
                 StringBuilder guessField = new StringBuilder(
                         methodName.length() - 3);
@@ -94,9 +97,13 @@ public class PageParam {
         return null;
     }
 
-	@Override
-	public String toString() {
-		return "PageParam [page=" + page + ", pageSize=" + pageSize + ", listSize=" + listSize + "]";
-	}
-    
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("PageParam{");
+        sb.append("page=").append(page);
+        sb.append(", pageSize=").append(pageSize);
+        sb.append(", listSize=").append(listSize);
+        sb.append('}');
+        return sb.toString();
+    }
 }

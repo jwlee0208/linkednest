@@ -23,11 +23,13 @@ public class SearchResultYoutubeDto {
     public void setResourceId(ResourceId resourceId) {
         this.resourceId = resourceId;
     }
-    
+
     @Override
     public String toString() {
-        return "SearchResultYoutubeDto [searchResultSnippet="
-                + searchResultSnippet + ", resourceId=" + resourceId + "]";
+        final StringBuffer sb = new StringBuffer("SearchResultYoutubeDto{");
+        sb.append("searchResultSnippet=").append(searchResultSnippet);
+        sb.append(", resourceId=").append(resourceId);
+        sb.append('}');
+        return sb.toString();
     }
-    
 }

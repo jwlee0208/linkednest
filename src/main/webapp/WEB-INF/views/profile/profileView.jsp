@@ -18,10 +18,19 @@
 </style>
 <div class="container">
 	<br/>
-	<h1 id="btn-groups" class="page-header">Profile&nbsp;&nbsp;<small>Detail</small></h1>
+	<div class="row">
+		<div class="col">
+			<h1 id="btn-groups" class="page-header">Profile&nbsp;&nbsp;<small>Detail</small></h1>
+		</div>
+		<div class="col">
+			&nbsp;
+			<%--span class="btn btn-info" style="float:right;" data-toggle="modal" data-target="#sendMailForm" id="sendProfileModalOpen">Send Profile</span>--%>
+		</div>
+	</div>
 	<hr/>
 	<form id="viewFrm" name="viewFrm" method="post" class="form-horizontal" role="form">
 		<input type="hidden" id="profileId" 	name="profileId" value="${profileInfo.profileId}"/>
+		<input type="hidden" id="profileType" value="${profileInfo.profileType}"/>
 		<div style="display:none;"><h2>${profileInfo.title}&nbsp;<small>Profile</small></h2></div>
 		<c:choose>
 			<c:when test="${profileInfo.profileType eq 1}">
@@ -48,73 +57,108 @@
 		<div id="contact" class="tab-pane" role="tabpanel">
 			<%--<h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
 			<hr/>--%>
-			<c:if test="${profileInfo.profileContactInfoDto.email ne null && profileInfo.profileContactInfoDto.email ne ''}">
+			<c:if test="${profileInfo.profileContactInfoDto.decryptedEmail ne null && profileInfo.profileContactInfoDto.decryptedEmail ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.email"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="mailto: ${profileInfo.profileContactInfoDto.email}">${profileInfo.profileContactInfoDto.email}</a></p>
+						<p class="form-control-static"><a href="mailto: ${profileInfo.profileContactInfoDto.decryptedEmail}">${profileInfo.profileContactInfoDto.decryptedEmail}</a></p>
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.phoneNo ne null && profileInfo.profileContactInfoDto.phoneNo ne ''}">
+			<c:if test="${profileInfo.profileContactInfoDto.decryptedPhoneNo ne null && profileInfo.profileContactInfoDto.decryptedPhoneNo ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label">Phone No.</label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.phoneNo}">${profileInfo.profileContactInfoDto.phoneNo}</a></p>
-					</div>
-				</div>
-			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.cellPhoneNo ne null && profileInfo.profileContactInfoDto.cellPhoneNo ne ''}">
-				<div class="form-group row">
-					<label for="" class="col-sm-3 col-form-label">Cell Phone No.</label>
-					<div class="col-sm-9">
-						<p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.cellPhoneNo}">${profileInfo.profileContactInfoDto.cellPhoneNo}</a></p>
-					</div>
-				</div>
-			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.websiteUrl ne null && profileInfo.profileContactInfoDto.websiteUrl ne ''}">
-				<div class="form-group row">
-					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.website"/></label>
-					<div class="col-sm-9">
-						<p class="form-control-static"><a href="http://${profileInfo.profileContactInfoDto.websiteUrl}" target="_blank">${profileInfo.profileContactInfoDto.websiteUrl}</a></p>
+						<p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.decryptedPhoneNo}">${profileInfo.profileContactInfoDto.decryptedPhoneNo}</a></p>
 					</div>
 				</div>
 			</c:if>
 
-			<c:if test="${profileInfo.profileContactInfoDto.facebookUrl ne null && profileInfo.profileContactInfoDto.facebookUrl ne ''}">
+				<%--<c:if test="${profileInfo.profileContactInfoDto.decryptedCellPhoneNo ne null && profileInfo.profileContactInfoDto.decryptedCellPhoneNo ne ''}">
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-3 col-form-label">Cell Phone No.</label>
+                                    <div class="col-sm-9">
+                                        <p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.decryptedCellPhoneNo}">${profileInfo.profileContactInfoDto.decryptedCellPhoneNo}</a></p>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:if test="${profileInfo.profileContactInfoDto.decryptedWebsiteUrl ne null && profileInfo.profileContactInfoDto.decryptedWebsiteUrl ne ''}">
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-3 col-form-label"><tag:message code="text.website"/></label>
+                                    <div class="col-sm-9">
+                                        <p class="form-control-static"><a href="http://${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}" target="_blank">${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}</a></p>
+                                    </div>
+                                </div>
+                            </c:if>--%>
+			<c:if test="${profileInfo.profileContactInfoDto.decryptedFacebookUrl ne null && profileInfo.profileContactInfoDto.decryptedFacebookUrl ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.facebook.id"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="https://www.facebook.com/${profileInfo.profileContactInfoDto.facebookUrl}">${profileInfo.profileContactInfoDto.facebookUrl}</a></p>
+						<p class="form-control-static"><a href="https://www.facebook.com/${profileInfo.profileContactInfoDto.decryptedFacebookUrl}">${profileInfo.profileContactInfoDto.decryptedFacebookUrl}</a></p>
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.twitterUrl ne null && profileInfo.profileContactInfoDto.twitterUrl ne ''}">
+			<c:if test="${profileInfo.profileContactInfoDto.decryptedTwitterUrl ne null && profileInfo.profileContactInfoDto.decryptedTwitterUrl ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.twitter.id"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="https://twitter.com/${profileInfo.profileContactInfoDto.twitterUrl}">${profileInfo.profileContactInfoDto.twitterUrl}</a></p>
+						<p class="form-control-static"><a href="https://twitter.com/${profileInfo.profileContactInfoDto.decryptedTwitterUrl}">${profileInfo.profileContactInfoDto.decryptedTwitterUrl}</a></p>
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.instagramUrl ne null && profileInfo.profileContactInfoDto.instagramUrl ne ''}">
+			<c:if test="${profileInfo.profileContactInfoDto.decryptedInstagramUrl ne null && profileInfo.profileContactInfoDto.decryptedInstagramUrl ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.instagram.id"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="https://instagram.com/${profileInfo.profileContactInfoDto.instagramUrl}">${profileInfo.profileContactInfoDto.instagramUrl}</a></p>
+						<p class="form-control-static"><a href="https://instagram.com/${profileInfo.profileContactInfoDto.decryptedInstagramUrl}">${profileInfo.profileContactInfoDto.decryptedInstagramUrl}</a></p>
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.address ne null && profileInfo.profileContactInfoDto.address ne ''}">
+			<%--<c:if test="${profileInfo.profileContactInfoDto.address ne null && profileInfo.profileContactInfoDto.address ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.address"/></label>
 					<div class="col-sm-9">
 						<p class="form-control-static"><a>${profileInfo.profileContactInfoDto.address}</a></p>
 					</div>
 				</div>
-			</c:if>
+			</c:if>--%>
 		</div>
 		<br/>
+
+		<div class="row">
+			<span class="btn btn-primary btn-block" id="goBack">Back</span>
+		</div>
+		<br/>
+		<div class="modal fade" id="sendMailForm" role="dialog" aria-labelledby="sendMailFormLabel" aria-hidden="true">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="sendMailFormLabel">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<label class="col-2 col-form-label">mailTo</label>
+						<input type="text" class="form-control" id="mailTo" name="mailTo" placeholder="수신자 메일을 입력해 주세요">
+					</div>
+					<div class="form-group row">
+						<label class="col-2 col-form-label">message</label>
+						<textarea class="form-control" id="message" name="message" placeholder="메일 내용을 입력해 주세요"></textarea>
+					</div>
+					<div class="form-group row">
+						<label class="col-2 col-form-label">Profile Preview</label>
+						<div id="profilePreviewDiv" class="container"></div>
+						<input type="text" class="form-control" id="profileContent" name="profileContent"/>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="sendProfileModalClose">Close</button>
+					<button type="button" class="btn btn-primary" id="sendProfileMail">Send</button>
+				</div>
+			</div>
+
+		</div>
 	</form>
 </div>
 </div>
@@ -141,8 +185,7 @@
                     dataType : 'json',
                     method : 'post',
                     success : function(data){
-                        console.log(data);
-
+                        /*console.log(data);*/
                         var result = data.result;
                         if(result == 'ok'){
                             location.href = "/profile/list/1";
@@ -164,6 +207,51 @@
 // 		location.href = "/player/modify";
         });
 
+        $("#sendProfileMail").on("click", function(){
+            alert('1');
+            $.ajax({
+                url : '/profile/sendMail/${profileInfo.profileType}/${profileInfo.profileId}',
+                data : $("#viewFrm").serialize(),
+                dataType : 'json',
+                method : 'post',
+                success : function(data){
+                    console.log(data);
 
+                    var result = data.result;
+                    if(result == 'true'){
+                        location.reload();
+                    }
+                }
+            });
+        });
+
+        $("#sendProfileModalClose").on("click", function(){
+            $(this).modal('toggle');
+        });
+
+        $("#sendProfileModalOpen").on("click", function(){
+            $.ajax({
+                async 		: false,
+                type 		: 'POST',
+                dataType 	: 'html',
+                url : '/profile/sendMailPopup/${profileInfo.profileType}/${profileInfo.profileId}',
+                data : $("#viewFrm").serialize(),
+                processData : true,
+                cache 		: false,
+                success : function(data){
+                    var profileHtml = $(data).find(".container").html();
+                    $("#profilePreviewDiv").html(profileHtml);
+                    $("#profileContent").val(profileHtml);
+                }
+            });
+        });
+
+        $("#goBack").on("click", function(){
+            var url = "/profile/list/";
+            if ($("#profileType").val() == '1') {url += "1/01010100";}
+            else if ($("#profileType").val() == '2') {url += "2/01010200";}
+            else {url += "3/01010300";}
+            location.href =  url;
+        });
     });
 </script>

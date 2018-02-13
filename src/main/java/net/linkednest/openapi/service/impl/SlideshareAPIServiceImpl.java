@@ -18,9 +18,7 @@ import org.springframework.social.slideshare.api.impl.SlideShareTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import net.linkednest.openapi.service.SlideshareAPIService;
-
-@Service("SlideshareAPIServiceImpl")
+@Service
 public class SlideshareAPIServiceImpl implements SlideshareAPIService {
 
     @Value("${slideshare.api.key}")

@@ -1,5 +1,6 @@
 package net.linkednest.common.paging;
 
+import javax.servlet.jsp.tagext.TagSupport;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -13,19 +14,18 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Created by 9000209 on 2017-11-03.
+ */
 public class PaginationTag extends TagSupport {
     private String name;
     private PageHolder pageHolder;
@@ -134,44 +134,44 @@ public class PaginationTag extends TagSupport {
 
     private String makeParamString(ServletRequest request)
     {
-      StringBuilder queryString = new StringBuilder();
-      StringBuffer erString = new StringBuffer();
-      
-      Enumeration er = request.getParameterNames();
-      while (er.hasMoreElements())
-      {
-        String temp = er.nextElement().toString();
-        if (erString.length() != 0) {
-          erString.append(",");
-        }
-        erString.append(temp);
-      }
-      if (StringUtils.isEmpty(erString.toString())) {
-        return "";
-      }
-      this.parameters = erString.toString();
-      
+        StringBuilder queryString = new StringBuilder();
+        StringBuffer erString = new StringBuffer();
 
-      StringTokenizer tokenizer = new StringTokenizer(this.parameters, ",");
-  
-      while (tokenizer.hasMoreTokens()) {
-          String parameterName = StringUtils.trim(tokenizer.nextToken());
-          String[] value = request.getParameterValues(parameterName);
-          for (int i = 0; value != null && i < value.length; i++) {
-              if (parameterName.equals(this.pageParam)) {
-                  continue;
-              }
-              if (value[i] != null) {
-                  try {
-                      queryString.append("&" + parameterName + "=" + URLEncoder.encode(value[i], "UTF-8"));
-                  } catch (UnsupportedEncodingException e) {
-                      queryString.append("&" + parameterName + "=");
-                  }
-              } else {
-                  queryString.append("&" + parameterName + "=");
-              }
-          }
-      }
+        Enumeration er = request.getParameterNames();
+        while (er.hasMoreElements())
+        {
+            String temp = er.nextElement().toString();
+            if (erString.length() != 0) {
+                erString.append(",");
+            }
+            erString.append(temp);
+        }
+        if (StringUtils.isEmpty(erString.toString())) {
+            return "";
+        }
+        this.parameters = erString.toString();
+
+
+        StringTokenizer tokenizer = new StringTokenizer(this.parameters, ",");
+
+        while (tokenizer.hasMoreTokens()) {
+            String parameterName = StringUtils.trim(tokenizer.nextToken());
+            String[] value = request.getParameterValues(parameterName);
+            for (int i = 0; value != null && i < value.length; i++) {
+                if (parameterName.equals(this.pageParam)) {
+                    continue;
+                }
+                if (value[i] != null) {
+                    try {
+                        queryString.append("&" + parameterName + "=" + URLEncoder.encode(value[i], "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        queryString.append("&" + parameterName + "=");
+                    }
+                } else {
+                    queryString.append("&" + parameterName + "=");
+                }
+            }
+        }
 //      String[] value;
 //      int i;
 //      for (; tokenizer.hasMoreTokens(); (value != null) && (i < value.length))
@@ -195,7 +195,7 @@ public class PaginationTag extends TagSupport {
 //        }
 //        i++;
 //      }
-      return queryString.toString();
+        return queryString.toString();
     }
 
     public void setTemplate(String template) {

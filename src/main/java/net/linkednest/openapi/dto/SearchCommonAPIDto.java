@@ -24,9 +24,12 @@ public class SearchCommonAPIDto {
 		this.type = type;
 	}
 
-	@Override
-	public String toString() {
-		return "SearchCommonAPIDto [keyword=" + keyword + ", type=" + type + "]";
-	}
-    
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("SearchCommonAPIDto{");
+        sb.append("keyword='").append(keyword).append('\'');
+        sb.append(", type='").append(type).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

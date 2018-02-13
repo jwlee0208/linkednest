@@ -135,17 +135,11 @@
 	    $("input[name=page]").val(newPage);
 
 	    loadPlayerList();
-	}    
-
-	function isEmpty(val){
-		var result = false;
-		
-		if(val == 'undefined' || val == null || val ==''){
-			result = true;
-		}
-		return result;
 	}
 
+    function isEmpty(val){
+        return (val == '' || val == null || val == 'undefined') ? true : false;
+    }
 
 	var Base64 = {
 

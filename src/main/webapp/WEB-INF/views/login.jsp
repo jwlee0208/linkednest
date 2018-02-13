@@ -14,7 +14,6 @@ $(document).on("ready", function() {
 		}	
 	});
 
-
 	$( "input" ).keypress(function( event ) {
 		  if ( event.which == 13 ) {
 			  event.preventDefault();
@@ -68,7 +67,7 @@ function loginAction(){
 				}
 			},
 			error : function(data){
-	console.log('error');
+	/*console.log('error');*/
 			}
 		});
 	}

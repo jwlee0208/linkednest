@@ -13,7 +13,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -21,9 +20,10 @@ import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.commons.lang.StringUtils;
-
-
+import org.apache.commons.lang3.StringUtils;
+/**
+ * Created by 9000209 on 2017-11-03.
+ */
 public class PaginationSubmitTag extends TagSupport {
 //    private static final long serialVersionUID = 1L;
 //    private String name;
@@ -122,7 +122,7 @@ public class PaginationSubmitTag extends TagSupport {
 //    private String makeParamString(ServletRequest request){
 //    StringBuilder queryString = new StringBuilder();
 //    StringBuffer erString = new StringBuffer();
-//    
+//
 //    Enumeration er = request.getParameterNames();
 //    while (er.hasMoreElements())
 //    {
@@ -136,16 +136,16 @@ public class PaginationSubmitTag extends TagSupport {
 //      return "";
 //    }
 //    this.parameters = erString.toString();
-//    
+//
 //
 //    StringTokenizer tokenizer = new StringTokenizer(this.parameters, ",");
 //    String[] value;
-//    
+//
 ////    for (; tokenizer.hasMoreTokens(); (value != null) && (i < value.length))
 //    while(tokenizer.hasMoreTokens()){
 //      String parameterName = StringUtils.trim(tokenizer.nextToken());
 //      value = request.getParameterValues(parameterName);
-//      
+//
 //      for (int i = 0; value != null && i < value.length; i++) {
 //          if (parameterName.equals(this.pageParam)) {
 //              continue;
@@ -158,7 +158,7 @@ public class PaginationSubmitTag extends TagSupport {
 //              }
 //          } else {
 //              queryString.append("&" + parameterName + "=");
-//          }          
+//          }
 ////          if (!parameterName.equals(this.pageParam)) {
 ////              if (value[i] != null) {
 ////                try
@@ -172,7 +172,7 @@ public class PaginationSubmitTag extends TagSupport {
 ////              } else {
 ////                queryString.append("&" + parameterName + "=");
 ////              }
-////            }          
+////            }
 //      }
 //    }
 //    return queryString.toString();
@@ -270,7 +270,7 @@ public class PaginationSubmitTag extends TagSupport {
     private String scriptName;
 
     private String separator = "?";
-    
+
     /**
      * 페이지 파라매터 명 리스트(, 로 구분)
      */
@@ -303,10 +303,10 @@ public class PaginationSubmitTag extends TagSupport {
 
             int startPage = ((int) Math.ceil((double) page / (double) this.pageHolder.getPageSize()) - 1) * this.pageHolder.getPageSize() + 1;
             pageInfo.put("startPage", startPage);
-            
+
             String paramString = makeParamString(pageContext.getRequest());
             pageInfo.put("paramString", paramString);
-            
+
 
             List<Integer> pages = new ArrayList<Integer>(this.pageHolder.getPageSize());
 
@@ -351,14 +351,14 @@ public class PaginationSubmitTag extends TagSupport {
         }
         return (bean);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private String makeParamString(ServletRequest request) {
         StringBuilder queryString = new StringBuilder();
         StringBuffer erString = new StringBuffer();
-        
+
         Enumeration er = request.getParameterNames();
-        
+
         while (er.hasMoreElements()) {
             String temp = er.nextElement().toString();
             if(erString.length() != 0){
@@ -366,13 +366,13 @@ public class PaginationSubmitTag extends TagSupport {
             }
             erString.append(temp);
         }
-        
+
         if(StringUtils.isEmpty(erString.toString())){
             return "";
         }else{
             this.parameters = erString.toString();
         }
-        
+
         StringTokenizer tokenizer = new StringTokenizer(this.parameters, ",");
         while (tokenizer.hasMoreTokens()) {
             String parameterName = StringUtils.trim(tokenizer.nextToken());

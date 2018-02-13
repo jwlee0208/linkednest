@@ -16,5 +16,6 @@
                 output.encoding=UTF-8
             </value>
         </property>
+        <property name="resourceLoaderPath" value="classpath:mailTemplate"/>
     </bean>
 </beans>

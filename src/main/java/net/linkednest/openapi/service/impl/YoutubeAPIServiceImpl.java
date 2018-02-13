@@ -1,7 +1,6 @@
 package net.linkednest.openapi.service.impl;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +20,7 @@ import com.google.api.services.youtube.model.SearchResult;
 
 
 
-@Service("YoutubeAPIServiceImpl")
+@Service
 public class YoutubeAPIServiceImpl implements YoutubeAPIService{
 
     @Value("${google.api.key}")

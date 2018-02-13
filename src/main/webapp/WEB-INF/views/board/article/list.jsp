@@ -51,9 +51,9 @@
 		<table style="width: 100%;" class="table table-hover">
 			<colgroup>
 				<col width="10%" />
-				<col width="65%" />
+				<col width="60%" />
 				<col width="15%" />
-				<col width="10%" />
+				<col width="15%" />
 			</colgroup>
 			<thead>
 				<tr>

@@ -489,3 +489,87 @@ INSERT INTO TB_CODE (code_name, code_value, code_type,  create_date) VALUES('Zul
 INSERT INTO `test`.`TB_BOARD_CATEGORY` (`board_category_id`, `board_category_name`) VALUES ('1', 'dev');
 INSERT INTO `test`.`TB_BOARD_CATEGORY` (`board_category_id`, `board_category_name`) VALUES ('2', 'trip');
 INSERT INTO `test`.`TB_BOARD_CATEGORY` (`board_category_id`, `board_category_name`) VALUES ('3', 'baseball');
+
+
+--
+-- 테이블의 덤프 데이터 `TB_PROFILE_ATTR`
+--
+INSERT INTO `TB_PROFILE_ATTR` (`profile_attr_id`, `profile_attr_name`, `cat_id`, `create_date`, `create_user_id`) VALUES
+  (1, 'throw', '01010100', '2016-09-04 19:52:28', 'jwlee'),
+  (2, 'throw.type', '01010100', '2016-09-04 19:52:58', 'jwlee'),
+  (3, 'hit', '01010100', '2016-09-04 19:53:18', 'jwlee'),
+  (4, 'position', '01010100', '2016-09-04 19:54:32', 'jwlee'),
+  (5, 'league.level', '01010300', '2016-09-04 19:54:43', 'jwlee');
+
+--
+-- 테이블의 덤프 데이터 `TB_PROFILE_ATTR_ELEMENT`
+--
+INSERT INTO `TB_PROFILE_ATTR_ELEMENT` (`profile_attr_element_id`, `profile_attr_id`, `profile_attr_element_name`, `create_date`, `create_user_id`, `modify_date`, `modify_user_id`) VALUES
+  (1, 3, 'right', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (2, 3, 'left', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (3, 3, 'switch', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (4, 2, 'overhand', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (5, 2, 'threequarter', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (6, 2, 'sidearm', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (7, 2, 'underhand', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (8, 1, 'right', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (9, 1, 'left', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (10, 1, 'switch', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (11, 4, 'p', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (12, 4, 'cc', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (13, 4, '1b', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (14, 4, '2b', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (15, 4, '3b', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (16, 4, 'ss', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (17, 4, 'lf', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (18, 4, 'cf', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (19, 4, 'rf', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (20, 4, 'dh', '2016-06-14 00:00:00', 'jwlee0208', NULL, NULL),
+  (21, 5, 'pro', '2016-06-16 00:00:00', 'jwlee0208', NULL, NULL),
+  (22, 5, 'semipro', '2016-06-16 00:00:00', 'jwlee0208', NULL, NULL),
+  (23, 5, 'independence', '2016-06-16 00:00:00', 'jwlee0208', NULL, NULL);
+
+
+INSERT INTO `TB_ATTR` (`attr_id`, `cat_id`, `attr_name`, `create_date`, `create_user_id`, `create_user_name`, `modify_date`, `modify_user_id`, `modify_user_name`) VALUES
+  (1, 1010100, 'throws', '2016-06-29 14:45:17', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (2, 1010100, 'throwsType', '2016-06-29 14:45:27', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (3, 1010100, 'bats', '2016-06-29 14:45:34', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (4, 1010100, 'position', '2016-06-29 14:45:40', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (5, 1010102, 'throws', '2016-06-29 14:45:58', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (6, 1010102, 'bats', '2016-06-29 14:46:05', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (7, 8, 'region', '2015-08-13 18:44:42', 'jwlee', 'jwlee', NULL, NULL, NULL),
+  (8, 9, 'region', '2015-08-13 19:34:53', NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO `TB_ATTR_ELEM` (`attr_elem_id`, `attr_id`, `cat_id`, `attr_elem_name`, `create_date`, `create_user_id`, `create_user_name`, `modify_date`, `modify_user_id`, `modify_user_name`) VALUES
+  (1, 1, 6, 'right', '2014-10-27 22:29:53', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (2, 1, 6, 'left', '2014-10-27 22:30:07', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (3, 1, 6, 'switch', '2014-10-27 22:30:12', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (4, 2, 6, 'overhand', '2014-10-27 22:30:35', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (5, 2, 6, 'underhand', '2014-10-27 22:30:44', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (6, 2, 6, 'sidearm', '2014-10-27 22:30:52', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (7, 2, 6, 'threequarter', '2014-10-27 22:31:05', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (8, 3, 6, 'right', '2014-10-27 22:31:25', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (9, 3, 6, 'left', '2014-10-27 22:31:29', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (10, 4, 7, 'CC', '2014-10-27 22:39:28', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (11, 4, 7, 'DH', '2014-10-27 22:39:33', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (12, 4, 7, '1B', '2014-10-27 22:39:37', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (13, 4, 7, '2B', '2014-10-27 22:39:40', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (14, 4, 7, '3B', '2014-10-27 22:39:42', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (15, 4, 7, 'SS', '2014-10-27 22:39:46', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (16, 4, 7, 'LF', '2014-10-27 22:39:50', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (17, 4, 7, 'CF', '2014-10-27 22:39:53', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (18, 4, 7, 'RF', '2014-10-27 22:39:55', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (19, 5, 7, 'right', '2014-10-27 22:40:43', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (20, 5, 7, 'left', '2014-10-27 22:40:47', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (21, 5, 7, 'switch', '2014-10-27 22:41:10', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (22, 6, 7, 'left', '2014-10-27 22:41:17', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (23, 6, 7, 'right', '2014-10-27 22:41:20', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (24, 6, 7, 'switch', '2014-10-27 22:41:25', 'jwlee0208', 'Paul', NULL, NULL, NULL),
+  (25, 7, 8, 'asia', '2015-08-13 18:45:44', NULL, NULL, NULL, NULL, NULL),
+  (26, 7, 8, 'north america', '2015-08-13 18:46:24', NULL, NULL, NULL, NULL, NULL),
+  (27, 7, 8, 'south america', '2015-08-13 18:46:45', 'jwlee', 'jwlee', NULL, NULL, NULL),
+  (28, 7, 8, 'europe', '2015-08-13 18:47:08', 'jwlee', 'jwlee', NULL, NULL, NULL),
+  (29, 8, 9, 'asia', '2015-08-13 19:35:41', 'jwlee', 'jwlee', NULL, NULL, NULL),
+  (30, 8, 9, 'north america', '2015-08-13 19:36:10', 'jwlee', 'jwlee', NULL, NULL, NULL),
+  (31, 8, 9, 'south america', '2015-08-13 19:36:35', NULL, NULL, NULL, NULL, NULL),
+  (32, 8, 9, 'europe', '2015-08-13 19:36:50', 'jwlee', 'jwlee', NULL, NULL, NULL);

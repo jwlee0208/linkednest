@@ -1,7 +1,9 @@
 package net.linkednest.common.paging;
 
+/**
+ * Created by 9000209 on 2017-11-03.
+ */
 public class PageHolder {
-
     public static int DEFAULT_LISTSIZE = 10;
     public static int DEFAULT_PAGESIZE = 3;
     private int listSize = DEFAULT_LISTSIZE;
@@ -21,7 +23,7 @@ public class PageHolder {
     }
 
     public PageHolder(long totalRows, int currentPage, int listSize,
-            int pageSize) {
+                      int pageSize) {
         this.totalRows = totalRows;
         this.currentPage = currentPage;
         this.listSize = listSize;
@@ -65,5 +67,4 @@ public class PageHolder {
     public long getTotalRows() {
         return this.totalRows;
     }
-
 }
