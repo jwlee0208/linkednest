@@ -26,7 +26,7 @@ public class ProfileContactValidator extends BaseValidator {
     private static void commonValidate(BindingResult result, ProfileContactInfoDto profileContactInfoDto) {
         ValidationUtil.rejectIfEmpty(result, "profileContactInfoDto.email", "profile.contact.email.empty", "email을 입력해 주세요.");
         if (StringUtils.isNotEmpty(profileContactInfoDto.getEmail())) {
-            ValidationUtil.rejectIfNotRegEx(result, "profileContactInfoDto.email", "profile.contact.email.regex", "잘못된 이메일 형식이 입력 되었습니다.", ValidationUtil.REG_EX_EMAIL);
+            /*ValidationUtil.rejectIfNotRegEx(result, "profileContactInfoDto.email", "profile.contact.email.regex", "잘못된 이메일 형식이 입력 되었습니다.", ValidationUtil.REG_EX_EMAIL);*/
         }
 
         if (StringUtils.isNotEmpty(profileContactInfoDto.getCellPhoneNo())) {
@@ -34,7 +34,7 @@ public class ProfileContactValidator extends BaseValidator {
         }
 
         if (StringUtils.isNotEmpty(profileContactInfoDto.getPhoneNo())) {
-            ValidationUtil.rejectIfNotRegEx(result, "profileContactInfoDto.phoneNo", "profile.contant.phoneNo.regex", "전화번호가 형식에 맞지 않습니다.", ValidationUtil.REG_EX_NORMAL_PHONE_NO);
+            /*ValidationUtil.rejectIfNotRegEx(result, "profileContactInfoDto.phoneNo", "profile.contant.phoneNo.regex", "전화번호가 형식에 맞지 않습니다.", ValidationUtil.REG_EX_NORMAL_PHONE_NO);*/
         }
 
         if (StringUtils.isNotEmpty(profileContactInfoDto.getWebsiteUrl())) {

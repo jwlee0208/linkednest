@@ -11,11 +11,6 @@
 <meta name="description" 			content="Checkout Future's MVP"/>
 <meta name="robots" 				content="index,follow" /> 
 <meta name="keywords" 				content="blog, baseball, link, player, profile"/>
-
-<script type="text/javascript"	src="${pageContext.request.contextPath}/js/holder.js"></script>
-
-<link 	rel="stylesheet" 		href="${pageContext.request.contextPath}/css/pagination.css">
-<link 	rel="stylesheet" 		href="${pageContext.request.contextPath}/css/profileList.css">
 <form id="listFrm" name="listFrm" method="post">
 	<div class="container">
 	
@@ -81,10 +76,8 @@
 			</div>
 			<!-- // list area -->
 		<c:if test="${isLogon}">
-			<div class="btn-group btn-group-justified" style="padding-bottom: 20px;">
-				
-					<input type="button" class="btn btn-default pull-right" value="새로운 리그 등록" name="goToRegistLeague" />
-				
+			<div class="row" style="padding-bottom: 20px;">
+				<input type="button" class="btn btn-outline-primary btn-block" value="새로운 리그 등록" name="goToRegistLeague" />
 			</div>		
 		</c:if>
 		</div>	
@@ -93,6 +86,9 @@
 	<c:import url="/common/modalPopup"/>
 	<!-- // modal popup area -->	
 </form>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/holder.js"></script>
+<link 	rel="stylesheet" 		href="${pageContext.request.contextPath}/css/pagination.css">
+<link 	rel="stylesheet" 		href="${pageContext.request.contextPath}/css/profileList.css">
 <script>
 $(document).on("ready", function() {
 	$("input[name='goToRegistLeague']").on("click", function() {
@@ -117,15 +113,6 @@ function isEmpty(val){
 
 function goDetailLeague(leagueId){
 	location.href = '/profile/leagueView/' + leagueId;
-// 	$.ajax({
-// 		url : '/profile/leagueView/' + leagueId,
-// 		data : '',
-// 		dataType : 'html',
-// 		success : function(data){
-// 			$('.modal-title').html(($(data).find("h2").html()));
-// 			$('.modal-body').html(data);
-// 		}
-// 	});
 }
 
 // modal 창 조회후 close시 html 초기화 : css issue

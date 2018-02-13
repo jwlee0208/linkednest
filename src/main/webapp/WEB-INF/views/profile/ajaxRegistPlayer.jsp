@@ -13,7 +13,7 @@
 --%>
 <br />
 <div class="form-group row">
-	<label class="col-2 col-form-label" for="name">Name</label>
+	<label class="col-2 col-form-label" for="name" style="color:red;">Name(*)</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="name" name="name" placeholder="write your name" />
 		<span name="nameErr" class="errorMsg" style="display: none;"></span>
@@ -21,7 +21,7 @@
 </div>
 <br />
 <div class="form-group row">
-	<label class="col-2 col-form-label" for="catId2">Main Position</label>
+	<label class="col-2 col-form-label" for="catId2" style="color:red;">Main Position(*)</label>
 	<div class="col-10">
 		<input type="hidden" id="catId1" name="catId1" value="01010100" />
 		<select id="catId2" name="catId2" class="form-control">
@@ -42,13 +42,13 @@
 </div>
 <br />
 <div class="form-group row">
-	<label class="col-2 col-form-label" for="height">Height (cm)</label>
+	<label class="col-2 col-form-label" for="height" style="color:red;">Height (cm)(*)</label>
 	<div class="col-4">
 		<input type="text" class="form-control" id="height" name="profilePlayerDto.height" aria-describedby="heightHelpInline" value="0"/>
 		<small id="heightHelpInline" class="text-muted">Allow digit and '.'</small>
 		<span name="profilePlayerDto_heightErr" class="errorMsg" style="display: none;"></span>
 	</div>
-	<label class="col-2 col-form-label" for="weight">Weight (kg)</label>
+	<label class="col-2 col-form-label" for="weight" style="color:red;">Weight (kg)(*)</label>
 	<div class="col-4">
 		<input type="text" class="form-control" id="weight" name="profilePlayerDto.weight" aria-describedby="weightHelpInline" value="0"/>
 		<small id="weightHelpInline" class="text-muted">Allow digit and '.'</small>
@@ -57,7 +57,7 @@
 </div>
 <br />
 <div class="form-group row">
-	<label class="col-2 col-form-label" for="birthDate">Date Of Birth</label>
+	<label class="col-2 col-form-label" for="birthDate" style="color:red;">Date Of Birth(*)</label>
 	<div class="col-10">
 		<input type="date" class="form-control" id="birthDate" name="profilePlayerDto.birthDate" aria-describedby="birthDateHelpInline"/>
 		<small id="birthDateHelpInline" class="text-muted">YYYY-MM-DD</small>
@@ -66,7 +66,7 @@
 </div>
 <br />
 <div class="form-group row">
-	<label class="col-2 col-form-label" for="birthPlace">Birth Place</label>
+	<label class="col-2 col-form-label" for="birthPlace" style="color:red;">Birth Place(*)</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="birthPlace" name="profilePlayerDto.birthPlace" />
 		<span name="profilePlayerDto_birthPlaceErr" class="errorMsg" style="display: none;"></span>
@@ -74,7 +74,7 @@
 </div>
 <br />
 <div class="form-group row">
-	<label class="col-2 col-form-label" for="education">Education</label>
+	<label class="col-2 col-form-label" for="education" style="color:red;">Education(*)</label>
 	<div class="col-10">
 		<textarea class="form-control" id="education" name="profilePlayerDto.education"></textarea>
 		<span name="profilePlayerDto_educationErr" class="errorMsg" style="display: none;"></span>
@@ -98,7 +98,7 @@
 </div>
 <br />--%>
 <div class="form-group row">
-	<label for="language" class="col-sm-2 control-label"><tag:message code="common.language"/></label>
+	<label for="language" class="col-sm-2 control-label" style="color:red;"><tag:message code="common.language"/>(*)</label>
 	<div class="col-sm-4">
 		<select class="form-control" id="language" name="profilePlayerDto.language">
 			<option value=""><tag:message code="select.language"/></option>
@@ -111,7 +111,7 @@
 		<span name="profilePlayerDto_languageErr" class="errorMsg" style="display: none;"></span>
 	</div>
 
-	<label for="nationality" class="col-sm-2 control-label"><tag:message code="common.nationality"/></label>
+	<label for="nationality" class="col-sm-2 control-label" style="color:red;"><tag:message code="common.nationality"/>(*)</label>
 	<div class="col-sm-4">
 		<select class="form-control" id="nationality" name="profilePlayerDto.nationality">
 			<option value=""><tag:message code="select.nationality"/></option>
@@ -137,7 +137,7 @@
 </div>
 <br />
 <div class="form-group row" for="introduce" >
-	<label class="col-2 col-form-label">Introduce</label>
+	<label class="col-2 col-form-label" style="color:red;">Introduce(*)</label>
 	<div class="col-10">
 		<textarea class="form-control tinymce" id="introduce" name="introduce"></textarea>
 		<span id="introduceErr" class="errorMsg" style="display: none;"></span>
@@ -151,7 +151,7 @@
 	<c:set var="rowCnt" value="${0}" />
 	<c:forEach var="profileAttrInfo" items="${profileAttrList}">
 		<div class="form-group row">
-			<label class="col-2 col-form-label"><tag:message code='text.${profileAttrInfo.profileAttrName}'/></label>
+			<label class="col-2 col-form-label" style="color:red;"><tag:message code='text.${profileAttrInfo.profileAttrName}'/>(*)</label>
 			<div class="col-10">
 				<div class="form-group row">
 					<c:set var="profileAttrElemList" value="${profileAttrInfo.profileAttrElementList}" />
@@ -179,7 +179,7 @@
 <h3>Contact Info.</h3>
 <hr />
 <div class="form-group row">
-	<label class="col-2 col-form-label" for="email">Email</label>
+	<label class="col-2 col-form-label" for="email" style="color:red;">Email(*)</label>
 	<div class="col-10">
 		<input type="email" class="form-control" id="email" name="profileContactInfoDto.email" placeholder="write your e-mail" />
 		<span name="profileContactInfoDto_emailErr" class="errorMsg" style="display: none;"></span>
@@ -187,7 +187,7 @@
 </div>
 <br />
 <div class="form-group row">
-	<label class="col-2 col-form-label" for="phoneNo">Phone No.</label>
+	<label class="col-2 col-form-label" for="phoneNo" style="color:red;">Phone No.(*)</label>
 	<div class="col-10">
 		<input type="tel" class="form-control" id="phoneNo" name="profileContactInfoDto.phoneNo" placeholder="write your phone No." />
 		<span name="profileContactInfoDto_phoneNoErr" class="errorMsg" style="display: none;"></span>

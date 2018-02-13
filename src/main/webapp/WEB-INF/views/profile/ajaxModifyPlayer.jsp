@@ -6,14 +6,14 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group row">
-            <label for="" class="col-sm-5 col-form-label"><tag:message code="text.player.name"/></label>
+            <label for="" class="col-sm-5 col-form-label" style="color:red;"><tag:message code="text.player.name"/>(*)</label>
             <div class="col-sm-7">
                 <p class="form-control-static"><input type="text" class="form-control" id="name" name="name" placeholder="write your name" value="${profileInfo.name}"/></p>
                 <span name="nameErr" class="errorMsg" style="display: none;"></span>
             </div>
         </div>
         <div class="form-group row">
-            <label for="" class="col-sm-5 col-form-label"><tag:message code="text.height"/></label>
+            <label for="" class="col-sm-5 col-form-label" style="color:red;"><tag:message code="text.height"/>(*)</label>
             <div class="col-sm-7">
                 <p class="form-control-static">
                     <input type="number" class="form-control" id="height" name="profilePlayerDto.height" value="${profileInfo.profilePlayerDto.height}"/>
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="" class="col-sm-5 col-form-label"><tag:message code="text.weight"/></label>
+            <label for="" class="col-sm-5 col-form-label" style="color:red;"><tag:message code="text.weight"/>(*)</label>
             <div class="col-sm-7">
                 <p class="form-control-static">
                     <input type="number" class="form-control" id="weight" name="profilePlayerDto.weight" value="${profileInfo.profilePlayerDto.weight}"/>
@@ -34,7 +34,7 @@
         </div>
 
         <div class="form-group row">
-            <label for="" class="col-sm-5 col-form-label"><tag:message code="text.dateofbirth"/></label>
+            <label for="" class="col-sm-5 col-form-label" style="color:red;"><tag:message code="text.dateofbirth"/>(*)</label>
             <div class="col-sm-7">
                 <p class="form-control-static">
                     <input type="date" class="form-control" id="birthDate" name="profilePlayerDto.birthDate" value="${fn:substring(profileInfo.profilePlayerDto.birthDate,0,10)}"/>
@@ -45,7 +45,7 @@
         </div>
 
         <div class="form-group row">
-            <label for="" class="col-sm-5 col-form-label"><tag:message code="text.birthplace"/></label>
+            <label for="" class="col-sm-5 col-form-label" style="color:red;"><tag:message code="text.birthplace"/>(*)</label>
             <div class="col-sm-7">
                 <p class="form-control-static">
                     <input type="text" class="form-control" id="birthPlace" name="profilePlayerDto.birthPlace" value="${profileInfo.profilePlayerDto.birthPlace}"/>
@@ -55,7 +55,7 @@
         </div>
 
         <div class="form-group row">
-            <label for="" class="col-sm-5 col-form-label"><tag:message code="text.education"/></label>
+            <label for="" class="col-sm-5 col-form-label" style="color:red;"><tag:message code="text.education"/>(*)</label>
             <div class="col-sm-7">
                 <p class="form-control-static">
                     <textarea class="form-control" id="education" name="profilePlayerDto.education">${profileInfo.profilePlayerDto.education}</textarea>
@@ -76,7 +76,7 @@
             </div>
         </div>--%>
         <div class="form-group row">
-            <label for="" class="col-sm-5 col-form-label"><tag:message code="text.nationality"/></label>
+            <label for="" class="col-sm-5 col-form-label" style="color:red;"><tag:message code="text.nationality"/>(*)</label>
             <div class="col-sm-7">
                 <p class="form-control-static"><input type="text" class="form-control" id="nationalitySearch" value="<tag:message code='code.country.${profileInfo.profilePlayerDto.nationality}'/>"/></p>
                 <input type="hidden" class="form-control" id="nationality" name="profilePlayerDto.nationality"  value="${profileInfo.profilePlayerDto.nationality}"/>
@@ -84,7 +84,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="" class="col-sm-5 col-form-label"><tag:message code="text.language"/></label>
+            <label for="" class="col-sm-5 col-form-label" style="color:red;"><tag:message code="text.language"/>(*)</label>
             <div class="col-sm-7">
                 <p class="form-control-static"><input type="text" class="form-control" id="languageSearch" value="<tag:message code='code.language.${profileInfo.profilePlayerDto.language}'/>"/></p>
                 <input type="hidden" class="form-control" id="language" name="profilePlayerDto.language" value="${profileInfo.profilePlayerDto.language}"/>
@@ -92,7 +92,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-5 col-form-label">Main Position</label>
+            <label class="col-5 col-form-label" style="color:red;">Main Position(*)</label>
             <div class="col-7">
                 <input type="hidden" id="catId1" name="catId1" value="${profileInfo.catId1}"/>
                 <select id="catId2" name="catId2" class="form-control">
@@ -126,7 +126,7 @@
 
     <c:forEach var="attrElemInfo" items="${attrElemList}">
         <div class="row">
-            <label for="" class="col-2 col-form-label"><tag:message code="text.${attrElemInfo.profileAttrName}"/></label>
+            <label for="" class="col-2 col-form-label" style="color:red;"><tag:message code="text.${attrElemInfo.profileAttrName}"/>(*)</label>
             <c:set var="profileAttrElemList" value="${attrElemInfo.profileAttrElementList}"/>
 
             <div class="col-10">
@@ -168,7 +168,7 @@
     <h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
     <hr/>
     <div class="form-group row">
-        <label for="email" class="col-sm-2 col-form-label"><tag:message code="text.email"/></label>
+        <label for="email" class="col-sm-2 col-form-label" style="color:red;"><tag:message code="text.email"/>(*)</label>
         <div class="col-sm-10">
             <p class="form-control-static">
                 <input type="email" class="form-control" id="email" name="profileContactInfoDto.email" placeholder="write your e-mail" value="${profileInfo.profileContactInfoDto.decryptedEmail}"/>
@@ -177,7 +177,7 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="phoneNo" class="col-sm-2 col-form-label">Phone No.</label>
+        <label for="phoneNo" class="col-sm-2 col-form-label" style="color:red;">Phone No.(*)</label>
         <div class="col-sm-10">
             <p class="form-control-static">
                 <input type="tel" class="form-control" id="phoneNo" name="profileContactInfoDto.phoneNo" placeholder="write your phone No." value="${profileInfo.profileContactInfoDto.decryptedPhoneNo}"/>
