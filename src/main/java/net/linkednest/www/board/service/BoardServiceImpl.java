@@ -14,7 +14,7 @@ import net.linkednest.www.board.dao.BoardDao;
 import net.linkednest.www.board.dto.BoardCategoryDto;
 import net.linkednest.www.board.dto.BoardCategoryPortalDto;
 
-@Service("BoardServiceImpl")
+@Service
 public class BoardServiceImpl implements BoardService{
 	
 	@Resource(name="BoardDao")

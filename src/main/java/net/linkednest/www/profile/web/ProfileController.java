@@ -223,7 +223,7 @@ public class ProfileController {
 	 */
     @RequestMapping(value="/registAction", method=RequestMethod.POST)
     @ResponseBody
-    public JsonResponse  registProfile(ProfileDto profileDto, HttpSession session, BindingResult bindingResult) throws Exception{
+    public JsonResponse registProfile(ProfileDto profileDto, HttpSession session, BindingResult bindingResult) throws Exception{
 		System.out.printf(" ----------- [start] regist profile action ---------- \n");
 		logger.info(" [profileDto] : " + profileDto);
 		// validation
@@ -267,22 +267,35 @@ public class ProfileController {
 	 */
 	@RequestMapping(value="/modifyAction", method=RequestMethod.POST)
     @ResponseBody
-    public JSONObject  modifyProfile(ProfileDto profileDto, HttpSession session, BindingResult bindingResult) throws Exception{
-    	JSONObject 		result 				= new  JSONObject();
+    public JsonResponse modifyProfile(ProfileDto profileDto, HttpSession session, BindingResult bindingResult) throws Exception{
+		System.out.printf(" ----------- [start] modify profile action ---------- \n");
 		// validation
 		ProfileValidator.updateValidate(bindingResult, profileDto);
 
-    	profileDto.setTitle(profileDto.getName());
-    	
-    	logger.debug("profileDto is " + profileDto.toString());
-    	
-		// service call : insert tables
-    	int addCnt = this.profileService.updateProfileInfos(profileDto);
-    	
-    	result.put("result"	, (addCnt > 0) ? "success" : "error");
-    	result.put("message", (addCnt > 0) ? "success!!!" : "error!!!");
-    	
-    	return result;
+		JsonResponse returnObj = new JsonResponse();
+		String resultCode = StringUtils.EMPTY;
+		String resultMsg = StringUtils.EMPTY;
+		if (bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().stream().forEach( e -> {
+				logger.info(e.getClass() + ", " + e.getCode() +", " + e.getDefaultMessage());
+			});
+			returnObj.setStatus("validateErr");
+			returnObj.setResult(bindingResult.getAllErrors());
+		} else {
+			profileDto.setTitle(profileDto.getName());
+
+			logger.info("profileDto is " + profileDto.toString());
+
+			// service call : insert tables
+			int addCnt = this.profileService.updateProfileInfos(profileDto);
+
+			resultCode = (addCnt > 0) ? "success" : "error";
+			resultMsg = (addCnt > 0) ? "success!!!" : "insert error!!!";
+
+			returnObj.setStatus(resultCode);
+			returnObj.setResult(resultMsg);
+		}
+    	return returnObj;
     }
 
 	/**

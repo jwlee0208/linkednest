@@ -10,6 +10,7 @@ import net.linkednest.www.share.service.ShareService;
 import net.linkednest.www.user.dto.UserDto;
 import net.linkednest.www.user.service.UserService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,16 +25,16 @@ import java.util.List;
 @RequestMapping(value="/common")
 public class CommonController {
 
-    @Resource(name = "BoardArticleServiceImpl")
+    @Autowired
     private BoardArticleService boardArticleService;
 
-    @Resource(name = "BoardServiceImpl")
+    @Autowired
     private BoardService boardService;
 
-    @Resource(name = "ShareServiceImpl")
+    @Autowired
     private ShareService shareService;
 
-    @Resource(name = "UserServiceImpl")
+    @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/sideBoardList")

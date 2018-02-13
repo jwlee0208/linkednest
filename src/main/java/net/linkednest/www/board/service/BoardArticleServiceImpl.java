@@ -16,7 +16,7 @@ import net.linkednest.www.board.dto.SideBoardCategoryPortalDto;
 import net.linkednest.www.board.dto.SlideshareLinkDto;
 import net.linkednest.common.util.PagingUtil;
 
-@Service("BoardArticleServiceImpl")
+@Service
 public class BoardArticleServiceImpl implements BoardArticleService{
 	
 	@Resource(name="BoardArticleDao")

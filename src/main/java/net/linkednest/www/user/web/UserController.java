@@ -7,8 +7,10 @@ import net.linkednest.www.common.dto.CodeDto;
 import net.linkednest.www.common.dto.MailDto;
 import net.linkednest.www.common.dto.ShareDto;
 import net.linkednest.www.common.service.CommonService;
+import net.linkednest.www.share.service.ShareService;
 import net.linkednest.www.share.service.ShareServiceImpl;
 import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserService;
 import net.linkednest.www.user.service.UserServiceImpl;
 import net.linkednest.www.user.validate.PasswordValidator;
 import net.linkednest.www.user.validate.UserValidator;
@@ -50,14 +52,14 @@ public class UserController {
     
     Log log = LogFactory.getLog(this.getClass());
     
-	@Resource(name="UserServiceImpl")
-	private UserServiceImpl userService;
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private CommonService commonService;
 	
-	@Resource(name="ShareServiceImpl")
-	private ShareServiceImpl shareService;
+	@Autowired
+	private ShareService shareService;
 	
     @Inject
     private VelocityEngine          velocityEngine;

@@ -2,6 +2,7 @@ package net.linkednest.www.profile.dao;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -82,6 +83,9 @@ public class ProfileDao extends SqlSessionDaoSupport{
 	 * @return
 	 */
 	public int updateProfileInfo(ProfileDto param) {
+		if (StringUtils.isNotEmpty(param.getProfileImgPath())) {
+			param.setProfileImgPath(StringUtils.trim(StringUtils.replace(param.getProfileImgPath(), ",", "")));
+		}
 		return getSqlSession().update("sql.profile.updateProfileInfo", param);
 	}
 

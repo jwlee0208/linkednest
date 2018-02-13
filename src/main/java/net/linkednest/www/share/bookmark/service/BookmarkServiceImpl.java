@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import net.linkednest.www.share.bookmark.dao.BookmarkDao;
 import net.linkednest.www.share.bookmark.dto.BookmarkDto;
 
-@Service("BookmarkServiceImpl")
+@Service
 public class BookmarkServiceImpl implements BookmarkService{
     @Resource(name="BookmarkDao")
     private BookmarkDao bookmarkDao;

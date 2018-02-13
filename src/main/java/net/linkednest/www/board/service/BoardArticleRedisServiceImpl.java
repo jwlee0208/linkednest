@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import net.linkednest.www.board.dao.BoardArticleRedisDao;
 
-@Service("BoardArticleRedisServiceImpl")
+@Service
 public class BoardArticleRedisServiceImpl implements BoardArticleRedisService{
 
 	@Inject

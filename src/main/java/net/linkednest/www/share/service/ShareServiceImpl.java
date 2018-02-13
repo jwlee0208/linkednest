@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-@Service("ShareServiceImpl")
+@Service
 public class ShareServiceImpl implements ShareService{
     
     @Inject

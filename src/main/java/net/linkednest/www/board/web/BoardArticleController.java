@@ -6,13 +6,13 @@ import net.linkednest.www.board.dto.BoardArticleDto;
 import net.linkednest.www.board.dto.BoardCategoryDto;
 import net.linkednest.www.board.dto.BoardDto;
 import net.linkednest.www.board.dto.SlideshareLinkDto;
-import net.linkednest.www.board.service.BoardArticleServiceImpl;
-import net.linkednest.www.board.service.BoardCategoryServiceImpl;
-import net.linkednest.www.board.service.BoardServiceImpl;
+import net.linkednest.www.board.service.*;
 import net.linkednest.www.common.dto.ShareDto;
 import net.linkednest.www.common.web.EditorController;
+import net.linkednest.www.share.service.ShareService;
 import net.linkednest.www.share.service.ShareServiceImpl;
 import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserService;
 import net.linkednest.www.user.service.UserServiceImpl;
 import net.sf.json.JSONObject;
 import org.apache.commons.collections.CollectionUtils;
@@ -20,6 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jboss.logging.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -61,26 +62,26 @@ public class BoardArticleController {
 	private static final int 	THUMBNAIL_IMAGE_WIDTH_LARGE 	= 400;
 	private static final int 	THUMBNAIL_IMAGE_HEIGHT_LARGE 	= 400;
 
-	@Resource(name = "BoardServiceImpl")
-	private BoardServiceImpl boardService;
+	@Autowired
+	private BoardService boardService;
 
-	@Resource(name = "BoardArticleServiceImpl")
-	private BoardArticleServiceImpl boardArticleService;
+	@Autowired
+	private BoardArticleService boardArticleService;
 	
-	@Resource(name = "BoardCategoryServiceImpl")
-	private BoardCategoryServiceImpl boardCategoryService;
+	@Autowired
+	private BoardCategoryService boardCategoryService;
 
 	@Resource(name = "fileUpload")
 	private FileUpload fileUpload;
 	
-	@Resource(name = "EditorController")
+	@Autowired
 	private EditorController editorController;
 	
-    @Resource(name = "ShareServiceImpl")
-    private ShareServiceImpl shareService;
+    @Autowired
+    private ShareService shareService;
 
-    @Resource(name = "UserServiceImpl")
-    private UserServiceImpl userService;
+    @Autowired
+    private UserService userService;
     
 	/*	
 	// spring-data-redis 사용.

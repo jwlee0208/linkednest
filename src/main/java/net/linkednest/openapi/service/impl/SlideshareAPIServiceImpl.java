@@ -18,7 +18,7 @@ import org.springframework.social.slideshare.api.impl.SlideShareTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-@Service("SlideshareAPIServiceImpl")
+@Service
 public class SlideshareAPIServiceImpl implements SlideshareAPIService {
 
     @Value("${slideshare.api.key}")

@@ -20,7 +20,7 @@ import com.google.api.services.youtube.model.SearchResult;
 
 
 
-@Service("YoutubeAPIServiceImpl")
+@Service
 public class YoutubeAPIServiceImpl implements YoutubeAPIService{
 
     @Value("${google.api.key}")

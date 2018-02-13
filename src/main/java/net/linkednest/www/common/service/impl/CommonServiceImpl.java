@@ -23,7 +23,7 @@ import net.linkednest.www.common.dto.CodeDto;
 import net.linkednest.www.common.dto.MailDto;
 import net.linkednest.www.common.service.CommonService;
 
-@Service("CommonServiceImpl")
+@Service
 public class CommonServiceImpl implements CommonService{
     final Log log = LogFactory.getLog(this.getClass());
     
@@ -95,12 +95,14 @@ import net.linkednest.www.common.dto.CodeDto;
 import net.linkednest.www.common.dto.MailDto;
 import net.linkednest.www.common.service.CommonService;
 import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserService;
 import net.linkednest.www.user.service.UserServiceImpl;
 import org.apache.axis.utils.StringUtils;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -151,8 +153,8 @@ public class CommonServiceImpl implements CommonService {
     @Value("${mail.smtp.port}")
     private int         smtpServerPort;
 
-    @Resource(name="UserServiceImpl")
-    private UserServiceImpl userService;
+    @Autowired
+    private UserService userService;
 
 
     @Override

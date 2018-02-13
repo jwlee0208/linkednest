@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-@Service("UserServiceImpl")
+@Service
 public class UserServiceImpl implements UserService{
     
     final Log logger = LogFactory.getLog(this.getClass());
