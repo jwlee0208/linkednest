@@ -923,8 +923,8 @@ public class BoardArticleController {
     }    
 
 
-    @RequestMapping(value="/test")
+    /*@RequestMapping(value="/test")
 	public String testReact() {
     	return "board/article/testReact";
-	}
+	}*/
 }

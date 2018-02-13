@@ -28,7 +28,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value= "/properties/config")
+@RequestMapping(value= "/config")
 @SessionAttributes("userInfo")
 public class ConfigController {
     public static final int DEFAULT_PAGE_NO    = 1;
@@ -58,7 +58,7 @@ public class ConfigController {
             return "redirect:/login?redirectPage=" + request.getRequestURI();
         }
         model.addAttribute("userInfo", sessionInfo);
-        return "properties/config/config";
+        return "config/config";
     }
 
     @RequestMapping(value="/board/list")
@@ -70,7 +70,7 @@ public class ConfigController {
             return "redirect:/login?redirectPage=" + request.getRequestURI();
         }
         model = this.getBoardCommonList(request, model, boardDto);
-        return "properties/config/board/accordionList";
+        return "config/board/accordionList";
     }
 
     @RequestMapping(value="/board/list/{menuId}")
@@ -124,7 +124,7 @@ public class ConfigController {
             return "redirect:/login?redirectPage=" + request.getRequestURI();
         }
         model.addAttribute("categoryList", this.boardService.getBoardCategoryList(boardCategoryDto));
-        return "properties/config/board/write";
+        return "config/board/write";
     }
 
     @SuppressWarnings("serial")
@@ -172,7 +172,7 @@ public class ConfigController {
 
         model.addAttribute("boardId"      , boardDto.getBoardId());
 
-        return "properties/config/board/view";
+        return "config/board/view";
     }
     /**
      * 게시판 수정 페이지
@@ -200,7 +200,7 @@ public class ConfigController {
 
         model.addAttribute("categoryList", this.boardService.getBoardCategoryList(boardCategoryDto));
         model.addAttribute("boardInfo"   , boardInfo);
-        return "properties/config/board/write";
+        return "config/board/write";
     }
 
     @SuppressWarnings("serial")
@@ -236,13 +236,13 @@ public class ConfigController {
     @RequestMapping(value="/board/categoryList")
     public String getCategoryList(Model model, HttpSession session) throws Exception{
         model = this.setBoardCategoryInfo(model, session);
-        return "properties/config/board/categoryList";
+        return "config/board/categoryList";
     }
 
     @RequestMapping(value="/board/ajaxCategoryList")
     public String getAjaxCategoryList(Model model, HttpSession session) throws Exception{
         model = this.setBoardCategoryInfo(model, session);
-        return "properties/config/board/ajaxCategoryList";
+        return "config/board/ajaxCategoryList";
     }
 
     private Model setBoardCategoryInfo(Model model, HttpSession session){
@@ -268,7 +268,7 @@ public class ConfigController {
         if(null == sessionInfo){
             return "redirect:/login?redirectPage=" + request.getRequestURI();
         }
-        return "properties/config/board/writeCategory";
+        return "config/board/writeCategory";
     }
 
 
@@ -315,7 +315,7 @@ public class ConfigController {
 
         model.addAttribute("boardCategoryId"      , boardCategoryDto.getBoardCategoryId());
 
-        return "properties/config/board/viewCategory";
+        return "config/board/viewCategory";
     }
 
     @RequestMapping(value = "/board/modifyCategory")
@@ -334,7 +334,7 @@ public class ConfigController {
             return "redirect:/login?redirectPage=" + request.getRequestURI();
         }
         model.addAttribute("boardCategoryInfo"   , boardCategoryInfo);
-        return "properties/config/board/writeCategory";
+        return "config/board/writeCategory";
     }
 
     @SuppressWarnings("serial")
@@ -366,7 +366,7 @@ public class ConfigController {
     @RequestMapping(value="/priv/modifyShareProfile")
     public String getShareProfileInfo(Model model, HttpSession session) throws Exception{
         this.shareService.setShareInfo(model, session);
-        return "properties/config/share/write";
+        return "config/share/write";
     }
 
     @RequestMapping(value="/priv/modifyShareProfileAction")
@@ -409,7 +409,7 @@ public class ConfigController {
             return "redirect:/board/article/arcodionList";
         }
         model.addAttribute("userInfo", sessionInfo);
-        return "properties/config/priv/write";
+        return "config/priv/write";
     }
 
 }
