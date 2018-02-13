@@ -81,7 +81,7 @@
 	</div>
 </div>
 <br />
-<div class="form-group row">
+<%--<div class="form-group row">
 	<label class="col-2 col-form-label" for="hobbies">Hobbies</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="hobbies" name="profilePlayerDto.hobbies" />
@@ -96,7 +96,7 @@
 		<span name="profilePlayerDto_favoriteFoodErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
-<br />
+<br />--%>
 <div class="form-group row">
 	<label for="language" class="col-sm-2 control-label"><tag:message code="common.language"/></label>
 	<div class="col-sm-4">
@@ -194,22 +194,22 @@
 	</div>
 </div>
 <br />
-<div class="form-group row">
+<%--<div class="form-group row">
 	<label class="col-2 col-form-label" for="cellPhoneNo">cellPhoneNo</label>
 	<div class="col-10">
 		<input type="tel" class="form-control" id="cellPhoneNo" name="profileContactInfoDto.cellPhoneNo" placeholder="write your cell phone No." />
 		<span name="profileContactInfoDto_cellPhoneNoErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
-<br />
-<div class="form-group row">
+<br />--%>
+<%--<div class="form-group row">
 	<label class="col-2 col-form-label" for="websiteUrl">website url</label>
 	<div class="col-10">
 		<input type="url" class="form-control" id="websiteUrl" name="profileContactInfoDto.websiteUrl" placeholder="write your website url" aria-describedby="basic-addon3" />
 		<span name="profileContactInfoDto_websiteUrlErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
-<br />
+<br />--%>
 <div class="form-group row">
 	<label class="col-2 col-form-label" for="facebookUrl">facebook</label>
 	<div class="col-10">
@@ -234,14 +234,14 @@
 	</div>
 </div>
 <br />
-<div class="form-group row">
+<%--<div class="form-group row">
 	<label class="col-2 col-form-label" for="address">Address</label>
 	<div class="col-10">
 		<input type="text" class="form-control" id="address" name="profileContactInfoDto.address" placeholder="write your address" />
 		<span name="profileContactInfoDto_addressErr" class="errorMsg" style="display: none;"></span>
 	</div>
 </div>
-<br />
+<br />--%>
 <h3>Career</h3>
 <hr />
 <div class="form-group row">

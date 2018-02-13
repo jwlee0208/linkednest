@@ -36,7 +36,6 @@ $(function(){
     });
 
     $("#profileImg").bind("change", function() {
-        // alert('profile image upload');
         // 썸네일 파일 업로드 할 때 저장
         if (!isEmpty($(this).val())) {
 
@@ -360,35 +359,7 @@ $(function(){
     });
 });
 
-function modifyProfile() {
-    $.ajax({
-        url 		: '/profile/modifyAction',
-        data 		: $("#actionFrm").serialize(),
-        dataType 	: 'json',
-        method 		: 'post',
-        success 	: function(data){
-            var result = data.result;
-            var msg = data.message;
 
-            if(result == 'success'){
-                location.href = "/profile/list/" + $("#profileType").val() + "/" +  + $("#catId1").val();
-            }else if (result == 'validateErr'){
-                var length = result.length;
-                if(result != null && length > 0){
-                    for(var i = 0 ; i < length ; i++){
-                        console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);
-                        $("#" + result[i].field+"Err").html(result[i].defaultMessage);
-                        $("#" + result[i].field+"Err").parent().parent().addClass("has-danger");
-                        $("#" + result[i].field+"Err").show();
-                    }
-                }
-            }
-        },
-        error : function(xhr, textStatus, thrownError){
-            console.log("error : " + xhr.status + ", " + textStatus + ", " + thrownError);
-        }
-    });
-}
 
 function toggleThumbImage(className){
     $(".thumbImg").hide();
@@ -405,3 +376,38 @@ $(".form-control").on("click", function(e){
     $("#" + e.target.id + "Err").hide();
     $("#" + e.target.id + "Err").html('');
 });
+
+function modifyProfile() {
+    $.ajax({
+        url 		: '/profile/modifyAction',
+        data 		: $("#actionFrm").serialize(),
+        dataType 	: 'json',
+        method 		: 'post',
+        success 	: function(data){
+            var status = data.status;
+            var result = data.result;
+
+            if(status == 'success'){
+                alert('Successfully registed!!!');
+                location.href = "/profile/list/" + $("#profileType").val() + "/" +  + $("#catId1").val();
+            }else if (status == 'validateErr'){
+                alert('Not Registed cause invalid information. check out invalid informations.');
+                var length = result.length;
+                if(result != null && length > 0){
+                    for(var i = 0 ; i < length ; i++){
+                        var fieldNm = result[i].field;
+                        var message = result[i].defaultMessage;
+                        /*console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);*/
+                        $("[name=" + fieldNm.replace(".", "_")+"Err]").html(message);
+                        $("[name=" + fieldNm.replace(".", "_")+"Err]").parent().parent().addClass("has-danger");
+                        $("[name=" + fieldNm.replace(".", "_")+"Err]").addClass("form-control-feedback");
+                        $("[name=" + fieldNm.replace(".", "_")+"Err]").show();
+                    }
+                }
+            }
+        },
+        error : function(xhr, textStatus, thrownError){
+            /*console.log("error : " + xhr.status + ", " + textStatus + ", " + thrownError);*/
+        }
+    });
+}

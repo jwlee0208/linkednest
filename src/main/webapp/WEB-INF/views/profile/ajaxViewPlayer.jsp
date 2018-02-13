@@ -93,7 +93,7 @@
 				<p class="form-control-static">${profileInfo.profilePlayerDto.education}</p>
 			</div>
 		</div>
-		<div class="form-group row">
+		<%--<div class="form-group row">
 			<label for="" class="col-sm-2 col-form-label"><tag:message code="text.hobbies"/></label>
 			<div class="col-sm-10">
 				<p class="form-control-static">${profileInfo.profilePlayerDto.hobbies}</p>
@@ -104,7 +104,7 @@
 			<div class="col-sm-10">
 				<p class="form-control-static">${profileInfo.profilePlayerDto.favoriteFood}</p>
 			</div>
-		</div>
+		</div>--%>
 		<div class="form-group row">
 			<label for="" class="col-sm-2 col-form-label"><tag:message code="text.nationality"/></label>
 			<div class="col-sm-10">

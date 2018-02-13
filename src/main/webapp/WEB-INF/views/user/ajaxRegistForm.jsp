@@ -187,7 +187,7 @@ $().ready(function() {
 							location.replace('/user/registOk');
 						}else{
 							var result = data.result;
-							console.log(result);
+							/*console.log(result);*/
 							var length = result.length;
 							if(result != null && length > 0){
 
@@ -222,7 +222,7 @@ $().ready(function() {
 							location.replace('/config/main');
 						}else{
 							var result = data.result;
-							console.log(result);
+							/*console.log(result);*/
 							var length = result.length;
 							if(result != null && length > 0){
 

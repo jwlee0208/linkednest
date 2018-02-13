@@ -51,7 +51,7 @@
 							 style="cursor:pointer; "/>
 							</c:otherwise>
 						</c:choose>	
-						<div class="card-block" style="cursor:pointer;">				
+						<div class="card-block ml-1 mt-1" style="cursor:pointer;">
 							<p class="card-text">
 							<img src="${pageContext.request.contextPath}/img/country/${fn:toLowerCase(leagueInfo.country)}.png" width="30px" height="20px"/>&nbsp;<tag:message code="code.country.${fn:toUpperCase(leagueInfo.country)}"/>
 							<br/><br/>

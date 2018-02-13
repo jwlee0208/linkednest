@@ -43,14 +43,13 @@ public class ProfilePlayerValidator extends BaseValidator {
         ValidationUtil.rejectIfEmpty(result, "profilePlayerDto.birthPlace", "profile.player.birthPlace.empty", "출생지를 입력해 주세요.");
         // education
         ValidationUtil.rejectIfEmpty(result, "profilePlayerDto.education", "profile.player.education.empty", "출신 학교를 입력해 주세요.");
-        // hobbies
+        /*// hobbies
         ValidationUtil.rejectIfEmpty(result, "profilePlayerDto.hobbies", "profile.player.hobbies.empty", "취미를 입력해 주세요.");
         // favoriteFood
-        ValidationUtil.rejectIfEmpty(result, "profilePlayerDto.favoriteFood", "profile.player.favoriteFood.empty", "좋아하는 음식을 입력해 주세요.");
+        ValidationUtil.rejectIfEmpty(result, "profilePlayerDto.favoriteFood", "profile.player.favoriteFood.empty", "좋아하는 음식을 입력해 주세요.");*/
         // language
         ValidationUtil.rejectIfEmpty(result, "profilePlayerDto.language", "profile.player.language.empty", "모국어를 입력해 주세요.");
         // nationality
         ValidationUtil.rejectIfEmpty(result, "profilePlayerDto.nationality", "profile.player.nationality.empty", "국적을 입력해 주세요.");
-
     }
 }

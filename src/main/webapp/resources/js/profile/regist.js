@@ -169,7 +169,7 @@
                             for(var i = 0 ; i < length ; i++){
                                 var fieldNm = result[i].field;
                                 var message = result[i].defaultMessage;
-                                console.log(i + ", " + fieldNm + ", " + message);
+                                /*console.log(i + ", " + fieldNm + ", " + message);*/
                                 /*$("input[name="+result[i].field+"]").addClass("form-control-danger");*/
                                 $("[name=" + fieldNm.replace(".", "_")+"Err]").html(message);
                                 $("[name=" + fieldNm.replace(".", "_")+"Err]").parent().parent().addClass("has-danger");

@@ -37,7 +37,7 @@
 								 style="cursor:pointer; width:auto;"/>
 								</c:otherwise>
 							</c:choose>	
-							<div class="card-block" style="cursor:pointer;">
+							<div class="card-block ml-1 mt-1" style="cursor:pointer;">
 							
 								<p class="card-text">
 									<c:choose>
@@ -123,7 +123,7 @@
 								 style="cursor:pointer;"/>
 								</c:otherwise>
 							</c:choose>	
-							<div class="card-block" style="cursor:pointer;">
+							<div class="card-block ml-1 mt-1" style="cursor:pointer;">
 								<p class="card-text">
 									<c:choose>
 										<c:when test="${recentTeamProfileInfo.profileType eq 1}">

@@ -67,7 +67,7 @@ function loginAction(){
 				}
 			},
 			error : function(data){
-	console.log('error');
+	/*console.log('error');*/
 			}
 		});
 	}

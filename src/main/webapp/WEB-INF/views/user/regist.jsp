@@ -161,7 +161,7 @@ $(function(){
                     var length = result.length;
                     if(result != null && length > 0){
                         for(var i = 0 ; i < length ; i++){
-                            console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);
+                            /*console.log(i + ", " + result[i].field + ", " + result[i].defaultMessage);*/
                             $("#" + result[i].field+"Err").html(result[i].defaultMessage);
                             $("#" + result[i].field+"Err").parent().parent().addClass("has-danger");
                             $("#" + result[i].field+"Err").show();

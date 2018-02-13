@@ -30,6 +30,7 @@
 	<hr/>
 	<form id="viewFrm" name="viewFrm" method="post" class="form-horizontal" role="form">
 		<input type="hidden" id="profileId" 	name="profileId" value="${profileInfo.profileId}"/>
+		<input type="hidden" id="profileType" value="${profileInfo.profileType}"/>
 		<div style="display:none;"><h2>${profileInfo.title}&nbsp;<small>Profile</small></h2></div>
 		<c:choose>
 			<c:when test="${profileInfo.profileType eq 1}">
@@ -72,23 +73,23 @@
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.decryptedCellPhoneNo ne null && profileInfo.profileContactInfoDto.decryptedCellPhoneNo ne ''}">
-				<div class="form-group row">
-					<label for="" class="col-sm-3 col-form-label">Cell Phone No.</label>
-					<div class="col-sm-9">
-						<p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.decryptedCellPhoneNo}">${profileInfo.profileContactInfoDto.decryptedCellPhoneNo}</a></p>
-					</div>
-				</div>
-			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.decryptedWebsiteUrl ne null && profileInfo.profileContactInfoDto.decryptedWebsiteUrl ne ''}">
-				<div class="form-group row">
-					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.website"/></label>
-					<div class="col-sm-9">
-						<p class="form-control-static"><a href="http://${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}" target="_blank">${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}</a></p>
-					</div>
-				</div>
-			</c:if>
 
+				<%--<c:if test="${profileInfo.profileContactInfoDto.decryptedCellPhoneNo ne null && profileInfo.profileContactInfoDto.decryptedCellPhoneNo ne ''}">
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-3 col-form-label">Cell Phone No.</label>
+                                    <div class="col-sm-9">
+                                        <p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.decryptedCellPhoneNo}">${profileInfo.profileContactInfoDto.decryptedCellPhoneNo}</a></p>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:if test="${profileInfo.profileContactInfoDto.decryptedWebsiteUrl ne null && profileInfo.profileContactInfoDto.decryptedWebsiteUrl ne ''}">
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-3 col-form-label"><tag:message code="text.website"/></label>
+                                    <div class="col-sm-9">
+                                        <p class="form-control-static"><a href="http://${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}" target="_blank">${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}</a></p>
+                                    </div>
+                                </div>
+                            </c:if>--%>
 			<c:if test="${profileInfo.profileContactInfoDto.decryptedFacebookUrl ne null && profileInfo.profileContactInfoDto.decryptedFacebookUrl ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.facebook.id"/></label>
@@ -113,14 +114,14 @@
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.address ne null && profileInfo.profileContactInfoDto.address ne ''}">
+			<%--<c:if test="${profileInfo.profileContactInfoDto.address ne null && profileInfo.profileContactInfoDto.address ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.address"/></label>
 					<div class="col-sm-9">
 						<p class="form-control-static"><a>${profileInfo.profileContactInfoDto.address}</a></p>
 					</div>
 				</div>
-			</c:if>
+			</c:if>--%>
 		</div>
 		<br/>
 
@@ -184,8 +185,7 @@
                     dataType : 'json',
                     method : 'post',
                     success : function(data){
-                        console.log(data);
-
+                        /*console.log(data);*/
                         var result = data.result;
                         if(result == 'ok'){
                             location.href = "/profile/list/1";
@@ -248,13 +248,9 @@
 
         $("#goBack").on("click", function(){
             var url = "/profile/list/";
-            if (${profileInfo.profileType} == '1') {
-                url += "1/01010100";
-            } else if (${profileInfo.profileType} == '2') {
-                url += "2/01010200";
-            } else {
-                url += "3/01010300";
-            }
+            if ($("#profileType").val() == '1') {url += "1/01010100";}
+            else if ($("#profileType").val() == '2') {url += "2/01010200";}
+            else {url += "3/01010300";}
             location.href =  url;
         });
     });
