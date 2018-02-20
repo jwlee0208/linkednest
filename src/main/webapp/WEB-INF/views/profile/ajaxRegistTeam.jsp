@@ -5,6 +5,7 @@
 <input type="hidden" id="catId2" name="catId2" value="01010301" />
 <h3>Team Information</h3>
 <hr />
+<%--
 <div class="form-group row">
 	<label class="col-2 col-form-label" for="profileImg">Profile Image</label>
 	<div class="col-10">
@@ -12,6 +13,7 @@
 	</div>
 </div>
 <br />
+--%>
 <div class="form-group row">
 	<label class="col-2 col-form-label">Name</label>
 	<div class="col-10">
@@ -31,29 +33,18 @@
 	<c:set var="rowCnt" value="${0}" />
 	<c:forEach var="profileAttrInfo" items="${profileAttrList}">
 		<div class="row">
-			<h4>${profileAttrInfo.profileAttrName}</h4>
-			<c:set var="profileAttrElemList"
-				   value="${profileAttrInfo.profileAttrElementList}" />
+			<h4><tag:message code='text.${profileAttrInfo.profileAttrName}'/></h4>
+			<c:set var="profileAttrElemList" value="${profileAttrInfo.profileAttrElementList}" />
 			<c:if test="${!empty profileAttrElemList}">
-				<c:forEach var="profileAttrElemInfo"
-						   items="${profileAttrElemList}" varStatus="index">
+				<c:forEach var="profileAttrElemInfo" items="${profileAttrElemList}" varStatus="index">
 					<div class="col-lg-2">
 						<div class="form-group row">
-							<input type="hidden" id=""
-								   name="profileAttrElementMapList[${rowCnt}].profileAttrId"
-								   value="${profileAttrInfo.profileAttrId}" /> <input
-								type="hidden" id=""
-								name="profileAttrElementMapList[${rowCnt}].profileAttrName"
-								value="${profileAttrInfo.profileAttrName}" /> <label
-								class="col-2 col-form-label"><input type="checkbox"
-																	id=""
-																	name="profileAttrElementMapList[${rowCnt}].profileAttrElementId"
-																	aria-label="Checkbox for following text input"
-																	value="${profileAttrElemInfo.profileAttrElementId}"></label>
-							<input type="text" class="form-control"
-								   aria-label="Text input with checkbox"
-								   name="profileAttrElementMapList[${rowCnt}].profileAttrElementMapName"
-								   value="${profileAttrElemInfo.profileAttrElementName}">
+							<input type="hidden" name="profileAttrElementMapList[${rowCnt}].profileAttrId" value="${profileAttrInfo.profileAttrId}" />
+							<input type="hidden" name="profileAttrElementMapList[${rowCnt}].profileAttrName" value="${profileAttrInfo.profileAttrName}" />
+							<input type="hidden" class="form-control" aria-label="Text input with checkbox" name="profileAttrElementMapList[${rowCnt}].profileAttrElementMapName" value="${profileAttrElemInfo.profileAttrElementName}">
+							<label class="col-2 col-form-label">
+								<input type="checkbox" name="profileAttrElementMapList[${rowCnt}].profileAttrElementId" aria-label="Checkbox for following text input" value="${profileAttrElemInfo.profileAttrElementId}">${profileAttrElemInfo.profileAttrElementName}
+							</label>
 						</div>
 					</div>
 					<c:set var="rowCnt" value="${rowCnt+1}" />
@@ -81,17 +72,14 @@
 <div class="form-group row">
 	<label class="col-2 col-form-label">City</label>
 	<div class="col-10">
-		<input type="text" class="form-control" id="city"
-			   name="profileTeamDto.city" />
+		<input type="text" class="form-control" id="city" name="profileTeamDto.city" />
 	</div>
 </div>
 <br />
 <div class="form-group row">
 	<label class="col-2 col-form-label">Established Date</label>
 	<div class="col-10">
-		<input type="date" class="form-control"
-			   id="establishedDate"
-			   name="profileTeamDto.establishedDate" />
+		<input type="date" class="form-control" id="establishedDate" name="profileTeamDto.establishedDate" />
 	</div>
 </div>
 <br />
@@ -100,73 +88,52 @@
 <div class="form-group row">
 	<label class="col-2 col-form-label">Email</label>
 	<div class="col-10">
-		<input type="email" class="form-control" id="email"
-			   name="profileContactInfoDto.email"
-			   placeholder="write your e-mail" />
+		<input type="email" class="form-control" id="email" name="profileContactInfoDto.email" placeholder="write your e-mail" />
 	</div>
 </div>
 <br />
 <div class="form-group row">
 	<label class="col-2 col-form-label">Phone No.</label>
 	<div class="col-10">
-		<input type="tel" class="form-control" id="phoneNo"
-			   name="profileContactInfoDto.phoneNo"
-			   placeholder="write your phone No." />
+		<input type="tel" class="form-control" id="phoneNo" name="profileContactInfoDto.phoneNo" placeholder="write your phone No." />
 	</div>
 </div>
 <br />
 <div class="form-group row">
 	<label class="col-2 col-form-label">cellPhoneNo</label>
 	<div class="col-10">
-		<input type="tel" class="form-control" id="cellPhoneNo"
-			   name="profileContactInfoDto.cellPhoneNo"
-			   placeholder="write your cell phone No." />
+		<input type="tel" class="form-control" id="cellPhoneNo" name="profileContactInfoDto.cellPhoneNo" placeholder="write your cell phone No." />
 	</div>
 </div>
 <br />
 <div class="form-group row">
 	<span class="form-group row-addon" id="basic-addon3">http://</span>
 	<div class="col-10">
-		<input type="url" class="form-control" id="websiteUrl"
-			   name="profileContactInfoDto.websiteUrl"
-			   placeholder="write your website url"
-			   aria-describedby="basic-addon3" />
+		<input type="url" class="form-control" id="websiteUrl" name="profileContactInfoDto.websiteUrl" placeholder="write your website url" aria-describedby="basic-addon3" />
 	</div>
 </div>
 <br />
 <div class="form-group row">
 	<label class="col-2 col-form-label">facebook</label>
 	<div class="col-10">
-		<input type="text" class="form-control" id="facebookUrl"
-			   name="profileContactInfoDto.faceebookUrl"
-			   placeholder="write your facebook id" />
+		<input type="text" class="form-control" id="facebookUrl" name="profileContactInfoDto.faceebookUrl" placeholder="write your facebook id" />
 	</div>
 </div>
 <br />
 <div class="form-group row">
 	<label class="col-2 col-form-label">twitter</label>
 	<div class="col-10">
-		<input type="text" class="form-control" id="twitterUrl"
-			   name="profileContactInfoDto.twitterUrl"
-			   placeholder="write your twitter id" />
+		<input type="text" class="form-control" id="twitterUrl" name="profileContactInfoDto.twitterUrl" placeholder="write your twitter id" />
 	</div>
 </div>
 <br />
 <div class="form-group row">
 	<label class="col-2 col-form-label">instagram</label>
-	<div class="col-10">
-		<input type="text" class="form-control" id="instagramUrl"
-			   name="profileContactInfoDto.instagramUrl"
-			   placeholder="write your instagram id" />
-	</div>
+	<div class="col-10"><input type="text" class="form-control" id="instagramUrl" name="profileContactInfoDto.instagramUrl" placeholder="write your instagram id" /></div>
 </div>
 <br />
 <div class="form-group row">
 	<label class="col-2 col-form-label">Address</label>
-	<div class="col-10">
-		<input type="text" class="form-control" id="address"
-			   name="profileContactInfoDto.address"
-			   placeholder="write your address" />
-	</div>
+	<div class="col-10"><input type="text" class="form-control" id="address" name="profileContactInfoDto.address" placeholder="write your address" /></div>
 </div>
 <br />

@@ -163,8 +163,7 @@
 							<input type="hidden" name="profileAttrElementMapList[${rowCnt}].profileAttrElementName" value="${profileAttrElemInfo.profileAttrElementName}">
 							<input type="checkbox" id="profileAttrElementMapList[${rowCnt}].profileAttrElementId" name="profileAttrElementMapList[${rowCnt}].profileAttrElementId" aria-label="Checkbox for following text input" value="${profileAttrElemInfo.profileAttrElementId}">
 							<tag:message code='attr.${profileAttrInfo.profileAttrName}.${profileAttrElemInfo.profileAttrElementName}' />
-							<input type="hidden" class="form-control" aria-label="Text input with checkbox"
-								   name="profileAttrElementMapList[${rowCnt}].profileAttrElementMapName"
+							<input type="hidden" class="form-control" aria-label="Text input with checkbox" name="profileAttrElementMapList[${rowCnt}].profileAttrElementMapName"
 								   value="<tag:message code='attr.${profileAttrInfo.profileAttrName}.${profileAttrElemInfo.profileAttrElementName}'/>"/>
 							<c:set var="rowCnt" value="${rowCnt+1}" />
 					</label>
