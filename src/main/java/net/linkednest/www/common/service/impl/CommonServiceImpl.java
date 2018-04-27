@@ -23,7 +23,7 @@ import net.linkednest.www.common.dto.CodeDto;
 import net.linkednest.www.common.dto.MailDto;
 import net.linkednest.www.common.service.CommonService;
 
-@Service("CommonServiceImpl")
+@Service
 public class CommonServiceImpl implements CommonService{
     final Log log = LogFactory.getLog(this.getClass());
     
@@ -88,13 +88,25 @@ public class CommonServiceImpl implements CommonService{
 */
 package net.linkednest.www.common.service.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import net.linkednest.common.constant.CommonConstant;
+import net.linkednest.common.util.AES256Util;
+import net.linkednest.www.common.dao.CommonDao;
+import net.linkednest.www.common.dto.CodeDto;
+import net.linkednest.www.common.dto.MailDto;
+import net.linkednest.www.common.service.CommonService;
+import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserService;
+import net.linkednest.www.user.service.UserServiceImpl;
+import org.apache.axis.utils.StringUtils;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.velocity.app.VelocityEngine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -106,27 +118,15 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
-import net.linkednest.www.common.dto.MailDto;
-import net.linkednest.www.common.service.CommonService;
-import net.linkednest.www.user.dto.UserDto;
-import org.apache.axis.utils.StringUtils;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.velocity.app.VelocityEngine;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-
-import net.linkednest.www.common.CommonConstant;
-import net.linkednest.www.common.dao.CommonDao;
-import net.linkednest.www.common.dto.CodeDto;
-import net.linkednest.www.common.util.AES256Util;
-import net.linkednest.www.user.service.UserServiceImpl;
-import org.springframework.ui.velocity.VelocityEngineUtils;
-
-@Service("CommonServiceImpl")
+@Service
 public class CommonServiceImpl implements CommonService {
     final Log log = LogFactory.getLog(this.getClass());
 
@@ -153,8 +153,8 @@ public class CommonServiceImpl implements CommonService {
     @Value("${mail.smtp.port}")
     private int         smtpServerPort;
 
-    @Resource(name="UserServiceImpl")
-    private UserServiceImpl userService;
+    @Autowired
+    private UserService userService;
 
 
     @Override
@@ -245,7 +245,6 @@ public class CommonServiceImpl implements CommonService {
         }catch(Exception e){
             e.printStackTrace();
         }
-
     }
     /**
      * @brief : searching private info

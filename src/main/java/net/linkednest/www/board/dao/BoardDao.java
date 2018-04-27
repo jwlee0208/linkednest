@@ -6,7 +6,7 @@ import java.util.Map;
 import net.linkednest.www.board.dto.BoardCategoryDto;
 import net.linkednest.www.board.dto.BoardCategoryPortalDto;
 import net.linkednest.www.board.dto.BoardDto;
-import net.linkednest.www.common.util.SearchCondition;
+import net.linkednest.common.util.SearchCondition;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 

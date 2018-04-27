@@ -1,5 +1,42 @@
 package net.linkednest.www.user.web;
 
+import net.linkednest.common.constant.CommonConstant;
+import net.linkednest.common.util.AES256Util;
+import net.linkednest.common.validate.JsonResponse;
+import net.linkednest.www.common.dto.CodeDto;
+import net.linkednest.www.common.dto.MailDto;
+import net.linkednest.www.common.dto.ShareDto;
+import net.linkednest.www.common.service.CommonService;
+import net.linkednest.www.share.service.ShareService;
+import net.linkednest.www.share.service.ShareServiceImpl;
+import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserService;
+import net.linkednest.www.user.service.UserServiceImpl;
+import net.linkednest.www.user.validate.PasswordValidator;
+import net.linkednest.www.user.validate.UserValidator;
+import net.sf.json.JSONObject;
+import org.apache.commons.lang.LocaleUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.velocity.app.VelocityEngine;
+import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+
+import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
@@ -8,48 +45,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import net.linkednest.www.common.CommonConstant;
-import net.linkednest.www.common.dto.CodeDto;
-import net.linkednest.www.common.dto.MailDto;
-import net.linkednest.www.common.dto.ShareDto;
-import net.linkednest.www.common.service.impl.CommonServiceImpl;
-import net.linkednest.www.common.util.AES256Util;
-import net.linkednest.www.common.validate.JsonResponse;
-import net.linkednest.www.user.dto.UserDto;
-import net.linkednest.www.user.service.UserServiceImpl;
-import net.linkednest.www.user.validate.UserValidator;
-import net.sf.json.JSONObject;
-
-import org.apache.commons.lang.LocaleUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.velocity.app.VelocityEngine;
-import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.velocity.VelocityEngineUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-
-import net.linkednest.www.share.service.ShareServiceImpl;
-import net.linkednest.www.user.validate.PasswordValidator;
-
 @Controller
 @RequestMapping(value="/user")
 @SessionAttributes("userInfo")
@@ -57,14 +52,14 @@ public class UserController {
     
     Log log = LogFactory.getLog(this.getClass());
     
-	@Resource(name="UserServiceImpl")
-	private UserServiceImpl userService;
+	@Autowired
+	private UserService userService;
 	
-	@Resource(name="CommonServiceImpl")
-	private CommonServiceImpl commonService;
+	@Autowired
+	private CommonService commonService;
 	
-	@Resource(name="ShareServiceImpl")
-	private ShareServiceImpl        shareService;
+	@Autowired
+	private ShareService shareService;
 	
     @Inject
     private VelocityEngine          velocityEngine;
@@ -72,6 +67,17 @@ public class UserController {
     @Inject
     private MessageSourceAccessor   messageSource;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    /**
+     * View Page For Joinning Member
+     *
+     * @param model
+     * @param request
+     * @return
+     * @throws Exception
+     */
 	@RequestMapping(value="/regist")
 	public String registUser(Model model, HttpServletRequest request) throws Exception{
 	    this.setRequiredInfos(model, request);
@@ -97,7 +103,16 @@ public class UserController {
         model.addAttribute("languageList"   , languageList);
 	    
 	}
-	
+
+    /**
+     * [OLD] Action For Joinning Member
+     *
+     * @param model
+     * @param userDto
+     * @param result
+     * @return
+     * @throws Exception
+     */
 	@RequestMapping(value="/regist.json")
 	@ResponseBody
 	public JSONObject registUser(Model model, @Valid @ModelAttribute UserDto userDto, BindingResult result) throws Exception{
@@ -113,7 +128,7 @@ public class UserController {
 			resultMsg    = "invalid_parameter";
 		}else{
 			
-			String hashedPassword = BCrypt.hashpw(userDto.getPasswd(), BCrypt.gensalt());
+			String hashedPassword = passwordEncoder.encode(userDto.getPasswd());    // BCrypt.hashpw(userDto.getPasswd(), BCrypt.gensalt());
 			
 			userDto.setPasswd(hashedPassword);
 			
@@ -132,7 +147,17 @@ public class UserController {
 		
 		return returnObj;
 	}
-	
+
+    /**
+     * Action For Joinning Member
+     *
+     * @param model
+     * @param request
+     * @param userDto
+     * @param result
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/registAction")
     @ResponseBody	
     public JsonResponse registUser2(Model model, HttpServletRequest request, @ModelAttribute UserDto userDto, BindingResult result) throws Exception{
@@ -144,7 +169,7 @@ public class UserController {
         UserValidator.insertValidate(result, userDto);
         
         String resultCode   = "REGIST_0000";
-        String resultMsg    = "";
+        String resultMsg    = org.apache.commons.lang3.StringUtils.EMPTY;
         
         int    registResult = 0;
         
@@ -155,12 +180,12 @@ public class UserController {
             returnObj.setResult(result.getAllErrors());
         }else{
             
-            String hashedPassword = BCrypt.hashpw(userDto.getPasswd(), BCrypt.gensalt());
+            String hashedPassword = passwordEncoder.encode(userDto.getPasswd());    // BCrypt.hashpw(userDto.getPasswd(), BCrypt.gensalt());
             
             userDto.setPasswd(hashedPassword);
             
-            String      encryptedEmail       = "";
-            String      encryptedPhoneNo     = "";
+            String      encryptedEmail       = org.apache.commons.lang3.StringUtils.EMPTY;
+            String      encryptedPhoneNo     = org.apache.commons.lang3.StringUtils.EMPTY;
             AES256Util aes256util           = null;
             try {
 
@@ -227,20 +252,47 @@ public class UserController {
 
         return returnObj;
     }
-	
+
+    /**
+     * Complete Joinning Member
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(method = RequestMethod.GET, value="/registOk")
     public String registOk(HttpServletRequest request) throws Exception{
         return "/user/registOk";
     }
-    
+
+    /**
+     * View Page For Modifying Member
+     *
+     * @param request
+     * @param model
+     * @param session
+     * @param userId
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/modify/{userId}")
     public String modifyUser(HttpServletRequest request, Model model, HttpSession session, @PathVariable String userId) throws Exception{
         this.commonService.getPrivateInfo(request, model, session);
         this.setRequiredInfos(model, request);
         return "/user/ajaxRegistForm";
     }
-    
-    
+
+    /**
+     * Action For Modifying Member
+     *
+     * @param model
+     * @param request
+     * @param session
+     * @param status
+     * @param userDto
+     * @param result
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/modifyAction")
     @ResponseBody   
     public JsonResponse modifyUser(Model model, HttpServletRequest request, HttpSession session, SessionStatus status, @ModelAttribute UserDto userDto, BindingResult result) throws Exception{
@@ -252,7 +304,7 @@ public class UserController {
         UserValidator.updateValidate(result, userDto);
         
         String resultCode   = "REGIST_0000";
-        String resultMsg    = "";
+        String resultMsg    = org.apache.commons.lang3.StringUtils.EMPTY;
         
         int    updateResult = 0;
         
@@ -305,11 +357,18 @@ public class UserController {
     public String forgotPasswordView(){
         return "/user/forgotPassword";
     }
-    
+
+    /**
+     * Reset Password
+     *
+     * @param encryptMail
+     * @param model
+     * @return
+     */
     @RequestMapping(value="/resetPassword")
     public String resetPasswordView(@RequestParam("v") String encryptMail, Model model){
         
-        String decryptedEmail = "";
+        String decryptedEmail = org.apache.commons.lang3.StringUtils.EMPTY;
         AES256Util aes256util = null;
         
         try {
@@ -343,7 +402,7 @@ public class UserController {
         
         if(!StringUtils.isEmpty(email)){
             
-            String encryptedEmail = "";
+            String encryptedEmail = org.apache.commons.lang3.StringUtils.EMPTY;
             AES256Util aes256util = null;
             try {
 
@@ -411,7 +470,7 @@ public class UserController {
             returnObj.setResult(result.getAllErrors());
         }else{
             // 2. update password
-            String hashedPassword = BCrypt.hashpw(userDto.getPasswd(), BCrypt.gensalt());
+            String hashedPassword = passwordEncoder.encode(userDto.getPasswd());    // BCrypt.hashpw(userDto.getPasswd(), BCrypt.gensalt());
             userDto.setPasswd(hashedPassword);
             
             try {
@@ -420,18 +479,19 @@ public class UserController {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            
-            if(updateResult < 1){
-                returnObj.setStatus("UPDATE_PW_0002");
-                returnObj.setResult("Error occurred");
-            }else{
-                returnObj.setStatus("UPDATE_PW_0000");
-                returnObj.setResult("Your password successfully updated.");
-            }            
+
+            returnObj.setStatus(updateResult < 1 ? "UPDATE_PW_0002" : "UPDATE_PW_0000");
+            returnObj.setResult(updateResult < 1 ? "Error occurred" : "Your password successfully updated.");
         }
 
         return returnObj;
     }
+
+    /**
+     * Send Mail For Welcome
+     *
+     * @param userDto
+     */
     private void sendWelcomeMail(UserDto userDto){
         // 메시지 다국어 처리
         String welcomeMsg = null;
@@ -451,7 +511,7 @@ public class UserController {
         contentMap.put("userId"			, userDto.getUserId());
 
         // Sending Mail
-        this.commonSendMailTemplate(userDto, "[linkedNest.net] Congraturation! Happy join us!!", "mailTemplates/welcomeJoinningTemplate.vm", contentMap);
+        this.commonSendMailTemplate(userDto, "[linkedNest.net] Congraturation! Happy join us!!", "mailTemplate/welcomeJoinningTemplate.vm", contentMap);
     }
     
     private void sendForgotPwMail(UserDto userDto){
@@ -478,7 +538,7 @@ public class UserController {
             contentMap.put("encryptedMail"  , userDto.getEmail());
 
             // Sending Mail
-            this.commonSendMailTemplate(userDto, "[linkedNest.net] Reset your password!!", "mailTemplates/forgotPassword.vm", contentMap);
+            this.commonSendMailTemplate(userDto, "[linkedNest.net] Reset your password!!", "mailTemplate/forgotPassword.vm", contentMap);
             
         }
     }
@@ -503,7 +563,7 @@ public class UserController {
             } finally{
                 MailDto mailInfo = new MailDto();
                 mailInfo.setContentType("text/html; charset=utf-8");
-                mailInfo.setMailFrom("jwlee0208@gmail.com");
+                mailInfo.setMailFrom("linkednest@gmail.com");
                 mailInfo.setMailTo(decryptedEmail);
                 mailInfo.setMailSubject(title);
                 mailInfo.setTemplateName(mailTemplateUrl);

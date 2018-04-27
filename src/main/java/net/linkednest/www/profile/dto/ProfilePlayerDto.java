@@ -1,20 +1,31 @@
 package net.linkednest.www.profile.dto;
 
 import org.apache.ibatis.type.Alias;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.NumberFormat;
+
+import javax.validation.constraints.NotNull;
 
 @Alias("profile.profilePlayerDto")
 public class ProfilePlayerDto extends ProfileDto {
 	
 	private int 	profilePlayerId;
+	/*@NotEmpty(message = "where is your birth date?")
+	@NotNull(message = "where is your birth date?")*/
 	private String 	birthDate;
-	private float 	height;
-	private float	wgt;
-	private float 	weight;
+
+	private float 	height = 0;
+	private float	wgt = 0;
+	private float 	weight = 0;
 	private String 	birthPlace;
 	private String 	education;
 	private String 	hobbies;
 	private String 	favoriteFood;
+	/*@NotEmpty(message = "not selected your nationality.")
+	@NotNull(message = "not selected your nationality.")*/
 	private String 	nationality;
+	/*@NotEmpty(message = "not selected your language.")
+	@NotNull(message = "not selected your language.")*/
 	private String 	language;
 	
 	public int getProfilePlayerId() {
@@ -29,13 +40,11 @@ public class ProfilePlayerDto extends ProfileDto {
 	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
+
 	public float getHeight() {
 		return height;
 	}
-	// feet로 변환
-	public double getHeightAsFeet() {
-		return Double.parseDouble(String.format("%.1f",this.height * 0.0328084));
-	}
+
 	public void setHeight(float height) {
 		this.height = height;
 	}
@@ -43,15 +52,24 @@ public class ProfilePlayerDto extends ProfileDto {
 	public float getWgt() {
 		return wgt;
 	}
+
 	public void setWgt(float wgt) {
 		this.wgt = wgt;
 	}
+
 	public float getWeight() {
 		return weight;
 	}
+
 	public void setWeight(float weight) {
 		this.weight = weight;
 	}
+
+	// feet로 변환
+	public double getHeightAsFeet() {
+		return Double.parseDouble(String.format("%.1f",this.height * 0.0328084));
+	}
+
 	// found로 변환
 	public double getWeightAsFound() {
 		return Double.parseDouble(String.format("%.1f",this.weight * 2.20459)); 
@@ -93,12 +111,22 @@ public class ProfilePlayerDto extends ProfileDto {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
+
 	@Override
 	public String toString() {
-		return "ProfilePlayerDto [profilePlayerId=" + profilePlayerId + ", birthDate=" + birthDate + ", height="
-				+ height + ", wgt=" + wgt + ", weight=" + weight + ", birthPlace=" + birthPlace + ", education="
-				+ education + ", hobbies=" + hobbies + ", favoriteFood=" + favoriteFood + ", nationality="
-				+ nationality + ", language=" + language + "]";
+		final StringBuffer sb = new StringBuffer("ProfilePlayerDto{");
+		sb.append("profilePlayerId=").append(profilePlayerId);
+		sb.append(", birthDate='").append(birthDate).append('\'');
+		sb.append(", height=").append(height);
+		sb.append(", wgt=").append(wgt);
+		sb.append(", weight=").append(weight);
+		sb.append(", birthPlace='").append(birthPlace).append('\'');
+		sb.append(", education='").append(education).append('\'');
+		sb.append(", hobbies='").append(hobbies).append('\'');
+		sb.append(", favoriteFood='").append(favoriteFood).append('\'');
+		sb.append(", nationality='").append(nationality).append('\'');
+		sb.append(", language='").append(language).append('\'');
+		sb.append('}');
+		return sb.toString();
 	}
-	
 }

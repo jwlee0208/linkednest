@@ -31,14 +31,14 @@ public class BoardCategoryPortalDto extends BoardCategoryDto{
     public void setBoardList(List<BoardDto> boardList) {
         this.boardList = boardList;
     }
-    
+
     @Override
     public String toString() {
-        return "BoardCategoryPortalDto [boardCategoryId=" + boardCategoryId
-                + ", boardCategoryName=" + boardCategoryName + ", boardList="
-                + boardList + "]";
+        final StringBuffer sb = new StringBuffer("BoardCategoryPortalDto{");
+        sb.append("boardCategoryId=").append(boardCategoryId);
+        sb.append(", boardCategoryName='").append(boardCategoryName).append('\'');
+        sb.append(", boardList=").append(boardList);
+        sb.append('}');
+        return sb.toString();
     }
-    
-    
-    
 }

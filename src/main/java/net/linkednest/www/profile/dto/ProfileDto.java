@@ -1,21 +1,37 @@
 package net.linkednest.www.profile.dto;
 
+
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.Alias;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Alias("profile.profileDto")
 public class ProfileDto {
 	private int 	profileId;
 	private String 	profileType;
+	/*@NotEmpty(message = "not selected first category.")
+	@NotNull(message = "not selected first category.")*/
 	private String 	catId1;
+	/*@NotEmpty(message = "not selected second category.")
+	@NotNull(message = "not selected second category.")*/
 	private String 	catId2;
 	private String 	title;
+	/*@NotEmpty(message = "Please, write your name.")
+	@NotNull(message = "Please, write your name.")
+	@Size(max = 50, message = "it's too long.")*/
 	private String 	name;
 	private MultipartFile profileImg;
 	private String 	profileImgPath;
+	/*@NotEmpty(message = "Please, write your introduce.")
+	@NotNull(message = "Please, write your introduce.")*/
 	private String 	introduce;
 	private String 	createDate;
 	private String  status;
@@ -24,7 +40,7 @@ public class ProfileDto {
 	 * profile status mapping array
 	 */
 	private static final String[] STATUS_CODE = {"0", "1", "2", "3"};
-	private static final String[] STATUS_VALUE = {"Temporary Saved", "Actavation", "Disabled", "Finished"};
+	private static final String[] STATUS_VALUE = {"Temporary Saved", "Activation", "Disabled", "Finished"};
 
 	/**
 	 * 2nd category code mapping array
@@ -204,29 +220,30 @@ public class ProfileDto {
 
 	@Override
 	public String toString() {
-		return "ProfileDto{" +
-				"profileId=" + profileId +
-				", profileType='" + profileType + '\'' +
-				", catId1='" + catId1 + '\'' +
-				", catId2='" + catId2 + '\'' +
-				", title='" + title + '\'' +
-				", name='" + name + '\'' +
-				", profileImg=" + profileImg +
-				", profileImgPath='" + profileImgPath + '\'' +
-				", introduce='" + introduce + '\'' +
-				", createDate='" + createDate + '\'' +
-				", status='" + status + '\'' +
-				", profilePlayerDto=" + profilePlayerDto +
-				", leagueInfoDto=" + leagueInfoDto +
-				", profileTeamDto=" + profileTeamDto +
-				", profileContactInfoDto=" + profileContactInfoDto +
-				", profileStatHitterList=" + profileStatHitterList +
-				", profileStatFielderList=" + profileStatFielderList +
-				", profileStatPitcherList=" + profileStatPitcherList +
-				", profileCareerList=" + profileCareerList +
-				", profileAttrList=" + profileAttrList +
-				", profileStreamList=" + profileStreamList +
-				", profileAttrElementMapList=" + profileAttrElementMapList +
-				'}';
+		final StringBuffer sb = new StringBuffer("ProfileDto{");
+		sb.append("profileId=").append(profileId);
+		sb.append(", profileType='").append(profileType).append('\'');
+		sb.append(", catId1='").append(catId1).append('\'');
+		sb.append(", catId2='").append(catId2).append('\'');
+		sb.append(", title='").append(title).append('\'');
+		sb.append(", name='").append(name).append('\'');
+		sb.append(", profileImg=").append(profileImg);
+		sb.append(", profileImgPath='").append(profileImgPath).append('\'');
+		sb.append(", introduce='").append(introduce).append('\'');
+		sb.append(", createDate='").append(createDate).append('\'');
+		sb.append(", status='").append(status).append('\'');
+		sb.append(", profilePlayerDto=").append(profilePlayerDto);
+		sb.append(", leagueInfoDto=").append(leagueInfoDto);
+		sb.append(", profileTeamDto=").append(profileTeamDto);
+		sb.append(", profileContactInfoDto=").append(profileContactInfoDto);
+		sb.append(", profileStatHitterList=").append(profileStatHitterList);
+		sb.append(", profileStatFielderList=").append(profileStatFielderList);
+		sb.append(", profileStatPitcherList=").append(profileStatPitcherList);
+		sb.append(", profileCareerList=").append(profileCareerList);
+		sb.append(", profileAttrList=").append(profileAttrList);
+		sb.append(", profileStreamList=").append(profileStreamList);
+		sb.append(", profileAttrElementMapList=").append(profileAttrElementMapList);
+		sb.append('}');
+		return sb.toString();
 	}
 }

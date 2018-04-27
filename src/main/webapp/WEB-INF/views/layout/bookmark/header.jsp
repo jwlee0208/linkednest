@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="tag" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8"%>
 <script type="text/javascript" 		src="${pageContext.request.contextPath}/js/home/home.js"></script>
+<div class="loader"></div>
 <div class="container-fluid" style="background:#e7e7e7;">
 	<div class="navbar-header">
 		<a class="navbar-brand" style="font-weight : bold; color : #777;">Share Yours</a>	

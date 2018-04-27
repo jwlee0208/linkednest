@@ -37,10 +37,11 @@ public class SideBoardCategoryPortalDto {
 
     @Override
     public String toString() {
-        return "SideBoardCategoryPortalDto [boardCategoryId=" + boardCategoryId
-                + ", boardCategoryName=" + boardCategoryName
-                + ", sideBoardList=" + sideBoardList + "]";
+        final StringBuffer sb = new StringBuffer("SideBoardCategoryPortalDto{");
+        sb.append("boardCategoryId=").append(boardCategoryId);
+        sb.append(", boardCategoryName='").append(boardCategoryName).append('\'');
+        sb.append(", sideBoardList=").append(sideBoardList);
+        sb.append('}');
+        return sb.toString();
     }
-    
-    
 }

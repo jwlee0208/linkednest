@@ -3,16 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" 		prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" 	prefix="tag" %>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/circle.css"/>
-<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/profileView.js"></script>
-<style>
-.jumbotron {
-background: #000 url("../img/home/img06.jpg") center center;
-background-size: cover; 
-overflow: hidden;
-}
-iframe {width : 250px; height : 200px; align:center;}
-</style>
 
 	<div class="jumbotron jumbotron-fluid">
 		<div class="container">
@@ -47,7 +37,7 @@ iframe {width : 250px; height : 200px; align:center;}
 								 style="cursor:pointer; width:auto;"/>
 								</c:otherwise>
 							</c:choose>	
-							<div class="card-block" style="cursor:pointer;">
+							<div class="card-block ml-1 mt-1" style="cursor:pointer;">
 							
 								<p class="card-text">
 									<c:choose>
@@ -103,8 +93,8 @@ iframe {width : 250px; height : 200px; align:center;}
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				<div style="text-align:center; min-height : 70px;vertical-align: middle;">
-					<h3><tag:message code='text.noregistplayer'/></h3>
+				<div style="padding-left : 20px; min-height : 70px; vertical-align: middle;">
+					<p><tag:message code='text.noregistplayer'/></p>
 				</div>
 			</c:otherwise>	
 		</c:choose>
@@ -133,7 +123,7 @@ iframe {width : 250px; height : 200px; align:center;}
 								 style="cursor:pointer;"/>
 								</c:otherwise>
 							</c:choose>	
-							<div class="card-block" style="cursor:pointer;">
+							<div class="card-block ml-1 mt-1" style="cursor:pointer;">
 								<p class="card-text">
 									<c:choose>
 										<c:when test="${recentTeamProfileInfo.profileType eq 1}">
@@ -197,8 +187,8 @@ iframe {width : 250px; height : 200px; align:center;}
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				<div style="text-align:center; min-height : 70px;vertical-align: middle;">
-					<h3><tag:message code='text.noregistplayer'/></h3>
+				<div style="padding-left : 20px; min-height : 70px; vertical-align: middle;">
+					<p><tag:message code='text.noregistplayer'/></p>
 				</div>
 			</c:otherwise>	
 		</c:choose>	
@@ -221,7 +211,7 @@ iframe {width : 250px; height : 200px; align:center;}
 							</c:forEach> 
 						</c:when>
 						<c:otherwise>
-						<tr><td colspan="2">데이터가 없습니다.</td></tr>
+						<tr><td colspan="2">There is no article.</td></tr>
 						</c:otherwise>	
 					</c:choose>		
 					</table>
@@ -284,4 +274,15 @@ iframe {width : 250px; height : 200px; align:center;}
 	    parallax();
 	});
 </script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/circle.css"/>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/profileView.js"></script>
+<style>
+	.jumbotron {
+		background: #000 url("../img/home/img06.jpg") center center;
+		background-size: cover;
+		overflow: hidden;
+	}
+	iframe {width : 250px; height : 200px; align:center;}
+</style>
+
 

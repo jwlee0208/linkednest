@@ -98,13 +98,7 @@
 		// 선택된 속성 항목을 초기화
 		$("#selectedAttrElemId").val('');
 	}
-	
-	function isEmpty(val){
-		var result = false;
-		
-		if(val == '' || val == null || val == 'undefined'){
-			result = true;
-		}
-		return result;
-		
-	}
+
+    function isEmpty(val){
+        return (val == '' || val == null || val == 'undefined') ? true : false;
+    }

@@ -2,7 +2,6 @@
 .header {
 	position: absolute;
 	left: 0;
-/* 	z-index: 1000; */
 	overflow: hidden;
 	min-width: 724px;
 	min-height: 63px;
@@ -21,11 +20,11 @@
 }
 /* contents */
 .contents {
-/* 	padding-top: 55px; */
 	padding-left : 30px;
 	padding-right : 30px;
 	height: auto;
 }
 .contents.minimum {padding-top: 76px;}
 .contents.maximum {padding-top: 160px;}
+
 

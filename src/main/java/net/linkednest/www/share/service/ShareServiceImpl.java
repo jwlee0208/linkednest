@@ -1,16 +1,15 @@
 package net.linkednest.www.share.service;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
-
 import net.linkednest.www.common.dto.ShareDto;
+import net.linkednest.www.share.dao.ShareDao;
 import net.linkednest.www.user.dto.UserDto;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import net.linkednest.www.share.dao.ShareDao;
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
-@Service("ShareServiceImpl")
+@Service
 public class ShareServiceImpl implements ShareService{
     
     @Inject

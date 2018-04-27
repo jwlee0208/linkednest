@@ -1,16 +1,14 @@
 package net.linkednest.www.board.dto;
 
-import java.util.List;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
+import net.linkednest.common.util.SearchCondition;
+import net.linkednest.www.common.dto.ShareDto;
 import org.apache.ibatis.type.Alias;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.linkednest.www.common.dto.ShareDto;
-import net.linkednest.www.common.util.SearchCondition;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Alias("board.boardArticleDto")
 public class BoardArticleDto extends SearchCondition {
@@ -39,7 +37,7 @@ public class BoardArticleDto extends SearchCondition {
 	
 	private List<SlideshareLinkDto>          slideshareLinkInfos;
 	
-	private ShareDto       shareInfo;
+	private ShareDto shareInfo;
 	
 	public int getArticleId() {
 		return articleId;
@@ -151,19 +149,28 @@ public class BoardArticleDto extends SearchCondition {
     public void setShareInfo(ShareDto shareInfo) {
         this.shareInfo = shareInfo;
     }
-    
-    @Override
-    public String toString() {
-        return "BoardArticleDto [thumbnailSize=" + thumbnailSize
-                + ", articleId=" + articleId + ", boardId=" + boardId
-                + ", title=" + title + ", content=" + content + ", authorId="
-                + authorId + ", authorNm=" + authorNm + ", createDate="
-                + createDate + ", thumbImg=" + thumbImg + ", filePath="
-                + filePath + ", originalFileName=" + originalFileName
-                + ", status=" + status + ", boardCategoryId=" + boardCategoryId
-                + ", boardCategoryName=" + boardCategoryName + ", boardName="
-                + boardName + ", slideshareLinkInfos=" + slideshareLinkInfos
-                + ", shareInfo=" + shareInfo + "]";
-    }
-    
+
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer("BoardArticleDto{");
+		sb.append("thumbnailSize='").append(thumbnailSize).append('\'');
+		sb.append(", articleId=").append(articleId);
+		sb.append(", boardId=").append(boardId);
+		sb.append(", title='").append(title).append('\'');
+		sb.append(", content='").append(content).append('\'');
+		sb.append(", authorId='").append(authorId).append('\'');
+		sb.append(", authorNm='").append(authorNm).append('\'');
+		sb.append(", createDate='").append(createDate).append('\'');
+		sb.append(", thumbImg=").append(thumbImg);
+		sb.append(", filePath='").append(filePath).append('\'');
+		sb.append(", originalFileName='").append(originalFileName).append('\'');
+		sb.append(", status=").append(status);
+		sb.append(", boardCategoryId=").append(boardCategoryId);
+		sb.append(", boardCategoryName='").append(boardCategoryName).append('\'');
+		sb.append(", boardName='").append(boardName).append('\'');
+		sb.append(", slideshareLinkInfos=").append(slideshareLinkInfos);
+		sb.append(", shareInfo=").append(shareInfo);
+		sb.append('}');
+		return sb.toString();
+	}
 }

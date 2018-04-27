@@ -96,14 +96,22 @@ public class UserDto implements Serializable{
     public void setTwUserId(String twUserId) {
         this.twUserId = twUserId;
     }
-    
-    @Override
-    public String toString() {
-        return "UserDto [userId=" + userId + ", userNm=" + userNm + ", passwd="
-                + passwd + ", passwdChk=" + passwdChk + ", email=" + email
-                + ", phoneNo=" + phoneNo + ", joinDate=" + joinDate
-                + ", nationality=" + nationality + ", language=" + language
-                + ", fbUserId=" + fbUserId + ", twUserId=" + twUserId + "]";
-    }
 
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer("UserDto{");
+		sb.append("userId='").append(userId).append('\'');
+		sb.append(", userNm='").append(userNm).append('\'');
+		sb.append(", passwd='").append(passwd).append('\'');
+		sb.append(", passwdChk='").append(passwdChk).append('\'');
+		sb.append(", email='").append(email).append('\'');
+		sb.append(", phoneNo='").append(phoneNo).append('\'');
+		sb.append(", joinDate='").append(joinDate).append('\'');
+		sb.append(", nationality='").append(nationality).append('\'');
+		sb.append(", language='").append(language).append('\'');
+		sb.append(", fbUserId='").append(fbUserId).append('\'');
+		sb.append(", twUserId='").append(twUserId).append('\'');
+		sb.append('}');
+		return sb.toString();
+	}
 }

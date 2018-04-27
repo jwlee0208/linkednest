@@ -7,7 +7,7 @@ import net.linkednest.www.board.dto.BoardArticleDto;
 import net.linkednest.www.board.dto.BoardDto;
 import net.linkednest.www.board.dto.SideBoardCategoryPortalDto;
 import net.linkednest.www.board.dto.SlideshareLinkDto;
-import net.linkednest.www.common.util.PagedList;
+import net.linkednest.common.util.PagedList;
 
 public interface BoardArticleService {
 	public List<BoardArticleDto>               getBoardArticleList(BoardArticleDto boardArticleDto) throws Exception;

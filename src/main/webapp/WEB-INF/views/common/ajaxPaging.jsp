@@ -56,8 +56,8 @@
 </div>	
 	</c:when>
 	<c:otherwise>
-<div class="form-control row">
-<nav aria-label="Page navigation example" id="pageDiv">
+<div class="form-control row" id="pageDiv">
+<%--<nav aria-label="Page navigation example" id="pageDiv">--%>
 	<ul class="pagination justify-content-center">
 		
  
@@ -90,7 +90,7 @@
    </c:if> 
 </c:if>
 	</ul>
-</nav>	
+<%--</nav>	--%>
 </div>
 	
 	</c:otherwise>

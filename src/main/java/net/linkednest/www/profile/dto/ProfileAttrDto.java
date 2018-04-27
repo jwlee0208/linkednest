@@ -2,7 +2,9 @@ package net.linkednest.www.profile.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.ibatis.type.Alias;
+
 
 @Alias("profile.profileAttrDto")
 public class ProfileAttrDto {
@@ -58,13 +60,18 @@ public class ProfileAttrDto {
 	public void setProfileAttrElementMapList(List<ProfileAttrElementMapDto> profileAttrElementMapList) {
 		this.profileAttrElementMapList = profileAttrElementMapList;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "ProfileAttrDto [profileAttrId=" + profileAttrId + ", profileAttrName=" + profileAttrName + ", catId="
-				+ catId + ", createDate=" + createDate + ", createUserId=" + createUserId + ", profileAttrElementList="
-				+ profileAttrElementList + ", profileAttrElementMapList=" + profileAttrElementMapList + "]";
+		final StringBuffer sb = new StringBuffer("ProfileAttrDto{");
+		sb.append("profileAttrId=").append(profileAttrId);
+		sb.append(", profileAttrName='").append(profileAttrName).append('\'');
+		sb.append(", catId='").append(catId).append('\'');
+		sb.append(", createDate='").append(createDate).append('\'');
+		sb.append(", createUserId='").append(createUserId).append('\'');
+		sb.append(", profileAttrElementList=").append(profileAttrElementList);
+		sb.append(", profileAttrElementMapList=").append(profileAttrElementMapList);
+		sb.append('}');
+		return sb.toString();
 	}
-	
-	
 }

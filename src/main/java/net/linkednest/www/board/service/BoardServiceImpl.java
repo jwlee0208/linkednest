@@ -6,15 +6,15 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import net.linkednest.www.board.dto.BoardDto;
-import net.linkednest.www.common.util.PagedList;
-import net.linkednest.www.common.util.PagingUtil;
+import net.linkednest.common.util.PagedList;
+import net.linkednest.common.util.PagingUtil;
 import org.springframework.stereotype.Service;
 
 import net.linkednest.www.board.dao.BoardDao;
 import net.linkednest.www.board.dto.BoardCategoryDto;
 import net.linkednest.www.board.dto.BoardCategoryPortalDto;
 
-@Service("BoardServiceImpl")
+@Service
 public class BoardServiceImpl implements BoardService{
 	
 	@Resource(name="BoardDao")

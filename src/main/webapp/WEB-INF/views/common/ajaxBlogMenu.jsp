@@ -11,23 +11,13 @@
 <c:set var="navbarType" value='navbar-inverse'/>
 
 <c:if test="${shareInfo ne null && userId ne null}">
-	<c:if test="${shareInfo.shareType eq 1}">
-		<c:set var="navbarType" value='navbar-default'/>
-	</c:if>
-	<c:if test="${shareInfo.shareType eq 2}">
-		<c:set var="navbarType" value='navbar-inverse'/>
-	</c:if>
-	<c:if test="${shareInfo.shareType eq 3}">
-		<c:set var="navbarType" value='navbar-red'/>
-	</c:if>
-	<c:if test="${shareInfo.shareType eq 4}">
-		<c:set var="navbarType" value='navbar-green'/>
-	</c:if>
-	<c:if test="${shareInfo.shareType eq 5}">
-		<c:set var="navbarType" value='navbar-yellow'/>
-	</c:if>
+	<c:if test="${shareInfo.shareType eq 1}"><c:set var="navbarType" value='navbar-default'/></c:if>
+	<c:if test="${shareInfo.shareType eq 2}"><c:set var="navbarType" value='navbar-inverse'/></c:if>
+	<c:if test="${shareInfo.shareType eq 3}"><c:set var="navbarType" value='navbar-red'/></c:if>
+	<c:if test="${shareInfo.shareType eq 4}"><c:set var="navbarType" value='navbar-green'/></c:if>
+	<c:if test="${shareInfo.shareType eq 5}"><c:set var="navbarType" value='navbar-yellow'/></c:if>
 </c:if>
-<nav class="navbar ${navbarType}" role="navigation">
+<nav class="navbar ${navbarType} navbar-expand-lg navbar-light" role="navigation">
 	<input type="hidden" id="menuId" name="menuId" value="${param.menuId}"/>
 	<input type="hidden" id="userId" name="userId" value="${userId}"/>
 

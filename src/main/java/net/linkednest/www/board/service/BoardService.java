@@ -6,7 +6,7 @@ import java.util.Map;
 import net.linkednest.www.board.dto.BoardCategoryDto;
 import net.linkednest.www.board.dto.BoardCategoryPortalDto;
 import net.linkednest.www.board.dto.BoardDto;
-import net.linkednest.www.common.util.PagedList;
+import net.linkednest.common.util.PagedList;
 
 public interface BoardService {
 

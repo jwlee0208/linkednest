@@ -1,41 +1,40 @@
 package net.linkednest.www.common.web;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import net.linkednest.www.board.dto.BoardCategoryPortalDto;
 import net.linkednest.www.board.dto.BoardDto;
+import net.linkednest.www.board.dto.SideBoardCategoryPortalDto;
 import net.linkednest.www.board.service.BoardArticleService;
 import net.linkednest.www.board.service.BoardService;
 import net.linkednest.www.common.dto.ShareDto;
+import net.linkednest.www.share.service.ShareService;
 import net.linkednest.www.user.dto.UserDto;
 import net.linkednest.www.user.service.UserService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import net.linkednest.www.board.dto.BoardCategoryPortalDto;
-import net.linkednest.www.board.dto.SideBoardCategoryPortalDto;
-import net.linkednest.www.share.service.ShareService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping(value="/common")
 public class CommonController {
 
-    @Resource(name = "BoardArticleServiceImpl")
+    @Autowired
     private BoardArticleService boardArticleService;
 
-    @Resource(name = "BoardServiceImpl")
+    @Autowired
     private BoardService boardService;
 
-    @Resource(name = "ShareServiceImpl")
+    @Autowired
     private ShareService shareService;
 
-    @Resource(name = "UserServiceImpl")
+    @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/sideBoardList")
@@ -106,7 +105,7 @@ public class CommonController {
             model.addAttribute("boardCategoryList"  , this.boardService.getBoardCategoryAndBoardList(boardCategoryPortalDto));
             model.addAttribute("shareInfo"          , shareDto);
             sb.append("ajaxBlogMenu");
-        }else if(menuType.equals("config")){
+        }else if(menuType.equals("properties/config")){
             BoardDto boardDto = new BoardDto();
             model.addAttribute("boardList", this.boardService.getBoardList(boardDto));
             sb.append("ajaxConfigMenu");

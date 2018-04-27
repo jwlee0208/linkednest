@@ -13,13 +13,14 @@ if($("#buildType").val()=='prod'){
 }
 </script>
 <!-- naver analytics -->
-<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
+<%--<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
 <script type="text/javascript">
 	if(!wcs_add) var wcs_add = {};
 	wcs_add["wa"] = "47918035f92e80";
 	wcs_do();
-</script>
+</script>--%>
 <!-- baidu analytics -->
+<%--
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -28,4 +29,4 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
-</script>
+</script>--%>

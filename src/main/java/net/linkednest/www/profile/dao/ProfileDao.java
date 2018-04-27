@@ -2,6 +2,7 @@ package net.linkednest.www.profile.dao;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -82,6 +83,9 @@ public class ProfileDao extends SqlSessionDaoSupport{
 	 * @return
 	 */
 	public int updateProfileInfo(ProfileDto param) {
+		if (StringUtils.isNotEmpty(param.getProfileImgPath())) {
+			param.setProfileImgPath(StringUtils.trim(StringUtils.replace(param.getProfileImgPath(), ",", "")));
+		}
 		return getSqlSession().update("sql.profile.updateProfileInfo", param);
 	}
 
@@ -139,7 +143,9 @@ public class ProfileDao extends SqlSessionDaoSupport{
 	}
 	
 	public int deleteProfileStatPitcherInfo(int param){
-		return getSqlSession().delete("sql.profile.deleteProfileStatPitcherInfo", param);
+		ProfileStatPitcherDto profileStatPitcherDto = new ProfileStatPitcherDto();
+		profileStatPitcherDto.setProfileId(param);
+		return getSqlSession().delete("sql.profile.deleteProfileStatPitcherInfo", profileStatPitcherDto);
 	}
 	
 	public int deleteProfileStreamInfo(int param){
@@ -151,7 +157,9 @@ public class ProfileDao extends SqlSessionDaoSupport{
 	}
 	
 	public int deleteProfileCareerInfo(int param){
-		return getSqlSession().delete("sql.profile.deleteProfileCareerInfo", param);
+		ProfileCareerDto profileCareerDto = new ProfileCareerDto();
+		profileCareerDto.setProfileId(param);
+		return getSqlSession().delete("sql.profile.deleteProfileCareerInfo", profileCareerDto);
 	}
 	
 	

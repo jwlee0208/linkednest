@@ -137,14 +137,23 @@ public class MailDto {
 
     @Override
     public String toString() {
-        return "MailDto [mailFrom=" + mailFrom + ", mailTo=" + mailTo
-                + ", mailCc=" + mailCc + ", mailBcc=" + mailBcc
-                + ", addressTo=" + addressTo + ", addressCc=" + addressCc
-                + ", addressBcc=" + addressBcc + ", mailSubject=" + mailSubject
-                + ", mailContent=" + mailContent + ", templateName="
-                + templateName + ", contentType=" + contentType
-                + ", attachPath=" + attachPath + ", attachName=" + attachName
-                + "]";
+        final StringBuffer sb = new StringBuffer("MailDto{");
+        sb.append("mailFrom='").append(mailFrom).append('\'');
+        sb.append(", mailTo='").append(mailTo).append('\'');
+        sb.append(", mailCc='").append(mailCc).append('\'');
+        sb.append(", mailBcc='").append(mailBcc).append('\'');
+        sb.append(", addressTo=").append(addressTo);
+        sb.append(", addressCc=").append(addressCc);
+        sb.append(", addressBcc=").append(addressBcc);
+        sb.append(", mailSubject='").append(mailSubject).append('\'');
+        sb.append(", mailContent='").append(mailContent).append('\'');
+        sb.append(", templateName='").append(templateName).append('\'');
+        sb.append(", contentType='").append(contentType).append('\'');
+        sb.append(", attachPath='").append(attachPath).append('\'');
+        sb.append(", attachName='").append(attachName).append('\'');
+        sb.append(", model=").append(model);
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override

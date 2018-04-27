@@ -1,16 +1,15 @@
 package net.linkednest.runtime.interceptor;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.linkednest.www.board.dto.BoardArticleDto;
 import net.linkednest.www.board.dto.BoardDto;
 import net.linkednest.www.common.dto.ShareDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 @Component
 public class BoardArticleInterceptor extends HandlerInterceptorAdapter {    

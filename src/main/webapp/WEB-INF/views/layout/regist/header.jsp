@@ -8,6 +8,7 @@
 </style>
 <!-- <div style="height : 3px; background-color:maroon;"></div> -->
 <!-- <div style="border-top : 2px solid maroon; border-bottom : 2px solid maroon; vertical-align: middle;"> -->
+<div class="loader"></div>
 <div style="vertical-align: middle;">
 	<div style="padding-left: 40px;">
 		<h1>The Root is the beginning</h1>

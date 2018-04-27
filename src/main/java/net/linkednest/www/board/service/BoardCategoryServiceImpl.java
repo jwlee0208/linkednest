@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import net.linkednest.www.board.dao.BoardCategoryDao;
 import net.linkednest.www.board.dto.BoardCategoryDto;
 
-@Service("BoardCategoryServiceImpl")
+@Service
 public class BoardCategoryServiceImpl implements BoardCategoryService{
 
     @Inject

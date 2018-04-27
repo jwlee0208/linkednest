@@ -2,7 +2,7 @@
 <div class="container_fluid" style="min-height: 500px;">
 	<div class="panel panel-default" style="margin-top: 100px;">
 		<div class="panel-heading">
-			<h3 class="panel-title">forgot password</h3>
+			<h3 class="panel-title">Forgot Password</h3>
 		</div>
 		<div class="panel-body" style="min-height: 200px;vertical-align: middle;margin-top:70px;">
 			<p>E-mail</p>

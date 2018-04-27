@@ -88,13 +88,23 @@ public class ProfileCareerDto {
 	public void setModifyUserId(String modifyUserId) {
 		this.modifyUserId = modifyUserId;
 	}
+
 	@Override
 	public String toString() {
-		return "ProfileCareerDto [careerId=" + careerId + ", profileId=" + profileId + ", careerTitle=" + careerTitle
-				+ ", careerDescription=" + careerDescription + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", careerStatus=" + careerStatus + ", careerSeq=" + careerSeq + ", createDate=" + createDate
-				+ ", createUserId=" + createUserId + ", modifyDate=" + modifyDate + ", modifyUserId=" + modifyUserId
-				+ "]";
+		final StringBuffer sb = new StringBuffer("ProfileCareerDto{");
+		sb.append("careerId=").append(careerId);
+		sb.append(", profileId=").append(profileId);
+		sb.append(", careerTitle='").append(careerTitle).append('\'');
+		sb.append(", careerDescription='").append(careerDescription).append('\'');
+		sb.append(", startDate='").append(startDate).append('\'');
+		sb.append(", endDate='").append(endDate).append('\'');
+		sb.append(", careerStatus='").append(careerStatus).append('\'');
+		sb.append(", careerSeq=").append(careerSeq);
+		sb.append(", createDate='").append(createDate).append('\'');
+		sb.append(", createUserId='").append(createUserId).append('\'');
+		sb.append(", modifyDate='").append(modifyDate).append('\'');
+		sb.append(", modifyUserId='").append(modifyUserId).append('\'');
+		sb.append('}');
+		return sb.toString();
 	}
-	
 }

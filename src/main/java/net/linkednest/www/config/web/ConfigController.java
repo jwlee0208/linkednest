@@ -1,59 +1,53 @@
 package net.linkednest.www.config.web;
 
+import net.linkednest.common.util.PagedList;
+import net.linkednest.www.board.dto.BoardCategoryDto;
+import net.linkednest.www.board.dto.BoardDto;
+import net.linkednest.www.board.service.BoardCategoryService;
+import net.linkednest.www.board.service.BoardService;
+import net.linkednest.www.common.dto.ShareDto;
+import net.linkednest.www.common.service.CommonService;
+import net.linkednest.www.share.service.ShareService;
+import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserService;
+import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import net.linkednest.www.board.service.BoardCategoryServiceImpl;
-import net.linkednest.www.common.dto.ShareDto;
-import net.linkednest.www.common.service.impl.CommonServiceImpl;
-import net.linkednest.www.common.util.PagedList;
-import net.linkednest.www.user.dto.UserDto;
-import net.sf.json.JSONObject;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
-import net.linkednest.www.board.dto.BoardCategoryDto;
-import net.linkednest.www.board.dto.BoardDto;
-import net.linkednest.www.board.service.BoardServiceImpl;
-import net.linkednest.www.share.service.ShareServiceImpl;
-import net.linkednest.www.user.service.UserServiceImpl;
 @Controller
-@RequestMapping(value="/config")
+@RequestMapping(value= "/config")
 @SessionAttributes("userInfo")
 public class ConfigController {
     public static final int DEFAULT_PAGE_NO    = 1;
     public static final int DEFAULT_PAGE_SIZE  = 10;
 
-    @Resource(name="BoardServiceImpl")
-    private BoardServiceImpl 		 boardService;
+    @Autowired
+    private BoardService boardService;
 
-    @Resource(name="BoardCategoryServiceImpl")
-    private BoardCategoryServiceImpl boardCategoryService;
+    @Autowired
+    private BoardCategoryService boardCategoryService;
 
-    @Resource(name="ShareServiceImpl")
-    private ShareServiceImpl         shareService;
+    @Autowired
+    private ShareService shareService;
 
-    @Resource(name="UserServiceImpl")
-    private UserServiceImpl          userService;
+    @Autowired
+    private UserService userService;
 
-    @Resource(name="CommonServiceImpl")
-    private CommonServiceImpl commonService;
+    @Autowired
+    private CommonService commonService;
 
     @RequestMapping(value="/main")
     public String getConfig(HttpServletRequest request, Model model, HttpSession session) throws Exception{
@@ -70,13 +64,11 @@ public class ConfigController {
     @RequestMapping(value="/board/list")
     public String getBoardList(HttpServletRequest request, Model model, BoardDto boardDto, HttpSession session) throws Exception{
         UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
-
         if(null != sessionInfo){
             boardDto.setCreateUserId(sessionInfo.getUserId());
         }else{
             return "redirect:/login?redirectPage=" + request.getRequestURI();
         }
-
         model = this.getBoardCommonList(request, model, boardDto);
         return "config/board/accordionList";
     }
@@ -94,9 +86,8 @@ public class ConfigController {
         String startDate       = request.getParameter("startDate");
         String endDate         = request.getParameter("endDate");
 
-        int    pageNo          = (request.getParameter("pageNo") != null) ? Integer.parseInt(request.getParameter("pageNo")) : DEFAULT_PAGE_NO;
-
-        int    listRowCnt      = (request.getParameter("listRowCnt") != null) ? Integer.parseInt(request.getParameter("listRowCnt")) : 10;
+        int    pageNo          = (StringUtils.isNotEmpty(StringUtils.defaultString(request.getParameter("pageNo")))) ? Integer.parseInt(request.getParameter("pageNo")) : DEFAULT_PAGE_NO;
+        int    listRowCnt      = (StringUtils.isNotEmpty(StringUtils.defaultString(request.getParameter("listRowCnt")))) ? Integer.parseInt(request.getParameter("listRowCnt")) : 10;
 
         String createUserId    = boardDto.getCreateUserId();
 
@@ -133,7 +124,6 @@ public class ConfigController {
             return "redirect:/login?redirectPage=" + request.getRequestURI();
         }
         model.addAttribute("categoryList", this.boardService.getBoardCategoryList(boardCategoryDto));
-
         return "config/board/write";
     }
 
@@ -141,16 +131,11 @@ public class ConfigController {
     @RequestMapping(value = "/board/insertBoardAction.json", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject insertBoardAction(@Valid BoardDto boardDto, BindingResult bindingResult, HttpSession session) throws Exception {
-
-//      System.out.println(">>> boardDto  : " + boardDto.toString());
-
         JSONObject    jsonObj         = new JSONObject();
         int           insertResult    = 0;
-
         UserDto       sessionInfo     = (UserDto)session.getAttribute("userInfo");
 
         if(null != sessionInfo){
-
             boardDto.setCreateUserId(sessionInfo.getUserId());
             boardDto.setCreateUserName(sessionInfo.getUserNm());
 
@@ -160,7 +145,6 @@ public class ConfigController {
         }
 
         insertResult = this.boardService.insertBoardInfo(boardDto);
-
         jsonObj.put("result", (insertResult > 0) ? true : false);
         return jsonObj;
     }
@@ -209,9 +193,7 @@ public class ConfigController {
             if(selectedBoardId > 0){
                 boardDto.setBoardId(selectedBoardId);
             }
-
             boardInfo = boardService.getBoardInfo(boardDto);
-
         }else{
             return "redirect:/login?redirectPage=" + request.getRequestURI();
         }
@@ -235,11 +217,9 @@ public class ConfigController {
 
         JSONObject jsonObj        = new JSONObject();
         int        modifyResult   = 0;
-
         UserDto    sessionInfo    = (UserDto)session.getAttribute("userInfo");
 
         if(null != sessionInfo){
-
             boardDto.setModifyUserId(sessionInfo.getUserId());
             boardDto.setModifyUserName(sessionInfo.getUserNm());
 
@@ -247,7 +227,6 @@ public class ConfigController {
                 jsonObj.put("validate", false);
             }
         }
-
         modifyResult = this.boardService.modifyBoardInfo(boardDto);
 
         jsonObj.put("result", (modifyResult > 0) ? true : false);
@@ -285,14 +264,10 @@ public class ConfigController {
 
     @RequestMapping(value = "/board/writeCategory")
     public String createBoardCategory(HttpServletRequest request, Model model, HttpSession session) throws Exception{
-
         UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
-        if(null != sessionInfo){
-
-        }else{
+        if(null == sessionInfo){
             return "redirect:/login?redirectPage=" + request.getRequestURI();
         }
-
         return "config/board/writeCategory";
     }
 
@@ -304,18 +279,14 @@ public class ConfigController {
 
         JSONObject    jsonObj         = new JSONObject();
         int           insertResult    = 0;
-
         UserDto       sessionInfo     = (UserDto)session.getAttribute("userInfo");
 
         if(null != sessionInfo){
-
             boardCategoryDto.setCreateUserId(sessionInfo.getUserId());
-
             if(bindingResult.hasErrors()){
                 jsonObj.put("validate", false);
             }
         }
-
         insertResult = this.boardCategoryService.insertBoardCategory(boardCategoryDto);
 
         jsonObj.put("result", (insertResult > 0) ? true : false);
@@ -338,7 +309,6 @@ public class ConfigController {
             // 다음 글 조회
             nextBoardCategoryInfo = this.boardCategoryService.getNextBoardCategoryInfo(boardCategoryDto);
         }
-
         model.addAttribute("boardCategoryInfo"    , boardCategoryInfo);
         model.addAttribute("prevBoardCategoryInfo", prevBoardCategoryInfo);
         model.addAttribute("nextBoardCategoryInfo", nextBoardCategoryInfo);
@@ -347,9 +317,6 @@ public class ConfigController {
 
         return "config/board/viewCategory";
     }
-
-
-
 
     @RequestMapping(value = "/board/modifyCategory")
     public String modifyBoardCategory(HttpServletRequest request, Model model, BoardCategoryDto boardCategoryDto, HttpSession session, @RequestParam(value="selectedBoardCategoryId", required=false) int selectedBoardCategoryId) throws Exception{
@@ -361,13 +328,11 @@ public class ConfigController {
             if(selectedBoardCategoryId > 0){
                 boardCategoryDto.setBoardCategoryId(selectedBoardCategoryId);
             }
-
             boardCategoryInfo = boardCategoryService.getBoardCategoryInfo(boardCategoryDto);
 
         }else{
             return "redirect:/login?redirectPage=" + request.getRequestURI();
         }
-
         model.addAttribute("boardCategoryInfo"   , boardCategoryInfo);
         return "config/board/writeCategory";
     }
@@ -386,18 +351,14 @@ public class ConfigController {
 
         JSONObject jsonObj        = new JSONObject();
         int        modifyResult   = 0;
-
         UserDto    sessionInfo    = (UserDto)session.getAttribute("userInfo");
 
         if(null != sessionInfo){
-
             if(bindingResult.hasErrors()){
                 jsonObj.put("validate", false);
             }
         }
-
         modifyResult = this.boardCategoryService.updateBoardCategory(boardCategoryDto);
-
         jsonObj.put("result", (modifyResult > 0) ? true : false);
         return jsonObj;
     }
@@ -414,7 +375,6 @@ public class ConfigController {
         UserDto    sessionInfo     = (UserDto)session.getAttribute("userInfo");
 
         if(sessionInfo != null){
-
             if(shareDto != null){
                 int updateResult = this.shareService.updateShareInfo(shareDto);
                 if(updateResult > 0){
@@ -428,7 +388,6 @@ public class ConfigController {
                 resultObj.put("code"    , "error");
                 resultObj.put("message" , "invalid object(null)");
             }
-
         }else{
             resultObj.put("code"    , "error");
             resultObj.put("message" , "invalid session");
@@ -442,6 +401,7 @@ public class ConfigController {
         this.commonService.getPrivateInfo(request, model, session);
         return "user/ajaxPrivateInfo";
     }
+
     @RequestMapping(value="/priv/modifyUserInfo")
     public String modifyRegistInfo(HttpServletRequest request, Model model, HttpSession session) throws Exception{
         UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");

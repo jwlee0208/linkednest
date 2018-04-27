@@ -1,31 +1,25 @@
 package net.linkednest.www.login.web;
 
-import java.util.Locale;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserService;
 import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import net.linkednest.www.user.service.UserServiceImpl;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.Locale;
 
 @Controller
 @SessionAttributes("userInfo")
@@ -33,8 +27,11 @@ public class LoginController {
 	
     final Log log = LogFactory.getLog(this.getClass());
     
-	@Resource(name="UserServiceImpl")
-	private UserServiceImpl userService;
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@RequestMapping(value="/")
 	public String index() throws Exception{
@@ -85,7 +82,7 @@ public class LoginController {
 		}else{
 			// 입력된 passwd와 비교한다.
 			String 	hashedPasswd = userInfo.getPasswd();	// BCrypt.hashpw(passwd, BCrypt.gensalt(15));			
-			boolean isOk 		 = BCrypt.checkpw(passwd, hashedPasswd);
+			boolean isOk 		 = passwordEncoder.matches(passwd, hashedPasswd);	// BCrypt.checkpw(passwd, hashedPasswd);
 			
 			if(isOk){
 				resultCode 	= "LOGIN_0000";

@@ -166,12 +166,34 @@ public class ProfileStatPitcherDto{
 	public void setProfileId(int profileId) {
 		this.profileId = profileId;
 	}
+
 	@Override
 	public String toString() {
-		return "ProfileStatPitcherDto [statPitcherId=" + statPitcherId + ", profileId=" + profileId + ", pTeamName="
-				+ pTeamName + ", pStatYear=" + pStatYear + ", inn=" + inn + ", w=" + w + ", l=" + l + ", era=" + era
-				+ ", g=" + g + ", gs=" + gs + ", sv=" + sv + ", svo=" + svo + ", ip=" + ip + ", h=" + h + ", r=" + r
-				+ ", er=" + er + ", hr=" + hr + ", bb=" + bb + ", so=" + so + ", avg=" + avg + ", whip=" + whip
-				+ ", k=" + k + ", etc=" + etc + "]";
+		final StringBuffer sb = new StringBuffer("ProfileStatPitcherDto{");
+		sb.append("statPitcherId=").append(statPitcherId);
+		sb.append(", profileId=").append(profileId);
+		sb.append(", pTeamName='").append(pTeamName).append('\'');
+		sb.append(", pStatYear='").append(pStatYear).append('\'');
+		sb.append(", inn=").append(inn);
+		sb.append(", w=").append(w);
+		sb.append(", l=").append(l);
+		sb.append(", era=").append(era);
+		sb.append(", g=").append(g);
+		sb.append(", gs=").append(gs);
+		sb.append(", sv=").append(sv);
+		sb.append(", svo=").append(svo);
+		sb.append(", ip=").append(ip);
+		sb.append(", h=").append(h);
+		sb.append(", r=").append(r);
+		sb.append(", er=").append(er);
+		sb.append(", hr=").append(hr);
+		sb.append(", bb=").append(bb);
+		sb.append(", so=").append(so);
+		sb.append(", avg=").append(avg);
+		sb.append(", whip=").append(whip);
+		sb.append(", k=").append(k);
+		sb.append(", etc='").append(etc).append('\'');
+		sb.append('}');
+		return sb.toString();
 	}
 }

@@ -1,10 +1,9 @@
 package net.linkednest.www.profile.service;
 
-import java.util.List;
+import net.linkednest.www.profile.dto.*;
 
-import net.linkednest.www.profile.dto.LeagueInfoDto;
-import net.linkednest.www.profile.dto.ProfileDto;
-import net.linkednest.www.profile.dto.SearchProfileDto;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public interface ProfileService {
 	public List<ProfileDto> getProfileInfos(ProfileDto profileInfo);
@@ -14,4 +13,8 @@ public interface ProfileService {
 	public int 				addLeagueInfo(LeagueInfoDto leagueInfoDto);
 	public List<LeagueInfoDto> getLeagueInfoList();
 	public LeagueInfoDto 	getLeagueInfo(int leagueId);
+	public void sendMailProfile(ProfileDto profileInfo, HttpSession session, ProfileMailReq request);
+	public List<ProfileAttrDto> getProfileAttrElementList(ProfileDto profileDto);
+	public int addProfileInfos(ProfileDto profileDto);
+	public int updateProfileInfos(ProfileDto profileDto);
 }

@@ -148,7 +148,6 @@ $(document).ready(function() {
 			$(this).children("a").text($(this).children("a").text().replace("∧ ", "∨ "));
 		}else{
 			$(this).children("a").text($(this).children("a").text().replace("∨ ", "∧ "));
-				
 		}
 	});
 });

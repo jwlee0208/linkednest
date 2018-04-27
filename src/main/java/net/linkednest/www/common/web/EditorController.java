@@ -5,9 +5,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.linkednest.www.board.service.BoardArticleService;
-import net.linkednest.www.common.util.FileUtil;
-import net.linkednest.www.openapi.service.FlickrAPIService;
+import net.linkednest.common.constant.FileConstants;
+import net.linkednest.common.util.FileUtil;
+import net.linkednest.openapi.service.FlickrAPIService;
+import org.apache.commons.lang.StringUtils;
 import org.scribe.model.Token;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import net.linkednest.www.common.util.FileUpload;
+import net.linkednest.common.util.FileUpload;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.SearchParameters;
@@ -32,15 +33,12 @@ import net.sf.json.JSONObject;
 @Controller("EditorController")
 public class EditorController extends BaseController {
 	private static final Logger logger = LoggerFactory.getLogger(EditorController.class);
-	public static final long MAX_UPLOAD_FILE_SIZE = 20480000;
-	public static final String FILE_EXTENSIONS_IMAGES = "jpg, jpeg, png, gif, bmp";
-
 
 	@Autowired
 	private ServletContext servletContext;
 
 	@Autowired
-	private BoardArticleService boardService;
+	private net.linkednest.www.board.service.BoardArticleService boardService;
 
 	@Autowired
 	private FlickrAPIService flickrService;
@@ -56,39 +54,46 @@ public class EditorController extends BaseController {
 
 	@RequestMapping(value = {"/{path}/imageuploadaction", "/{path1}/{path2}/imageuploadaction", "/{path1}/{path2}/{path3}/imageuploadaction", "/{path1}/{path2}/{path3}/{path4}/imageuploadaction", "/{path1}/{path2}/{path3}/{path4}/{path5}/imageuploadaction"}, method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public String imageadd(MultipartFile imageFile) throws Exception {
+	public String addImage(MultipartFile imageFile) throws Exception {
+		System.out.printf("=========== [ addImage ] ===========\n");
+		System.out.printf("OriginalFilename : %s\n", imageFile.getOriginalFilename());
+		System.out.printf("Name : %s\n", imageFile.getName());
+		System.out.printf("Size : %s\n", imageFile.getSize());
+		System.out.printf("Bytes : %s\n", imageFile.getBytes());
 
-		System.out.println("imageadd");
-		System.out.println("" + imageFile.getOriginalFilename());
-		System.out.println("" + imageFile.getName());
-		System.out.println("" + imageFile.getSize());
-		System.out.println("" + imageFile.getBytes());
 		StringBuffer sb = this.fileUploadByEditor(imageFile);
-		System.out.println("image upload result : " + sb.toString());
+
+		System.out.printf("image upload result : %s\n", sb.toString());
+		System.out.printf("====================================\n");
 		return sb.toString();
 	}
 
 	private StringBuffer fileUploadByEditor(MultipartFile imageFile) throws Exception {
+
 		StringBuffer sb = new StringBuffer();
 		try {
 			//이미지 파일 용량 체크
 			long fileSize = imageFile.getSize();
-			if (fileSize > MAX_UPLOAD_FILE_SIZE || fileSize <= 0) {
+			if (fileSize > FileConstants.MAX_UPLOAD_FILE_SIZE || fileSize <= 0) {
 				logger.info("20MB 이상의 파일은 업로드 할 수 없습니다.");
 				sb.append("fileSizeError");
 				return sb;
 			}
 
 			if (imageFile != null) {
-				//file size check
-				if (!fileUpload.checkFileSize(MAX_UPLOAD_FILE_SIZE, imageFile)) {
+				boolean isValidFileSize = fileUpload.checkFileSize(FileConstants.MAX_UPLOAD_FILE_SIZE, imageFile);	//file size check
+				boolean isValidFileExtension = fileUpload.checkFileExtension(FileConstants.FILE_EXTENSIONS_IMAGES, imageFile);	// filee extension check
+
+				if (!isValidFileSize) {
 					sb.append("fileSizeError");
 					return sb;
-				} else if (!fileUpload.checkFileExtension(FILE_EXTENSIONS_IMAGES, imageFile)) {
+				} else if (!isValidFileExtension) {
 					sb.append("fileExtensionError");
 					return sb;
 				}
 				System.out.println("imageFile : " + imageFile);
+
+				// Upload File
 				String fileRealPath = fileUpload.uploadFile(imageFile);
 
 				System.out.println("fileRealPath : " + fileRealPath);
@@ -144,26 +149,25 @@ public class EditorController extends BaseController {
 	@RequestMapping(value = {"/{path}/popImageSelector/{cmd}", "/{path1}/{path2}/popImageSelector/{cmd}", "/{path1}/{path2}/{path3}/popImageSelector/{cmd}", "/{path1}/{path2}/{path3}/{path4}/popImageSelector/{cmd}"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public String imageSelectorForm(HttpServletRequest request, Model model, HttpSession session, @RequestParam(value="userId", required=false) String userId, @RequestParam(value="searchKeyword", required=false) String searchKeyword) throws Exception {
 		SearchParameters params = new SearchParameters();
-		if(searchKeyword != null && searchKeyword != ""){
-			params.setText(searchKeyword);
-		}else{
-			searchKeyword = "";
-		}
-		if(userId != null && userId != ""){
-			params.setUserId(userId);
-		}else{
-			userId = "";
-		}
+
 		PhotoList<Photo> photoList = null;
 
-		if((searchKeyword != null && searchKeyword != "") || (userId != null && userId != "")){
+		if(StringUtils.isNotEmpty(searchKeyword) || StringUtils.isNotEmpty(userId)){
+			if (StringUtils.isNotEmpty(searchKeyword)) {
+				params.setText(searchKeyword);
+			}
+			if (StringUtils.isNotEmpty(userId)) {
+				params.setUserId(userId);
+			}
 			photoList = this.flickrService.getPhotoList(params);
 		}
 		model.addAttribute("searchKeyword"	, searchKeyword);
 		model.addAttribute("userId"			, userId);
 		model.addAttribute("photoList"		, photoList);
+
 		System.out.println("request.getRequestURI() : " + request.getRequestURI());
 		System.out.println("request.getRequestURL() : " + request.getRequestURL());
+
 		return "/common/popFlickrImageSelector";
 	}
 	/**

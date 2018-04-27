@@ -47,11 +47,17 @@ public class ProfileTeamDto extends ProfileDto{
 	public void setCreateUserId(String createUserId) {
 		this.createUserId = createUserId;
 	}
+
 	@Override
 	public String toString() {
-		return "ProfileTeamDto [profileTeamId=" + profileTeamId + ", leagueId=" + leagueId + ", city=" + city
-				+ ", establishedDate=" + establishedDate + ", createDate=" + createDate + ", createUserId="
-				+ createUserId + "]";
+		final StringBuffer sb = new StringBuffer("ProfileTeamDto{");
+		sb.append("profileTeamId=").append(profileTeamId);
+		sb.append(", leagueId=").append(leagueId);
+		sb.append(", city='").append(city).append('\'');
+		sb.append(", establishedDate='").append(establishedDate).append('\'');
+		sb.append(", createDate='").append(createDate).append('\'');
+		sb.append(", createUserId='").append(createUserId).append('\'');
+		sb.append('}');
+		return sb.toString();
 	}
-	
 }
