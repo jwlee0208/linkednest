@@ -103,7 +103,7 @@ public class ProfileDao extends SqlSessionDaoSupport{
 	}
 
 	public int updateProfileContactInfo(ProfileContactInfoDto param){
-		return getSqlSession().update("sql.profile.insertProfileContactInfo", param);
+		return getSqlSession().update("sql.profile.updateProfileContactInfo", param);
 	}
 
 	public int insertProfileStatFielderInfo(ProfileStatFielderDto param){
@@ -177,5 +177,9 @@ public class ProfileDao extends SqlSessionDaoSupport{
 	
 	public LeagueInfoDto selectLeagueInfo(LeagueInfoDto param){
 		return getSqlSession().selectOne("sql.profile.selectLeagueInfo", param);
+	}
+
+	public List<ProfileContactInfoDto> selectContactList() {
+		return getSqlSession().selectList("sql.profile.selectContactList");
 	}
 }

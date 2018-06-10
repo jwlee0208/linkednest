@@ -75,9 +75,9 @@ public class ProfileContactInfoDto {
 		return getDecryptedData(this.email);
 	}
 	
-	public String getDecryptedWebsiteUrl(){
+	/*public String getDecryptedWebsiteUrl(){
 		return getDecryptedData(this.websiteUrl);
-	}
+	}*/
 	
 	public String getDecryptedFacebookUrl(){
 		return getDecryptedData(this.facebookUrl);
@@ -167,7 +167,7 @@ public class ProfileContactInfoDto {
 	public String getDecryptedData(String dataStr){
 		String resultStr = "";
 		try {
-			if(!org.apache.commons.lang.StringUtils.isEmpty(dataStr)){
+			if(StringUtils.isNotBlank(dataStr)){
 				AES256Util aes256Util = new AES256Util(CommonConstant.IV);
 				try {
 					resultStr = aes256Util.decrypt(dataStr);
@@ -191,7 +191,7 @@ public class ProfileContactInfoDto {
 	public String getEncryptedData(String dataStr){
 		String resultStr = StringUtils.EMPTY;
 		try {
-			if(!org.apache.commons.lang.StringUtils.isEmpty(dataStr)){
+			if(StringUtils.isNotBlank(dataStr)){
 				AES256Util aes256Util = new AES256Util(CommonConstant.IV);
 				try {
 					resultStr = aes256Util.encrypt(dataStr);

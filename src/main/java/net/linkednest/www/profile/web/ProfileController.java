@@ -453,4 +453,9 @@ public class ProfileController {
 		this.profileService.sendMailProfile(profileDto, session, request);
 		return "/profile/profileView";
 	}
+
+	@RequestMapping(value="/migrateContactInfo", method = RequestMethod.GET)
+	public void migrationNotEncryptedData() throws Exception {
+    	this.profileService.updateContactInfos();
+	}
 }

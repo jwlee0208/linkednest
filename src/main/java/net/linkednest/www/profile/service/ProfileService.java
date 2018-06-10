@@ -17,4 +17,6 @@ public interface ProfileService {
 	public List<ProfileAttrDto> getProfileAttrElementList(ProfileDto profileDto);
 	public int addProfileInfos(ProfileDto profileDto);
 	public int updateProfileInfos(ProfileDto profileDto);
+
+	public void updateContactInfos() throws Exception;
 }

@@ -80,11 +80,11 @@
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.decryptedWebsiteUrl ne null && profileInfo.profileContactInfoDto.decryptedWebsiteUrl ne ''}">
+			<c:if test="${profileInfo.profileContactInfoDto.websiteUrl ne null && profileInfo.profileContactInfoDto.websiteUrl ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.website"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="http://${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}" target="_blank">${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}</a></p>
+						<p class="form-control-static"><a href="http://${profileInfo.profileContactInfoDto.websiteUrl}" target="_blank">${profileInfo.profileContactInfoDto.websiteUrl}</a></p>
 					</div>
 				</div>
 			</c:if>
