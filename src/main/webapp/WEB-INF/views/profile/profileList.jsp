@@ -140,10 +140,8 @@
 			<!-- // list area -->
 
 			<c:if test="${isLogon}">
-				<div class="btn-group btn-group-justified" style="padding-bottom: 20px;">
-					<div class="btn-group">
-						<input type="button" class="btn btn-default pull-right" value="regist" name="goToRegistProfile" />
-					</div>
+				<div style="padding-bottom: 20px;">
+					<input type="button" class="btn btn-outline-primary btn-lg btn-block" value="regist" name="goToRegistProfile" />
 				</div>
 			</c:if>
 		</div>

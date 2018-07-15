@@ -3,7 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" 		prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" 	prefix="tag" %>
-
+	<jsp:useBean id="now" class="java.util.Date"/>
+	<c:set var="nowTime">
+		<fmt:formatDate value="${now}" pattern="yyyyMMddHHmmss"/>
+	</c:set>
 	<div class="jumbotron jumbotron-fluid">
 		<div class="container">
 			<h1 class="display-3" style="color:#efefef;">Find &nbsp;|&nbsp; Join &nbsp;|&nbsp; Play</h1>
@@ -20,6 +23,7 @@
 		<c:choose>
 			<c:when test="${!empty recentPlayerProfileList}">
 				<c:forEach var="recentPlayerProfileInfo" items="${recentPlayerProfileList}" varStatus="index">
+					<c:if test="${index.count <= 3}">
 				<div class="col-sm-4">
 					<div class="card">
 							<c:choose>
@@ -89,7 +93,8 @@
 							</div>
 					</div>
 					<br/>
-				</div>	
+				</div>
+					</c:if>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
@@ -106,7 +111,8 @@
 		<c:choose>
 			<c:when test="${!empty recentTeamProfileList}">
 				<c:forEach var="recentTeamProfileInfo" items="${recentTeamProfileList}" varStatus="index">
-				<div class="col-sm-4">
+					<c:if test="${index.count <= 3}">
+					<div class="col-sm-4">
 					<div class="card">
 							<c:choose>
 								<c:when test="${recentTeamProfileInfo.profileImgPath ne null && recentTeamProfileInfo.profileImgPath ne ''}">
@@ -183,14 +189,16 @@
 							</div>
 					</div>		
 					<br/>
-				</div>						
+				</div>
+					</c:if>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
 				<div style="padding-left : 20px; min-height : 70px; vertical-align: middle;">
 					<p><tag:message code='text.noregistplayer'/></p>
 				</div>
-			</c:otherwise>	
+			</c:otherwise>
+
 		</c:choose>	
 		</div>	
 <!-- // 2016.06.14 이후 작업 --> 		
@@ -274,8 +282,8 @@
 	    parallax();
 	});
 </script>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/circle.css"/>
-<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/profileView.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/circle.css?${nowTime}"/>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/js/profile/profileView.js?${nowTime}"></script>
 <style>
 	.jumbotron {
 		background: #000 url("../img/home/img06.jpg") center center;
