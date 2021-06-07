@@ -32,7 +32,7 @@
 		<hibernate.version>4.2.1.Final</hibernate.version>
 
 		<!-- Logging -->
-		<logback.version>1.0.7</logback.version>
+		<logback.version>1.2.0</logback.version>
 
 		<aspectj.version>1.7.1</aspectj.version>
 		<slf4j.version>1.7.5</slf4j.version>
