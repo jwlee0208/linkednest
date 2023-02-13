@@ -20,3 +20,12 @@
 
 <!-- angular js -->
 <%-- <script type="text/javascript" 		src="${pageContext.request.contextPath}/lib/angular.min.js"></script> --%>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QG1LNG2KRX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QG1LNG2KRX');
+</script>
