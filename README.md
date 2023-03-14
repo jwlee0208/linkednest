@@ -27,7 +27,7 @@
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"> <img src="https://img.shields.io/badge/jQUery-0769AD?style=flat&logo=jQUery&logoColor=white"> <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=Bootstrap&logoColor=white"> <img src="https://img.shields.io/badge/Google Translate-4285F4?style=flat&logo=Google Translate&logoColor=white">
 
 ### Back-End
-<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=Spring Boot&logoColor=white"> <img src="https://img.shields.io/badge/OpenJDK-FFFFFF?style=flat&logo=OpenJDK&logoColor=white"> 
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=Spring&logoColor=white"> <img src="https://img.shields.io/badge/OpenJDK-FFFFFF?style=flat&logo=OpenJDK&logoColor=white"> 
 
 ### OPEN API
 <img src="https://img.shields.io/badge/Flickr-0063DC?style=flat&logo=Flickr&logoColor=white"> <img src="https://img.shields.io/badge/SlideShare-008ED2?style=flat&logo=SlideShare&logoColor=white"> <img src="https://img.shields.io/badge/Youtube-FF0000?style=flat&logo=Youtube&logoColor=white">
