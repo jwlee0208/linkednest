@@ -32,35 +32,45 @@
 ### OPEN API
 <img src="https://img.shields.io/badge/Flickr-0063DC?style=flat&logo=Flickr&logoColor=white"> <img src="https://img.shields.io/badge/SlideShare-008ED2?style=flat&logo=SlideShare&logoColor=white"> <img src="https://img.shields.io/badge/Youtube-FF0000?style=flat&logo=Youtube&logoColor=white">
 
-### Code Repository
-<img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"> <img src="https://img.shields.io/badge/Azure DevOps-0078D7?style=flat&logo=Azure DevOps&logoColor=white">
 
 ### Dependency
 <img src="https://img.shields.io/badge/Apache Maven-C71A36?style=flat&logo=Apache Maven&logoColor=white">
 
-### WAS
-<img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=Apache Tomcat&logoColor=white">
+### INFRA
 
-### DBMS
-<img src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=MariaDB&logoColor=white">
+#### WAF 
+<img src="https://img.shields.io/badge/Cloudflare-F38020?style=flat&logo=Cloudflare&logoColor=white"> 
 
-### IDE
-<img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=flat&logo=Eclipse IDE&logoColor=white"> <img src="https://img.shields.io/badge/IntelliJ IDEA-000000?style=flat&logo=IntelliJ IDEA&logoColor=white"> 
+#### WAS
+<img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=Apache Tomcat&logoColor=white"> 
 
-### Analytic Tool
-<img src="https://img.shields.io/badge/Google Analytics-E37400?style=flat&logo=Google Analytics&logoColor=white"> 
+#### RDB
+<img src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=MariaDB&logoColor=white"> 
 
-### WAF
-<img src="https://img.shields.io/badge/Cloudflare-F38020?style=flat&logo=Cloudflare&logoColor=white">
+#### Memory Cache
+<img src="https://img.shields.io/badge/Redis-EE0000?style=flat&logo=Redis&logoColor=white">
 
-### OS
+#### Code Repository
+<img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"> <img src="https://img.shields.io/badge/Azure DevOps-0078D7?style=flat&logo=Azure DevOps&logoColor=white">
+
+#### HOSTING
+<img src="https://img.shields.io/badge/Vultr-007BFC?style=flat&logo=Vultr&logoColor=white"> <img src="https://img.shields.io/badge/Microsoft Azure-0078D4?style=flat&logo=Microsoft Azure&logoColor=white"> 
+
+#### OS
 <img src="https://img.shields.io/badge/Linux-FCC624?style=flat&logo=Linux&logoColor=white"> <img src="https://img.shields.io/badge/CentOS-262577?style=flat&logo=CentOS&logoColor=white">
 
-### APM
+#### APM
 <img src="https://img.shields.io/badge/New Relic-008C99?style=flat&logo=New Relic&logoColor=white"> <img src="https://img.shields.io/badge/Prometheus-E6522C?style=flat&logo=Prometheus&logoColor=white"> <img src="https://img.shields.io/badge/Grafana-F46800?style=flat&logo=Grafana&logoColor=white"> <img src="https://img.shields.io/badge/Datadog-632CA6?style=flat&logo=Datadog&logoColor=white">
 
-## HOSTING
-<img src="https://img.shields.io/badge/Vultr-007BFC?style=flat&logo=Vultr&logoColor=white"> <img src="https://img.shields.io/badge/Microsoft Azure-0078D4?style=flat&logo=Microsoft Azure&logoColor=white"> 
+### Tool
+
+#### IDE
+<img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=flat&logo=Eclipse IDE&logoColor=white"> <img src="https://img.shields.io/badge/IntelliJ IDEA-000000?style=flat&logo=IntelliJ IDEA&logoColor=white"> 
+
+#### Analytic Tool
+<img src="https://img.shields.io/badge/Google Analytics-E37400?style=flat&logo=Google Analytics&logoColor=white"> 
+
+
 
 ## __Redis Installation And Configuration Guide__
 ### - Go to http://redis.io/download , download and execute to install redis
