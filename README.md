@@ -60,7 +60,7 @@
 <img src="https://img.shields.io/badge/New Relic-008C99?style=flat&logo=New Relic&logoColor=white"> <img src="https://img.shields.io/badge/Prometheus-E6522C?style=flat&logo=Prometheus&logoColor=white"> <img src="https://img.shields.io/badge/Grafana-F46800?style=flat&logo=Grafana&logoColor=white"> <img src="https://img.shields.io/badge/Datadog-632CA6?style=flat&logo=Datadog&logoColor=white">
 
 ## HOSTING
-<img src="https://img.shields.io/badge/Vultr-007BFC?style=flat&logo=Vultr&logoColor=white"> <img src="https://img.shields.io/badge/Microsoft Azure-0078D4?style=flat&logo=Microsoft Azure&logoColor=white"> <img src="https://img.shields.io/badge/Red Hat Open Shift-EE0000?style=flat&logo=Red Hat Open Shift&logoColor=white">
+<img src="https://img.shields.io/badge/Vultr-007BFC?style=flat&logo=Vultr&logoColor=white"> <img src="https://img.shields.io/badge/Microsoft Azure-0078D4?style=flat&logo=Microsoft Azure&logoColor=white"> 
 
 ## __Redis Installation And Configuration Guide__
 ### - Go to http://redis.io/download , download and execute to install redis
