@@ -53,7 +53,8 @@
 ### WAF
 <img src="https://img.shields.io/badge/Cloudflare-F38020?style=flat&logo=Cloudflare&logoColor=white">
 
-
+### OS
+<img src="https://img.shields.io/badge/Linux-FCC624?style=flat&logo=Linux&logoColor=white"> <img src="https://img.shields.io/badge/CentOS-262577?style=flat&logo=CentOS&logoColor=white">
 
 ## __Redis Installation And Configuration Guide__
 ### - Go to http://redis.io/download , download and execute to install redis
