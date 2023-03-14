@@ -18,7 +18,42 @@
 	- Search Stream List Using Youtube Api
 ### - Write Article Using WISIWIG Editor 
 	- TinyMCE(4.x ver.) 
-			
+
+## Tech Stack
+--------
+
+<!-- <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=Spring&logoColor=white"> -->
+### Front-End
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"> <img src="https://img.shields.io/badge/jQUery-0769AD?style=flat&logo=jQUery&logoColor=white"> <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=Bootstrap&logoColor=white"> <img src="https://img.shields.io/badge/Google Translate-4285F4?style=flat&logo=Google Translate&logoColor=white">
+
+### Back-End
+<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=Spring Boot&logoColor=white"> <img src="https://img.shields.io/badge/OpenJDK-FFFFFF?style=flat&logo=OpenJDK&logoColor=white"> 
+
+### OPEN API
+<img src="https://img.shields.io/badge/Flickr-0063DC?style=flat&logo=Flickr&logoColor=white"> <img src="https://img.shields.io/badge/SlideShare-008ED2?style=flat&logo=SlideShare&logoColor=white"> <img src="https://img.shields.io/badge/Youtube-FF0000?style=flat&logo=Youtube&logoColor=white">
+
+### Code Repository
+<img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white">
+
+### Dependency
+<img src="https://img.shields.io/badge/Apache Maven-C71A36?style=flat&logo=Apache Maven&logoColor=white">
+
+### WAS
+<img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=Apache Tomcat&logoColor=white">
+
+### DBMS
+<img src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=MariaDB&logoColor=white">
+
+### IDE
+<img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=flat&logo=Eclipse IDE&logoColor=white"> <img src="https://img.shields.io/badge/IntelliJ IDEA-000000?style=flat&logo=IntelliJ IDEA&logoColor=white"> 
+
+### Analytic Tool
+<img src="https://img.shields.io/badge/Google Analytics-E37400?style=flat&logo=Google Analytics&logoColor=white"> 
+
+### WAF
+<img src="https://img.shields.io/badge/Cloudflare-F38020?style=flat&logo=Cloudflare&logoColor=white">
+
+
 
 ## __Redis Installation And Configuration Guide__
 ### - Go to http://redis.io/download , download and execute to install redis
