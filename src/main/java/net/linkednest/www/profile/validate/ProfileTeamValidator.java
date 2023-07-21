@@ -25,13 +25,13 @@ public class ProfileTeamValidator extends BaseValidator {
 
     private static void commonValidate(BindingResult result, ProfileTeamDto profileTeamDto) {
         // name
-        ValidationUtil.rejectIfEmpty(result, "leagueId", "profile.team.leagueId.empty", "리그 정보가 선택되지 않았습니다.");
+        ValidationUtil.rejectIfEmpty(result, "profileTeamDto.leagueId", "profile.team.leagueId.empty", "리그 정보가 선택되지 않았습니다.");
         // city
-        ValidationUtil.rejectIfEmpty(result, "city", "profile.team.city.empty", "도시(연고지)가 입력되지 않았습니다.");
+        ValidationUtil.rejectIfEmpty(result, "profileTeamDto.city", "profile.team.city.empty", "도시(연고지)가 입력되지 않았습니다.");
         // establishedDate
-        ValidationUtil.rejectIfEmpty(result, "establishedDate", "profile.team.establishedDate.empty", "창단일자가 입력되지 않았습니다.");
+        ValidationUtil.rejectIfEmpty(result, "profileTeamDto.establishedDate", "profile.team.establishedDate.empty", "창단일자가 입력되지 않았습니다.");
         if (StringUtils.isNotEmpty(profileTeamDto.getEstablishedDate())) {
-            ValidationUtil.rejectIfNotRegEx(result, "establishedDate", "profile.team.establishedDate.wrongformat", "창단일자가 형식에 맞지 않습니다.", ValidationUtil.REG_EX_YYYY_MM_DD);
+            ValidationUtil.rejectIfNotRegEx(result, "profileTeamDto.establishedDate", "profile.team.establishedDate.wrongformat", "창단일자가 형식에 맞지 않습니다.", ValidationUtil.REG_EX_YYYY_MM_DD);
         }
     }
 }
