@@ -188,8 +188,12 @@ public class ProfileController {
     	List<ProfileAttrDto> profileAttrList = this.profileService.getProfileAttrElementList(profileDto);
     	
     	List<LeagueInfoDto> leagueInfoList = null;
-    	if(profileType.equals(ProfileConstants.PROFILE_TYPE_TEAM)){
+    	
+		logger.debug(String.format("[%s][%s] profileType : %s, constantVal : %s", this.getClass().getName(), "getProfileUpdateInfo", profileType.toString(), ProfileConstants.PROFILE_TYPE_TEAM.toString()));    	
+    	
+    	if(profileType.equals(ProfileConstants.PROFILE_TYPE_TEAM.getCode())){
     		leagueInfoList = this.profileService.getLeagueInfoList();
+    		logger.debug(String.format("[%s][%s] leagueInfoList : %s", this.getClass().getName(), "getProfileUpdateInfo", leagueInfoList));    	
     	}
 
 		// Nation List

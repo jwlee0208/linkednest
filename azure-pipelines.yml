@@ -20,3 +20,26 @@ steps:
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: 'Azure Container Registry'
+    azureSubscription: 'Azure subscription 1(a1b0ae65-267d-4df3-b5a3-6052e6964a71)'
+    azureContainerRegistry: '{"loginServer":"testacrjwlee0208.azurecr.io", "id" : "/subscriptions/a1b0ae65-267d-4df3-b5a3-6052e6964a71/resourceGroups/TEST-ACR-01/providers/Microsoft.ContainerRegistry/registries/testacrjwlee0208"}'
+    dockerComposeFile: '**/docker-compose.yml'
+    action: 'Build services'
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: 'Azure Container Registry'
+    azureSubscription: 'Azure subscription 1(a1b0ae65-267d-4df3-b5a3-6052e6964a71)'
+    azureContainerRegistry: '{"loginServer":"testacrjwlee0208.azurecr.io", "id" : "/subscriptions/a1b0ae65-267d-4df3-b5a3-6052e6964a71/resourceGroups/TEST-ACR-01/providers/Microsoft.ContainerRegistry/registries/testacrjwlee0208"}'
+    dockerComposeFile: '**/docker-compose.yml'
+    action: 'Push services'
+    includeLatestTag: true
+- task: AzureVmssDeployment@0
+  inputs:
+    azureSubscription: 'Azure subscription 1(a1b0ae65-267d-4df3-b5a3-6052e6964a71)'
+    action: 'Update image'
+    vmssName: 'TEST-VMSS-01'
+    vmssOsType: 'Linux'
+    imageUrl: 'testacrjwlee0208.azurecr.io/testacrjwlee0208/test_pipeline_build'
+    customScriptsStorageAccount: 'cs110037ffeadff49cd'
