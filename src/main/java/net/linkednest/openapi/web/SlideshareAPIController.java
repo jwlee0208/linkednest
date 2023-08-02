@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "/api/slideshare")
 public class SlideshareAPIController {
-    
     @Autowired
     private SlideshareAPIServiceImpl slideshareAPIService;
-
     /**
      * get slideshare's list
      *
@@ -31,11 +29,9 @@ public class SlideshareAPIController {
     public String getSlideList(SearchCommonAPIDto searchCommonAPIDto, Model model){
         String              keyword         = searchCommonAPIDto.getKeyword();
         List<Slideshow>     slideList       = null;
-        
         if(!StringUtils.isEmpty(keyword)){
             slideList       = this.slideshareAPIService.searchSlideshowList(keyword);
         }
-        
         model.addAttribute("slideList", slideList);
         return "api/slideshare/ajaxSlideList";
     }

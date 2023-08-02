@@ -25,10 +25,7 @@ public class PropertiesConfig {
 	
 	private PropertiesConfig() {	
 		InputStream is = null;
-		
-		/**
-		 * server
-		 */		
+		// server
 		try {
 			is = Resources.getResourceAsStream(serverconfig_resource);
 			server_props.load(is);

@@ -21,10 +21,7 @@ public class BoardDao extends SqlSessionDaoSupport{
     public List<BoardDto> getBoardList(BoardDto boardDto) throws Exception{
         return getSqlSession().selectList("sql.board.selectBoardListAll", boardDto);
     }
-
-    
     public List<BoardDto> getBoardList(Map<String, Object> param) throws Exception{
-		
 	       SearchCondition searchCondition = new SearchCondition();
 	       searchCondition.setStartRow((Integer)param.get("startRow"));
 	       searchCondition.setEndRow((Integer)param.get("endRow"));
@@ -73,7 +70,6 @@ public class BoardDao extends SqlSessionDaoSupport{
             boardId = boardDto.getBoardId();
         }
         return boardId;
-
 	}
 	/**
 	 * 게시판 정보 수정

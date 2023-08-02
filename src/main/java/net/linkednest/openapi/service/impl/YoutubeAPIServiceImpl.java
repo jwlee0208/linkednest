@@ -18,20 +18,14 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 
-
-
 @Service
 public class YoutubeAPIServiceImpl implements YoutubeAPIService{
-
     @Value("${google.api.key}")
     private String apiKey;
-    
     /** Global instance of the HTTP transport. */
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-
     /** Global instance of the JSON factory. */
     private static final JsonFactory JSON_FACTORY = new JacksonFactory();
-    
     /** Global instance of the max number of videos we want returned. */
     private static final long NUMBER_OF_VIDEOS_RETURNED = 5;    
     
@@ -44,12 +38,11 @@ public class YoutubeAPIServiceImpl implements YoutubeAPIService{
     public List<SearchResult> searchStreamList(String keyword){
         YouTube youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, new HttpRequestInitializer() {
             public void initialize(HttpRequest request) throws IOException {}})
-          .setApplicationName("LinkedNest's Share")
-          .build();
-        
-        YouTube.Search.List search = null;
+                .setApplicationName("LinkedNest's Share")
+                .build();
+        YouTube.Search.List search           = null;
         List<SearchResult>  searchResultList = null;
-        
+
         if(!StringUtils.isEmpty(keyword)){
             try {
                 // setting search params
@@ -68,16 +61,12 @@ public class YoutubeAPIServiceImpl implements YoutubeAPIService{
                 //search.setQ(URLEncoder.encode(keyword, "UTF-8"));
                 
                 SearchListResponse searchResponse = search.execute();
-
                 searchResultList = searchResponse.getItems();
-
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }            
         }
-        
         return searchResultList;
-
     }
 }

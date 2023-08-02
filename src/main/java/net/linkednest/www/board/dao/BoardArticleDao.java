@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository("BoardArticleDao")
 public class BoardArticleDao extends SqlSessionDaoSupport{
-    
 	/**
 	 * 게시판 조회
 	 * @return
@@ -22,7 +21,6 @@ public class BoardArticleDao extends SqlSessionDaoSupport{
 	public List<BoardArticleDto> getBoardArticleList(BoardArticleDto boardArticleDto) throws Exception{
 		return getSqlSession().selectList("sql.boardArticle.selectList", boardArticleDto);
 	}
-	
     private SearchCondition setSearchConditionParams(Map<String, Object> param){
         SearchCondition searchCondition = new SearchCondition();
                                    
@@ -35,27 +33,16 @@ public class BoardArticleDao extends SqlSessionDaoSupport{
         
         return searchCondition;
 	}
-	
-	
-	public List<BoardArticleDto> selectBoardArticleList(Map<String, Object> param) throws Exception {                          
-	       
+	public List<BoardArticleDto> selectBoardArticleList(Map<String, Object> param) throws Exception {
 	    SearchCondition searchCondition = this.setSearchConditionParams(param);
 	    searchCondition.setStartRow((Integer)param.get("startRow"));
 	    searchCondition.setEndRow((Integer)param.get("endRow"));
-
-	    List<BoardArticleDto> list =  getSqlSession().selectList("sql.boardArticle.selectBoardList", searchCondition);
-	       
-	    return list;   
+	    return getSqlSession().selectList("sql.boardArticle.selectBoardList", searchCondition);
 	}
-	
 	public int selectArticleListCnt(Map<String, Object> param) throws Exception {
-	       
 	    SearchCondition searchCondition = this.setSearchConditionParams(param);
-	       
-	    int result = getSqlSession().selectOne("sql.boardArticle.selectListCount", searchCondition);                
-	    return result;
-	} 
-	
+	    return getSqlSession().selectOne("sql.boardArticle.selectListCount", searchCondition);
+	}
 	/**
 	 * 게시글 입력
 	 * @param boardArticleDto
@@ -63,17 +50,13 @@ public class BoardArticleDao extends SqlSessionDaoSupport{
 	 * @throws Exception
 	 */
 	public int insertBoardArticle(BoardArticleDto boardArticleDto) throws Exception{
-		
 		int articleId     = 0;
 	    int inputResult   = getSqlSession().insert("sql.boardArticle.insertArticleInfo", boardArticleDto);
-	    
 	    if(inputResult > 0){
 	        articleId = boardArticleDto.getArticleId();
 	    }
-	    
 		return articleId;
 	}
-	
 	/**
 	 * 게시글 수정
 	 * @param boardArticleDto
@@ -83,7 +66,6 @@ public class BoardArticleDao extends SqlSessionDaoSupport{
 	public int updateBoardArticle(BoardArticleDto boardArticleDto) throws Exception{		
 		return getSqlSession().update("sql.boardArticle.updateArticleInfo", boardArticleDto);
 	}
-	
 	/**
 	 * 게시글 삭제
 	 * @param boardArticleDto
@@ -94,7 +76,6 @@ public class BoardArticleDao extends SqlSessionDaoSupport{
 		// 논리적 삭제
 		return getSqlSession().update("sql.boardArticle.deleteArticleInfo", boardArticleDto);
 	}
-	
 	/**
 	 * 게시글 조회
 	 * @param boardArticleDto
@@ -104,7 +85,6 @@ public class BoardArticleDao extends SqlSessionDaoSupport{
 	public BoardArticleDto selectBoardArticle(BoardArticleDto boardArticleDto) throws Exception{
 		return getSqlSession().selectOne("sql.boardArticle.selectBoardContent", boardArticleDto);
 	}
-	
 	/**
 	 * 이전 글 조회
 	 * @param boardArticleDto
@@ -114,7 +94,6 @@ public class BoardArticleDao extends SqlSessionDaoSupport{
 	public BoardArticleDto selectPrevBoardArticle(BoardArticleDto boardArticleDto) throws Exception{
 		return getSqlSession().selectOne("sql.boardArticle.selectPrevBoardContent", boardArticleDto);
 	}
-	
 	/**
 	 * 다음 글 조회
 	 * @param boardArticleDto
@@ -124,7 +103,6 @@ public class BoardArticleDao extends SqlSessionDaoSupport{
 	public BoardArticleDto selectNextBoardArticle(BoardArticleDto boardArticleDto) throws Exception{
 		return getSqlSession().selectOne("sql.boardArticle.selectNextBoardContent", boardArticleDto);
 	}
-	
 	/**
 	 * 다섯개의 게시글 조회
 	 * <pre>
@@ -143,17 +121,15 @@ public class BoardArticleDao extends SqlSessionDaoSupport{
 		return getSqlSession().selectList("sql.boardArticle.selectArticleFive", boardArticleDto);
 				
 	}
-	
 	/**
 	 * @brief 우측 가장자리의 게시글 목록 조회
-	 * @param sideBoardListDto
+	 * @param boardDto
 	 * @return
 	 * @throws Exception
 	 */
 	public List<SideBoardCategoryPortalDto> selectSideBoardList(BoardDto boardDto) throws Exception{
 	    return getSqlSession().selectList("sql.boardArticle.selectSideBoardList", boardDto);
 	}
-	
 	/**
 	 * @brief slideshare 공유 링크 정보 입력
 	 * @param slideshareLinkDto
@@ -163,7 +139,6 @@ public class BoardArticleDao extends SqlSessionDaoSupport{
 	public int insertSlideshareInfo(SlideshareLinkDto slideshareLinkDto) throws Exception{
 	    return getSqlSession().insert("sql.boardArticle.insertSlideshareLinkInfo", slideshareLinkDto);
 	}
-	
 	/**
 	 * @brief slideshare 공유 링크 정보 수정
 	 * @param slideshareLinkDto
