@@ -30,7 +30,7 @@ public class SearchCondition {
 	}
 
 	public String getStartDate() {
-		return (startDate != null && startDate != "") ? startDate + " 00:00:00"
+		return (startDate != null && startDate != "") ? String.format("%s%s", startDate, " 00:00:00")
 				: startDate;
 	}
 
@@ -39,7 +39,7 @@ public class SearchCondition {
 	}
 
 	public String getEndDate() {
-		return (endDate != null && endDate != "") ? endDate + " 23:59:59"
+		return (endDate != null && endDate != "") ? String.format("%s%s", endDate, " 23:59:59")
 				: endDate;
 	}
 

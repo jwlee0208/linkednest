@@ -1,20 +1,14 @@
 package net.linkednest.www.board.web;
 
-import net.linkednest.common.util.FileUpload;
-import net.linkednest.common.util.PagedList;
-import net.linkednest.www.board.dto.BoardArticleDto;
-import net.linkednest.www.board.dto.BoardCategoryDto;
-import net.linkednest.www.board.dto.BoardDto;
-import net.linkednest.www.board.dto.SlideshareLinkDto;
-import net.linkednest.www.board.service.*;
-import net.linkednest.www.common.dto.ShareDto;
-import net.linkednest.www.common.web.EditorController;
-import net.linkednest.www.share.service.ShareService;
-import net.linkednest.www.share.service.ShareServiceImpl;
-import net.linkednest.www.user.dto.UserDto;
-import net.linkednest.www.user.service.UserService;
-import net.linkednest.www.user.service.UserServiceImpl;
-import net.sf.json.JSONObject;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -30,58 +24,41 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import net.linkednest.common.constant.CommonConstant;
+import net.linkednest.common.util.FileUpload;
+import net.linkednest.common.util.PagedList;
+import net.linkednest.www.board.dto.BoardArticleDto;
+import net.linkednest.www.board.dto.BoardCategoryDto;
+import net.linkednest.www.board.dto.BoardDto;
+import net.linkednest.www.board.dto.SlideshareLinkDto;
+import net.linkednest.www.board.service.BoardArticleService;
+import net.linkednest.www.board.service.BoardCategoryService;
+import net.linkednest.www.board.service.BoardService;
+import net.linkednest.www.common.dto.ShareDto;
+import net.linkednest.www.common.web.EditorController;
+import net.linkednest.www.share.service.ShareService;
+import net.linkednest.www.user.dto.UserDto;
+import net.linkednest.www.user.service.UserService;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = {"/board/article", "/share"})
-public class BoardArticleController {
-
+public class BoardArticleController extends CommonConstant {
     Log log = LogFactory.getLog(this.getClass());
-    
-	public static final int 	DEFAULT_PAGE_NO 				= 1;
-	public static final int 	DEFAULT_PAGE_SIZE 				= 3;
-
-	// Related to image upload
-	public static final long 	MAX_UPLOAD_FILE_SIZE 			= 20480000;
-	public static final String 	FILE_EXTENSIONS_IMAGES 			= "jpg, jpeg, png, gif, bmp";
-	public static final int 	DB_RESULT_SUCCESS 				= 1;
-	
-	public static final int 	DEFAULT_THUMBNAIL_IMAGE_WIDTH 	= 314;
-	public static final int 	DEFAULT_THUMBNAIL_IMAGE_HEIGHT 	= 166;
-	
-	private static final int 	THUMBNAIL_IMAGE_WIDTH_SMALL 	= 64;
-	private static final int 	THUMBNAIL_IMAGE_HEIGHT_SMALL 	= 64;
-	private static final int 	THUMBNAIL_IMAGE_WIDTH_MIDDLE 	= 256;
-	private static final int 	THUMBNAIL_IMAGE_HEIGHT_MIDDLE 	= 256;
-	private static final int 	THUMBNAIL_IMAGE_WIDTH_LARGE 	= 400;
-	private static final int 	THUMBNAIL_IMAGE_HEIGHT_LARGE 	= 400;
-
 	@Autowired
-	private BoardService boardService;
-
+	private BoardService 			boardService;
 	@Autowired
-	private BoardArticleService boardArticleService;
-	
+	private BoardArticleService 	boardArticleService;
 	@Autowired
-	private BoardCategoryService boardCategoryService;
-
+	private BoardCategoryService 	boardCategoryService;
 	@Resource(name = "fileUpload")
-	private FileUpload fileUpload;
-	
+	private FileUpload 				fileUpload;
 	@Autowired
-	private EditorController editorController;
-	
+	private EditorController 		editorController;
     @Autowired
-    private ShareService shareService;
-
+    private ShareService 			shareService;
     @Autowired
-    private UserService userService;
+    private UserService 			userService;
     
 	/*	
 	// spring-data-redis 사용.
@@ -96,7 +73,6 @@ public class BoardArticleController {
     public String getShareRoot(HttpServletRequest request, Model model, BoardArticleDto boardArticleDto) throws Exception{
         return this.getBoardArticleList(request, model, boardArticleDto);
     }
-    
 	/**
 	 * 게시글 목록 조회
 	 * @param request
@@ -109,7 +85,6 @@ public class BoardArticleController {
 	public String getBoardArticleList(HttpServletRequest request, Model model, BoardArticleDto boardArticleDto) throws Exception{
 	    return this.getCommonBoardArticleList(request, model, boardArticleDto);
 	}
-	
 	/**
 	 * @brief 게시글 목록 조회
 	 * @param request
@@ -124,7 +99,6 @@ public class BoardArticleController {
 	    boardArticleDto.setCreateUserId(userId);
         return this.getCommonBoardArticleList(request, model, boardArticleDto);
     }
-	
 	/**
 	 * 게시글 목록 조회
 	 * @param request
@@ -137,13 +111,11 @@ public class BoardArticleController {
 	public String getBoardArticleList(HttpServletRequest request, Model model, BoardArticleDto boardArticleDto, @PathVariable int boardId) throws Exception {
 		return this.getCommonBoardArticleList(request, model, boardArticleDto);
 	}
-
     @RequestMapping(value = {"/{userId}/list"}, method = {RequestMethod.POST, RequestMethod.GET})
     public String getBoardArticleMainList(HttpServletRequest request, Model model, BoardArticleDto boardArticleDto, @PathVariable String userId) throws Exception {
         boardArticleDto.setCreateUserId(userId);
         return this.getCommonBoardArticleList(request, model, boardArticleDto);
     }
-
 	/**
 	 * 게시글 목록 조회
 	 * @param request
@@ -159,7 +131,6 @@ public class BoardArticleController {
         boardArticleDto.setCreateUserId(userId);
         return this.getCommonBoardArticleList(request, model, boardArticleDto);
     }
-
     /**
      * 게시글 목록 조회(공통 메서드)
      * @param request
@@ -206,11 +177,8 @@ public class BoardArticleController {
                 model.addAttribute("isWritable", true);
             }
         }
-        
         return page;
-
 	}
-	
 	
 	private Model getBoardCommonListForJson(HttpServletRequest request, Model model, BoardArticleDto boardArticleDto) throws Exception{
 		// 검색 조건
@@ -222,12 +190,11 @@ public class BoardArticleController {
 		
 		int    boardId         = boardArticleDto.getBoardId();
 		// 페이징 관련 params
-		int    pageNo          = (request.getParameter("pageNo") != null) ? Integer.parseInt(request.getParameter("pageNo")) : DEFAULT_PAGE_NO;
-		int    listRowCnt      = (request.getParameter("listRowCnt") != null) ? Integer.parseInt(request.getParameter("listRowCnt")) : 10;
-		int    pageSize        = (request.getParameter("pageSize") != null) ? Integer.parseInt(request.getParameter("pageSize")) : DEFAULT_PAGE_SIZE;
+		int    pageNo          = (org.apache.commons.lang3.StringUtils.isNotEmpty(request.getParameter("pageNo"))) 		? Integer.parseInt(request.getParameter("pageNo")) : DEFAULT_PAGE_NO;
+		int    listRowCnt      = (org.apache.commons.lang3.StringUtils.isNotEmpty(request.getParameter("listRowCnt"))) 	? Integer.parseInt(request.getParameter("listRowCnt")) : 10;
+		int    pageSize        = (org.apache.commons.lang3.StringUtils.isNotEmpty(request.getParameter("pageSize"))) 	? Integer.parseInt(request.getParameter("pageSize")) : 3;
 		int    totalListCnt    = 0;
-		
-		
+
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		// searching condition setting
 		paramMap.put("boardId"        , boardId);
@@ -237,8 +204,7 @@ public class BoardArticleController {
 		paramMap.put("endDate"        , endDate);
 		paramMap.put("type"        	  , type);
 		
-		List<BoardArticleDto> boardArticleList;	
-		
+		List<BoardArticleDto> boardArticleList;
 /*
 		try{
 			
@@ -289,12 +255,8 @@ public class BoardArticleController {
 		model.addAttribute("pagedResult", pagedList);
 */		
 		model.addAttribute("boardId", boardId);
-		
 		return model;
 	}
-	
-	
-	
 	/**
 	 * 페이징을 위한 리스트 조회
 	 * @param request
@@ -314,8 +276,8 @@ public class BoardArticleController {
 		
 		int    boardId         = boardArticleDto.getBoardId();
 		// 페이징 관련 params
-		int    pageNo          = (request.getParameter("pageNo") != null) ? Integer.parseInt(request.getParameter("pageNo")) : DEFAULT_PAGE_NO;
-		int    listRowCnt      = (request.getParameter("listRowCnt") != null) ? Integer.parseInt(request.getParameter("listRowCnt")) : 10;
+		int    pageNo          = (org.apache.commons.lang3.StringUtils.isNotEmpty(request.getParameter("pageNo"))) ? Integer.parseInt(request.getParameter("pageNo")) : DEFAULT_PAGE_NO;
+		int    listRowCnt      = (org.apache.commons.lang3.StringUtils.isNotEmpty(request.getParameter("listRowCnt"))) ? Integer.parseInt(request.getParameter("listRowCnt")) : 10;
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		// searching condition setting
@@ -340,7 +302,6 @@ public class BoardArticleController {
 		model.addAttribute("boardId"      , boardId);
 		return model;
 	}
-	
 	/**
 	 * 게시글 상세 조회
 	 * @param request
@@ -355,7 +316,6 @@ public class BoardArticleController {
 	    return this.getBoardContent(request, model, boardArticleDto, selectedArticleId, null, session);
 	}
 
-	
     @RequestMapping(value = "/{userId}/view/{selectedArticleId}")
     public String getBoardContent(HttpServletRequest request, Model model, BoardArticleDto boardArticleDto, @PathVariable int selectedArticleId, @PathVariable String userId, HttpSession session){
         
@@ -366,14 +326,12 @@ public class BoardArticleController {
         List<BoardDto>      boardList       = null;
         
         if(selectedArticleId > 0){
-            
             boardArticleDto.setArticleId(selectedArticleId);
 //            boardArticleDto.setCreateUserId(userId);
             // 글 조회
             try {
                 contentInfo     = this.boardArticleService.selectBoardArticle(boardArticleDto);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             
@@ -384,22 +342,17 @@ public class BoardArticleController {
             try {
                 prevContentInfo = this.boardArticleService.selectPrevBoardArticle(boardArticleDto);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 log.error(e.getMessage());
-                
             }
             // 다음 글 조회
             try {
                 nextContentInfo = this.boardArticleService.selectNextBoardArticle(boardArticleDto);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 log.error(e.getMessage());
             }
-            
             try {
                 boardList       = this.boardService.getBoardList(boardDto);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 log.error(e.getMessage());
             }
         }
@@ -419,15 +372,11 @@ public class BoardArticleController {
         try {
             shareInfo = this.shareService.getShareInfo(shareDto);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         model.addAttribute("shareInfo", shareInfo);
-        
-        
         return "board/article/view";
     }
-
 	/**
 	 * 게시글 입력 화면 출력
 	 * @param model
@@ -439,7 +388,6 @@ public class BoardArticleController {
 	public String writeBoard(HttpServletRequest request, Model model, BoardArticleDto boardArticleDto, HttpSession session) throws Exception{
 	    return this.writeBoard(request, model, boardArticleDto, session, null, null);
 	}
-
 	/**
 	 * 게시글 입력 화면 출력
 	 * @param request
@@ -454,7 +402,6 @@ public class BoardArticleController {
     public String writeBoardAsUserId(HttpServletRequest request, Model model, BoardArticleDto boardArticleDto, HttpSession session, @PathVariable String userId) throws Exception{
         return this.writeBoard(request, model, boardArticleDto, session, userId, null);
     }
-
     /**
      * @brief 게시글 입력 화면 출력
      * @param request
@@ -469,7 +416,6 @@ public class BoardArticleController {
     public String writeBoardAsBoardId(HttpServletRequest request, Model model, BoardArticleDto boardArticleDto, HttpSession session, @PathVariable String boardId) throws Exception{
         return this.writeBoard(request, model, boardArticleDto, session, null, boardId);
     }
-    
 	/**
 	 * 게시글 입력 화면 출력
 	 * @param request
@@ -483,26 +429,19 @@ public class BoardArticleController {
 	 */
     @RequestMapping(value = "/{userId}/write/{boardId}")
     public String writeBoard(HttpServletRequest request, Model model, BoardArticleDto boardArticleDto, HttpSession session, @PathVariable String userId, @PathVariable String boardId) throws Exception{
-        
         UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
         BoardDto boardDto = new BoardDto();
-        if(null != sessionInfo){
-            if(!StringUtils.isEmpty(boardId)){
-                model.addAttribute("boardId", boardId);
-            }else{
-                model.addAttribute("boardId", boardArticleDto.getBoardId());
-            }
+        if (null != sessionInfo) {
+			model.addAttribute("boardId", (!StringUtils.isEmpty(boardId)) ? boardId : boardArticleDto.getBoardId());
             boardDto.setCreateUserId(userId);
-        }else{
-            return "redirect:/login?redirectPage=" + request.getRequestURI();
+        } else {
+            return String.format("%s%s", "redirect:/login?redirectPage=", request.getRequestURI());
         }
-        
         List<BoardDto> boardList = this.boardService.getBoardList(boardDto);
         model.addAttribute("boardList"  , boardList);
         model.addAttribute("userId"     , userId);
         return "board/article/write";
     }
-	
 	/**
 	 * 게시글 입력(json타입 : 업로드 파일 없을 때)
 	 * @param boardArticleDto
@@ -515,17 +454,13 @@ public class BoardArticleController {
 	@RequestMapping(value = "/insertBoardArticle.json", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject insertBoardArticleJSON(@Valid BoardArticleDto boardArticleDto, BindingResult bindingResult, HttpSession session) throws Exception {
-	
-		JSONObject jsonObj = new JSONObject();
-		int insertedArticleId = 0;
-
-		UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
+		JSONObject 	jsonObj 			= new JSONObject();
+		int 		insertedArticleId 	= 0;
+		UserDto 	sessionInfo 		= (UserDto)session.getAttribute("userInfo");
 		
 		if(null != sessionInfo){
-
-		    int       boardId = boardArticleDto.getBoardId();
+		    int       boardId 	= boardArticleDto.getBoardId();
 		    String    boardName = boardArticleDto.getBoardName();
-		    
 		    if(boardId < 0 && !StringUtils.isEmpty(boardName)){
 		        // board_category 생성
 		        BoardCategoryDto boardCategoryDto = new BoardCategoryDto();
@@ -533,7 +468,6 @@ public class BoardArticleController {
 		        boardCategoryDto.setCreateUserId(sessionInfo.getUserId());
 		        
 		        int createdCategoryId = this.boardCategoryService.insertBoardCategory(boardCategoryDto);
-		        
 		        // board 생성
 		        BoardDto boardDto = new BoardDto();
 		        boardDto.setBoardCategoryId(createdCategoryId);
@@ -544,11 +478,9 @@ public class BoardArticleController {
 		        boardDto.setBoardType("0");
 		        
 		        int createdBoardId = this.boardService.insertBoardInfo(boardDto);
-		        
 		        // 생성된 board 정보 설정
 		        boardArticleDto.setBoardCategoryId(createdCategoryId);
 		        boardArticleDto.setBoardId(createdBoardId);
-		        
 		    }
 		    
 			boardArticleDto.setAuthorId(sessionInfo.getUserId());
@@ -574,7 +506,6 @@ public class BoardArticleController {
 			// 게시글 데이터 하나씩 추가될 때마다 redis 키값에 저장된 리스트 데이터 삭제 후 데이터 재설정하는 부분 
 			this.updateArticleListForRedis(boardId);
 		}
-		
 		jsonObj.put("result", (insertedArticleId > 0) ? true : false);
 		return jsonObj;
 	}
@@ -598,7 +529,6 @@ public class BoardArticleController {
 			e.printStackTrace();
 		}
 	}
-
 	/**
 	 * 게시글 입력(업로드 파일 있을 때)
 	 * @param boardArticleDto
@@ -611,20 +541,15 @@ public class BoardArticleController {
 	@RequestMapping(value = "/insertBoardArticle")
 	@ResponseBody
 	public String insertBoardArticle(@Valid BoardArticleDto boardArticleDto, BindingResult bindingResult, HttpSession session, Model model) throws Exception {
-		
-		int insertedArticleId = 0;
-		MultipartFile imageFile = boardArticleDto.getThumbImg();
-
-		String imageUploadResult = StringUtils.EMPTY;
-		String thumbnailSize = boardArticleDto.getThumbnailSize();
-		
-		int boardId = boardArticleDto.getBoardId();
-
-        UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
+		int 			insertedArticleId 	= 0;
+		MultipartFile 	imageFile 			= boardArticleDto.getThumbImg();
+		String 			imageUploadResult 	= StringUtils.EMPTY;
+		String 			thumbnailSize 		= boardArticleDto.getThumbnailSize();
+		int 			boardId 			= boardArticleDto.getBoardId();
+        UserDto 		sessionInfo 		= (UserDto)session.getAttribute("userInfo");
         
         if(null != sessionInfo){
 			String filePath = StringUtils.EMPTY;
-
             // if boardId가 없고, boardName이 입력되어 넘어오는 경우
             // 1. default boardCategory 를 생성
             // 2. 새로운 board를 생성
@@ -637,14 +562,11 @@ public class BoardArticleController {
 			boolean isValidImageUploadResult = !imageUploadResult.equals("fileSizeError") && !imageUploadResult.equals("fileExtensionError");
 			if(isValidImageUploadResult){
     			filePath = imageUploadResult;
-    			
     			boardArticleDto.setFilePath(filePath);
     			boardArticleDto.setOriginalFileName(imageFile.getOriginalFilename());
     			boardArticleDto.setStatus(1);
-    			
     			insertedArticleId = this.boardArticleService.insertBoardArticle(boardArticleDto);
     		}
-    		
     		if(insertedArticleId > 0){
 				List<SlideshareLinkDto> slideshareLinkDtos = boardArticleDto.getSlideshareLinkInfos();
 				if(CollectionUtils.isNotEmpty(slideshareLinkDtos)){
@@ -663,7 +585,6 @@ public class BoardArticleController {
 //		model.addAttribute("result", imageUploadResult);
 		return imageUploadResult;
 	}
-
 	/**
 	 * Upload Image File
 	 *
@@ -671,22 +592,20 @@ public class BoardArticleController {
 	 * @return String
 	 */
 	private String uploadImage(BoardArticleDto boardArticleDto) {
-		String imageUploadResult = StringUtils.EMPTY;
-		String thumbnailSize = boardArticleDto.getThumbnailSize();
-		MultipartFile imageFile = boardArticleDto.getThumbImg();
-
+		String 			thumbnailSize 		= boardArticleDto.getThumbnailSize();
+		MultipartFile 	imageFile 			= boardArticleDto.getThumbImg();
+		int 			widthSize 			= THUMBNAIL_IMAGE_WIDTH_SMALL;
+		int 			heightSize 			= THUMBNAIL_IMAGE_HEIGHT_SMALL;
 		if(boardArticleDto != null){
-			if(thumbnailSize.equals("small")){
-				imageUploadResult = fileUpload.uploadFileForCafe24(imageFile, THUMBNAIL_IMAGE_WIDTH_SMALL, THUMBNAIL_IMAGE_HEIGHT_SMALL);
-			}else if(thumbnailSize.equals("middle")){
-				imageUploadResult = fileUpload.uploadFileForCafe24(imageFile, THUMBNAIL_IMAGE_WIDTH_MIDDLE, THUMBNAIL_IMAGE_HEIGHT_MIDDLE);
-			}else if(thumbnailSize.equals("large")){
-				imageUploadResult = fileUpload.uploadFileForCafe24(imageFile, THUMBNAIL_IMAGE_WIDTH_LARGE, THUMBNAIL_IMAGE_HEIGHT_LARGE);
+			if (thumbnailSize.equals("middle")) {
+				widthSize 	= THUMBNAIL_IMAGE_WIDTH_MIDDLE;
+				heightSize 	= THUMBNAIL_IMAGE_HEIGHT_MIDDLE;
+			} else if(thumbnailSize.equals("large")) {
+				widthSize 	= THUMBNAIL_IMAGE_WIDTH_LARGE;
+				heightSize 	= THUMBNAIL_IMAGE_HEIGHT_LARGE;
 			}
-		} else {
-			imageUploadResult = fileUpload.uploadFileForCafe24(imageFile, THUMBNAIL_IMAGE_WIDTH_SMALL, THUMBNAIL_IMAGE_HEIGHT_SMALL);
 		}
-		return imageUploadResult;
+		return fileUpload.uploadFileForCafe24(imageFile, widthSize, heightSize);
 	}
 
 	/**
@@ -701,13 +620,10 @@ public class BoardArticleController {
 	@RequestMapping(value = "/modifyBoardArticle.json", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject modifyBoardArticleJSON(@Valid BoardArticleDto boardArticleDto, BindingResult bindingResult, HttpSession session) throws Exception {
-		JSONObject jsonObj = new JSONObject();
-		int updateResult = 0;
-
-		UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
-		
+		JSONObject 	jsonObj 		= new JSONObject();
+		int 		updateResult 	= 0;
+		UserDto 	sessionInfo 	= (UserDto)session.getAttribute("userInfo");
 		if(null != sessionInfo){
-
 			boardArticleDto.setAuthorId(sessionInfo.getUserId());
 			boardArticleDto.setAuthorNm(sessionInfo.getUserNm());
 	
@@ -724,12 +640,10 @@ public class BoardArticleController {
 					}
 				});
             }
-			
 			if(bindingResult.hasErrors()){
 				jsonObj.put("validate", false);
 			}						
 		}
-		
 		jsonObj.put("result", (updateResult > 0) ? true : false);
 		return jsonObj;
 	}	
@@ -764,7 +678,7 @@ public class BoardArticleController {
 	public String modifyBoardArticle(@Valid BoardArticleDto boardArticleDto, BindingResult bindingResult, HttpSession session, Model model) throws Exception {
 
         UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
-        String imageUploadResult = "";
+        String 	imageUploadResult = "";
         if(null != sessionInfo){
 			String filePath = StringUtils.EMPTY;
 
@@ -850,32 +764,24 @@ public class BoardArticleController {
 	 */
 	@RequestMapping(value = "/{userId}/modify")
     public String modifyBoardArticlePage(HttpServletRequest request, Model model, BoardArticleDto boardArticleDto, HttpSession session, @Param int selectedArticleId, @Param int selectedBoardId, @PathVariable String userId) throws Exception{
-        
-        UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
-        BoardDto        boardDto        = new BoardDto();
-        if(null != sessionInfo){
-            model.addAttribute("boardId", selectedBoardId); 
-            
+        UserDto 	sessionInfo = (UserDto)session.getAttribute("userInfo");
+        BoardDto 	boardDto    = new BoardDto();
+        if (null != sessionInfo) {
+            model.addAttribute("boardId", selectedBoardId);
             BoardArticleDto articleInfo = null;
-            
             if(selectedArticleId > 0){
                 boardArticleDto.setArticleId(selectedArticleId);
                 // 글 조회
                 articleInfo = this.boardArticleService.selectBoardArticle(boardArticleDto);
             }
-            
             model.addAttribute("articleInfo"    , articleInfo);     
             model.addAttribute("boardList"      , this.boardService.getBoardList(boardDto));
             model.addAttribute("userId"         , userId);
-            
-        }else{
-            return "redirect:/login?redirectPage=" + request.getRequestURI();
+        } else {
+            return String.format("%s%s", "redirect:/login?redirectPage=", request.getRequestURI());
         }
-        
         return "board/article/write";
-    }	
-	
-	
+    }
 	/**
 	 * 게시글 삭제
 	 * @param model
@@ -888,15 +794,12 @@ public class BoardArticleController {
 	public JSONObject deleteBoardArticleJSON(Model model, HttpSession session, @PathVariable int selectedArticleId) throws Exception{
 		BoardArticleDto   boardArticleDto = new BoardArticleDto();
 		JSONObject        jsonObj         = new JSONObject();
-
 		int               deleteResult    = 0;
-		
 		if(selectedArticleId > 0){
 			boardArticleDto.setArticleId(selectedArticleId);
 			// 글 삭제 - 논리적 삭제
 			deleteResult = boardArticleService.deleteBoardArticle(boardArticleDto);
 		}
-			
 		jsonObj.put("result"              , (deleteResult > 0) ? true : false);
 		jsonObj.put("selectedArticleId"   , selectedArticleId);
 		return jsonObj;
@@ -906,12 +809,10 @@ public class BoardArticleController {
 	public String goProfile(@PathVariable String userId, Model model) throws Exception{
 	    ShareDto shareDto  = new ShareDto();
 	    ShareDto shareInfo = null;
-	        
 	    if(!StringUtils.isEmpty(userId)){
 	        shareDto.setUserId(userId);         
 	        shareInfo = this.shareService.getShareInfo(shareDto);
 	    }
-	        
 	    model.addAttribute("shareInfo", shareInfo);
 	    return "board/article/profile";
 	}
@@ -921,7 +822,6 @@ public class BoardArticleController {
         this.shareService.setShareInfo(model, session);
         return "common/ajaxShareInfo";
     }    
-
 
     /*@RequestMapping(value="/test")
 	public String testReact() {

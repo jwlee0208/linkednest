@@ -19,7 +19,6 @@ import net.sf.json.JSONObject;
 @Controller
 @RequestMapping(value = "/api/flickr")
 public class FlickrAPIController {
-
     @Autowired
     private FlickrAPIServiceImpl flickrAPIService;
 
@@ -32,18 +31,14 @@ public class FlickrAPIController {
      */
     @RequestMapping(value = "/photoList")
     public String getFlickrImageList(SearchCommonAPIDto searchCommonAPIDto, Model model){
-        
         String              keyword     = searchCommonAPIDto.getKeyword();
         PhotoList<Photo>    photoList   = null;
-        
         if(!StringUtils.isEmpty(keyword)){
             photoList = this.flickrAPIService.getPhotoList(keyword);
         }
-        
         model.addAttribute("photoList", photoList);
         return "api/flickr/ajaxPhotoList";
     }
-
     /**
      * check for authentication
      *

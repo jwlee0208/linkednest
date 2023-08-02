@@ -110,7 +110,6 @@ public class ConfigController {
 
         model.addAttribute("pagedResult", result);
         return model;
-
     }
 
     @RequestMapping(value = "/board/write")
