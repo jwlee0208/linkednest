@@ -20,13 +20,10 @@ import org.springframework.util.StringUtils;
 
 @Service
 public class SlideshareAPIServiceImpl implements SlideshareAPIService {
-
     @Value("${slideshare.api.key}")
     private String apiKey;
-    
     @Value("${slideshare.shared.secret}")
     private String sharedSecret;
-    
     /**
      * @brief slideshare List 조회
      */
@@ -37,13 +34,15 @@ public class SlideshareAPIServiceImpl implements SlideshareAPIService {
         List<Slideshow>             slideshowList            = null;
 
         if(!StringUtils.isEmpty(searchText)){
-            SearchSlideshowsResponse    searchSlideshowsResponse = slideshowOperations.searchSlideshows(searchText, 1, 5, Language.All, Sort.MOSTVIEWED, UploadDate.YEAR, SearchType.TEXT, true, FileFormat.PPT, FileType.PRESENTATIONS, false, false, false, false, false);
-            
+            SearchSlideshowsResponse    searchSlideshowsResponse
+                    = slideshowOperations.searchSlideshows(searchText, 1, 5, Language.All, Sort.MOSTVIEWED
+                                                         , UploadDate.YEAR, SearchType.TEXT, true, FileFormat.PPT
+                                                         , FileType.PRESENTATIONS, false, false, false
+                                                         , false, false);
             if(searchSlideshowsResponse.getNumResults() > 0){
                 slideshowList   = searchSlideshowsResponse.getSlideshows();
             }            
         }
-    
         return slideshowList;
     }
 }

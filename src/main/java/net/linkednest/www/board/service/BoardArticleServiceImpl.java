@@ -18,14 +18,10 @@ import net.linkednest.common.util.PagingUtil;
 
 @Service
 public class BoardArticleServiceImpl implements BoardArticleService{
-	
 	@Resource(name="BoardArticleDao")
 	private BoardArticleDao boardArticleDao;
-
 	@Resource(name="BoardArticleRedisDao")
 	private BoardArticleRedisDao boardArticleRedisDao;
-
-	
 	@Override
 	public List<BoardArticleDto> getBoardArticleList(BoardArticleDto boardArticleDto) throws Exception{
 		return this.boardArticleDao.getBoardArticleList(boardArticleDto);
@@ -45,9 +41,7 @@ public class BoardArticleServiceImpl implements BoardArticleService{
         int startRow     = (Integer) paramMap.get("startRow");                              
         int endRow       = (Integer) paramMap.get("endRow");       
  
-        PagedList pagedList = new PagedList(articleList, pageNo, pageSize, totalListCnt, startRow, endRow, listRowCnt);
-       
-	    return pagedList;
+	    return new PagedList(articleList, pageNo, pageSize, totalListCnt, startRow, endRow, listRowCnt);
 	}   
 	@Override
 	public List<BoardArticleDto> getBoardArticleList(Map<String,Object> paramMap) throws Exception {                       
@@ -59,8 +53,7 @@ public class BoardArticleServiceImpl implements BoardArticleService{
 	       paramMap.put("startRow", startRow);                                     
 	       paramMap.put("endRow", endRow);
 	       return boardArticleDao.selectBoardArticleList(paramMap);            
-	} 
-	
+	}
 	@Override
 	public PagedList getBoardArticlePagedListForJson(Map<String, Object> paramMap) throws Exception {                              
         List<?> articleList = this.getBoardArticleList(paramMap);
@@ -72,12 +65,8 @@ public class BoardArticleServiceImpl implements BoardArticleService{
         int startRow     = (Integer) paramMap.get("startRow");                              
         int endRow       = (Integer) paramMap.get("endRow");       
  
-        PagedList pagedList = new PagedList(articleList, pageNo, pageSize, totalListCnt, startRow, endRow, listRowCnt);
-        
-	    return pagedList;
-	}   
-
-	
+	    return new PagedList(articleList, pageNo, pageSize, totalListCnt, startRow, endRow, listRowCnt);
+	}
 	/**
 	 * 게시글 입력
 	 */
@@ -87,10 +76,8 @@ public class BoardArticleServiceImpl implements BoardArticleService{
         try {
             articleId = this.boardArticleDao.insertBoardArticle(boardArticleDto);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
 		return articleId;
 	}
 	/**
@@ -110,14 +97,11 @@ public class BoardArticleServiceImpl implements BoardArticleService{
 	public int deleteBoardArticle(BoardArticleDto boardArticleDto) throws Exception{
 		return this.boardArticleDao.deleteBoardArticle(boardArticleDto);
 	}
-	
-	
 	/**
 	 * 게시 글 조회
 	 */
 	@Override
 	public BoardArticleDto selectBoardArticle(BoardArticleDto boardArticleDto) throws Exception {
-		
 		return this.boardArticleDao.selectBoardArticle(boardArticleDto);
 	}
 	/**
@@ -134,12 +118,10 @@ public class BoardArticleServiceImpl implements BoardArticleService{
 	public BoardArticleDto selectNextBoardArticle(BoardArticleDto boardArticleDto) throws Exception {
 		return this.boardArticleDao.selectNextBoardArticle(boardArticleDto);
 	}
-	
 	@Override
 	public List<BoardArticleDto> selectBoardArticleFive(BoardArticleDto boardArticleDto) throws Exception {
 		return this.boardArticleDao.selectBoardArticleFive(boardArticleDto);
 	}
-	
 	/**
 	 * 우측 영역 게시판 목록 조회
 	 * @return
@@ -148,7 +130,6 @@ public class BoardArticleServiceImpl implements BoardArticleService{
 	public List<SideBoardCategoryPortalDto> selectSideBoardList(BoardDto boardDto) throws Exception {
 	    return this.boardArticleDao.selectSideBoardList(boardDto);
 	}
-	
 	/**
 	 * @brief 슬라이드쉐어 
 	 * @param slideshareLinkDto
@@ -161,22 +142,18 @@ public class BoardArticleServiceImpl implements BoardArticleService{
 	    try {
 	        insertResult = this.boardArticleDao.insertSlideshareInfo(slideshareLinkDto);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 	    return insertResult;
 	}
-
     @Override
     public int updateSlideshareInfo(SlideshareLinkDto slideshareLinkDto){
         int updateResult = 0;
         try {
             updateResult = this.boardArticleDao.updateSlideshareInfo(slideshareLinkDto);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return updateResult;
     }
-
 }

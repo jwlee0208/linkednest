@@ -54,9 +54,9 @@ public class PagingUtil {
 	 * <pre>
 	 * 1. MethodName     : getEndRow             
 	 * 2. ClassName      : PagingUtil          
-	 * 3. Comment                   : 리스트 마지막 row number 조회     
-	 * 4. 작성자                    : leejinwon             
-	 * 5. 작성일                    : 2014. 3. 18. 오전 10:43:00
+	 * 3. Comment        : 리스트 마지막 row number 조회
+	 * 4. 작성자          : leejinwon
+	 * 5. 작성일          : 2014. 3. 18. 오전 10:43:00
 	 * </pre>
 	 * 
 	 * @param firstRow

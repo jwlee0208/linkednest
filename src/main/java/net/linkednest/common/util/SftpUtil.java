@@ -16,10 +16,8 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 
 public class SftpUtil {
-    private Session session = null;
-
-    private Channel channel = null;
-
+    private Session     session     = null;
+    private Channel     channel     = null;
     private ChannelSftp channelSftp = null;
 
     /**
@@ -108,7 +106,6 @@ public class SftpUtil {
         try {
             out = new FileOutputStream(new File(path));
             int i;
-
             while ((i = in.read()) != -1) {
                 out.write(i);
             }
@@ -122,9 +119,7 @@ public class SftpUtil {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
-
     }
     
     /**
@@ -182,7 +177,6 @@ public class SftpUtil {
      */
     public void disconnection() {
         channelSftp.quit();
-
     }
     
     
@@ -196,72 +190,50 @@ public class SftpUtil {
         return as;
     }
     
-    public static void main(String args[]) {
-        String host = "14.63.170.148"; //admin server ip
-        int port = 2122;
-        String userName = "company";
-        String password = "namu1234";
-        String dir = "/Users/we/Documents/images/btn.png"; //접근할 폴더가 위치할 경로
-        
-        SftpUtil util = new SftpUtil();
-        util.init(host, userName, password, port);
-        String saveDir="/home/company/www/intro/uploadfiles" ;//ex. "f:\\test3.txt"
-        
-        util.upload(saveDir, new File(dir));
-        util.disconnection();
-        System.exit(0);
-    }
-    
-    
-
     public boolean sendSFtp(String server, String userid, String password, String filepath, String filename, String path
         ) throws JSchException, SftpException, IOException {
-    FileInputStream in = null;
-     try {
-         
-         JSch jsch = new JSch();
-         session = jsch.getSession(userid,server,22);
-         session.setPassword(password);
-         
-         java.util.Properties config = new java.util.Properties();
-         config.put("StrictHostKeyChecking", "no");
-         session.setConfig(config);
-         session.connect();
+        FileInputStream in = null;
+        try {
+            JSch jsch = new JSch();
+            session = jsch.getSession(userid,server,22);
+            session.setPassword(password);
 
-         channel = session.openChannel("sftp");
-         channel.connect();
-         
-         channelSftp = (ChannelSftp) channel;
-         File file_in = new File(filepath+filename);
-  
-           // 폴더 생성;
-           String[] pathArray = split(path,"/");
-           
-           for(int i = 0; i < pathArray.length; i ++) {
+            java.util.Properties config = new java.util.Properties();
+            config.put("StrictHostKeyChecking", "no");
+            session.setConfig(config);
+            session.connect();
 
-              try{
-                  if(path.length() != 0){
-                      channelSftp.mkdir(pathArray[i]);  //폴더 생성..
+            channel = session.openChannel("sftp");
+            channel.connect();
 
-                      channelSftp.cd(pathArray[i]);
-                  }
-                  
-               }catch(Exception e)  {
-                   channelSftp.cd(pathArray[i]);
-                  
-               }    
-           }
+            channelSftp = (ChannelSftp) channel;
+            File file_in = new File(filepath+filename);
+            // 폴더 생성;
+            String[] pathArray = split(path,"/");
 
-           in = new FileInputStream(file_in);
-           channelSftp.put(in, file_in.getName());  //업로드
-           in.close();
-           channelSftp.quit();
+            for(int i = 0; i < pathArray.length; i ++) {
+                try{
+                    if(path.length() != 0){
+                        channelSftp.mkdir(pathArray[i]);  //폴더 생성..
+                        channelSftp.cd(pathArray[i]);
+                    }
+                }catch(Exception e)  {
+                    channelSftp.cd(pathArray[i]);
+                }
+            }
 
+            in = new FileInputStream(file_in);
+            channelSftp.put(in, file_in.getName());  //업로드
+            channelSftp.quit();
         } catch (SftpException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } 
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+        }
         return true;
     }
 }

@@ -16,10 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
-    private UserService userService;
-
+    private UserService             userService;
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder   passwordEncoder;
 
     @Override
     public Authentication authenticate (Authentication authentication) throws AuthenticationException {
@@ -28,10 +27,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         UserDto userDto = new UserDto();
         userDto.setUserId(userId);
-        UserDto userInfo 	= null;
+        UserDto userInfo = null;
         try {
             userInfo = userService.selectUserInfo(userDto);
-
             if (!passwordEncoder.matches(passwd, userInfo.getPasswd())) {
                 throw new BadCredentialsException("Password is not matched!!!");
             }

@@ -17,34 +17,26 @@ public class BoardCategoryServiceImpl implements BoardCategoryService{
 
     @Override
     public List<BoardCategoryDto> getBoardCategoryList(BoardCategoryDto boardCategoryDto) throws Exception {
-        // TODO Auto-generated method stub
         return this.boardCategoryDao.selectBoardCategoryList(boardCategoryDto);
     }
 
     @Override
     public BoardCategoryDto getBoardCategoryInfo(BoardCategoryDto boardCategoryDto) throws Exception {
-        // TODO Auto-generated method stub
         return this.boardCategoryDao.selectBoardCategoryInfo(boardCategoryDto);
     }
 
     @Override
-    public int insertBoardCategory(BoardCategoryDto boardCategoryDto)
-            throws Exception {
-        // TODO Auto-generated method stub
+    public int insertBoardCategory(BoardCategoryDto boardCategoryDto) throws Exception {
         return this.boardCategoryDao.insertBoardCategory(boardCategoryDto);
     }
 
     @Override
-    public int updateBoardCategory(BoardCategoryDto boardCategoryDto)
-            throws Exception {
-        // TODO Auto-generated method stub
+    public int updateBoardCategory(BoardCategoryDto boardCategoryDto) throws Exception {
         return this.boardCategoryDao.updateBoardCategory(boardCategoryDto);
     }
 
     @Override
-    public int deleteBoardCategory(BoardCategoryDto boardCategoryDto)
-            throws Exception {
-        // TODO Auto-generated method stub
+    public int deleteBoardCategory(BoardCategoryDto boardCategoryDto) throws Exception {
         return this.boardCategoryDao.deleteBoardCategory(boardCategoryDto);
     }
     

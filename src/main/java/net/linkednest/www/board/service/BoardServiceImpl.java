@@ -16,37 +16,33 @@ import net.linkednest.www.board.dto.BoardCategoryPortalDto;
 
 @Service
 public class BoardServiceImpl implements BoardService{
-	
 	@Resource(name="BoardDao")
 	private BoardDao boardDao;
-	
 	@Override
 	public List<BoardDto> getBoardList(BoardDto boardDto) throws Exception{
 	    return this.boardDao.getBoardList(boardDto);
 	}
-	
 	@Override
 	public List<BoardDto> getBoardList(Map<String, Object> paramMap) throws Exception{
-	       int pageNo     = (Integer) paramMap.get("pageNo");                                   
-	       int listRowCnt = (Integer) paramMap.get("listRowCnt");
-	       int startRow   = PagingUtil.getStartRow(pageNo, listRowCnt);
-	       int endRow     = PagingUtil.getEndRow(startRow, listRowCnt);
-	 
-	       paramMap.put("startRow", startRow);                                     
-	       paramMap.put("endRow", endRow);
+		int pageNo     = (Integer) paramMap.get("pageNo");
+		int listRowCnt = (Integer) paramMap.get("listRowCnt");
+		int startRow   = PagingUtil.getStartRow(pageNo, listRowCnt);
+		int endRow     = PagingUtil.getEndRow(startRow, listRowCnt);
+
+		paramMap.put("startRow", startRow);
+		paramMap.put("endRow", endRow);
 		
 		return this.boardDao.getBoardList(paramMap);
 	}
 	
 	@Override
-	public int getListCnt(Map<String, Object> param) throws Exception {                     
-	       return boardDao.selectListCnt(param);      
+	public int getListCnt(Map<String, Object> param) throws Exception {
+		return boardDao.selectListCnt(param);
 	}    	
 	
 	@Override
 	public PagedList getBoardPagedList(Map<String, Object> paramMap) throws Exception {
         List<?> boardList = this.getBoardList(paramMap);
- 
         int pageNo       = (Integer) paramMap.get("pageNo");    
         int listRowCnt   = (Integer) paramMap.get("listRowCnt");
         int totalListCnt = (Integer) paramMap.get("totalListCnt");
@@ -54,11 +50,9 @@ public class BoardServiceImpl implements BoardService{
         int startRow     = (Integer) paramMap.get("startRow");                              
         int endRow       = (Integer) paramMap.get("endRow");       
  
-        PagedList pagedList = new PagedList(boardList, pageNo, pageSize, totalListCnt, startRow, endRow, listRowCnt);
-	    return pagedList;
+	    return new PagedList(boardList, pageNo, pageSize, totalListCnt, startRow, endRow, listRowCnt);
 	} 	
-	
-	
+
 	@Override
 	public BoardDto getBoardInfo(BoardDto boardDto) throws Exception{
 		return this.boardDao.selectBoardInfo(boardDto);
@@ -71,13 +65,11 @@ public class BoardServiceImpl implements BoardService{
 	public int updateBoardInfo(BoardDto boardDto) throws Exception{
 		return this.boardDao.updateBoardInfo(boardDto);
 	}
-	
 	/**
 	 * 게시 글 조회
 	 */
 	@Override
 	public BoardDto selectBoardInfo(BoardDto boardDto) throws Exception {
-		
 		return this.boardDao.selectBoardInfo(boardDto);
 	}
 	/**
@@ -94,7 +86,6 @@ public class BoardServiceImpl implements BoardService{
 	public BoardDto getNextBoardInfo(BoardDto boardDto) throws Exception {
 		return this.boardDao.selectNextBoardInfo(boardDto);
 	}
-	
 	@Override
 	public int modifyBoardInfo(BoardDto boardDto) throws Exception{
 		return this.boardDao.modifyBoardInfo(boardDto);
@@ -108,12 +99,10 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardCategoryDto> getBoardCategoryList(BoardCategoryDto boardCategoryDto) throws Exception{
 	    return this.boardDao.selectBoardCategoryList(boardCategoryDto);
 	}
-	
 	@Override
 	public List<BoardCategoryPortalDto> getBoardCategoryAndBoardList(BoardCategoryPortalDto boardCategoryPortalDto) throws Exception{
 	    return this.boardDao.selectBoardCategoryAndBoardList(boardCategoryPortalDto);
 	}
-
 	@Override
     public BoardDto getBoardCategoryAndBoardInfo(BoardDto boardDto) throws Exception{
         return this.boardDao.selectBoardCategoryAndBoardInfo(boardDto);
