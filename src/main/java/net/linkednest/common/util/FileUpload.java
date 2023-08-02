@@ -48,31 +48,27 @@ public class FileUpload{
 	 * @return String
 	 */
 	public String uploadFileForCafe24(MultipartFile attachFile, int width, int height){
-		String uploadFilePath = StringUtils.EMPTY;
-		String newFolderDir = DateUtil.formatDateToday() + "/" ;    	
+		String uploadFilePath 	= StringUtils.EMPTY;
+		String newFolderDir 	= String.format("%s%s", DateUtil.formatDateToday(), "/");
 		//String newFileName = attachFile.getOriginalFilename();
-		String newFileName = Long.toString(System.currentTimeMillis()) + attachFile.getOriginalFilename().substring(attachFile.getOriginalFilename().lastIndexOf("."));
-		String thumbnailUrl = destinationUrl + "/" + newFolderDir + newFileName;
-
-		String ftpUploadId = PropertiesConfig.getInstance().getServerConfig("ftp.upload.id");
-		String ftpUploadPw = PropertiesConfig.getInstance().getServerConfig("ftp.upload.pw");
+		String newFileName 		= Long.toString(System.currentTimeMillis()) + attachFile.getOriginalFilename().substring(attachFile.getOriginalFilename().lastIndexOf("."));
+		String thumbnailUrl 	= String.format("%s/%s%s", destinationUrl, newFolderDir, newFileName);
+		logger.info(String.format("[%s.%s] [thumbnailUrl] : %s", this.getClass().getName(), "uploadFileForCafe24", thumbnailUrl));
+		String ftpUploadId 		= PropertiesConfig.getInstance().getServerConfig("ftp.upload.id");
+		String ftpUploadPw 		= PropertiesConfig.getInstance().getServerConfig("ftp.upload.pw");
+		String ftpUploadUrl  	= PropertiesConfig.getInstance().getServerConfig("ftp.upload.url");
+		String ftpUploadPort 	= PropertiesConfig.getInstance().getServerConfig("ftp.upload.port");
+		String modeVal 			= PropertiesConfig.getInstance().getServerConfig("mode");
 
 		if (StringUtils.isNotEmpty(ftpUploadPw)) {
 			ftpUploadPw = new String(Base64.decodeBase64(ftpUploadPw));
 		}
-
-		String ftpUploadUrl = PropertiesConfig.getInstance().getServerConfig("ftp.upload.url");
-		String ftpUploadPort = PropertiesConfig.getInstance().getServerConfig("ftp.upload.port");
-
-		logger.info("[thumbnailUrl]" + thumbnailUrl);
-
-		if ("live".equals(PropertiesConfig.getInstance().getServerConfig("mode"))) {
+		if ("live".equals(modeVal)) {
 			uploadFilePath = PropertiesConfig.getInstance().getServerConfig("thumbnail.uploadpath");
-		} else if ("test".equals(PropertiesConfig.getInstance().getServerConfig("mode"))) {
+		} else if ("test".equals(modeVal)) {
 			uploadFilePath = PropertiesConfig.getInstance().getServerConfig("test.thumbnail.uploadpath");
 		} else {
-//			uploadFilePath = servletContext.getRealPath("/resources" + destinationUrl);
-			uploadFilePath = "/www" + destinationUrl;
+			uploadFilePath = String.format("/%s%s", "www", destinationUrl);
 		}
 		
 		File file = null;
@@ -338,7 +334,7 @@ public class FileUpload{
 			//remote upload
 			String destionUrl = PropertiesConfig.getInstance().getServerConfig("remote.thumbnail.path");
 			destionUrl += thumbnailUrl;
-			logger.info("[destionuRL]" + destionUrl);
+			logger.info("[destionUrl]" + destionUrl);
 			SftpUtil sftpUtil = new SftpUtil();
 			sftpUtil.init((String)PropertiesConfig.getInstance().getServerConfig("uploadserver.ip")
 					,(String)PropertiesConfig.getInstance().getServerConfig("uploadserver.id")

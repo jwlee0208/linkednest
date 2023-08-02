@@ -9,6 +9,7 @@ import net.linkednest.www.profile.dto.*;
 import net.linkednest.www.user.dto.UserDto;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -281,7 +282,7 @@ public class ProfileServiceImpl implements ProfileService{
 		
 		int profileId = profileDto.getProfileId();	//this.addProfileInfo(profileDto);
 		
-		logger.debug("profileId is " + profileId);
+		logger.debug(String.format("[%s.%s] profileId is  : %d", this.getClass().getName(), "updateProfileInfos", profileId));
 		
 		if(profileId > 0){
 			// update to profile info

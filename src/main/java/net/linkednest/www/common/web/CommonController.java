@@ -1,5 +1,17 @@
 package net.linkednest.www.common.web;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import net.linkednest.www.board.dto.BoardCategoryPortalDto;
 import net.linkednest.www.board.dto.BoardDto;
 import net.linkednest.www.board.dto.SideBoardCategoryPortalDto;
@@ -9,17 +21,6 @@ import net.linkednest.www.common.dto.ShareDto;
 import net.linkednest.www.share.service.ShareService;
 import net.linkednest.www.user.dto.UserDto;
 import net.linkednest.www.user.service.UserService;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequestMapping(value="/common")
