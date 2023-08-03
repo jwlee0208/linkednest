@@ -57,7 +57,7 @@ public class LoginController {
 		    referer="/share";
 		}
 		
-		log.info(" >>> REFER : " + referer);				
+		log.info(String.format("[%s.%s] >>> REFER : %s", this.getClass().getName(), "login", referer));				
 
 		model.addAttribute("prevPage", referer);
 		return model;
@@ -69,43 +69,28 @@ public class LoginController {
 		JSONObject 	checkResult = new JSONObject();
 		// Return Code/Message Data
 		String 		resultCode 	= "LOGIN_0000";
-		String 		resultMsg 	= "";
-		
+		String 		resultMsg 	= "";		
 		String 		passwd 		= userDto.getPasswd();
 		// 아이디 값을 이용, db에 저장된 개인 정보 중 passwd를 가져온다.
 		UserDto 	userInfo 	= this.userService.selectUserInfo(userDto);
 		
-		if(userInfo == null){
-			userInfo = new UserDto();
+		if (userInfo == null) {
+			userInfo 	= new UserDto();
 			resultCode 	= "LOGIN_0001";
 			resultMsg 	= "Not registed UserId. Please, Join us.";
-		}else{
+		} else {
 			// 입력된 passwd와 비교한다.
 			String 	hashedPasswd = userInfo.getPasswd();	// BCrypt.hashpw(passwd, BCrypt.gensalt(15));			
-			boolean isOk 		 = passwordEncoder.matches(passwd, hashedPasswd);	// BCrypt.checkpw(passwd, hashedPasswd);
+			boolean isOk 		 = passwordEncoder.matches(passwd, hashedPasswd);	// BCrypt.checkpw(passwd, hashedPasswd);			
+			resultCode = (isOk) ? "LOGIN_0000" : "LOGIN_0002";
+			resultMsg  = (isOk) ? "checked" : "This password is invalid.Please, Check out password";
+			Locale language = StringUtils.isEmpty(userInfo.getLanguage())  ? Locale.ENGLISH : LocaleUtils.toLocale(userInfo.getLanguage());
 			
-			if(isOk){
-				resultCode 	= "LOGIN_0000";
-				resultMsg 	= "checked";
-			}else{
-				resultCode 	= "LOGIN_0002";
-				resultMsg 	= "This password is invalid.Please, Check out password";
-			}
-			
-			Locale language = null;
-			
-			if(StringUtils.isEmpty(userInfo.getLanguage())){
-			    language = Locale.ENGLISH;
-			}else{
-			    language = LocaleUtils.toLocale(userInfo.getLanguage());
-			}
-			log.info("[ LoginController.loginProcess ] locale : " + language.toString());
-			log.info("[ LoginController.loginProcess ] session : " + (session != null));
+			log.info(String.format("[%s.%s] locale : %s, session : %b",  this.getClass().getName(), "loginProcess", language.toString(), (session != null)));
 			// User의 사용 language 설정 값에 따른 Locale 설정
 			session.setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, language);
 		}
 		
-//		log.info("[ LoginController.loginProcess ] session : " + (session != null));
 		checkResult.put("resultCode"	, resultCode);
 		checkResult.put("resultMsg"		, resultMsg);
 		
@@ -114,10 +99,8 @@ public class LoginController {
 	}
 	@RequestMapping(value="/logout")
 	public String logout(@ModelAttribute UserDto userDto, HttpSession session, SessionStatus status) {
-		
 		status.setComplete();
 		session.removeAttribute("userInfo");
-		
 		return "redirect:/home";
 	}
 	

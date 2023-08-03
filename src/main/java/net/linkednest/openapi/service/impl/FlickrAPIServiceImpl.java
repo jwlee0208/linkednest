@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import net.linkednest.openapi.service.FlickrAPIService;
 import com.flickr4java.flickr.Flickr;
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.REST;
@@ -29,6 +28,7 @@ import com.flickr4java.flickr.photos.SearchParameters;
 import com.flickr4java.flickr.uploader.UploadMetaData;
 import com.flickr4java.flickr.uploader.Uploader;
 
+import net.linkednest.openapi.service.FlickrAPIService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 

@@ -27,7 +27,6 @@ public class BoardCategoryDao extends SqlSessionDaoSupport{
     }
     
     public int insertBoardCategory(BoardCategoryDto boardCategoryDto) throws Exception{
-        
         int insertResult = getSqlSession().insert("sql.boardcategory.insertBoardCategory", boardCategoryDto);
         int boardCategoryId = 0;
         if(insertResult > 0){
@@ -43,5 +42,4 @@ public class BoardCategoryDao extends SqlSessionDaoSupport{
     public int deleteBoardCategory(BoardCategoryDto boardCategoryDto) throws Exception{
         return getSqlSession().delete("sql.boardcategory.deleteBoardCategory", boardCategoryDto);
     }
-
 }

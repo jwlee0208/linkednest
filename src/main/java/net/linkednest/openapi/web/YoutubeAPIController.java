@@ -17,10 +17,8 @@ import com.google.api.services.youtube.model.SearchResult;
 @Controller
 @RequestMapping(value = "/api/youtube")
 public class YoutubeAPIController {
-
     @Autowired
     private YoutubeAPIServiceImpl youtubeAPIService;
-
     /**
      * get youtube's stream list
      *
@@ -31,17 +29,13 @@ public class YoutubeAPIController {
      */
     @RequestMapping(value = "/streamList")
     public String searchStreamList(SearchCommonAPIDto searchCommonAPIDto, Model model) throws Exception{
-        
         String keyword = searchCommonAPIDto.getKeyword();
         List<SearchResult> searchResultList = null;
-        
         if(!StringUtils.isEmpty(keyword)){
             searchResultList = this.youtubeAPIService.searchStreamList(keyword);
         }
-        
-        model.addAttribute("type", searchCommonAPIDto.getType());
-        model.addAttribute("streamList", searchResultList);        
+        model.addAttribute("type"       , searchCommonAPIDto.getType());
+        model.addAttribute("streamList" , searchResultList);
         return "api/youtube/ajaxStreamList";
     }
-    
 }
