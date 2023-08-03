@@ -16,6 +16,16 @@
 }
 </style>
 <!-- google analytics -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QG1LNG2KRX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QG1LNG2KRX');
+</script>
+<%--
 <script>
 if($("#buildType").val()=='prod'){
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -27,6 +37,7 @@ if($("#buildType").val()=='prod'){
 	ga('send', 'pageview');
 }
 </script>
+--%>
 <!-- naver analytics -->
 <%--<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
 <script type="text/javascript">
