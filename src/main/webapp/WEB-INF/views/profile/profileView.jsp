@@ -44,6 +44,8 @@
 		</c:choose>
 
 		<div id="introduce" class="tab-pane" role="tabpanel">
+			<h3/>Introduce</h3>
+			<hr/>			
 			<%--<h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.introduce"/></h3>
 			<hr/>--%>
 			<div class="form-group row">
@@ -54,6 +56,8 @@
 		</div>
 
 		<div id="contact" class="tab-pane" role="tabpanel">
+			<h3/>Contact</h3>
+			<hr/>			
 			<%--<h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
 			<hr/>--%>
 			<c:if test="${profileInfo.profileContactInfoDto.decryptedEmail ne null && profileInfo.profileContactInfoDto.decryptedEmail ne ''}">
@@ -222,9 +226,9 @@
 
         $("#goBack").on("click", function(){
             var url = "/profile/list/";
-            if ($("#profileType").val() == '1') {url += "1/01010100";}
-            else if ($("#profileType").val() == '2') {url += "2/01010200";}
-            else {url += "3/01010300";}
+            if ($("#profileType").val() == '1') {url += "1/${profileInfo.catId1}";}
+            else if ($("#profileType").val() == '2') {url += "2/${profileInfo.catId1}";}
+            else {url += "3/${profileInfo.catId1}";}
             location.href =  url;
         });
     });

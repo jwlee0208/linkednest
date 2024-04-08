@@ -61,6 +61,8 @@
 	<div id="playerInfo" class="tab-pane active" role="tabpanel">
 		<%--<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.personalinfo"/></h3>
 		<hr/>	--%>
+		<h3/>Player Information</h3>
+		<hr/>
 		<div class="form-group row">
 			<label for="" class="col-sm-2 col-form-label"><tag:message code="text.player.name"/></label>
 			<div class="col-sm-10">
@@ -135,7 +137,8 @@
 		</div>
 	</div>
 	<div id="playerAttribute" class="tab-pane" role="tabpanel">
-
+		<h3/>Player Attributes</h3>
+		<hr/>
 		<%--<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.playerattr"/></h3>
 		<hr/>--%>
 		<c:set var="profileAttrList" value="${profileInfo.profileAttrList}"/>
@@ -148,7 +151,7 @@
 						<div class="col-sm-10">
 							<c:forEach var="profileAttrElemInfo" items="${profileAttrInfo.profileAttrElementMapList}">
 								<c:choose>
-									<c:when test="${profileAttrElemInfo.profileAttrElementName != null}">
+									<c:when test="${profileAttrElemInfo.profileAttrElementName ne null}">
 										<p class="form-control-static"><tag:message code="attr.${profileAttrInfo.profileAttrName}.${profileAttrElemInfo.profileAttrElementName}"/></p>
 									</c:when>
 									<c:otherwise>
@@ -164,11 +167,13 @@
 		<div class="form-group row">
 			<label for="" class="col-sm-2 col-form-label">Main <tag:message code="text.position"/></label>
 			<div class="col-sm-10">
-				<span class="btn btn-danger"><tag:message code="${profileInfo.catId2Val}"/></span>
+ 				<span class="btn btn-danger"><tag:message code="${profileInfo.catId2Val}"/></span>
 			</div>
 		</div>
 	</div>
 	<div id="career" class="tab-pane" role="tabpanel">
+		<h3/>Career</h3>
+		<hr/>	
 		<c:set var="profileCareerList" value="${profileInfo.profileCareerList}"/>
 		<c:if test="${!empty profileCareerList}">
 			<%--<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.career"/></h3>
@@ -200,6 +205,8 @@
 		</c:if>
 	</div>
 	<div id="streamList" class="tab-pane" role="tabpanel">
+		<h3/>Play Streamming</h3>
+		<hr/>	
 		<c:set var="profileStreamList" value="${profileInfo.profileStreamList}"/>
 		<c:if test="${!empty profileStreamList}">
 			<%--<h3><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.playstream"/></h3>
@@ -215,6 +222,8 @@
 	<c:set var="profileStatFielderList" value="${profileInfo.profileStatFielderList}"/>
 
 	<div id="statistic" class="tab-pane" role="tabpanel">
+		<h3/>Statistics</h3>
+		<hr/>		
 		<c:if test="${!empty profileStatPitcherList || !empty profileStatHitterList || !empty profileStatFielderList}">
 			<%--<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;<tag:message code="text.stats"/></h3>
             <hr/>	--%>

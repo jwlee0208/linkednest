@@ -45,12 +45,10 @@ public class ProfileDto {
 	/**
 	 * 2nd category code mapping array
 	 */
-	private static final String[] CHILD_CATEGORY_CODE = {	"01010101", "01010102", "01010103", "01010104"
-														  , "01010105", "01010106", "01010107", "01010108"
-														  , "01010109", "01010110"};
-	private static final String[] CHILD_CATEGORY_VALUE = {"attr.position.p", "attr.position.cc", "attr.position.1b", "attr.position.2b"
-														, "attr.position.3b", "attr.position.ss", "attr.position.lf", "attr.position.cf"
-														, "attr.position.rf", "attr.position.dh"};
+	private static final String[] CHILD_CATEGORY_CODE = {	"01010101", "01010102", "01010103", "01010104", "01010105", "01010106", "01010107", "01010108", "01010109", "01010110"
+														, "01020101"	};
+	private static final String[] CHILD_CATEGORY_VALUE = {"attr.position.p", "attr.position.cc", "attr.position.1b", "attr.position.2b", "attr.position.3b", "attr.position.ss", "attr.position.lf", "attr.position.cf", "attr.position.rf", "attr.position.dh"
+														, "attr.position.gk"};
 
 	// player profile dto
 	private ProfilePlayerDto 		profilePlayerDto;

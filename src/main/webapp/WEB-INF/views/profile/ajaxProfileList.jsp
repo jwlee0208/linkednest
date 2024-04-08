@@ -45,18 +45,7 @@
                                                                                 <c:set var="playerInfo" value="${list.profilePlayerDto}"/>
                                                                                 <img src="${pageContext.request.contextPath}/img/country/${fn:toLowerCase(playerInfo.nationality)}.png" width="30px" height="20px" style="filter: drop-shadow(5px 5px 5px #000);"/>&nbsp;
                                                                                 <span class="btn btn-outline-primary btn-sm"><tag:message code="code.country.${fn:toUpperCase(playerInfo.nationality)}"/></span>
-                                                                                <span class="btn btn-outline-info btn-sm">
-                                                                                <c:if test="${list.catId2 eq '01010101'}"><tag:message code="attr.position.p"/></c:if>
-                                                                                <c:if test="${list.catId2 eq '01010102'}"><tag:message code="attr.position.cc"/></c:if>
-                                                                                <c:if test="${list.catId2 eq '01010103'}"><tag:message code="attr.position.1b"/></c:if>
-                                                                                <c:if test="${list.catId2 eq '01010104'}"><tag:message code="attr.position.2b"/></c:if>
-                                                                                <c:if test="${list.catId2 eq '01010105'}"><tag:message code="attr.position.3b"/></c:if>
-                                                                                <c:if test="${list.catId2 eq '01010106'}"><tag:message code="attr.position.ss"/></c:if>
-                                                                                <c:if test="${list.catId2 eq '01010107'}"><tag:message code="attr.position.lf"/></c:if>
-                                                                                <c:if test="${list.catId2 eq '01010108'}"><tag:message code="attr.position.cf"/></c:if>
-                                                                                <c:if test="${list.catId2 eq '01010109'}"><tag:message code="attr.position.rf"/></c:if>
-                                                                                <c:if test="${list.catId2 eq '01010110'}"><tag:message code="attr.position.dh"/></c:if>
-                                                                                </span>
+                                                                                <span class="btn btn-outline-info btn-sm"><tag:message code="${list.catId2Val}"/></span>
                                                                         </c:when>
                                                                         <c:when test="${list.profileType eq 2}">
                                                                                 <c:set var="playerInfo" value="${list.profilePlayerDto}"/>

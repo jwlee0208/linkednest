@@ -18,15 +18,42 @@
 	<!-- mobile menu list button -->
 	<!-- 		<div class="navbar-header"> -->
 
-	<a class="navbar-brand" href="javascript:;" onclick="javascript:goHome();"><span style="color: white; font-size: 25px; font-weight: bold;">L</span>inked<span style="color: white; font-size: 25px; font-weight: bold;">N</span>est - <span style="color: white; font-size: 15px;">Looking For Chances</span></a>
+	<a class="navbar-brand" href="javascript:;" onclick="javascript:goHome();"><span style="color: white; font-size: 25px; font-weight: bold;font-family:monospace;">L</span>inked<span style="color: white; font-size: 25px; font-weight: bold;font-family:monospace;">N</span>est - <span style="color: white; font-size: 15px;font-family:monospace;">Looking For Chances</span></a>
 	<!-- 		</div> -->
 	<div class="collapse navbar-collapse" id="nav-collapse-player-menu-list">
 		<ul class="nav navbar-nav  mr-auto">
 			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goHome();" style="color: white;">Home</a></li>
-			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(1, '01010100');" style="color: white; "><span><tag:message code="text.playerlist"/></span></a></li>
+ 			<li class="nav-item dropdown" style="color: white;">
+		        <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownBb" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+		          Baseball
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdownBb">
+					<a class="dropdown-item" href="javascript:;" onclick="javascript:goProfileList(1, '01010100');" ><span><tag:message code="text.playerlist"/></span></a>
+					<a class="dropdown-item" href="javascript:;" onclick="javascript:goProfileList(2, '01010200');"><span><tag:message code="text.coachlist"/></span></a>
+					<a class="dropdown-item" href="javascript:;" onclick="javascript:goProfileList(3, '01010300');"><span><tag:message code="text.teamlist"/></span></a>
+			        <div class="dropdown-divider"></div>
+				    <a class="dropdown-item" href="/profile/leagueList"><span style=""><tag:message code="text.leaguelist"/></span></a>
+		        </div>
+		    </li>			
+ 			<li class="nav-item dropdown" style="color: white;">
+		        <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownFb" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+		          Football
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdownFb">
+					<a class="dropdown-item" href="javascript:;" onclick="javascript:goProfileList(1, '01020100');" ><span><tag:message code="text.playerlist"/></span></a>
+					<a class="dropdown-item" href="javascript:;" onclick="javascript:goProfileList(2, '01020200');"><span><tag:message code="text.coachlist"/></span></a>
+					<a class="dropdown-item" href="javascript:;" onclick="javascript:goProfileList(3, '01020300');"><span><tag:message code="text.teamlist"/></span></a>
+			        <div class="dropdown-divider"></div>
+				    <a class="dropdown-item" href="/profile/leagueList"><span style=""><tag:message code="text.leaguelist"/></span></a>
+		        </div>
+		    </li>			
+
+
+
+<%-- 			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(1, '01010100');" style="color: white; "><span><tag:message code="text.playerlist"/></span></a></li>
 			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(2, '01010200');" style="color: white; "><span><tag:message code="text.coachlist"/></span></a></li>
 			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(3, '01010300');" style="color: white; "><span><tag:message code="text.teamlist"/></span></a></li>
-			<li class="nav-item"><a class="nav-link" href="/profile/leagueList"><span style="color: white; "><tag:message code="text.leaguelist"/></span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/profile/leagueList"><span style="color: white; "><tag:message code="text.leaguelist"/></span></a></li> --%>
 		</ul>
 		<c:if test="${null ne userInfo}">
 			<ul class="nav navbar-nav navbar-right float-right">
