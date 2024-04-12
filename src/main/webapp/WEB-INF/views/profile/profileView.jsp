@@ -8,8 +8,7 @@
 <script type="text/javascript" 		src="${pageContext.request.contextPath}/js/jquery-validate.min.js"></script>
 <script type="text/javascript" 		src="${pageContext.request.contextPath}/js/jquery.form.min.js"></script>
 <script type="text/javascript" 		src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
-
-<script type="text/javascript"	src="${pageContext.request.contextPath}/js/holder.js"></script>
+<script type="text/javascript"		src="${pageContext.request.contextPath}/js/holder.js"></script>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base.css"/>
 
@@ -29,8 +28,8 @@
 	</div>
 	<hr/>
 	<form id="viewFrm" name="viewFrm" method="post" class="form-horizontal" role="form">
-		<input type="hidden" id="profileId" 	name="profileId" value="${profileInfo.profileId}"/>
-		<input type="hidden" id="profileType" value="${profileInfo.profileType}"/>
+		<input type="hidden" id="profileId" 	value="${profileInfo.profileId}"	name="profileId" />
+		<input type="hidden" id="profileType" 	value="${profileInfo.profileType}"/>
 		<div style="display:none;"><h2>${profileInfo.title}&nbsp;<small>Profile</small></h2></div>
 		<c:choose>
 			<c:when test="${profileInfo.profileType eq 1}">
@@ -45,6 +44,8 @@
 		</c:choose>
 
 		<div id="introduce" class="tab-pane" role="tabpanel">
+			<h3/>Introduce</h3>
+			<hr/>			
 			<%--<h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.introduce"/></h3>
 			<hr/>--%>
 			<div class="form-group row">
@@ -55,6 +56,8 @@
 		</div>
 
 		<div id="contact" class="tab-pane" role="tabpanel">
+			<h3/>Contact</h3>
+			<hr/>			
 			<%--<h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
 			<hr/>--%>
 			<c:if test="${profileInfo.profileContactInfoDto.decryptedEmail ne null && profileInfo.profileContactInfoDto.decryptedEmail ne ''}">
@@ -74,27 +77,11 @@
 				</div>
 			</c:if>
 
-				<%--<c:if test="${profileInfo.profileContactInfoDto.decryptedCellPhoneNo ne null && profileInfo.profileContactInfoDto.decryptedCellPhoneNo ne ''}">
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-3 col-form-label">Cell Phone No.</label>
-                                    <div class="col-sm-9">
-                                        <p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.decryptedCellPhoneNo}">${profileInfo.profileContactInfoDto.decryptedCellPhoneNo}</a></p>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${profileInfo.profileContactInfoDto.decryptedWebsiteUrl ne null && profileInfo.profileContactInfoDto.decryptedWebsiteUrl ne ''}">
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-3 col-form-label"><tag:message code="text.website"/></label>
-                                    <div class="col-sm-9">
-                                        <p class="form-control-static"><a href="http://${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}" target="_blank">${profileInfo.profileContactInfoDto.decryptedWebsiteUrl}</a></p>
-                                    </div>
-                                </div>
-                            </c:if>--%>
 			<c:if test="${profileInfo.profileContactInfoDto.decryptedFacebookUrl ne null && profileInfo.profileContactInfoDto.decryptedFacebookUrl ne ''}">
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.facebook.id"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="https://www.facebook.com/${profileInfo.profileContactInfoDto.decryptedFacebookUrl}">${profileInfo.profileContactInfoDto.decryptedFacebookUrl}</a></p>
+						<p class="form-control-static"><a href="//www.facebook.com/${profileInfo.profileContactInfoDto.decryptedFacebookUrl}">${profileInfo.profileContactInfoDto.decryptedFacebookUrl}</a></p>
 					</div>
 				</div>
 			</c:if>
@@ -102,7 +89,7 @@
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.twitter.id"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="https://twitter.com/${profileInfo.profileContactInfoDto.decryptedTwitterUrl}">${profileInfo.profileContactInfoDto.decryptedTwitterUrl}</a></p>
+						<p class="form-control-static"><a href="//twitter.com/${profileInfo.profileContactInfoDto.decryptedTwitterUrl}">${profileInfo.profileContactInfoDto.decryptedTwitterUrl}</a></p>
 					</div>
 				</div>
 			</c:if>
@@ -110,18 +97,10 @@
 				<div class="form-group row">
 					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.instagram.id"/></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="https://instagram.com/${profileInfo.profileContactInfoDto.decryptedInstagramUrl}">${profileInfo.profileContactInfoDto.decryptedInstagramUrl}</a></p>
+						<p class="form-control-static"><a href="//instagram.com/${profileInfo.profileContactInfoDto.decryptedInstagramUrl}">${profileInfo.profileContactInfoDto.decryptedInstagramUrl}</a></p>
 					</div>
 				</div>
 			</c:if>
-			<%--<c:if test="${profileInfo.profileContactInfoDto.address ne null && profileInfo.profileContactInfoDto.address ne ''}">
-				<div class="form-group row">
-					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.address"/></label>
-					<div class="col-sm-9">
-						<p class="form-control-static"><a>${profileInfo.profileContactInfoDto.address}</a></p>
-					</div>
-				</div>
-			</c:if>--%>
 		</div>
 		<br/>
 
@@ -161,12 +140,12 @@
 		</div>
 	</form>
 </div>
-</div>
 <script>
     $(document).ready(function() {
         $("img").addClass("media-object");
-// 	$("img").attr("width", "95%");
-        $("img").attr("height", "300px");
+/* 	 	$("img").attr("max-width", "95%");
+ */
+ 		$("img").attr("height", "300px");
         $("img").off("error");
         $("img").on("error", function(){
             $(this).attr("src", '${pageContext.request.contextPath}/img/no_image.png');
@@ -177,7 +156,6 @@
     $(function(){
 
         $("#deleteBtn").on("click", function(){
-
             if(confirm('Do you delete this information?')){
                 $.ajax({
                     url : '/player/deletePlayerInfo.json',
@@ -248,9 +226,9 @@
 
         $("#goBack").on("click", function(){
             var url = "/profile/list/";
-            if ($("#profileType").val() == '1') {url += "1/01010100";}
-            else if ($("#profileType").val() == '2') {url += "2/01010200";}
-            else {url += "3/01010300";}
+            if ($("#profileType").val() == '1') {url += "1/${profileInfo.catId1}";}
+            else if ($("#profileType").val() == '2') {url += "2/${profileInfo.catId1}";}
+            else {url += "3/${profileInfo.catId1}";}
             location.href =  url;
         });
     });

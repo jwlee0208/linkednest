@@ -20,7 +20,7 @@
 		<input type="hidden" id="selectedCatId" 		name="selectedCatId" />
 		<input type="hidden" id="page"					name="page"	/>
 		<input type="hidden" id="profileType"			name="profileType" 	value="${profileType}"/>
-		<input type="hidden" id="catagoryId"			name="catagoryId" 	value="${catagoryId}"/>
+		<input type="hidden" id="catId1"				name="catId1" 		value="${categoryId}"/>
 		<c:set var="type" value=""/>
 		<c:choose>
 			<c:when test="${profileType eq 1}"><c:set var="type" value="Player"/></c:when>

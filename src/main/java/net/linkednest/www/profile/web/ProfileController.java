@@ -123,7 +123,7 @@ public class ProfileController extends CommonConstant {
 		
 		model.addAttribute("isLogon"			, isLogon);
 		model.addAttribute("profileType"		, profileType);
-		model.addAttribute("catagoryId"		, catId);
+		model.addAttribute("categoryId"			, catId);
 		model.addAttribute("attrElementList"	, attrElementList);
 		return "/profile/profileList";
 	}

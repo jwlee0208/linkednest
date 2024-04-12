@@ -4,11 +4,11 @@
 <%@ taglib uri="http://www.springframework.org/tags" 	prefix="tag"%>
 <div style="padding-top:20px;"></div>
 <div class="form-group row">
-	<div class="col-sm-5">
+	<div class="col-sm-12">
 		<img src="http://jwlee0208.cdn3.cafe24.com/${profileInfo.profileImgPath}" class="img-fluid rounded mx-auto d-block"/>
 	</div>
-	<div class="col-sm-7">
-		<ul class="nav flex-column nav-pills" id="profileTab">
+<!-- 	<div class="col-sm-7">
+ --><!-- 		<ul class="nav flex-column nav-pills" id="profileTab">
 			<li class="nav-item">
 				<a class="flex-sm-fill nav-link active" data-toggle="pill" href="#playerInfo">Player Information</a>
 			</li>
@@ -31,9 +31,10 @@
 				<a class="flex-sm-fill nav-link" data-toggle="pill" href="#contact">Contact</a>
 			</li>
 		</ul>
-	</div>
+ -->	
+ <!-- </div> -->
 </div>
-<%--<ul class="nav nav-tabs flex-column flex-sm-row" id="profileTab">
+<ul class="nav nav-tabs flex-column flex-sm-row" id="profileTab" role="tablist">
   <li class="nav-item">
     <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="pill" href="#playerInfo">Player Information</a>
   </li>
@@ -55,12 +56,14 @@
   <li class="nav-item">
     <a class="flex-sm-fill text-sm-center nav-link" data-toggle="pill" href="#contact">Contact</a>
   </li>
-</ul>--%>
+</ul>
 <br/>
 <div class="tab-content">
 	<div id="playerInfo" class="tab-pane active" role="tabpanel">
 		<%--<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.personalinfo"/></h3>
 		<hr/>	--%>
+		<h3/>Player Information</h3>
+		<hr/>
 		<div class="form-group row">
 			<label for="" class="col-sm-2 col-form-label"><tag:message code="text.player.name"/></label>
 			<div class="col-sm-10">
@@ -135,7 +138,8 @@
 		</div>
 	</div>
 	<div id="playerAttribute" class="tab-pane" role="tabpanel">
-
+		<h3/>Player Attributes</h3>
+		<hr/>
 		<%--<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.playerattr"/></h3>
 		<hr/>--%>
 		<c:set var="profileAttrList" value="${profileInfo.profileAttrList}"/>
@@ -148,7 +152,7 @@
 						<div class="col-sm-10">
 							<c:forEach var="profileAttrElemInfo" items="${profileAttrInfo.profileAttrElementMapList}">
 								<c:choose>
-									<c:when test="${profileAttrElemInfo.profileAttrElementName != null}">
+									<c:when test="${profileAttrElemInfo.profileAttrElementName ne null}">
 										<p class="form-control-static"><tag:message code="attr.${profileAttrInfo.profileAttrName}.${profileAttrElemInfo.profileAttrElementName}"/></p>
 									</c:when>
 									<c:otherwise>
@@ -164,11 +168,13 @@
 		<div class="form-group row">
 			<label for="" class="col-sm-2 col-form-label">Main <tag:message code="text.position"/></label>
 			<div class="col-sm-10">
-				<span class="btn btn-danger"><tag:message code="${profileInfo.catId2Val}"/></span>
+ 				<span class="btn btn-danger"><tag:message code="${profileInfo.catId2Val}"/></span>
 			</div>
 		</div>
 	</div>
 	<div id="career" class="tab-pane" role="tabpanel">
+		<h3/>Career</h3>
+		<hr/>	
 		<c:set var="profileCareerList" value="${profileInfo.profileCareerList}"/>
 		<c:if test="${!empty profileCareerList}">
 			<%--<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.career"/></h3>
@@ -200,6 +206,8 @@
 		</c:if>
 	</div>
 	<div id="streamList" class="tab-pane" role="tabpanel">
+		<h3/>Play Streamming</h3>
+		<hr/>	
 		<c:set var="profileStreamList" value="${profileInfo.profileStreamList}"/>
 		<c:if test="${!empty profileStreamList}">
 			<%--<h3><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.playstream"/></h3>
@@ -211,11 +219,14 @@
 		</c:if>
 	</div>
 	<c:set var="profileStatPitcherList" value="${profileInfo.profileStatPitcherList}"/>
-	<c:set var="profileStatHitterList" value="${profileInfo.profileStatHitterList}"/>
+	<c:set var="profileStatHitterList" 	value="${profileInfo.profileStatHitterList}"/>
 	<c:set var="profileStatFielderList" value="${profileInfo.profileStatFielderList}"/>
+	<c:set var="profileStatFbGkList"	value="${profileInfo.profileStatFbGkList}"/>
 
 	<div id="statistic" class="tab-pane" role="tabpanel">
-		<c:if test="${!empty profileStatPitcherList || !empty profileStatHitterList || !empty profileStatFielderList}">
+		<h3>Statistics</h3>
+		<hr/>		
+		<c:if test="${!empty profileStatPitcherList || !empty profileStatHitterList || !empty profileStatFielderList || !empty profileStatFbGkList}">
 			<%--<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;<tag:message code="text.stats"/></h3>
             <hr/>	--%>
 
@@ -378,5 +389,40 @@
 					</tbody>
 				</table>
 			</c:if>
+			<c:if test="${!empty profileStatFbGkList}">
+				<h3><small>GK Stats</small></h3>
+
+				<table class="table table-bordered table-hover">
+					<thead class="">
+					<tr>
+						<th>Team</th>
+						<th>Year</th>
+						<th>MP</th>
+						<th>Starts</th>
+						<th>MIN</th>
+						<th>90S</th>
+						<th>GA</th>
+						<th>GA90</th>
+						<th>Save%</th>
+					</tr>
+					</thead>
+					<tbody>
+					<c:forEach var="profileStatFbGkInfo" items="${profileStatFbGkList}">
+						<tr>
+							<td><p class="form-control-static">${profileStatFbGkInfo.teamName}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.year}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.mp}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.starts}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.min}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.ninetyS}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.ga}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.ga90}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.savePercent}</p></td>
+						</tr>
+					</c:forEach>
+					</tbody>
+				</table>
+
+			</c:if>			
 		</c:if>
 	</div>

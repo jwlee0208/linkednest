@@ -29,11 +29,12 @@
 	<form id="viewFrm" name="viewFrm" method="post" class="form-horizontal" role="form">
 		<input type="hidden" id="leagueId" 	name="leagueId" value="${leagueInfo.leagueId}"/>
 		<div style="display:none;"><h2>${leagueInfo.leagueName}</h2></div>
-		<img src="http://jwlee0208.cdn3.cafe24.com/${leagueInfo.leagueImgPath}" class="rounded mx-auto d-block"/>
+		<img src="//jwlee0208.cdn3.cafe24.com/${leagueInfo.leagueImgPath}" class="rounded mx-auto d-block"/>
+		<br/>
 		<h3>League Information</h3>
 		<hr/>		
 	  	<div class="form-group row">
-	    	<label for="" class="col-sm-2 col-form-label">Name</label>
+	    	<label for="" class="col-sm-2 col-form-label">League Name</label>
 		    <div class="col-sm-10">
 		    	<p class="form-control-static">${leagueInfo.leagueName}</p>
 			</div>
@@ -59,53 +60,75 @@
 		    </div>
 		  </div>
 
-
+<c:if test="${leagueInfo.commissioner ne '' && leagueInfo.commissioner ne null }">
 		  <div class="form-group row">
 		    <label for="" class="col-sm-2 col-form-label">Commissioner</label>
 		    <div class="col-sm-10">
 		      <p class="form-control-static">${leagueInfo.commissioner}</p>
 		    </div>
 		  </div>	
-
+</c:if>		  
+<c:if test="${leagueInfo.leagueWebsiteUrl ne '' && leagueInfo.leagueWebsiteUrl ne null }">
 		  <div class="form-group row">
 		    <label for="" class="col-sm-2 col-form-label">League Website</label>
 		    <div class="col-sm-10">
-		      <p class="form-control-static">${leagueInfo.leagueWebsiteUrl}</p>
+		      <p class="form-control-static" ><a href="${leagueInfo.leagueWebsiteUrl}" target="_blank">${leagueInfo.leagueWebsiteUrl}</a></p>
 		    </div>
 		  </div>	
-
+</c:if>
 		  <div class="form-group row">
 		    <label for="" class="col-sm-2 col-form-label">Area / Country</label>
 		    <div class="col-sm-10">
 		      <p class="form-control-static"><tag:message code="code.area.${leagueInfo.area}"/> / <tag:message code="code.country.${leagueInfo.country}"/></p>
 		    </div>
 		  </div>	
-
+<c:if test="${leagueInfo.establishedDate ne '' && leagueInfo.establishedDate ne null}">
 		  <div class="form-group row">
-		    <label for="" class="col-sm-2 col-form-label">Established Date</label>
+		    <label for="" class="col-sm-2 col-form-label">Established Year</label>
 		    <div class="col-sm-10">
-		      <p class="form-control-static">${leagueInfo.establishedDate}</p>
+		      <p class="form-control-static">${leagueInfo.establishedDate.substring(0,4)}</p>
 		    </div>
 		  </div>	
-
+</c:if>
 		  <div class="form-group row">
-		    <label for="" class="col-sm-2 col-form-label">Joined Team (Total : ${leagueInfo.joinedTeamCnt})</label>
+		    <label for="" class="col-sm-2 col-form-label">Joined Team <br/>(Total : ${leagueInfo.joinedTeamCnt})</label>
 		    <div class="col-sm-10">
 		    <c:if test="${!empty leagueInfo.teamList}">
-		    	<c:forEach var="teamInfo" items="${leagueInfo.teamList}">
-		      <p class="form-control-static"><a href="/profile/view/${teamInfo.profileType}/${teamInfo.profileId}">${teamInfo.name}(city : ${teamInfo.profileTeamDto.city})</a></p>		    	
-		    	</c:forEach>
+		    	<table style="border:1px; border-color:#efefef; ">
+		    		<colgroup>
+		    			<col width="60%">
+		    			<col width="40%">
+		    		</colgroup>
+		    		<thead>
+		    			<tr>
+			    			<th>Team</th>
+			    			<th>City</th>
+		    			</tr>
+		    		</thead>
+					<tbody>
+				<c:forEach var="teamInfo" items="${leagueInfo.teamList}">
+						<tr>
+							<td><a href="/profile/view/${teamInfo.profileType}/${teamInfo.profileId}">${teamInfo.name}</a></td>
+							<td>${teamInfo.profileTeamDto.city}</td>
+						</tr>
+				</c:forEach>
+					</tbody>
+		    	</table>
+				<hr/>
 		    </c:if>	
 		    </div>
 		  </div>	
 	</form>
+	<div class="row p-3">
+		<span class="btn btn-primary btn-block" id="goList">Back</span>
+	</div>
 </div>
 
 </body>
 <script>
 $(document).ready(function() {
 	$("img").addClass("media-object");
-	$("img").attr("width", "95%");
+	$("img").attr("max-width", "95%");
 	$("img").off("error");
 	$("img").on("error", function(){
 		$(this).attr("src", '${pageContext.request.contextPath}/img/no_image.png');
@@ -113,7 +136,9 @@ $(document).ready(function() {
 });
 
 $(function(){
-
+    $("#goList").on("click", function(){
+		location.href = "/profile/leagueList";
+    });
 });
 </script>
 </html>
