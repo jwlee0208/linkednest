@@ -64,6 +64,8 @@ public class ProfileDto {
 	private List<ProfileStatFielderDto>	profileStatFielderList;
 	
 	private List<ProfileStatPitcherDto>	profileStatPitcherList;
+	
+	private List<ProfileStatFbGkDto>	profileStatFbGkList;
 	// career dto
 	private List<ProfileCareerDto>  profileCareerList;
 	// attribute & element map dto
@@ -183,6 +185,12 @@ public class ProfileDto {
 	}
 	public void setProfileStatPitcherList(List<ProfileStatPitcherDto> profileStatPitcherList) {
 		this.profileStatPitcherList = profileStatPitcherList;
+	}
+	public List<ProfileStatFbGkDto> getProfileStatFbGkList() {
+		return profileStatFbGkList;
+	}
+	public void setProfileStatFbGkList(List<ProfileStatFbGkDto> profileStatFbGkList) {
+		this.profileStatFbGkList = profileStatFbGkList;
 	}
 	public List<ProfileCareerDto> getProfileCareerList() {
 		return profileCareerList;

@@ -140,6 +140,32 @@
 				, psh.ops as h_ops
 				, psh.etc as h_etc		
 		</sql>
+		<sql id="profileStatFbGkColumnSql">
+				, psfg.id
+				, psfg.profile_id
+				, psfg.team_name
+				, psfg.year
+				, psfg.mp
+				, psfg.starts
+				, psfg.min
+				, psfg.ninety_s
+				, psfg.ga
+				, psfg.ga90
+				, psfg.sota
+				, psfg.saves
+				, psfg.save_percent
+				, psfg.w
+				, psfg.d
+				, psfg.l
+				, psfg.cs
+				, psfg.cs_percent
+				, psfg.pk_att
+				, psfg.pk_a
+				, psfg.pk_sv
+				, psfg.pk_m
+				, psfg.pk_save_percent
+				, psfg.seq
+		</sql>
 		<sql id="profileStreamColumnSql">
 				, pstream.stream_id
 				, pstream.stream_title
@@ -194,6 +220,7 @@
 				<include refid="profileStatPitcherColumnSql"/>
 				<include refid="profileStatHitterColumnSql"/>
 				<include refid="profileStatFielderColumnSql"/>			
+				<include refid="profileStatFbGkColumnSql"/>
 				<include refid="profileStreamColumnSql"/>		
 			FROM TB_PROFILE 					  p
 			INNER JOIN TB_PROFILE_PLAYER 		  pp 		ON pp.profile_id		= p.profile_id
@@ -205,6 +232,9 @@
 			LEFT JOIN TB_PROFILE_STAT_FIELDER 	  psf 		ON psf.profile_id 		= p.profile_id
 			LEFT JOIN TB_PROFILE_STAT_PITCHER 	  psp 		ON psp.profile_id 		= p.profile_id 
 			LEFT JOIN TB_PROFILE_STAT_HITTER 	  psh 		ON psh.profile_id 		= p.profile_id
+			LEFT JOIN TB_PROFILE_STAT_FB_GK		  psfg		ON psfg.profile_id		= p.profile_id
+			LEFT JOIN TB_PROFILE_STAT_FB_OFFENSIVE psfo		ON psfo.profile_id		= p.profile_id
+			LEFT JOIN TB_PROFILE_STAT_FB_DEFENSIVE psfd		ON psfd.profile_id		= p.profile_id
     	</sql>
      	<sql id="selectProfileCoachInfoSql">
 			SELECT 
@@ -326,7 +356,7 @@
 
 			<choose>
 				<when test="profileType == 1">
-			 ORDER BY p.create_date DESC, psh.h_stat_year DESC, psf.f_stat_year DESC, psp.p_stat_year DESC
+			 ORDER BY p.create_date DESC, psfg.year DESC, psh.h_stat_year DESC, psf.f_stat_year DESC, psp.p_stat_year DESC
 				</when>	
 				<when test="profileType == 2">
 			 ORDER BY p.create_date DESC
@@ -484,7 +514,33 @@
 				<result column="f_fpct" 				property="fpct"/>
 				<result column="f_rf" 				property="rf"/>
 				<result column="f_etc" 				property="etc"/>
-			</collection>				
+			</collection>		
+			<collection property="profileStatFbGkList" ofType="profile.profileStatFbGkDto">
+				<id 	column="id" 				property="id"/>
+				<result column="team_name" 			property="teamName"/>
+				<result column="year" 				property="year"/>
+				<result column="mp" 				property="mp"/>
+				<result column="starts" 			property="starts"/>
+				<result column="min" 				property="min"/>
+				<result column="ninety_s" 			property="ninetyS"/>
+				<result column="ga" 				property="ga"/>
+				<result column="ga90" 				property="ga90"/>
+				<result column="sota" 				property="sota"/>								
+				<result column="saves" 				property="saves"/>
+				<result column="save_percent" 		property="savePercent"/>
+				<result column="w" 					property="w"/>
+				<result column="d" 					property="d"/>
+				<result column="l" 					property="l"/>
+				<result column="cs" 				property="cs"/>				
+				<result column="cs_percent" 		property="csPercent"/>
+				<result column="pk_att" 			property="pkAtt"/>
+				<result column="pk_a" 				property="pkA"/>
+				<result column="pk_sv" 				property="pkSv"/>				
+				<result column="pk_m" 				property="pkM"/>
+				<result column="pk_save_percent" 	property="pkSavePercent"/>
+				<result column="seq" 				property="seq"/>
+			</collection>
+					
 		</resultMap>
 		<!-- 검색 리스트 목록 조회 -->			
 		<select id="selectSearchedProfileList" resultMap="profileListMap" parameterType="profile.searchProfileDto">

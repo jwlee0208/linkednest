@@ -4,11 +4,11 @@
 <%@ taglib uri="http://www.springframework.org/tags" 	prefix="tag"%>
 <div style="padding-top:20px;"></div>
 <div class="form-group row">
-	<div class="col-sm-5">
+	<div class="col-sm-12">
 		<img src="http://jwlee0208.cdn3.cafe24.com/${profileInfo.profileImgPath}" class="img-fluid rounded mx-auto d-block"/>
 	</div>
-	<div class="col-sm-7">
-		<ul class="nav flex-column nav-pills" id="profileTab">
+<!-- 	<div class="col-sm-7">
+ --><!-- 		<ul class="nav flex-column nav-pills" id="profileTab">
 			<li class="nav-item">
 				<a class="flex-sm-fill nav-link active" data-toggle="pill" href="#playerInfo">Player Information</a>
 			</li>
@@ -31,9 +31,10 @@
 				<a class="flex-sm-fill nav-link" data-toggle="pill" href="#contact">Contact</a>
 			</li>
 		</ul>
-	</div>
+ -->	
+ <!-- </div> -->
 </div>
-<%--<ul class="nav nav-tabs flex-column flex-sm-row" id="profileTab">
+<ul class="nav nav-tabs flex-column flex-sm-row" id="profileTab" role="tablist">
   <li class="nav-item">
     <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="pill" href="#playerInfo">Player Information</a>
   </li>
@@ -55,7 +56,7 @@
   <li class="nav-item">
     <a class="flex-sm-fill text-sm-center nav-link" data-toggle="pill" href="#contact">Contact</a>
   </li>
-</ul>--%>
+</ul>
 <br/>
 <div class="tab-content">
 	<div id="playerInfo" class="tab-pane active" role="tabpanel">
@@ -218,13 +219,14 @@
 		</c:if>
 	</div>
 	<c:set var="profileStatPitcherList" value="${profileInfo.profileStatPitcherList}"/>
-	<c:set var="profileStatHitterList" value="${profileInfo.profileStatHitterList}"/>
+	<c:set var="profileStatHitterList" 	value="${profileInfo.profileStatHitterList}"/>
 	<c:set var="profileStatFielderList" value="${profileInfo.profileStatFielderList}"/>
+	<c:set var="profileStatFbGkList"	value="${profileInfo.profileStatFbGkList}"/>
 
 	<div id="statistic" class="tab-pane" role="tabpanel">
-		<h3/>Statistics</h3>
+		<h3>Statistics</h3>
 		<hr/>		
-		<c:if test="${!empty profileStatPitcherList || !empty profileStatHitterList || !empty profileStatFielderList}">
+		<c:if test="${!empty profileStatPitcherList || !empty profileStatHitterList || !empty profileStatFielderList || !empty profileStatFbGkList}">
 			<%--<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;<tag:message code="text.stats"/></h3>
             <hr/>	--%>
 
@@ -387,5 +389,40 @@
 					</tbody>
 				</table>
 			</c:if>
+			<c:if test="${!empty profileStatFbGkList}">
+				<h3><small>GK Stats</small></h3>
+
+				<table class="table table-bordered table-hover">
+					<thead class="">
+					<tr>
+						<th>Team</th>
+						<th>Year</th>
+						<th>MP</th>
+						<th>Starts</th>
+						<th>MIN</th>
+						<th>90S</th>
+						<th>GA</th>
+						<th>GA90</th>
+						<th>Save%</th>
+					</tr>
+					</thead>
+					<tbody>
+					<c:forEach var="profileStatFbGkInfo" items="${profileStatFbGkList}">
+						<tr>
+							<td><p class="form-control-static">${profileStatFbGkInfo.teamName}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.year}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.mp}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.starts}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.min}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.ninetyS}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.ga}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.ga90}</p></td>
+							<td><p class="form-control-static">${profileStatFbGkInfo.savePercent}</p></td>
+						</tr>
+					</c:forEach>
+					</tbody>
+				</table>
+
+			</c:if>			
 		</c:if>
 	</div>
