@@ -137,7 +137,7 @@ $(document).ready(function() {
 
 $(function(){
     $("#goList").on("click", function(){
-		location.href = "/profile/leagueList";
+		location.href = "/profile/league/list/${catId}";
     });
 });
 </script>

@@ -34,7 +34,8 @@
 				, li.league_type
 				, li.league_division
 				, li.area
-				, li.country		
+				, li.country	
+				, li.cat_id	
 		</sql>
 		<sql id="profileTeamColumnSql">
 				, pt.profile_team_id
@@ -401,6 +402,7 @@
 				<result column="area" 					property="area"/>
 				<result column="country" 				property="country"/>
 				<result column="established_date" 		property="establishedDate"/>
+				<result column="cat_id" 				property="catId"/>
 			</association>				
 			<association 	property="profileTeamDto" javaType="profile.profileTeamDto">
 				<id 	column="profile_team_id" 	property="profileTeamId"/>
@@ -1043,7 +1045,8 @@
 				,league_division
 				,introduce
 				,area
-				,country		
+				,country	
+				,cat_id	
 			FROM TB_LEAGUE_INFO	li			
 		</sql>		
 
@@ -1051,6 +1054,17 @@
 			<include refid="selectLeagueInfoDefault"/>
 			ORDER BY li.league_id DESC
 		</select>
+
+		<select id="selectLeagueInfoListByCatId" parameterType="profile.leagueInfoDto" resultType="profile.leagueInfoDto">
+			<include refid="selectLeagueInfoDefault"/>
+		<if test="catId != null and catId != ''">
+			<where>
+				li.cat_id = #{catId}
+			</where>
+		</if>
+			ORDER BY li.league_id DESC
+		</select>
+
 
 		<select id="selectLeagueInfo" parameterType="profile.leagueInfoDto" resultMap="leagueInfoMap">
 			SELECT 
@@ -1083,7 +1097,7 @@
 			<result column="league_type" 		property="leagueType"/>
 			<result column="league_name" 		property="leagueName"/>
 			<result column="league_division" 	property="leagueDivision"/>
-			<result column="introduce" 	property="introduce"/>
+			<result column="introduce" 			property="introduce"/>
 			<result column="commissioner" 		property="commissioner"/>
 			<result column="league_division" 	property="leagueDivision"/>
 			<result column="league_website_url" property="leagueWebsiteUrl"/>
@@ -1093,6 +1107,7 @@
 			<result column="country" 			property="country"/>
 			<result column="create_date" 		property="createDate"/>
 			<result column="create_user_id" 	property="createUserId"/>
+			<result column="cat_id" 			property="catId"/>
 			<collection property="teamList" ofType="profile.profileDto">
 				<id 	column="profile_id" 		property="profileId"/>
 				<result column="profile_type" 		property="profileType"/>

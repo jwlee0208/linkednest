@@ -22,6 +22,7 @@ public class LeagueInfoDto {
 	private String establishedDate;
 	private String createDate;
 	private String createUserId;
+	private String catId;
 	
 	List<ProfileDto> teamList;
 	
@@ -122,27 +123,19 @@ public class LeagueInfoDto {
 	public void setTeamList(List<ProfileDto> teamList) {
 		this.teamList = teamList;
 	}
-
+	public String getCatId() {
+		return catId;
+	}
+	public void setCatId(String catId) {
+		this.catId = catId;
+	}
 	@Override
 	public String toString() {
-		final StringBuffer sb = new StringBuffer("LeagueInfoDto{");
-		sb.append("leagueId=").append(leagueId);
-		sb.append(", leagueImg=").append(leagueImg);
-		sb.append(", leagueImgPath='").append(leagueImgPath).append('\'');
-		sb.append(", leagueType='").append(leagueType).append('\'');
-		sb.append(", leagueName='").append(leagueName).append('\'');
-		sb.append(", leagueDivision='").append(leagueDivision).append('\'');
-		sb.append(", introduce='").append(introduce).append('\'');
-		sb.append(", commissioner='").append(commissioner).append('\'');
-		sb.append(", leagueWebsiteUrl='").append(leagueWebsiteUrl).append('\'');
-		sb.append(", joinedTeamCnt=").append(joinedTeamCnt);
-		sb.append(", area='").append(area).append('\'');
-		sb.append(", country='").append(country).append('\'');
-		sb.append(", establishedDate='").append(establishedDate).append('\'');
-		sb.append(", createDate='").append(createDate).append('\'');
-		sb.append(", createUserId='").append(createUserId).append('\'');
-		sb.append(", teamList=").append(teamList);
-		sb.append('}');
-		return sb.toString();
+		return "LeagueInfoDto [leagueId=" + leagueId + ", leagueImg=" + leagueImg + ", leagueImgPath=" + leagueImgPath
+				+ ", leagueType=" + leagueType + ", leagueName=" + leagueName + ", leagueDivision=" + leagueDivision
+				+ ", introduce=" + introduce + ", commissioner=" + commissioner + ", leagueWebsiteUrl="
+				+ leagueWebsiteUrl + ", joinedTeamCnt=" + joinedTeamCnt + ", area=" + area + ", country=" + country
+				+ ", establishedDate=" + establishedDate + ", createDate=" + createDate + ", createUserId="
+				+ createUserId + ", catId=" + catId + ", teamList=" + teamList + "]";
 	}
 }

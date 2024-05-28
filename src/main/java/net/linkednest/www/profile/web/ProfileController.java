@@ -346,11 +346,18 @@ public class ProfileController extends CommonConstant {
 	 * @param session
 	 * @return
 	 */
+	@Deprecated
     @RequestMapping(value="/registLeague", method=RequestMethod.GET)
     public String registLeague(Model model, HttpSession session){
     	return "/profile/registLeague";
     }
 
+    @RequestMapping(value="/league/regist/{catId}", method=RequestMethod.GET)
+    public String registLeagueInfo(Model model, HttpSession session, @PathVariable String catId){
+    	model.addAttribute("catId", StringUtils.defaultString(catId));
+    	return "/profile/registLeague";
+    }
+    
 	/**
 	 * Regist League Info
 	 *
@@ -398,6 +405,7 @@ public class ProfileController extends CommonConstant {
 	 * @return
 	 * @throws Exception
 	 */
+    @Deprecated
 	@RequestMapping(value="/leagueList")
     public String getLeagueInfoList(Model model, HttpSession session) throws Exception{
     	UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
@@ -407,6 +415,18 @@ public class ProfileController extends CommonConstant {
     	return "/profile/leagueList";
     }
 
+	@RequestMapping(value="/league/list/{catId}")
+    public String getLeagueInfoListPerCat(Model model, HttpSession session, @PathVariable String catId) throws Exception{
+    	UserDto sessionInfo = (UserDto)session.getAttribute("userInfo");
+		boolean isLogon     = (sessionInfo != null) ? true : false;
+        model.addAttribute("isLogon"		, isLogon);
+    	model.addAttribute("leagueList"	, this.profileService.getLeagueInfoList(catId));
+    	model.addAttribute("catId"		, StringUtils.defaultString(catId));
+    	return "/profile/leagueList";
+    }
+	
+	
+	
 	/**
 	 * get league info detail
 	 *
@@ -415,6 +435,7 @@ public class ProfileController extends CommonConstant {
 	 * @param leagueId
 	 * @return
 	 */
+	@Deprecated
 	@RequestMapping(value="/leagueView/{leagueId}")
     public String getLeagueInfo(Model model, HttpSession session, @PathVariable int leagueId){
     	LeagueInfoDto leagueInfo = this.profileService.getLeagueInfo(leagueId);
@@ -422,6 +443,16 @@ public class ProfileController extends CommonConstant {
     	return "/profile/leagueView";
     }
 
+	@RequestMapping(value="/league/view/{catId}/{leagueId}")
+    public String getLeagueInfo(Model model, HttpSession session, @PathVariable String catId, @PathVariable int leagueId){
+    	LeagueInfoDto leagueInfo = this.profileService.getLeagueInfo(leagueId);
+    	model.addAttribute("leagueInfo", leagueInfo);
+    	model.addAttribute("catId", StringUtils.defaultString(catId));
+    	return "/profile/leagueView";
+    }
+	
+	
+	
     @RequestMapping(value="/sendMailPopup/{profileType}/{profileId}", method = RequestMethod.POST)
 	public String sendProfileMailPopup(Model model, @PathVariable String profileType, @PathVariable int profileId) {
 		ProfileDto profileDto = new ProfileDto();

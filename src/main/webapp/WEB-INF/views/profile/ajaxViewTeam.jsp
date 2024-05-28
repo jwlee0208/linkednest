@@ -80,7 +80,7 @@
 			<label for="" class="col-sm-3 col-form-label"><tag:message code="text.league.name" /></label>
 			<div class="col-sm-9">
 				<p class="form-control-static">
-					<a href="/profile/leagueView/${profileInfo.leagueInfoDto.leagueId}" target="_blank">${profileInfo.leagueInfoDto.leagueName}</a>
+					<a href="/profile/league/view/${profileInfo.leagueInfoDto.catId}/${profileInfo.leagueInfoDto.leagueId}" target="_blank">${profileInfo.leagueInfoDto.leagueName}</a>
 				</p>
 			</div>
 		</div>

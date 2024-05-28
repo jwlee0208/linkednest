@@ -27,17 +27,18 @@
 		<div class="input-group">
 			<span class="input-group-addon">League Type</span>
 			<select id="leagueType" name="leagueType" class="form-control">
-				<option value="">::: select league type :::</option>
+				<option value="">::: SELECT LEAGUE TYPE :::</option>
 				<option value="pro"><tag:message code="code.leaguetype.pro"/></option>
 				<option value="semipro"><tag:message code="code.leaguetype.semipro"/></option>
 				<option value="independence"><tag:message code="code.leaguetype.independence"/></option>
+				<option value="ama"><tag:message code="code.leaguetype.ama"/></option>
 			</select>
 		</div>
 		<br/>
 		<div class="input-group">
 			<span class="input-group-addon">League Division</span>
 			<select id="leagueDivision" name="leagueDivision" class="form-control">
-				<option value="">::: select league Division :::</option>
+				<option value="">::: SELECT LEAGUE DIVISION :::</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
@@ -77,7 +78,7 @@
 			<span class="input-group-addon">Area(Continent)</span>
 			<!-- ref.] 대륙별 코드 : http://mindgear.tistory.com/173 -->
 			<select id="area" name="area" class="form-control">
-				<option value="">::: select continent :::</option>
+				<option value="">::: SELECT CONTINENT :::</option>
 				<option value="eu"><tag:message code="code.area.eu"/></option>
 				<option value="as"><tag:message code="code.area.as"/></option>
 				<option value="af"><tag:message code="code.area.af"/></option>
@@ -90,7 +91,7 @@
 		<div class="input-group">
 			<span class="input-group-addon">Country</span>
 			<select id="country" name="country" class="form-control">
-				<option value="">::: select continent :::</option>
+				<option value="">::: SELECT COUNTRY :::</option>
 				<option value="KR"><tag:message code="code.country.KR"/></option>
 				<option value="US"><tag:message code="code.country.US"/></option>
 				<option value="CA"><tag:message code="code.country.CA"/></option>
