@@ -11,7 +11,7 @@
 	</div>
 	<div class="col-sm-6"></div>
 </div>
-<div class="row">
+<!-- <div class="row">
 	<ul class="nav nav-pills flex-column flex-sm-row" id="profileTab">
 		<li class="nav-item"><a
 			class="flex-sm-fill text-sm-center nav-link active"
@@ -27,7 +27,7 @@
 			href="#contact">Contact</a></li>
 	</ul>
 </div>
-<br />
+<br /> -->
 <div class="tab-content">
 	<div id="teamInfo" class="tab-pane active" role="tabpanel">
 		<h3>#&nbsp;&nbsp;Team Information</h3>
@@ -56,7 +56,7 @@
 		</div>
 </c:if>		
 	</div>
-	<div id="leagueInfo" class="tab-pane" role="tabpanel">
+	<div id="leagueInfo" class="tab-pane active" role="tabpanel">
 
 		<h3>#&nbsp;&nbsp;League Information</h3>
 		<hr />

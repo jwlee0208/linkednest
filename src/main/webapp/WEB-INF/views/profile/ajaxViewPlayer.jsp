@@ -7,34 +7,33 @@
 	<div class="col-sm-12">
 		<img src="http://jwlee0208.cdn3.cafe24.com/${profileInfo.profileImgPath}" class="img-fluid rounded mx-auto d-block"/>
 	</div>
-<!-- 	<div class="col-sm-7">
- --><!-- 		<ul class="nav flex-column nav-pills" id="profileTab">
+ 	<div class="col-sm-7" style="display:none;">
+		<ul class="nav flex-column nav-pills" id="profileTab">
 			<li class="nav-item">
 				<a class="flex-sm-fill nav-link active" data-toggle="pill" href="#playerInfo">Player Information</a>
 			</li>
 			<li class="nav-item">
-				<a class="flex-sm-fill nav-link" data-toggle="pill" href="#playerAttribute">Player Attribute</a>
+				<a class="flex-sm-fill nav-link active" data-toggle="pill" href="#playerAttribute">Player Attribute</a>
 			</li>
 			<li class="nav-item">
-				<a class="flex-sm-fill nav-link" data-toggle="pill" href="#career">Career</a>
+				<a class="flex-sm-fill nav-link active" data-toggle="pill" href="#career">Career</a>
 			</li>
 			<li class="nav-item">
-				<a class="flex-sm-fill nav-link" data-toggle="pill" href="#streamList">Play Streamming</a>
+				<a class="flex-sm-fill nav-link active" data-toggle="pill" href="#streamList">Play Streamming</a>
 			</li>
 			<li class="nav-item">
-				<a class="flex-sm-fill nav-link" data-toggle="pill" href="#statistic">Statistics</a>
+				<a class="flex-sm-fill nav-link active" data-toggle="pill" href="#statistic">Statistics</a>
 			</li>
 			<li class="nav-item">
-				<a class="flex-sm-fill nav-link" data-toggle="pill" href="#introduce">Introduce</a>
+				<a class="flex-sm-fill nav-link active" data-toggle="pill" href="#introduce">Introduce</a>
 			</li>
 			<li class="nav-item">
-				<a class="flex-sm-fill nav-link" data-toggle="pill" href="#contact">Contact</a>
+				<a class="flex-sm-fill nav-link active" data-toggle="pill" href="#contact">Contact</a>
 			</li>
-		</ul>
- -->	
- <!-- </div> -->
+		</ul>	
+	</div>
 </div>
-<ul class="nav nav-tabs flex-column flex-sm-row" id="profileTab" role="tablist">
+<!-- <ul class="nav nav-tabs flex-column flex-sm-row" id="profileTab" role="tablist">
   <li class="nav-item">
     <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="pill" href="#playerInfo">Player Information</a>
   </li>
@@ -58,7 +57,8 @@
   </li>
 </ul>
 <br/>
-<div class="tab-content">
+ -->
+ <div class="tab-content">
 	<div id="playerInfo" class="tab-pane active" role="tabpanel">
 		<%--<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.personalinfo"/></h3>
 		<hr/>	--%>
@@ -137,7 +137,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="playerAttribute" class="tab-pane" role="tabpanel">
+	<div id="playerAttribute" class="tab-pane active" role="tabpanel">
 		<h3/>Player Attributes</h3>
 		<hr/>
 		<%--<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.playerattr"/></h3>
@@ -205,7 +205,7 @@
 			</table>
 		</c:if>
 	</div>
-	<div id="streamList" class="tab-pane" role="tabpanel">
+	<div id="streamList" class="tab-pane active" role="tabpanel">
 		<h3/>Play Streamming</h3>
 		<hr/>	
 		<c:set var="profileStreamList" value="${profileInfo.profileStreamList}"/>
@@ -223,7 +223,7 @@
 	<c:set var="profileStatFielderList" value="${profileInfo.profileStatFielderList}"/>
 	<c:set var="profileStatFbGkList"	value="${profileInfo.profileStatFbGkList}"/>
 
-	<div id="statistic" class="tab-pane" role="tabpanel">
+	<div id="statistic" class="tab-pane active" role="tabpanel" style="margin-top:10px;">
 		<h3>Statistics</h3>
 		<hr/>		
 		<c:if test="${!empty profileStatPitcherList || !empty profileStatHitterList || !empty profileStatFielderList || !empty profileStatFbGkList}">

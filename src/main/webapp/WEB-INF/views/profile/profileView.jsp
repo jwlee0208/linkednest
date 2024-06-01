@@ -43,7 +43,7 @@
 			</c:when>
 		</c:choose>
 
-		<div id="introduce" class="tab-pane" role="tabpanel">
+		<div id="introduce" class="tab-pane active" role="tabpanel">
 			<h3/>Introduce</h3>
 			<hr/>			
 			<%--<h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.introduce"/></h3>
@@ -55,7 +55,7 @@
 			</div>
 		</div>
 
-		<div id="contact" class="tab-pane" role="tabpanel">
+		<div id="contact" class="tab-pane active" role="tabpanel">
 			<h3/>Contact</h3>
 			<hr/>			
 			<%--<h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
