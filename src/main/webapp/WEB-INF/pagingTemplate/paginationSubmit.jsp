@@ -8,7 +8,7 @@
 		<ul class="pagination justify-content-center">
 	        <c:if test="${pageInfo.totalPage != 1}">
 	            <c:if test="${pageInfo.startPage > 1}">
-	         <li class="page-item"><a class="page-link" href="javascript:${pageInfo.scriptName}('${pageInfo.previousScalePage}', '${pageInfo.paramString}')" class="num prev"></a></li>
+	         <li class="page-item"><a class="page-link" href="javascript:${pageInfo.scriptName}('${pageInfo.previousScalePage}', '${pageInfo.paramString}')" class="num prev"><c:out value="<<"/></a></li>
 	            </c:if>
 	        </c:if>
 	        <c:forEach items="${pageInfo.pages}" var="page" varStatus="status">
@@ -20,7 +20,7 @@
 	            </c:if>
 	        </c:forEach>
 	        <c:if test="${pageInfo.nextScalePage <= pageInfo.totalPage}">
-	        <li class="page-item"><a class="page-link" href="javascript:${pageInfo.scriptName}('${pageInfo.nextScalePage}', '${pageInfo.paramString}')" class="num next"></a></li>
+	        <li class="page-item"><a class="page-link" href="javascript:${pageInfo.scriptName}('${pageInfo.nextScalePage}', '${pageInfo.paramString}')" class="num next"><c:out value=">>"/></a></li>
 	        </c:if>
 	    </ul>	
 	<%--</nav>--%>
