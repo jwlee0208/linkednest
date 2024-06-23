@@ -115,7 +115,7 @@
 
 	$(document).on("ready", function() {
 		$("input[name='goToRegistLeague']").on("click", function() {
-			location.href = "/profile/registLeague";
+			location.href = "/profile/league/regist/${catId}";
 		});
 
 		$("#searchText").keypress(function(event) {
@@ -135,7 +135,7 @@
 	}
 
 	function goDetailLeague(leagueId) {
-		location.href = '/profile/leagueView/' + leagueId;
+		location.href = '/profile/league/view/${catId}/' + leagueId;
 		//      $.ajax({
 		//              url : '/profile/leagueView/' + leagueId,
 		//              data : '',

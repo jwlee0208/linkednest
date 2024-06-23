@@ -568,6 +568,13 @@ public class ProfileServiceImpl implements ProfileService{
 	public List<LeagueInfoDto> getLeagueInfoList(){
 		return this.profileDao.selectLeagueInfoList();
 	}
+
+	@Override
+	public List<LeagueInfoDto> getLeagueInfoList(String catId){
+		LeagueInfoDto reqParams = new LeagueInfoDto();
+		reqParams.setCatId(org.apache.commons.lang3.StringUtils.defaultString(catId));
+		return this.profileDao.selectLeagueInfoList(reqParams);
+	}
 	
 	@Override
 	public LeagueInfoDto getLeagueInfo(int leagueId){

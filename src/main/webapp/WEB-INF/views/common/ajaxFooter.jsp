@@ -54,7 +54,8 @@ if($("#buildType").val()=='prod'){
 	  </c:when>
 	  <c:otherwise>
 	  <p><a href="https://www.facebook.com/jwlee0524" target="_blank" class="btn btn-primary">Facebook</a>
-	  &nbsp;&nbsp;&nbsp;<a target="_blank" class="btn btn-primary" href="/aboutUs">contact</a>
+	  &nbsp;&nbsp;&nbsp;<a target="_blank" class="btn btn-primary" href="/aboutUs">About Us</a>
+	  &nbsp;&nbsp;&nbsp;<a target="_blank" class="btn btn-primary" href="mailto:jwlee0208@gmail.com">E-Mail</a>
 	  &nbsp;&nbsp;&nbsp;<a target="_blank" class="btn btn-primary" href="/share/main">Share</a></p>
 	  </c:otherwise>
 </c:choose>

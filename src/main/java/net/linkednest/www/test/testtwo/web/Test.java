@@ -41,6 +41,8 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 
+import net.linkednest.www.profile.dto.ProfileContactInfoDto;
+
 public class Test {
     
     @Value("${slideshare.api.key}")
@@ -324,6 +326,11 @@ public class Test {
 //	    Test.testSlideShare();
 	    
 //	    Test.testYoutube();
+	    
+	    
+	    ProfileContactInfoDto profileContactInfoDto = new ProfileContactInfoDto();
+	    System.out.println("encrypt str : " + profileContactInfoDto.getEncryptedData("wisdom1293xx@gmail.com"));
+	    System.out.println("============");
 	    
 	    int arr[] = { 34, 1, 9, 2, 10, 11, 45, 100, 80 , 84 , 99 };
 	    int nLength = arr.length;

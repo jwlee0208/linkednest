@@ -12,6 +12,7 @@ public interface ProfileService {
 	public int 				getSearchedProfileListCnt(SearchProfileDto searchProfileDto);
 	public int 				addLeagueInfo(LeagueInfoDto leagueInfoDto);
 	public List<LeagueInfoDto> getLeagueInfoList();
+	public List<LeagueInfoDto> getLeagueInfoList(String catId);
 	public LeagueInfoDto 	getLeagueInfo(int leagueId);
 	public void sendMailProfile(ProfileDto profileInfo, HttpSession session, ProfileMailReq request);
 	public List<ProfileAttrDto> getProfileAttrElementList(ProfileDto profileDto);

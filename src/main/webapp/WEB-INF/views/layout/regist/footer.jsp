@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/footer.css"/>
 <input type="hidden" id="buildType" value="${buildType}"/>
 <!-- google analytics -->
-<script>
+<!-- <script>
 if($("#buildType").val()=='prod'){
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -14,7 +14,7 @@ if($("#buildType").val()=='prod'){
 	ga('send', 'pageview');
 }
 </script>
-<!-- naver analytics -->
+ --><!-- naver analytics -->
 <%--<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
 <script type="text/javascript">
 	if(!wcs_add) var wcs_add = {};
@@ -34,7 +34,7 @@ var _hmt = _hmt || [];
 <footer class="footer">
 	<div class="container">
 	  <p><a href="https://www.facebook.com/jwlee0524" target="_blank" class="btn btn-primary">Facebook</a>
-	  &nbsp;&nbsp;&nbsp;<a target="_blank" class="btn btn-primary" href="/aboutUs/5">contact</a>&nbsp;&nbsp;&nbsp;<a target="_blank" class="btn btn-primary" href="/share/jwlee">developer's blog</a></p>
+	  &nbsp;&nbsp;&nbsp;<a target="_blank" class="btn btn-primary" href="/aboutUs">About Us</a>&nbsp;&nbsp;&nbsp;<a target="_blank" class="btn btn-primary" href="mailto:jwlee0208@gmail.com">E-Mail</a>&nbsp;&nbsp;&nbsp;<a target="_blank" class="btn btn-primary" href="/share/jwlee">developer's blog</a></p>
 	  <p>Copyrightⓒ2014 All right reserved by leejinwon</p>
       <p><a href="#"><tag:message code='text.backtotop'/></a></p>
     </div>  

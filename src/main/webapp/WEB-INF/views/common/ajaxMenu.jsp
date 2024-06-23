@@ -6,6 +6,11 @@
 <%
 	UserDto userInfo = (UserDto) request.getSession().getAttribute("userInfo");
 %>
+<style>
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+</style>
 <c:set var="userInfo" value="<%=userInfo%>" />
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary navbar-expand-lg navbar-light" role="navigation" style="background-color: #e3f2fd;">
 	<input type="hidden" id="menuId" name="menuId" value="${param.menuId}" />
@@ -23,17 +28,17 @@
 	<div class="collapse navbar-collapse" id="nav-collapse-player-menu-list">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goHome();" style="color: white;">Home</a></li>
- 			<li class="nav-item dropdown" style="color: white;">
-		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBb" role="button" data-toggle="dropdown" aria-expanded="false" style="color: white;">Baseball</a>
+ 			<li class="nav-item dropdown bb-li" style="color: white;">
+		        <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownBb" data-toggle="dropdown" aria-expanded="false" style="color: white;">Baseball</a>
 		        <ul class="dropdown-menu" aria-labelledby="navbarDropdownBb">
 					<li><a class="dropdown-item" href="javascript:;" onclick="javascript:goProfileList(1, '01010100');"><span><tag:message code="text.playerlist"/></span></a></li>
 					<li><a class="dropdown-item" href="javascript:;" onclick="javascript:goProfileList(2, '01010200');"><span><tag:message code="text.coachlist"/></span></a></li>
 					<li><a class="dropdown-item" href="javascript:;" onclick="javascript:goProfileList(3, '01010300');"><span><tag:message code="text.teamlist"/></span></a></li>
-				    <li><a class="dropdown-item" href="/profile/leagueList"><span style=""><tag:message code="text.leaguelist"/></span></a></li>
+				    <li><a class="dropdown-item" href="/profile/league/list/01010000"><span style=""><tag:message code="text.leaguelist"/></span></a></li>
 		        </ul>
 		    </li>			
-  			<li class="nav-item dropdown" style="color: white;">
-		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFb" role="button" data-toggle="dropdown" aria-expanded="false" style="color: white;">
+  			<li class="nav-item dropdown fb-li" style="color: white;">
+		        <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownFb" role="button" data-toggle="dropdown" aria-expanded="false" style="color: white;">
 		          Football
 		        </a>
 		        <div class="dropdown-menu" aria-labelledby="navbarDropdownFb">
@@ -41,10 +46,9 @@
 					<a class="dropdown-item" href="javascript:;" onclick="javascript:goProfileList(2, '01020200');"><span><tag:message code="text.coachlist"/></span></a>
 					<a class="dropdown-item" href="javascript:;" onclick="javascript:goProfileList(3, '01020300');"><span><tag:message code="text.teamlist"/></span></a>
 			        <div class="dropdown-divider"></div>
-				    <a class="dropdown-item" href="/profile/leagueList"><span style=""><tag:message code="text.leaguelist"/></span></a>
+				    <a class="dropdown-item" href="/profile/league/list/01020000"><span style=""><tag:message code="text.leaguelist"/></span></a>
 		        </div>
 		    </li>			
-
 
 <%-- 			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(1, '01010100');" style="color: white; "><span><tag:message code="text.playerlist"/></span></a></li>
 			<li class="nav-item"><a class="nav-link" href="javascript:;" onclick="javascript:goProfileList(2, '01010200');" style="color: white; "><span><tag:message code="text.coachlist"/></span></a></li>
@@ -54,7 +58,7 @@
 		<c:if test="${null ne userInfo}">
 			<ul class="nav navbar-nav navbar-right float-right">
 				<li class="dropdown nav-item">
-					<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="dropdown_menu" role="button" aria-haspopup="true" aria-expanded="false"><tag:message code="menu.hi"/>, "${userInfo.userNm}"</a>
+					<a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown" id="dropdown_menu" role="button" aria-haspopup="true" aria-expanded="false"><tag:message code="menu.hi"/>, "${userInfo.userNm}"</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown_menu">
 						<a class="dropdown-item" href="/share/${userInfo.userId}" style="font-weight: bold;"><tag:message code="common.myshare"/></a>
 						<a class="dropdown-item" href="#" onclick="javascript:goConfig();" style="font-weight: bold;"><tag:message code="common.config"/></a>
@@ -73,3 +77,11 @@
 	</div>
 	<!-- 	</div> -->
 </nav>
+<script>
+	$('.dropdown-toggle').click(function(){
+		var $dropdownMenu = $(this).next('.dropdown-menu');
+	    $('.dropdown-menu').not($dropdownMenu).hide();
+	    $dropdownMenu.toggle();
+  	});
+	
+</script>
