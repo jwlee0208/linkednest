@@ -30,73 +30,102 @@
 <br /> -->
 <div class="tab-content">
 	<div id="teamInfo" class="tab-pane active" role="tabpanel">
-		<h3>#&nbsp;&nbsp;Team Information</h3>
-		<hr />
-		<div class="form-group row">
-			<label for="" class="col-sm-2 col-form-label"><tag:message
-					code="text.team.name" /></label>
-			<div class="col-sm-10">
-				<p class="form-control-static">${profileInfo.name}</p>
+		<div class="col-sm-12">
+			<ul class="nav justify-content-center nav-tabs flex-column flex-sm-row nav-pills nav-fill">
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link active" href="#teamInfo">Information</a>
+				</li>
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link" href="#leagueInfo">League</a>
+				</li>
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link" href="#introduce">Introduce</a>
+				</li>
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link" href="#contact">Contact</a>
+				</li>
+			</ul>	
+			<hr/>	
+			<div class="form-group row">
+				<label for="" class="col-sm-2 col-form-label"><tag:message
+						code="text.team.name" /></label>
+				<div class="col-sm-10">
+					<p class="form-control-static">${profileInfo.name}</p>
+				</div>
 			</div>
-		</div>
-		<div class="form-group row">
-			<label for="" class="col-sm-2 col-form-label"><tag:message
-					code="text.team.franchise" /></label>
-			<div class="col-sm-10">
-				<p class="form-control-static">${profileInfo.profileTeamDto.city}</p>
+			<div class="form-group row">
+				<label for="" class="col-sm-2 col-form-label"><tag:message
+						code="text.team.franchise" /></label>
+				<div class="col-sm-10">
+					<p class="form-control-static">${profileInfo.profileTeamDto.city}</p>
+				</div>
 			</div>
-		</div>
-<c:if test="${profileInfo.profileTeamDto.establishedDate ne '' && profileInfo.profileTeamDto.establishedDate ne null}">
-		<div class="form-group row">
-			<label for="" class="col-sm-2 col-form-label"><tag:message
-					code="text.team.eastablish.date" /></label>
-			<div class="col-sm-10">
-				<p class="form-control-static">${profileInfo.profileTeamDto.establishedDate.substring(0,4)}</p>
+	<c:if test="${profileInfo.profileTeamDto.establishedDate ne '' && profileInfo.profileTeamDto.establishedDate ne null}">
+			<div class="form-group row">
+				<label for="" class="col-sm-2 col-form-label"><tag:message
+						code="text.team.eastablish.date" /></label>
+				<div class="col-sm-10">
+					<p class="form-control-static">${profileInfo.profileTeamDto.establishedDate.substring(0,4)}</p>
+				</div>
 			</div>
+	</c:if>		
 		</div>
-</c:if>		
 	</div>
 	<div id="leagueInfo" class="tab-pane active" role="tabpanel">
-
-		<h3>#&nbsp;&nbsp;League Information</h3>
-		<hr />
-		<div class="form-group row">
-			<label for="" class="col-sm-3 col-form-label"><tag:message code="text.continent" /></label>
-			<div class="col-sm-9">
-				<p class="form-control-static">
-					<tag:message code="code.area.${profileInfo.leagueInfoDto.area}" />
-				</p>
+		<div class="col-sm-12">
+			<ul class="nav justify-content-center nav-tabs flex-column flex-sm-row nav-pills nav-fill">
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link" href="#teamInfo">Information</a>
+				</li>
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link active" href="#leagueInfo">League</a>
+				</li>
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link" href="#introduce">Introduce</a>
+				</li>
+				<li class="nav-item">
+					<a class="flex-sm-fill nav-link" href="#contact">Contact</a>
+				</li>
+			</ul>	
+			<hr />
+			<div class="form-group row">
+				<label for="" class="col-sm-3 col-form-label"><tag:message code="text.continent" /></label>
+				<div class="col-sm-9">
+					<p class="form-control-static">
+						<tag:message code="code.area.${profileInfo.leagueInfoDto.area}" />
+					</p>
+				</div>
 			</div>
-		</div>
-		<div class="form-group row">
-			<label for="" class="col-sm-3 col-form-label"><tag:message code="text.countries" /></label>
-			<div class="col-sm-9">
-				<p class="form-control-static">
-					<tag:message code="code.country.${profileInfo.leagueInfoDto.country}" />
-				</p>
+			<div class="form-group row">
+				<label for="" class="col-sm-3 col-form-label"><tag:message code="text.countries" /></label>
+				<div class="col-sm-9">
+					<p class="form-control-static">
+						<tag:message code="code.country.${profileInfo.leagueInfoDto.country}" />
+					</p>
+				</div>
 			</div>
-		</div>
-		<div class="form-group row">
-			<label for="" class="col-sm-3 col-form-label"><tag:message code="text.league.name" /></label>
-			<div class="col-sm-9">
-				<p class="form-control-static">
-					<a href="/profile/league/view/${profileInfo.leagueInfoDto.catId}/${profileInfo.leagueInfoDto.leagueId}" target="_blank">${profileInfo.leagueInfoDto.leagueName}</a>
-				</p>
+			<div class="form-group row">
+				<label for="" class="col-sm-3 col-form-label"><tag:message code="text.league.name" /></label>
+				<div class="col-sm-9">
+					<p class="form-control-static">
+						<a href="/profile/league/view/${profileInfo.leagueInfoDto.catId}/${profileInfo.leagueInfoDto.leagueId}" target="_blank">${profileInfo.leagueInfoDto.leagueName}</a>
+					</p>
+				</div>
 			</div>
-		</div>
-		<div class="form-group row">
-			<label for="" class="col-sm-3 col-form-label"><tag:message code="text.league.level" /></label>
-			<div class="col-sm-9">
-				<p class="form-control-static">
-					<tag:message
-						code="code.leaguetype.${profileInfo.leagueInfoDto.leagueType}" />
-				</p>
+			<div class="form-group row">
+				<label for="" class="col-sm-3 col-form-label"><tag:message code="text.league.level" /></label>
+				<div class="col-sm-9">
+					<p class="form-control-static">
+						<tag:message
+							code="code.leaguetype.${profileInfo.leagueInfoDto.leagueType}" />
+					</p>
+				</div>
 			</div>
-		</div>
-		<div class="form-group row">
-			<label for="" class="col-sm-3 col-form-label"><tag:message code="text.league.division" /></label>
-			<div class="col-sm-9">
-				<p class="form-control-static">${profileInfo.leagueInfoDto.leagueDivision}</p>
+			<div class="form-group row">
+				<label for="" class="col-sm-3 col-form-label"><tag:message code="text.league.division" /></label>
+				<div class="col-sm-9">
+					<p class="form-control-static">${profileInfo.leagueInfoDto.leagueDivision}</p>
+				</div>
 			</div>
 		</div>
 	</div>

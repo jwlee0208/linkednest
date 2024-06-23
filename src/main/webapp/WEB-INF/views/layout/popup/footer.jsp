@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <input type="hidden" id="buildType" value="${buildType}"/>
 <!-- google analytics -->
-<script>
+<!-- <script>
 if($("#buildType").val()=='prod'){
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -11,7 +11,7 @@ if($("#buildType").val()=='prod'){
 	ga('create', 'UA-65838621-1', 'auto');
 	ga('send', 'pageview');
 }
-</script>
+</script> -->
 <!-- naver analytics -->
 <%--<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
 <script type="text/javascript">

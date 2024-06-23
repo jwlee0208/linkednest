@@ -223,19 +223,19 @@
 				<include refid="profileStatFielderColumnSql"/>			
 				<include refid="profileStatFbGkColumnSql"/>
 				<include refid="profileStreamColumnSql"/>		
-			FROM TB_PROFILE 					  p
-			INNER JOIN TB_PROFILE_PLAYER 		  pp 		ON pp.profile_id		= p.profile_id
-			LEFT JOIN TB_CONTACT_INFO 			  ci 		ON ci.profile_id 		= p.profile_id
-			LEFT JOIN TB_PROFILE_ATTR 	  		  pa		ON pa.cat_id 			= p.cat_id1
-			LEFT JOIN TB_PROFILE_ATTR_ELEMENT_MAP paem 		ON paem.profile_id 		= p.profile_id AND pa.profile_attr_id = paem.profile_attr_id		 
-			LEFT JOIN TB_PROFILE_STREAM			  pstream 	ON pstream.profile_id 	= p.profile_id 
-			LEFT JOIN TB_PROFILE_CAREER 		  pc 		ON pc.profile_id 		= p.profile_id					
-			LEFT JOIN TB_PROFILE_STAT_FIELDER 	  psf 		ON psf.profile_id 		= p.profile_id
-			LEFT JOIN TB_PROFILE_STAT_PITCHER 	  psp 		ON psp.profile_id 		= p.profile_id 
-			LEFT JOIN TB_PROFILE_STAT_HITTER 	  psh 		ON psh.profile_id 		= p.profile_id
-			LEFT JOIN TB_PROFILE_STAT_FB_GK		  psfg		ON psfg.profile_id		= p.profile_id
-			LEFT JOIN TB_PROFILE_STAT_FB_OFFENSIVE psfo		ON psfo.profile_id		= p.profile_id
-			LEFT JOIN TB_PROFILE_STAT_FB_DEFENSIVE psfd		ON psfd.profile_id		= p.profile_id
+			FROM TB_PROFILE 					  	p
+			INNER JOIN TB_PROFILE_PLAYER 		  	pp 			ON pp.profile_id		= p.profile_id
+			LEFT JOIN TB_CONTACT_INFO 			  	ci 			ON ci.profile_id 		= p.profile_id
+			LEFT JOIN TB_PROFILE_ATTR 	  		  	pa			ON pa.cat_id 			= p.cat_id1
+			LEFT JOIN TB_PROFILE_ATTR_ELEMENT_MAP 	paem 		ON paem.profile_id 		= p.profile_id AND pa.profile_attr_id = paem.profile_attr_id		 
+			LEFT JOIN TB_PROFILE_STREAM			  	pstream 	ON pstream.profile_id 	= p.profile_id 
+			LEFT JOIN TB_PROFILE_CAREER 		  	pc 			ON pc.profile_id 		= p.profile_id					
+			LEFT JOIN TB_PROFILE_STAT_FIELDER 	  	psf 		ON psf.profile_id 		= p.profile_id AND p.cat_id1 = '01010100'
+			LEFT JOIN TB_PROFILE_STAT_PITCHER 	  	psp 		ON psp.profile_id 		= p.profile_id AND p.cat_id1 = '01010100' 
+			LEFT JOIN TB_PROFILE_STAT_HITTER 	  	psh 		ON psh.profile_id 		= p.profile_id AND p.cat_id1 = '01010100'
+			LEFT JOIN TB_PROFILE_STAT_FB_GK		  	psfg		ON psfg.profile_id		= p.profile_id AND p.cat_id1 = '01020100'
+			LEFT JOIN TB_PROFILE_STAT_FB_OFFENSIVE 	psfo		ON psfo.profile_id		= p.profile_id AND p.cat_id1 = '01020100'
+			LEFT JOIN TB_PROFILE_STAT_FB_DEFENSIVE 	psfd		ON psfd.profile_id		= p.profile_id AND p.cat_id1 = '01020100'
     	</sql>
      	<sql id="selectProfileCoachInfoSql">
 			SELECT 
@@ -357,7 +357,7 @@
 
 			<choose>
 				<when test="profileType == 1">
-			 ORDER BY p.create_date DESC, psfg.year DESC, psh.h_stat_year DESC, psf.f_stat_year DESC, psp.p_stat_year DESC
+			 ORDER BY p.create_date DESC, psfg.year DESC, psh.h_stat_year DESC, psf.f_stat_year DESC, psp.p_stat_year DESC, pc.start_date desc, pc.career_seq asc, pstream.stream_title asc
 				</when>	
 				<when test="profileType == 2">
 			 ORDER BY p.create_date DESC

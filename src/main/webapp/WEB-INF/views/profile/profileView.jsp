@@ -11,7 +11,6 @@
 <script type="text/javascript"		src="${pageContext.request.contextPath}/js/holder.js"></script>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base.css"/>
-
 <style type="text/css">
 	.form-group .col-sm-10 {vertical-align : middle;}
 </style>
@@ -31,79 +30,177 @@
 		<input type="hidden" id="profileId" 	value="${profileInfo.profileId}"	name="profileId" />
 		<input type="hidden" id="profileType" 	value="${profileInfo.profileType}"/>
 		<div style="display:none;"><h2>${profileInfo.title}&nbsp;<small>Profile</small></h2></div>
-		<c:choose>
-			<c:when test="${profileInfo.profileType eq 1}">
-				<%@include file="/WEB-INF/views/profile/ajaxViewPlayer.jsp"%>
-			</c:when>
-			<c:when test="${profileInfo.profileType eq 2}">
-				<%@include file="/WEB-INF/views/profile/ajaxViewCoach.jsp"%>
-			</c:when>
-			<c:when test="${profileInfo.profileType eq 3}">
-				<%@include file="/WEB-INF/views/profile/ajaxViewTeam.jsp"%>
-			</c:when>
-		</c:choose>
-
+<c:choose>
+	<c:when test="${profileInfo.profileType eq 1}">
+		<%@include file="/WEB-INF/views/profile/ajaxViewPlayer.jsp"%>
+	</c:when>
+	<c:when test="${profileInfo.profileType eq 2}">
+		<%@include file="/WEB-INF/views/profile/ajaxViewCoach.jsp"%>
+	</c:when>
+	<c:when test="${profileInfo.profileType eq 3}">
+		<%@include file="/WEB-INF/views/profile/ajaxViewTeam.jsp"%>
+	</c:when>
+</c:choose>
+		<!-- INTRODUCE -->
 		<div id="introduce" class="tab-pane active" role="tabpanel">
-			<h3/>Introduce</h3>
-			<hr/>			
-			<%--<h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.introduce"/></h3>
-			<hr/>--%>
-			<div class="form-group row">
-				<div class="col-sm-12">
-					<p class="form-control-static"><c:out value="${profileInfo.introduce}" escapeXml="false"/></p>
-				</div>
-			</div>
+			<div class="col-sm-12">
+				<ul class="nav justify-content-center nav-tabs flex-column flex-sm-row nav-pills nav-fill">
+<c:if test="${profileInfo.profileType eq 1}">
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#playerInfo">Information</a>
+					</li>
+</c:if>			
+<c:if test="${profileInfo.profileType eq 2}">
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#coachInfo">Information</a>
+					</li>
+</c:if>			
+<c:if test="${profileInfo.profileType eq 3}">
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#teamInfo">Information</a>
+					</li>
+</c:if>			
+<c:if test="${profileInfo.profileType eq 3}">
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#leagueInfo">League</a>
+					</li>
+</c:if>					
+<c:if test="${profileInfo.profileType eq 1}">
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#playerAttribute">Attribute</a>
+					</li>
+</c:if>
+<c:if test="${profileInfo.profileType ne 3}">					
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#career">Career</a>
+					</li>
+</c:if>
+<c:if test="${profileInfo.profileType ne 3}">					
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#streamList">Videos</a>
+					</li>
+</c:if>
+<c:if test="${profileInfo.profileType eq 1}">					
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#statistic">Statistics</a>
+					</li>
+</c:if>					
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link active" href="#introduce">Introduce</a>
+					</li>
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#contact">Contact</a>
+					</li>
+				</ul>	
+				<hr/>	
+				<%--<h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.introduce"/></h3>
+				<hr/>--%>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<p class="form-control-static"><c:out value="${profileInfo.introduce}" escapeXml="false"/></p>
+					</div>
+				</div>				
+			</div>	
 		</div>
-
+		<!-- [END] INTRODUCE -->
+		<!-- CONTACT -->
 		<div id="contact" class="tab-pane active" role="tabpanel">
-			<h3/>Contact</h3>
-			<hr/>			
-			<%--<h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
-			<hr/>--%>
-			<c:if test="${profileInfo.profileContactInfoDto.decryptedEmail ne null && profileInfo.profileContactInfoDto.decryptedEmail ne ''}">
-				<div class="form-group row">
-					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.email"/></label>
-					<div class="col-sm-9">
-						<p class="form-control-static"><a href="mailto: ${profileInfo.profileContactInfoDto.decryptedEmail}">${profileInfo.profileContactInfoDto.decryptedEmail}</a></p>
+			<div class="col-sm-12">
+				<ul class="nav justify-content-center nav-tabs flex-column flex-sm-row nav-pills nav-fill">
+<c:if test="${profileInfo.profileType eq 1}">
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#playerInfo">Information</a>
+					</li>
+</c:if>			
+<c:if test="${profileInfo.profileType eq 2}">
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#coachInfo">Information</a>
+					</li>
+</c:if>			
+<c:if test="${profileInfo.profileType eq 3}">
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#teamInfo">Information</a>
+					</li>
+</c:if>			
+<c:if test="${profileInfo.profileType eq 3}">
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#leagueInfo">League</a>
+					</li>
+</c:if>					
+<c:if test="${profileInfo.profileType eq 1}">
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#playerAttribute">Attribute</a>
+					</li>
+</c:if>
+<c:if test="${profileInfo.profileType ne 3}">					
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#career">Career</a>
+					</li>
+</c:if>
+<c:if test="${profileInfo.profileType ne 3}">					
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#streamList">Videos</a>
+					</li>
+</c:if>
+<c:if test="${profileInfo.profileType eq 1}">					
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#statistic">Statistics</a>
+					</li>
+</c:if>					
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link" href="#introduce">Introduce</a>
+					</li>
+					<li class="nav-item">
+						<a class="flex-sm-fill nav-link active" href="#contact">Contact</a>
+					</li>
+				</ul>	
+				<hr/>
+				<%--<h3><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>#&nbsp;&nbsp;<tag:message code="text.contact"/></h3>
+				<hr/>--%>
+				<c:if test="${profileInfo.profileContactInfoDto.decryptedEmail ne null && profileInfo.profileContactInfoDto.decryptedEmail ne ''}">
+					<div class="form-group row">
+						<label for="" class="col-sm-3 col-form-label"><tag:message code="text.email"/></label>
+						<div class="col-sm-9">
+							<p class="form-control-static"><a href="mailto: ${profileInfo.profileContactInfoDto.decryptedEmail}">${profileInfo.profileContactInfoDto.decryptedEmail}</a></p>
+						</div>
 					</div>
-				</div>
-			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.decryptedPhoneNo ne null && profileInfo.profileContactInfoDto.decryptedPhoneNo ne ''}">
-				<div class="form-group row">
-					<label for="" class="col-sm-3 col-form-label">Phone No.</label>
-					<div class="col-sm-9">
-						<p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.decryptedPhoneNo}">${profileInfo.profileContactInfoDto.decryptedPhoneNo}</a></p>
+				</c:if>
+				<c:if test="${profileInfo.profileContactInfoDto.decryptedPhoneNo ne null && profileInfo.profileContactInfoDto.decryptedPhoneNo ne ''}">
+					<div class="form-group row">
+						<label for="" class="col-sm-3 col-form-label">Phone No.</label>
+						<div class="col-sm-9">
+							<p class="form-control-static"><a href="tel:${profileInfo.profileContactInfoDto.decryptedPhoneNo}">${profileInfo.profileContactInfoDto.decryptedPhoneNo}</a></p>
+						</div>
 					</div>
-				</div>
-			</c:if>
-
-			<c:if test="${profileInfo.profileContactInfoDto.decryptedFacebookUrl ne null && profileInfo.profileContactInfoDto.decryptedFacebookUrl ne ''}">
-				<div class="form-group row">
-					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.facebook.id"/></label>
-					<div class="col-sm-9">
-						<p class="form-control-static"><a href="//www.facebook.com/${profileInfo.profileContactInfoDto.decryptedFacebookUrl}">${profileInfo.profileContactInfoDto.decryptedFacebookUrl}</a></p>
+				</c:if>
+				<c:if test="${profileInfo.profileContactInfoDto.decryptedFacebookUrl ne null && profileInfo.profileContactInfoDto.decryptedFacebookUrl ne ''}">
+					<div class="form-group row">
+						<label for="" class="col-sm-3 col-form-label"><tag:message code="text.facebook.id"/></label>
+						<div class="col-sm-9">
+							<p class="form-control-static"><a href="//www.facebook.com/${profileInfo.profileContactInfoDto.decryptedFacebookUrl}">${profileInfo.profileContactInfoDto.decryptedFacebookUrl}</a></p>
+						</div>
 					</div>
-				</div>
-			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.decryptedTwitterUrl ne null && profileInfo.profileContactInfoDto.decryptedTwitterUrl ne ''}">
-				<div class="form-group row">
-					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.twitter.id"/></label>
-					<div class="col-sm-9">
-						<p class="form-control-static"><a href="//twitter.com/${profileInfo.profileContactInfoDto.decryptedTwitterUrl}">${profileInfo.profileContactInfoDto.decryptedTwitterUrl}</a></p>
+				</c:if>
+				<c:if test="${profileInfo.profileContactInfoDto.decryptedTwitterUrl ne null && profileInfo.profileContactInfoDto.decryptedTwitterUrl ne ''}">
+					<div class="form-group row">
+						<label for="" class="col-sm-3 col-form-label"><tag:message code="text.twitter.id"/></label>
+						<div class="col-sm-9">
+							<p class="form-control-static"><a href="//twitter.com/${profileInfo.profileContactInfoDto.decryptedTwitterUrl}">${profileInfo.profileContactInfoDto.decryptedTwitterUrl}</a></p>
+						</div>
 					</div>
-				</div>
-			</c:if>
-			<c:if test="${profileInfo.profileContactInfoDto.decryptedInstagramUrl ne null && profileInfo.profileContactInfoDto.decryptedInstagramUrl ne ''}">
-				<div class="form-group row">
-					<label for="" class="col-sm-3 col-form-label"><tag:message code="text.instagram.id"/></label>
-					<div class="col-sm-9">
-						<p class="form-control-static"><a href="//instagram.com/${profileInfo.profileContactInfoDto.decryptedInstagramUrl}">${profileInfo.profileContactInfoDto.decryptedInstagramUrl}</a></p>
+				</c:if>
+				<c:if test="${profileInfo.profileContactInfoDto.decryptedInstagramUrl ne null && profileInfo.profileContactInfoDto.decryptedInstagramUrl ne ''}">
+					<div class="form-group row">
+						<label for="" class="col-sm-3 col-form-label"><tag:message code="text.instagram.id"/></label>
+						<div class="col-sm-9">
+							<p class="form-control-static"><a href="//instagram.com/${profileInfo.profileContactInfoDto.decryptedInstagramUrl}">${profileInfo.profileContactInfoDto.decryptedInstagramUrl}</a></p>
+						</div>
 					</div>
-				</div>
-			</c:if>
+				</c:if>
+			</div>	
+			<!-- [END] INTRODUCE -->
 		</div>
 		<br/>
-
 		<div class="row">
 			<span class="btn btn-primary btn-block" id="goBack">Back</span>
 		</div>
@@ -136,33 +233,29 @@
 					<button type="button" class="btn btn-primary" id="sendProfileMail">Send</button>
 				</div>
 			</div>
-
 		</div>
 	</form>
 </div>
 <script>
     $(document).ready(function() {
         $("img").addClass("media-object");
-/* 	 	$("img").attr("max-width", "95%");
- */
+/* 	 	$("img").attr("max-width", "95%"); */
  		$("img").attr("height", "300px");
         $("img").off("error");
         $("img").on("error", function(){
             $(this).attr("src", '${pageContext.request.contextPath}/img/no_image.png');
         });
-
     });
 
     $(function(){
-
         $("#deleteBtn").on("click", function(){
             if(confirm('Do you delete this information?')){
                 $.ajax({
-                    url : '/player/deletePlayerInfo.json',
-                    data : $("#viewFrm").serialize(),
-                    dataType : 'json',
-                    method : 'post',
-                    success : function(data){
+                    url 		: '/player/deletePlayerInfo.json',
+                    data 		: $("#viewFrm").serialize(),
+                    dataType 	: 'json',
+                    method 		: 'post',
+                    success 	: function(data){
                         /*console.log(data);*/
                         var result = data.result;
                         if(result == 'ok'){
@@ -182,19 +275,18 @@
             frm.attr("action","/player/modify");
             frm.attr("method","get");
             frm.submit();
-// 		location.href = "/player/modify";
+// 			location.href = "/player/modify";
         });
 
         $("#sendProfileMail").on("click", function(){
-            alert('1');
+//          alert('1');
             $.ajax({
-                url : '/profile/sendMail/${profileInfo.profileType}/${profileInfo.profileId}',
-                data : $("#viewFrm").serialize(),
-                dataType : 'json',
-                method : 'post',
-                success : function(data){
-                    console.log(data);
-
+                url 		: '/profile/sendMail/${profileInfo.profileType}/${profileInfo.profileId}',
+                data 		: $("#viewFrm").serialize(),
+                dataType 	: 'json',
+                method 		: 'post',
+                success 	: function(data){
+ //                 console.log(data);
                     var result = data.result;
                     if(result == 'true'){
                         location.reload();
@@ -212,11 +304,11 @@
                 async 		: false,
                 type 		: 'POST',
                 dataType 	: 'html',
-                url : '/profile/sendMailPopup/${profileInfo.profileType}/${profileInfo.profileId}',
-                data : $("#viewFrm").serialize(),
+                url 		: '/profile/sendMailPopup/${profileInfo.profileType}/${profileInfo.profileId}',
+                data 		: $("#viewFrm").serialize(),
                 processData : true,
                 cache 		: false,
-                success : function(data){
+                success 	: function(data){
                     var profileHtml = $(data).find(".container").html();
                     $("#profilePreviewDiv").html(profileHtml);
                     $("#profileContent").val(profileHtml);
