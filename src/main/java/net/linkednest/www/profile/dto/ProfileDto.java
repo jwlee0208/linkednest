@@ -46,9 +46,9 @@ public class ProfileDto {
 	 * 2nd category code mapping array
 	 */
 	private static final String[] CHILD_CATEGORY_CODE = {	"01010101", "01010102", "01010103", "01010104", "01010105", "01010106", "01010107", "01010108", "01010109", "01010110"
-														, "01020101"	};
+														, "01020101", "01020102", "01020103", "01020104", "01020105", "01020106", "01020107", "01020108", "01020109", "01020110", "01020111"	};
 	private static final String[] CHILD_CATEGORY_VALUE = {"attr.position.p", "attr.position.cc", "attr.position.1b", "attr.position.2b", "attr.position.3b", "attr.position.ss", "attr.position.lf", "attr.position.cf", "attr.position.rf", "attr.position.dh"
-														, "attr.position.gk"};
+														, "attr.position.gk", "attr.position.rb", "attr.position.lb", "attr.position.cb", "attr.position.cb", "attr.position.df", "attr.position.rw", "attr.position.mf", "attr.position.cf", "attr.position.ss", "attr.position.lw"};
 
 	// player profile dto
 	private ProfilePlayerDto 		profilePlayerDto;
@@ -66,7 +66,7 @@ public class ProfileDto {
 	private List<ProfileStatPitcherDto>	profileStatPitcherList;
 	
 	private List<ProfileStatFbGkDto>	profileStatFbGkList;
-	// career dto
+	// career dtolw
 	private List<ProfileCareerDto>  profileCareerList;
 	// attribute & element map dto
 	private List<ProfileAttrDto> 	profileAttrList;
