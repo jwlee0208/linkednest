@@ -8,6 +8,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>::: LinkedNest.net >> Registration Player's Profile</title>
 </head>
+<style>
+	input[type="radio"]{width:30px;heignt:30px;}
+	input[type="checkbox"]{width:30px;heignt:30px;}
+</style>
 <body>
 <div class="container">
 	<h1 id="btn-groups" class="page-header">Registration&nbsp;&nbsp;<small>Profile</small></h1>

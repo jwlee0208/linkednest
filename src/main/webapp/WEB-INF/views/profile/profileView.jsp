@@ -229,8 +229,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="sendProfileModalClose">Close</button>
-					<button type="button" class="btn btn-primary" id="sendProfileMail">Send</button>
+					<button type="button" class="btn btn-secondary" id="sendProfileModalClose" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" 	id="sendProfileMail">Send</button>
 				</div>
 			</div>
 		</div>
