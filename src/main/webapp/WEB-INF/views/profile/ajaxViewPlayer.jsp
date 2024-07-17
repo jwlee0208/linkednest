@@ -113,12 +113,14 @@
 					<p class="form-control-static">${profileInfo.profilePlayerDto.birthPlace}</p>
 				</div>
 			</div>
+			<c:if test="${profileInfo.profilePlayerDto.education ne '' && profileInfo.profilePlayerDto.education ne null}">
 			<div class="form-group row">
 				<label for="" class="col-sm-2 col-form-label"><tag:message code="text.education"/></label>
 				<div class="col-sm-10">
 					<p class="form-control-static">${profileInfo.profilePlayerDto.education}</p>
 				</div>
 			</div>
+			</c:if>
 			<%--<div class="form-group row">
 				<label for="" class="col-sm-2 col-form-label"><tag:message code="text.hobbies"/></label>
 				<div class="col-sm-10">
@@ -346,7 +348,8 @@
 				</li>
 			</ul>	
 			<hr/>
-		<c:if test="${!empty profileStatPitcherList || !empty profileStatHitterList || !empty profileStatFielderList || !empty profileStatFbGkList}">
+	<c:choose>		
+		<c:when test="${!empty profileStatPitcherList || !empty profileStatHitterList || !empty profileStatFielderList || !empty profileStatFbGkList}">
 			<%--<h3><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>#&nbsp;<tag:message code="text.stats"/></h3>
             <hr/>	--%>
 
@@ -543,7 +546,13 @@
 				</table>
 
 			</c:if>			
-		</c:if>
+		</c:when>
+		<c:otherwise>
+			<h4 style='text-align:center;margin: 100px 0px;'>The information is not ready yet</h4>
+			
+			
+		</c:otherwise>
+	</c:choose>	
 			
 		</div>		
 	</div>
