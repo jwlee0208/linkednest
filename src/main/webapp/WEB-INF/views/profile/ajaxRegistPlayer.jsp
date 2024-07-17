@@ -91,7 +91,6 @@
 					<%@include file="/WEB-INF/views/profile/regist/ajaxRegistPlayerStep06.jsp"%>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 	                    <button class="btn btn-secondary prev-step">Previous</button>
-    	                <button class="btn btn-primary next-step">Next</button>
         			</div>
                 </div>
 </c:if>
