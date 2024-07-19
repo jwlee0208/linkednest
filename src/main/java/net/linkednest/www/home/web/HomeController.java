@@ -6,6 +6,8 @@ import net.linkednest.www.board.service.BoardArticleRedisService;
 import net.linkednest.www.board.service.BoardArticleService;
 import net.linkednest.www.profile.dto.ProfileDto;
 import net.linkednest.www.profile.service.ProfileService;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +43,14 @@ public class HomeController {
 	
 	@RequestMapping(value="/home")
 	public String goHome(Model model, HttpSession session) throws Exception{
-		// recent player list
-		this.getRecentPlayerList(model);
-		// recent team list
-		this.getRecentTeamList(model);
+		// recent player list - baseball
+		this.getRecentPlayerList(model,"01010100");
+		// recent player list - football
+		this.getRecentPlayerList(model,"01020100");
+		// recent team list - baseball
+		this.getRecentTeamList(model,"01010300");
+		// recent team list - football
+		this.getRecentTeamList(model,"01020300");		
 		// recent tryout list
 		this.getRecentTryoutList(model);
 
@@ -57,12 +63,12 @@ public class HomeController {
 	 * @param model
 	 * @throws Exception
 	 */
-	private void getRecentPlayerList(Model model) throws Exception {
+	private void getRecentPlayerList(Model model, String catId1) throws Exception {
 		ProfileDto profilePlayerDto = new ProfileDto();
-		profilePlayerDto.setCatId1("01010100");
+		profilePlayerDto.setCatId1(catId1);
 		profilePlayerDto.setProfileType(ProfileConstants.PROFILE_TYPE_PLAYER.getCode());
 		List<ProfileDto> profilePlayerList = this.profileService.getProfileInfos(profilePlayerDto);
-		model.addAttribute("recentPlayerProfileList", profilePlayerList);
+		model.addAttribute(String.format("%s%s", "recentPlayerProfileList", (StringUtils.equals("01010100", catId1) ? "Baseball" : "Football")), profilePlayerList);
 	}
 
 	/**
@@ -71,12 +77,12 @@ public class HomeController {
 	 * @param model
 	 * @throws Exception
 	 */
-	private void getRecentTeamList(Model model) throws Exception {
+	private void getRecentTeamList(Model model, String catId1) throws Exception {
 		ProfileDto profileTeamDto = new ProfileDto();
-		profileTeamDto.setCatId1("01010300");
+		profileTeamDto.setCatId1(catId1);
 		profileTeamDto.setProfileType(ProfileConstants.PROFILE_TYPE_TEAM.getCode());
 		List<ProfileDto> profileTeamList = this.profileService.getProfileInfos(profileTeamDto);
-		model.addAttribute("recentTeamProfileList", profileTeamList);
+		model.addAttribute(String.format("%s%s", "recentTeamProfileList", (StringUtils.equals("01010300", catId1) ? "Baseball" : "Football")), profileTeamList);
 	}
 
 	/**
