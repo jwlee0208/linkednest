@@ -1,40 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       					   http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+       					   http://www.springframework.org/schema/aop 
+       					   http://www.springframework.org/schema/aop/spring-aop-3.1.xsd 
+       					   http://www.springframework.org/schema/tx 
+       					   http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+       					   http://www.springframework.org/schema/context
+       					   http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
+	<context:property-placeholder location="classpath:properties/config/operation.properties"/>
     <!-- DataSource	-->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <!-- op -->
-        <!--<property name="url" value="jdbc:mysql://localhost:3306/jwlee0208?characterEncoding=UTF-8"/>
-        <property name="username" value="jwlee0208"/>
-        <property name="password" value=""/>-->
-        <!-- local -->
-        <property name="url" value="jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8"/>
-        <property name="username" value="root"/>
-        <property name="password" value=""/>
-
-        <property name="defaultAutoCommit" value="true"/>
-        <property name="poolPreparedStatements" value="true"/>
-        <property name="maxActive" value="15" />
-        <property name="initialSize" value="5" />
-        <property name="maxIdle" value="15" />
-        <property name="minIdle" value="15" />
-        <property name="testOnBorrow" value="false" />
-        <property name="validationQuery" value="select 1" />
-        <property name="timeBetweenEvictionRunsMillis" value="10000" />
-        <property name="testWhileIdle" value="true" />
-        <property name="numTestsPerEvictionRun" value="3" />
-        <property name="minEvictableIdleTimeMillis" value="-1" />
+        <property name="driverClassName" 				value="${jdbc.dirverclassname}"/>
+        <property name="url" 							value="${jdbc.url}"/>
+        <property name="username" 						value="${jdbc.userid}"/>
+        <property name="password" 						value="${jdbc.userpw}"/>
+        <property name="defaultAutoCommit" 				value="true"/>
+        <property name="poolPreparedStatements" 		value="true"/>
+        <property name="maxActive" 						value="${jdbc.maxactive}" />
+        <property name="initialSize" 					value="${jdbc.initsize}" />
+        <property name="maxIdle" 						value="${jdbc.maxidle}" />
+        <property name="minIdle" 						value="${jdbc.minidle}" />
+        <property name="testOnBorrow" 					value="false" />
+        <property name="validationQuery" 				value="${jdbc.validquery}" />
+        <property name="timeBetweenEvictionRunsMillis" 	value="10000" />
+        <property name="testWhileIdle" 					value="true" />
+        <property name="numTestsPerEvictionRun" 		value="3" />
+        <property name="minEvictableIdleTimeMillis" 	value="-1" />
     </bean>
 
     <!-- myBATIS Master -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="configLocation"  value="WEB-INF/config/mybatis/mapper.xml" />
-        <property name="mapperLocations" value="classpath:sql/**/*.xml" />
+        <property name="dataSource" 		ref="dataSource" />
+        <property name="configLocation"  	value="WEB-INF/config/mybatis/mapper.xml" />
+        <property name="mapperLocations" 	value="classpath:sql/**/*.xml" />
     </bean>
 
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
@@ -47,8 +51,8 @@
     </bean>
 
     <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
-        <property name="transactionManager" ref="transactionManager"/>
-        <property name="isolationLevelName" value="ISOLATION_READ_UNCOMMITTED"/>
-        <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
+        <property name="transactionManager" 		ref="transactionManager"/>
+        <property name="isolationLevelName" 		value="ISOLATION_READ_UNCOMMITTED"/>
+        <property name="propagationBehaviorName" 	value="PROPAGATION_REQUIRED"/>
     </bean>
 </beans>

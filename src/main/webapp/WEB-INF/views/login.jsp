@@ -43,7 +43,7 @@
                     <input type="password" class="form-control" id="passwd" name="passwd" placeholder="Input your password" required/>
                 </div>
                 <div class="alert alert-danger" style="display: none;"></div>
-                <button type="button" class="btn btn-primary btn-lg btn-block" name="signinSubmit"><tag:message code="signin"/></button>
+                <input type="button" class="btn btn-primary btn-lg btn-block" name="signinSubmit" value="<tag:message code="signin"/>">
                 <div class="btn-group btn-group-justified mt-3" role="group">
                     <a class="btn btn-default" href="/user/regist"><tag:message code="signup"/></a> | 
                     <a class="btn btn-default" href="/share/main"><tag:message code="common.home"/></a> | 
